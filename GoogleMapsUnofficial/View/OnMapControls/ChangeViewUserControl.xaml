@@ -1,0 +1,43 @@
+﻿<UserControl
+    x:Class="GoogleMapsUnofficial.View.OnMapControls.ChangeViewUserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GoogleMapsUnofficial.View.OnMapControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="90"
+    d:DesignWidth="245">
+
+    <UserControl.Resources>
+        <ResourceDictionary Source="/Resources/CustomControls/DotButton.xaml"/>
+    </UserControl.Resources>
+    <Grid>
+        <Button Background="Gray" Width="30" Height="30" Style="{StaticResource dotbut}" VerticalAlignment="Top" HorizontalAlignment="Right" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0">
+            <Button.Content>
+                <Grid>
+                    <Ellipse Stroke="White" Margin="9"/>
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="C"/>
+                </Grid>
+            </Button.Content>
+            <Button.Flyout>
+                <Flyout x:Name="FL" Opened="Flyout_Opened" Placement="Left" LightDismissOverlayMode="On">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,3">
+                            <ToggleButton Checked="DefaultMapView_Checked" Click="DefaultMapView_Click" x:Name="DefaultMapView" Content="Default" Margin="3,0"/>
+                            <ToggleButton Checked="SatelliteMapView_Checked" Click="SatelliteMapView_Click" x:Name="SatelliteMapView" Content="Satellite" Margin="3,0"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,3">
+                            <ToggleButton Checked="ShowTraffic_Checked" Click="ShowTraffic_Click" x:Name="ShowTraffic" Content="Traffic" Margin="3,0"/>
+                            <ToggleButton Checked="ShowTransit_Checked" Click="ShowTransit_Click" x:Name="ShowTransit" Content="Transit" Margin="3,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Flyout>
+            </Button.Flyout>
+        </Button>
+    </Grid>
+</UserControl>

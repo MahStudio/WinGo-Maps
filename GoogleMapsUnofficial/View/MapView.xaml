@@ -1,0 +1,36 @@
+﻿<Page
+    x:Class="GoogleMapsUnofficial.View.MapView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GoogleMapsUnofficial.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
+    xmlns:OMC="using:GoogleMapsUnofficial.View.OnMapControls"
+    xmlns:viewmodel="using:GoogleMapsUnofficial.ViewModel"
+    xmlns:directionscontrols="using:GoogleMapsUnofficial.View.DirectionsControls"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <viewmodel:MapViewVM/>
+    </Page.DataContext>
+    
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <maps:MapControl MapTapped="Map_MapTapped" x:Name="Map" MapServiceToken="Qe4rzjfqSL7zZlp8xb8A~4o8bBFXIWVuiCUT9pX2cUg~Auk92xku8o5QuFTpMvN0_7Os9b6pREma6NBC8ojGjU0N3Eq3BBzkI9ehNfu065Wv">
+            <Grid HorizontalAlignment="Left" maps:MapControl.Location="{Binding UserLocation.Location,Mode=OneWay}" maps:MapControl.NormalizedAnchorPoint="0,1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Border Background="{ThemeResource SystemControlBackgroundAccentBrush}" Grid.Row="0">
+                    <TextBlock Text="{Binding UserLocation.AttractionName}" HorizontalAlignment="Left" />
+                </Border>
+                <Polygon Points="0,0 12.5,0 0,20" Fill="{ThemeResource SystemControlBackgroundAccentBrush}" StrokeThickness="0" Grid.Row="1" />
+            </Grid>
+        </maps:MapControl>
+        <OMC:MyLocationUserControl VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10"/>
+        <OMC:ChangeViewUserControl VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10"/>
+        <!--<directionscontrols:DirectionsMainUserControl VerticalAlignment="Top" HorizontalAlignment="Left"/>-->
+    </Grid>
+</Page>
