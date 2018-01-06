@@ -11,16 +11,32 @@ namespace GoogleMapsUnofficial.ViewModel.OfflineMapDownloader
 {
     public class MapDLHelper
     {
+        /// <summary>
+        /// Please subscribe this event. When e == true, it means download completed
+        /// </summary>
         public EventHandler<bool> DownloadCompleted;
+        /// <summary>
+        /// This event periodically notify you about the download precent. e == DownloadPercent
+        /// </summary>
         public EventHandler<int> DownloadProgress;
+        /// <summary>
+        /// The event notify you that the download count calculation finished and we started download. e == Number of files to download!
+        /// </summary>
+        public EventHandler<Int64> DownloadStarted;
         private Int64 _alldls;
         private Int64 _dld;
         private int _perc;
+        /// <summary>
+        /// All number of files to be downloaded.
+        /// </summary>
         public Int64 AllDownloads
         {
             get { return _alldls; }
             set { _alldls = value; }
         }
+        /// <summary>
+        /// Downloaded files count
+        /// </summary>
         public Int64 Downloaded
         {
             get { return _dld; }
@@ -34,6 +50,9 @@ namespace GoogleMapsUnofficial.ViewModel.OfflineMapDownloader
                 catch { }
             }
         }
+        /// <summary>
+        /// Download Percentage (Downloaded / All Downloads * 100)
+        /// </summary>
         public int DownloadPercent
         {
             get { return _perc; }
@@ -41,17 +60,50 @@ namespace GoogleMapsUnofficial.ViewModel.OfflineMapDownloader
         }
         private StorageFolder MapFolder { get; set; }
         private const String mapfiles = "http://maps.google.com/mapfiles/mapfiles/132e/map2";
+        /// <summary>
+        /// Initialize an instance of the class.
+        /// </summary>
         public MapDLHelper()
         {
             AsyncInitialize();
         }
-
-        async void AsyncInitialize()
+        /// <summary>
+        /// Initialize an instance of the class. you can use this method instead of var something = new MapDLHelper();
+        /// </summary>
+        /// <returns>Instance of the MapDLHelper class.</returns>
+        public static MapDLHelper GetInstance()
+        {
+            return new MapDLHelper();
+        }
+        private async void AsyncInitialize()
         {
             MapFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("MahMaps", CreationCollisionOption.OpenIfExists);
         }
 
-        public async Task<bool> Download(String href, String filename)
+        /// <summary>
+        /// Override destination folder of offline map location
+        /// </summary>
+        /// <param name="OutputFolder"></param>
+        /// <returns>acknowledge of override</returns>
+        public bool OverrideOutPutFolder(StorageFolder OutputFolder)
+        {
+            try
+            {
+                MapFolder = OutputFolder;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        /// <summary>
+        /// Fetch links and save them to file 
+        /// </summary>
+        /// <param name="href">Tile link to download</param>
+        /// <param name="filename">Filename to save on storage</param>
+        /// <returns>acknowledge of downloading file</returns>
+        private async Task<bool> Download(String href, String filename)
         {
             //mkdir if folder not existed
             StorageFile file = null;
@@ -84,7 +136,14 @@ namespace GoogleMapsUnofficial.ViewModel.OfflineMapDownloader
                 return false;
             }
         }
-
+        /// <summary>
+        /// Download map of a region you mention. We get two points at top left and bottom right
+        /// </summary>
+        /// <param name="lat_bgn"></param>
+        /// <param name="lng_bgn"></param>
+        /// <param name="lat_end"></param>
+        /// <param name="lng_end"></param>
+        /// <param name="MaxZoomLevel">Maximum zoom level to download tiles. Default value is 17</param>
         public async void DownloadMap(double lat_bgn, double lng_bgn, double lat_end, double lng_end, int MaxZoomLevel = 17)
         {
             AllDownloads = 0;
@@ -109,6 +168,8 @@ namespace GoogleMapsUnofficial.ViewModel.OfflineMapDownloader
                     }
                 }
             }
+
+            DownloadStarted?.Invoke(this, AllDownloads);
             //Start Download
             for (int z = (int)MapView.MapControl.MinZoomLevel; z <= MaxZoomLevel; z++)
             {
@@ -130,17 +191,14 @@ namespace GoogleMapsUnofficial.ViewModel.OfflineMapDownloader
                         //http://mt0.google.com/vt/lyrs=m@405000000&hl=x-local&src=app&sG&x=43614&y=25667&z=16
                         await Download("http://mt" + ((x + y) % 4) + ".google.com/vt/lyrs=m@405000000&hl=x-local&&src=app&sG&x=" + x + "&y=" + y + "&z=" + z, "mah_" + mapparams + ".jpeg");
                         Downloaded++;
-                        if (z == (int)MapView.MapControl.MaxZoomLevel)
-                            if (x == x_max)
-                                if (y == y_max)
-                                {
-                                    DownloadCompleted?.Invoke(this, true);
-                                    AllDownloads = 0;
-                                }
                     }
                 }
 
             }
+
+            //Download Completed
+            DownloadCompleted?.Invoke(this, true);
+            AllDownloads = 0;
         }
 
     }

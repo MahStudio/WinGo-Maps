@@ -6,7 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
+using Windows.System;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls.Maps;
 
 namespace GoogleMapsUnofficial.ViewModel
@@ -91,6 +93,16 @@ namespace GoogleMapsUnofficial.ViewModel
                     Map.Center = snPoint;
                     Map.ZoomLevel = 16;
 
+                }
+                else
+                {
+                    var msg = new MessageDialog("We weren't able to access your location. Please check if your device location is on and you have accepted location access to the app in privacy settings.\nHit ok button to navigate location settings and cancel to continue.");
+                    msg.Commands.Add(new UICommand("OK", async delegate
+                    {
+                        await Launcher.LaunchUriAsync(new Uri("ms-settings:privacy-location", UriKind.RelativeOrAbsolute));
+                    }));
+                    msg.Commands.Add(new UICommand("Cancel", delegate { }));
+                    await msg.ShowAsync();
                 }
             });
         }
