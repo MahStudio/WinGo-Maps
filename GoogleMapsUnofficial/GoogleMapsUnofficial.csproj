@@ -138,7 +138,6 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="GoogleMapsUnofficial_TemporaryKey.pfx" />
-    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Logs\ChangeLog.txt" />
