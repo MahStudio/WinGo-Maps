@@ -85,10 +85,12 @@ namespace GoogleMapsUnofficial.ViewModel.OfflineMapDownloader
             }
         }
 
-        public async void DownloadMap(double lat_bgn, double lng_bgn, double lat_end, double lng_end)
+        public async void DownloadMap(double lat_bgn, double lng_bgn, double lat_end, double lng_end, int MaxZoomLevel = 17)
         {
+            AllDownloads = 0;
             Downloaded = 0;
-            for (int z = (int)MapView.MapControl.MinZoomLevel; z <= (int)MapView.MapControl.MaxZoomLevel; z++)
+            //Calculate Total downloads number
+            for (int z = (int)MapView.MapControl.MinZoomLevel; z <= MaxZoomLevel; z++)
             {
                 TileCoordinate c_bgn = new TileCoordinate(lat_bgn, lng_bgn, z);
                 var c1 = c_bgn.locationCoord();
@@ -99,9 +101,26 @@ namespace GoogleMapsUnofficial.ViewModel.OfflineMapDownloader
 
                 var y_min = (int)c_bgn.y;
                 var y_max = (int)c_end.y;
-                //Calculate download
-                AllDownloads = (x_max - x_min + 1) * (y_max - y_min + 1);
-                Downloaded = 0;
+                for (int x = x_min; x <= x_max; x++)
+                {
+                    for (int y = y_min; y <= y_max; y++)
+                    {
+                        AllDownloads++;
+                    }
+                }
+            }
+            //Start Download
+            for (int z = (int)MapView.MapControl.MinZoomLevel; z <= MaxZoomLevel; z++)
+            {
+                TileCoordinate c_bgn = new TileCoordinate(lat_bgn, lng_bgn, z);
+                var c1 = c_bgn.locationCoord();
+                TileCoordinate c_end = new TileCoordinate(lat_end, lng_end, z);
+                var c2 = c_end.locationCoord();
+                var x_min = (int)c_bgn.x;
+                var x_max = (int)c_end.x;
+
+                var y_min = (int)c_bgn.y;
+                var y_max = (int)c_end.y;
 
                 for (int x = x_min; x <= x_max; x++)
                 {
@@ -114,7 +133,10 @@ namespace GoogleMapsUnofficial.ViewModel.OfflineMapDownloader
                         if (z == (int)MapView.MapControl.MaxZoomLevel)
                             if (x == x_max)
                                 if (y == y_max)
+                                {
                                     DownloadCompleted?.Invoke(this, true);
+                                    AllDownloads = 0;
+                                }
                     }
                 }
 
