@@ -120,6 +120,7 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
             }
             return $"{EstimatedTime} minutes";
         }
+
         //public static async Task<List<GoogleMapPlaceAutoCompleteModel.Prediction>> GetAutoCompleteResults(string Input, string Lat, string Lng)
         //{
         //    var http = new HttpClient();
