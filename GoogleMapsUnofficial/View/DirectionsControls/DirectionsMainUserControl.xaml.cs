@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -25,10 +26,45 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
             Transit = 2,
             Walking = 3
         }
-        public DirectionsMode SelectedDirectionMode;
+        public static Geopoint Origin { get; set; }
+        public static Geopoint Destination { get; set; }
+        public static DirectionsMode SelectedDirectionMode;
         public DirectionsMainUserControl()
         {
             this.InitializeComponent();
+            this.Loaded += DirectionsMainUserControl_Loaded;
+            this.Unloaded += DirectionsMainUserControl_Unloaded;
+        }
+
+        private void DirectionsMainUserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            var gr = MapView.MapControl.FindName("OrigDesPointer") as Grid;
+            gr.Visibility = Visibility.Collapsed;
+            Origin = null;
+            Destination = null;
+            MainPage.Grid.Children.Remove(this);
+        }
+
+        private void DirectionsMainUserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            var gr = MapView.MapControl.FindName("OrigDesPointer") as Grid;
+            gr.Visibility = Visibility.Visible;
+        }
+
+        private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(Piv.SelectedIndex == 0)
+            {
+                SelectedDirectionMode = DirectionsMode.Walking;
+            }
+            else if (Piv.SelectedIndex ==1)
+            {
+                SelectedDirectionMode = DirectionsMode.Transit;
+            }
+            else if (Piv.SelectedIndex == 2)
+            {
+                SelectedDirectionMode = DirectionsMode.Driving;
+            }
         }
     }
 }

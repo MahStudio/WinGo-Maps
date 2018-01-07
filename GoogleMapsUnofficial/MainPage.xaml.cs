@@ -24,21 +24,32 @@ namespace GoogleMapsUnofficial
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public static Grid Grid { get; set; }
         public MainPage()
         {
             this.InitializeComponent();
+            Grid = Gr;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             Fr.Navigate(typeof(View.MapView));
-            
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Fr.Navigate(typeof(View.OfflineMapDownloader.MapDownloaderView));
+        }
+
+        private void DirBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var dir = Gr.FindName("DirectionUC") as View.DirectionsControls.DirectionsMainUserControl;
+            if (dir == null)
+                Gr.Children.Add(new View.DirectionsControls.DirectionsMainUserControl() { Name = "DirectionUC", VerticalAlignment = VerticalAlignment.Top, HorizontalAlignment = HorizontalAlignment.Left });
+            else
+                Gr.Children.Remove(dir);
         }
     }
 }

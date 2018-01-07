@@ -28,8 +28,6 @@ namespace GoogleMapsUnofficial.View
     /// </summary>
     public sealed partial class MapView : Page
     {
-        Geopoint bgn_pnt;
-        Geopoint end_pnt;
         public static MapControl MapControl;
         public MapView()
         {
@@ -46,20 +44,6 @@ namespace GoogleMapsUnofficial.View
                 Map.TileSources.Add(new MapTileSource(new LocalMapTileDataSource("ms-appdata:///local/MahMaps/mah_x_{x}-y_{y}-z_{zoomlevel}.jpeg")));
             }
         }
-
-        private async void Map_MapTapped(MapControl sender, MapInputEventArgs args)
-        {
-            var dt = (DataContext as ViewModel.MapViewVM);
-            var Origin = dt.UserLocation.Location;
-            var Destination = args.Location;
-            var r = await ViewModel.DirectionsControls.DirectionsHelper.GetDirections(Origin.Position, Destination.Position, ViewModel.DirectionsControls.DirectionsHelper.DirectionModes.walking);
-            if(r == null || r.routes.Count() == 0)
-            {
-                await new MessageDialog("No way to your destination!!!").ShowAsync();
-                return;
-            }
-            var route = ViewModel.DirectionsControls.DirectionsHelper.GetDirectionAsRoute(r);
-            Map.MapElements.Add(route);
-        }
+        
     }
 }

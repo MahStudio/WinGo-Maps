@@ -16,7 +16,7 @@
     </Page.DataContext>
     
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <maps:MapControl MapTapped="Map_MapTapped" x:Name="Map" MapServiceToken="Qe4rzjfqSL7zZlp8xb8A~4o8bBFXIWVuiCUT9pX2cUg~Auk92xku8o5QuFTpMvN0_7Os9b6pREma6NBC8ojGjU0N3Eq3BBzkI9ehNfu065Wv">
+        <maps:MapControl x:Name="Map" MapServiceToken="Qe4rzjfqSL7zZlp8xb8A~4o8bBFXIWVuiCUT9pX2cUg~Auk92xku8o5QuFTpMvN0_7Os9b6pREma6NBC8ojGjU0N3Eq3BBzkI9ehNfu065Wv" BusinessLandmarksVisible="False">
             <Grid HorizontalAlignment="Left" maps:MapControl.Location="{Binding UserLocation.Location,Mode=OneWay}" maps:MapControl.NormalizedAnchorPoint="0,1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -28,9 +28,13 @@
                 </Border>
                 <Polygon Points="0,0 12.5,0 0,20" Fill="{ThemeResource SystemControlBackgroundAccentBrush}" StrokeThickness="0" Grid.Row="1" />
             </Grid>
+
+            <Grid x:Name="OrigDesPointer" maps:MapControl.Location="{Binding UserLocation.Center, Mode=OneWay}"  VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Collapsed">
+                <Button FontFamily="Segoe MDL2 Assets" Content="" Padding="0" Command="{Binding OrigDestinCommand}"/>
+            </Grid>
         </maps:MapControl>
         <OMC:MyLocationUserControl VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10"/>
         <OMC:ChangeViewUserControl VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10"/>
-        <!--<directionscontrols:DirectionsMainUserControl VerticalAlignment="Top" HorizontalAlignment="Left"/>-->
+        
     </Grid>
 </Page>

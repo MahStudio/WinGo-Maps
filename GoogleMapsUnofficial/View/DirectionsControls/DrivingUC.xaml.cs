@@ -1,10 +1,13 @@
-﻿using System;
+﻿using GoogleMapsUnofficial.ViewModel.DirectionsControls;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,6 +25,27 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
         public DrivingUC()
         {
             this.InitializeComponent();
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if(DirectionsMainUserControl.Origin != null && DirectionsMainUserControl.Destination != null)
+            {
+                var Origin = DirectionsMainUserControl.Origin;
+                var Destination = DirectionsMainUserControl.Destination;
+                var r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.driving);
+                if (r == null || r.routes.Count() == 0)
+                {
+                    await new MessageDialog("No way to your destination!!!").ShowAsync();
+                    return;
+                }
+                var route = ViewModel.DirectionsControls.DirectionsHelper.GetDirectionAsRoute(r);
+                MapView.MapControl.MapElements.Add(route);
+            }
+            else
+            {
+                await new MessageDialog("You didn't select both origin and destination points").ShowAsync();
+            }
         }
     }
 }

@@ -17,6 +17,6 @@
         </Grid.RowDefinitions>
         <TextBox Header="A" Grid.Row="0"/>
         <TextBox Header="B" Grid.Row="1"/>
-        <Button Grid.Row="2" Content="Navigate" Margin="0,10"/>
+        <Button Grid.Row="2" Content="Navigate" Margin="0,10" Click="Button_Click"/>
     </Grid>
 </UserControl>

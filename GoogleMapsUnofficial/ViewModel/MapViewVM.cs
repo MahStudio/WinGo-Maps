@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoogleMapsUnofficial.View.DirectionsControls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -17,6 +18,16 @@ namespace GoogleMapsUnofficial.ViewModel
     {
         private string attractionname;
         private Geopoint location;
+        private Geopoint center;
+        public Geopoint Center
+        {
+            get { return center; }
+            set
+            {
+                center = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Center"));
+            }
+        }
         public Geopoint Location
         {
             get { return location; }
@@ -40,6 +51,7 @@ namespace GoogleMapsUnofficial.ViewModel
     }
     class MapViewVM : INotifyPropertyChanged
     {
+        public AppCommand OrigDestinCommand { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
         private MapControl Map;
         private CoreWindow CoreWindow;
@@ -50,7 +62,22 @@ namespace GoogleMapsUnofficial.ViewModel
             CoreWindow = CoreWindow.GetForCurrentThread();
             LoadPage();
             UserLocation = new ViewModel() { AttractionName = "My Location" };
+            OrigDestinCommand = AppCommand.GetInstance();
+            OrigDestinCommand.ExecuteFunc = OrigDestinCmd;
         }
+
+        private void OrigDestinCmd(object obj)
+        {
+            if(DirectionsMainUserControl.Origin == null)
+            {
+                DirectionsMainUserControl.Origin = Map.Center;
+            }
+            else if(DirectionsMainUserControl.Destination == null)
+            {
+                DirectionsMainUserControl.Destination = Map.Center;
+            }
+        }
+
         ~MapViewVM()
         {
             geolocator.PositionChanged -= Geolocator_PositionChanged;
@@ -91,6 +118,7 @@ namespace GoogleMapsUnofficial.ViewModel
                     Map = View.MapView.MapControl;
                     //Map.MapElements.Add(UserLoction);
                     Map.Center = snPoint;
+                    Map.CenterChanged += Map_CenterChanged;
                     Map.ZoomLevel = 16;
 
                 }
@@ -105,6 +133,15 @@ namespace GoogleMapsUnofficial.ViewModel
                     await msg.ShowAsync();
                 }
             });
+        }
+
+        private void Map_CenterChanged(MapControl sender, object args)
+        {
+            try
+            {
+                UserLocation.Center = Map.Center;
+            }
+            catch { }
         }
 
         private async void Geolocator_PositionChanged(Geolocator sender, PositionChangedEventArgs args)

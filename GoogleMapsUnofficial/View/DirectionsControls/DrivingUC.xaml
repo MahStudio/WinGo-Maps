@@ -15,8 +15,9 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBox Header="A" Grid.Row="0"/>
-        <TextBox Header="B" Grid.Row="1"/>
-        <Button Grid.Row="2" Content="Navigate" Margin="0,10"/>
+        <TextBox x:Name="OriginTxt" Header="A" Grid.Row="0"/>
+        <TextBox x:Name="DestTxt" Header="B" Grid.Row="1"/>
+        <Button Grid.Row="2" Content="Navigate" Margin="0,10" Click="Button_Click"/>
+        <Border CornerRadius="5,10,5,5"/>
     </Grid>
 </UserControl>

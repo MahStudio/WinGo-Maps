@@ -11,7 +11,7 @@
         <ResourceDictionary Source="/Resources/CustomControls/TabbedPivot.xaml"/>
     </UserControl.Resources>
     <Grid Background="White">
-        <Pivot>
+        <Pivot x:Name="Piv" SelectionChanged="Pivot_SelectionChanged">
             <PivotItem Header="Walking">
                 <local:WalkingUC/>
             </PivotItem>

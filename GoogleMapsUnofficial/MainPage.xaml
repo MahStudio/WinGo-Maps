@@ -5,6 +5,7 @@
     xmlns:local="using:GoogleMapsUnofficial"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:directionscontrols="using:GoogleMapsUnofficial.View.DirectionsControls"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -13,7 +14,12 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="{StaticResource SystemControlBackgroundAccentBrush}">
-            <Button Content="Download Map" Click="Button_Click"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Download Map" Click="Button_Click" Grid.Column="0"/>
+            <Button Content="Directions" Grid.Column="1" Click="DirBtn_Click"/>
         </Grid>
         <SplitView Grid.Row="1">
             <SplitView.Pane>
@@ -21,7 +27,9 @@
                     
                 </Grid>
             </SplitView.Pane>
-            <Frame x:Name="Fr"/>
+            <Grid x:Name="Gr">
+                <Frame x:Name="Fr"/>
+            </Grid>
         </SplitView>
     </Grid>
 </Page>
