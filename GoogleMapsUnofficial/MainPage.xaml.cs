@@ -54,10 +54,12 @@ namespace GoogleMapsUnofficial
 
         private async void DirBtn_Click(object sender, RoutedEventArgs e)
         {
-            await new MessageDialog("Navigate the point added on your screen to the Origin point and click on it. Then move it to Destination point and click on it again. Select navigation mode from top left menu and hit the navigate button.").ShowAsync();
             var dir = Gr.FindName("DirectionUC") as View.DirectionsControls.DirectionsMainUserControl;
             if (dir == null)
+            {
                 Gr.Children.Add(new View.DirectionsControls.DirectionsMainUserControl() { Name = "DirectionUC", VerticalAlignment = VerticalAlignment.Top, HorizontalAlignment = HorizontalAlignment.Left });
+                await new MessageDialog("Navigate the point added on your screen to the Origin point and click on it. Then move it to Destination point and click on it again. Select navigation mode from top left menu and hit the navigate button.").ShowAsync();
+            }
             else
                 Gr.Children.Remove(dir);
         }

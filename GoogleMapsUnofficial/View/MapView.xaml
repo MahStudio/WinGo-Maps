@@ -29,7 +29,7 @@
                 <Polygon Points="0,0 12.5,0 0,20" Fill="{ThemeResource SystemControlBackgroundAccentBrush}" StrokeThickness="0" Grid.Row="1" />
             </Grid>
 
-            <Grid x:Name="OrigDesPointer" maps:MapControl.Location="{Binding UserLocation.Center, Mode=OneWay}"  VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Collapsed">
+            <Grid x:Name="OrigDesPointer" maps:MapControl.NormalizedAnchorPoint="0,1" maps:MapControl.Location="{Binding UserLocation.Center, Mode=OneWay}"  VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Collapsed">
                 <Button FontFamily="Segoe MDL2 Assets" Content="" Padding="0" Command="{Binding OrigDestinCommand}"/>
             </Grid>
         </maps:MapControl>
