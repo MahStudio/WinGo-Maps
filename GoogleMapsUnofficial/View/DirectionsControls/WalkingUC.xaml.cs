@@ -28,23 +28,30 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (DirectionsMainUserControl.Origin != null && DirectionsMainUserControl.Destination != null)
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
             {
-                var Origin = DirectionsMainUserControl.Origin;
-                var Destination = DirectionsMainUserControl.Destination;
-                var r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.walking);
-                if (r == null || r.routes.Count() == 0)
+
+                if (DirectionsMainUserControl.Origin != null && DirectionsMainUserControl.Destination != null)
                 {
-                    await new MessageDialog("No way to your destination!!!").ShowAsync();
-                    return;
+                    var Origin = DirectionsMainUserControl.Origin;
+                    var Destination = DirectionsMainUserControl.Destination;
+                    var r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.walking);
+                    if (r == null || r.routes.Count() == 0)
+                    {
+                        await new MessageDialog("No way to your destination!!!").ShowAsync();
+                        return;
+                    }
+                    var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault());
+                    MapView.MapControl.MapElements.Add(route);
+                    var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
+                    var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
+                    await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
                 }
-                var route = ViewModel.DirectionsControls.DirectionsHelper.GetDirectionAsRoute(r);
-                MapView.MapControl.MapElements.Add(route);
-            }
-            else
-            {
-                await new MessageDialog("You didn't select both origin and destination points").ShowAsync();
-            }
+                else
+                {
+                    await new MessageDialog("You didn't select both origin and destination points").ShowAsync();
+                }
+            });
         }
     }
 }

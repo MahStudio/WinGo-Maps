@@ -28,7 +28,7 @@
                 </Grid>
             </SplitView.Pane>
             <Grid x:Name="Gr">
-                <Frame x:Name="Fr"/>
+                <Frame x:Name="Fr" Navigated="Fr_Navigated"/>
             </Grid>
         </SplitView>
     </Grid>

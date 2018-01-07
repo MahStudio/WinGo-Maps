@@ -108,7 +108,7 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
             {
                 Distance += item.distance.value;
             }
-            return $"{Distance} km";
+            return $"{Distance} meters";
         }
 
         public static string GetTotalEstimatedTime(Route Route)
@@ -118,7 +118,7 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
             {
                 EstimatedTime += item.duration.value;
             }
-            return $"{EstimatedTime} minutes";
+            return $"{Convert.ToInt32((EstimatedTime / 60))} minutes";
         }
 
         //public static async Task<List<GoogleMapPlaceAutoCompleteModel.Prediction>> GetAutoCompleteResults(string Input, string Lat, string Lng)
