@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
+using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -66,15 +68,30 @@ namespace GoogleMapsUnofficial.ViewModel
             OrigDestinCommand.ExecuteFunc = OrigDestinCmd;
         }
 
-        private void OrigDestinCmd(object obj)
+        private async void OrigDestinCmd(object obj)
         {
+            var Pointer = (await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/InAppIcons/GMP.png")));
             if(DirectionsMainUserControl.Origin == null)
             {
                 DirectionsMainUserControl.Origin = Map.Center;
+                Map.MapElements.Add(new MapIcon()
+                {
+                    Location = Map.Center,
+                    NormalizedAnchorPoint = new Point(0.5, 1.0),
+                    Title = "Origin",
+                    Image = RandomAccessStreamReference.CreateFromFile(Pointer),
+                });
             }
             else if(DirectionsMainUserControl.Destination == null)
             {
                 DirectionsMainUserControl.Destination = Map.Center;
+                Map.MapElements.Add(new MapIcon()
+                {
+                    Location = Map.Center,
+                    NormalizedAnchorPoint = new Point(0.5, 1.0),
+                    Title = "Destination",
+                    Image = RandomAccessStreamReference.CreateFromFile(Pointer)
+                });
             }
         }
 

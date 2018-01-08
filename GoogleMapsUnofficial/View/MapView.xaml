@@ -14,7 +14,7 @@
     <Page.DataContext>
         <viewmodel:MapViewVM/>
     </Page.DataContext>
-    
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <maps:MapControl x:Name="Map" BusinessLandmarksEnabled="False" LandmarksVisible="False" MapServiceToken="Qe4rzjfqSL7zZlp8xb8A~4o8bBFXIWVuiCUT9pX2cUg~Auk92xku8o5QuFTpMvN0_7Os9b6pREma6NBC8ojGjU0N3Eq3BBzkI9ehNfu065Wv" BusinessLandmarksVisible="False">
             <Grid HorizontalAlignment="Left" maps:MapControl.Location="{Binding UserLocation.Location,Mode=OneWay}" maps:MapControl.NormalizedAnchorPoint="0,1">
@@ -35,6 +35,6 @@
         </maps:MapControl>
         <OMC:MyLocationUserControl VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10"/>
         <OMC:ChangeViewUserControl VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10"/>
-        
+
     </Grid>
 </Page>
