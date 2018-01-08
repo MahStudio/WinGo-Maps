@@ -14,6 +14,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" TextWrapping="Wrap" Text="This tool will let you to download offline map for a selected range of world map. Please select a region and hit start download.\n Touch 2 points on map to select region. First point Top Left, Second point Bottom Right."/>
         <Border Grid.Row="1" Width="300" Height="300" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -43,7 +44,11 @@
                 </Grid>
             </maps:MapControl>
         </Border>
-        <ProgressBar x:Name="DLPB" Minimum="0" Maximum="100" Grid.Row="2" Margin="5" Width="300"/>
-        <Button IsEnabled="False" x:Name="DLButton" Click="DownloadMap_Click" Grid.Row="3" Content="Start Download" HorizontalAlignment="Center" Margin="0,25"/>
+        <StackPanel Grid.Row="2">
+            <TextBlock Text="Maximum zoom level to download (Default 17)" TextAlignment="Center"/>
+            <Slider x:Name="MaxZoom" StepFrequency="1" Maximum="20" Minimum="1" Width="300" Value="17"/>
+        </StackPanel>
+        <ProgressBar x:Name="DLPB" Minimum="0" Maximum="100" Grid.Row="3" Margin="5" Width="300"/>
+        <Button IsEnabled="False" x:Name="DLButton" Click="DownloadMap_Click" Grid.Row="4" Content="Start Download" HorizontalAlignment="Center" Margin="0,25"/>
     </Grid>
 </Page>

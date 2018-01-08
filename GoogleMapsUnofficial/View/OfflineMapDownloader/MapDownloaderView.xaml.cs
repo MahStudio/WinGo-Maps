@@ -76,7 +76,7 @@ namespace GoogleMapsUnofficial.View.OfflineMapDownloader
             MDH.DownloadProgress += new EventHandler<int>(DLProgress);
             MDH.DownloadCompleted += new EventHandler<bool>(DLComplete);
             MDH.DownloadMap(TopLeftPos.Latitude, TopLeftPos.Longitude,
-                                BottomRightPos.Latitude, BottomRightPos.Longitude);
+                                BottomRightPos.Latitude, BottomRightPos.Longitude, (int)MaxZoom.Value);
         }
 
         private async void DLComplete(object sender, bool e)
@@ -88,5 +88,6 @@ namespace GoogleMapsUnofficial.View.OfflineMapDownloader
         {
             DLPB.Value = e;
         }
+        
     }
 }
