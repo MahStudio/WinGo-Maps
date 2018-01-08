@@ -49,7 +49,7 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
         /// </summary>
         /// <param name="FuncResp">Convert first or default route to mappolyline to show on map</param>
         /// <returns></returns>
-        public static MapPolyline GetDirectionAsRoute(Rootobject FuncResp)
+        public static MapPolyline GetDirectionAsRoute(Rootobject FuncResp, Color ResultColor)
         {
             var loclist = new List<BasicGeoposition>();
             foreach (var leg in FuncResp.routes.FirstOrDefault().legs)
@@ -77,7 +77,7 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
         /// </summary>
         /// <param name="Route">Selected route for converting to mappolyline</param>
         /// <returns></returns>
-        public static MapPolyline GetDirectionAsRoute(Route Route)
+        public static MapPolyline GetDirectionAsRoute(Route Route, Color ResultColor)
         {
             var loclist = new List<BasicGeoposition>();
             foreach (var leg in Route.legs)
@@ -95,7 +95,7 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
             MapPolyline line = new MapPolyline()
             {
                 StrokeThickness = 5,
-                StrokeColor = Colors.Purple,
+                StrokeColor = ResultColor,
                 Path = new Geopath(loclist)
             };
             return line;

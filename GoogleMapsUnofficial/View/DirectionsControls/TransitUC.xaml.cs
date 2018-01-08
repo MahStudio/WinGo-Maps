@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -41,7 +42,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                         await new MessageDialog("No way to your destination!!!").ShowAsync();
                         return;
                     }
-                    var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault());
+                    var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), Colors.Purple);
                     MapView.MapControl.MapElements.Add(route);
                     var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
                     var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
