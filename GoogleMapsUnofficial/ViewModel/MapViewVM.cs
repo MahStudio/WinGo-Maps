@@ -59,6 +59,7 @@ namespace GoogleMapsUnofficial.ViewModel
         private CoreWindow CoreWindow;
         public ViewModel UserLocation { get; set; }
         Geolocator geolocator = new Geolocator();
+        public static Geolocator GeoLocate { get; private set; }
         public MapViewVM()
         {
             CoreWindow = CoreWindow.GetForCurrentThread();
@@ -137,7 +138,7 @@ namespace GoogleMapsUnofficial.ViewModel
                     Map.Center = snPoint;
                     Map.CenterChanged += Map_CenterChanged;
                     Map.ZoomLevel = 16;
-
+                    GeoLocate = geolocator;
                 }
                 else
                 {

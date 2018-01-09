@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using GoogleMapsUnofficial.ViewModel.VoiceNavigation;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,6 +71,7 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
                 StrokeColor = Colors.Purple,
                 Path = new Geopath(loclist)
             };
+            var voice = new VoiceHelper(FuncResp.routes.FirstOrDefault());
             return line;
         }
         /// <summary>
@@ -98,6 +100,7 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
                 StrokeColor = ResultColor,
                 Path = new Geopath(loclist)
             };
+            var voice = new VoiceHelper(Route);
             return line;
         }
 
