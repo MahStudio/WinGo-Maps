@@ -65,11 +65,20 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
                     {
                         using (var speech = new SpeechSynthesizer())
                         {
-                            var mediaplayer = new MediaPlayer();
+                            var mediaplayer = new MediaPlayer() { AudioCategory = MediaPlayerAudioCategory.Other };
                             speech.Voice = SpeechSynthesizer.AllVoices.First(gender => gender.Gender == VoiceGender.Female);
-                            SpeechSynthesisStream stream = await speech.SynthesizeTextToStreamAsync(item.html_instructions.NoHTMLString());
-                            mediaplayer.Source = MediaSource.CreateFromStream(stream, stream.ContentType);
-                            mediaplayer.Play();
+                            if(item.maneuver == null)
+                            {
+                                SpeechSynthesisStream stream = await speech.SynthesizeTextToStreamAsync(item.html_instructions.NoHTMLString());
+                                mediaplayer.Source = MediaSource.CreateFromStream(stream, stream.ContentType);
+                                mediaplayer.Play();
+                            }
+                            else
+                            {
+                                SpeechSynthesisStream stream = await speech.SynthesizeTextToStreamAsync(item.maneuver + "\n" + item.html_instructions.NoHTMLString());
+                                mediaplayer.Source = MediaSource.CreateFromStream(stream, stream.ContentType);
+                                mediaplayer.Play();
+                            }
                         }
                     }
                 }

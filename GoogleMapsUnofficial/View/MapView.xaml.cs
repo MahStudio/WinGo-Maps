@@ -37,7 +37,7 @@ namespace GoogleMapsUnofficial.View
             ConnectionProfile connections = NetworkInformation.GetInternetConnectionProfile();
             if ( connections != null && connections.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess )
             {
-                Map.TileSources.Add(new MapTileSource(new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=r@221097413,traffic&hl=x-local&z={zoomlevel}&x={x}&y={y}") { AllowCaching = true }));
+                Map.TileSources.Add(new MapTileSource(new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=r@221097413,traffic&hl=x-local&z={zoomlevel}&x={x}&y={y}") { AllowCaching = true }){ AllowOverstretch = false });
             }
             else
             {
