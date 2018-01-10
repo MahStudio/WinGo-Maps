@@ -35,9 +35,12 @@ namespace GoogleMapsUnofficial.View
             MapControl = Map;
             Map.TileSources.Clear();
             ConnectionProfile connections = NetworkInformation.GetInternetConnectionProfile();
-            if ( connections != null && connections.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess )
+            if (connections != null && connections.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess)
             {
-                Map.TileSources.Add(new MapTileSource(new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=r@221097413,traffic&hl=x-local&z={zoomlevel}&x={x}&y={y}") { AllowCaching = true }){ AllowOverstretch = false });
+                //var hm = new HttpMapTileDataSource("https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyCVXdJEPpeVNh7anwX1zzDZkXZ8LMYEtco&center={Position}&zoom={zoomlevel}&format=png&maptype=traffic&size=480x480") { AllowCaching = true };
+                //var md = new MapTileSource(hm) { AllowOverstretch = false };
+                //Map.TileSources.Add(md);
+                Map.TileSources.Add(new MapTileSource(new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=r@221097413,traffic&hl=x-local&z={zoomlevel}&x={x}&y={y}") { AllowCaching = true }) { AllowOverstretch = false });
             }
             else
             {

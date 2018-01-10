@@ -41,7 +41,7 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
             }
             return dist;
         }
-        Route Route;
+        Route Route; Step LastStep = null;
         public VoiceHelper(Route route)
         {
             Route = route;
@@ -63,22 +63,48 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
                     var d = DistanceTo(cp.Point.Position.Latitude, cp.Point.Position.Longitude, item.end_location.lat, item.end_location.lng);
                     if (d <= 0.4)
                     {
-                        using (var speech = new SpeechSynthesizer())
+                        if (LastStep != item)
                         {
-                            var mediaplayer = new MediaPlayer() { AudioCategory = MediaPlayerAudioCategory.Other };
-                            speech.Voice = SpeechSynthesizer.AllVoices.First(gender => gender.Gender == VoiceGender.Female);
-                            if(item.maneuver == null)
+                            using (var speech = new SpeechSynthesizer())
                             {
-                                SpeechSynthesisStream stream = await speech.SynthesizeTextToStreamAsync(item.html_instructions.NoHTMLString());
-                                mediaplayer.Source = MediaSource.CreateFromStream(stream, stream.ContentType);
-                                mediaplayer.Play();
+                                var mediaplayer = new MediaPlayer() { AudioCategory = MediaPlayerAudioCategory.Other };
+                                speech.Voice = SpeechSynthesizer.AllVoices.First(gender => gender.Gender == VoiceGender.Female);
+                                if (item.maneuver == null)
+                                {
+                                    SpeechSynthesisStream stream = await speech.SynthesizeTextToStreamAsync(item.html_instructions.NoHTMLString());
+                                    mediaplayer.Source = MediaSource.CreateFromStream(stream, stream.ContentType);
+                                    mediaplayer.Play();
+                                }
+                                else
+                                {
+                                    SpeechSynthesisStream stream = await speech.SynthesizeTextToStreamAsync(item.maneuver + "\n" + item.html_instructions.NoHTMLString());
+                                    mediaplayer.Source = MediaSource.CreateFromStream(stream, stream.ContentType);
+                                    mediaplayer.Play();
+                                }
                             }
-                            else
+                            LastStep = item;
+                            return;
+                        }
+                        else if(d < 0.05)
+                        {
+                            using (var speech = new SpeechSynthesizer())
                             {
-                                SpeechSynthesisStream stream = await speech.SynthesizeTextToStreamAsync(item.maneuver + "\n" + item.html_instructions.NoHTMLString());
-                                mediaplayer.Source = MediaSource.CreateFromStream(stream, stream.ContentType);
-                                mediaplayer.Play();
+                                var mediaplayer = new MediaPlayer() { AudioCategory = MediaPlayerAudioCategory.Other };
+                                speech.Voice = SpeechSynthesizer.AllVoices.First(gender => gender.Gender == VoiceGender.Female);
+                                if (item.maneuver == null)
+                                {
+                                    SpeechSynthesisStream stream = await speech.SynthesizeTextToStreamAsync(item.html_instructions.NoHTMLString());
+                                    mediaplayer.Source = MediaSource.CreateFromStream(stream, stream.ContentType);
+                                    mediaplayer.Play();
+                                }
+                                else
+                                {
+                                    SpeechSynthesisStream stream = await speech.SynthesizeTextToStreamAsync(item.maneuver + "\n" + item.html_instructions.NoHTMLString());
+                                    mediaplayer.Source = MediaSource.CreateFromStream(stream, stream.ContentType);
+                                    mediaplayer.Play();
+                                }
                             }
+                            return;
                         }
                     }
                 }
