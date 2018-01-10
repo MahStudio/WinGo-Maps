@@ -1,4 +1,5 @@
 ﻿using GoogleMapsUnofficial.View.DirectionsControls;
+using GoogleMapsUnofficial.View.GeocodControls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -150,6 +151,7 @@ namespace GoogleMapsUnofficial.ViewModel
                     msg.Commands.Add(new UICommand("Cancel", delegate { }));
                     await msg.ShowAsync();
                 }
+                await new MessageDialog(await GeocodeHelper.GetAddress()).ShowAsync();
             });
         }
 

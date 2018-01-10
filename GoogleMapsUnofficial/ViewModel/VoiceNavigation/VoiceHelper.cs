@@ -51,6 +51,7 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
         {
             MapViewVM.GeoLocate.PositionChanged -= GeoLocate_PositionChanged;
             Route = null;
+            LastStep = null;
         }
 
         private async void GeoLocate_PositionChanged(Geolocator sender, PositionChangedEventArgs args)

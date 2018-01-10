@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 public class AppCore
 {
+    public static string GoogleMapAPIKey { get; private set; }
     public static string HttpUserAgent { get; private set; }
     static AppCore()
     {
         HttpUserAgent = "WindowsUniversalGoogleMapsV1Beta";
+        GoogleMapAPIKey = "AIzaSyCS5gpejHZIpgK7StAfFCcTqZ8cQsuHVnw";
     }
 }
 
