@@ -123,7 +123,7 @@
     <Compile Include="View\DirectionsControls\WalkingUC.xaml.cs">
       <DependentUpon>WalkingUC.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\GeocodControls\GeocodeHelper.cs" />
+    <Compile Include="ViewModel\GeocodControls\GeocodeHelper.cs" />
     <Compile Include="View\MapView.xaml.cs">
       <DependentUpon>MapView.xaml</DependentUpon>
     </Compile>

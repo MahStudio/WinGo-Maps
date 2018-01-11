@@ -26,6 +26,12 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
             Transit = 2,
             Walking = 3
         }
+        private static string _orgadd { get; set; }
+        private static string _desadd { get; set; }
+        public static string OriginAddress { get { return _orgadd; } set { _orgadd = value; OriginAddressChanged?.Invoke("", value); } }
+        public static string DestinationAddress { get { return _desadd; } set { _desadd = value; DestinationAddressChanged?.Invoke("", value); } }
+        public static event EventHandler<string> OriginAddressChanged;
+        public static event EventHandler<string> DestinationAddressChanged;
         public static Geopoint Origin { get; set; }
         public static Geopoint Destination { get; set; }
         public static DirectionsMode SelectedDirectionMode;

@@ -25,6 +25,18 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
         public TransitUC()
         {
             this.InitializeComponent();
+            DirectionsMainUserControl.DestinationAddressChanged += DirectionsMainUserControl_DestinationAddressChanged;
+            DirectionsMainUserControl.OriginAddressChanged += DirectionsMainUserControl_OriginAddressChanged;
+        }
+
+        private void DirectionsMainUserControl_OriginAddressChanged(object sender, string e)
+        {
+            OriginTxt.Text = e;
+        }
+
+        private void DirectionsMainUserControl_DestinationAddressChanged(object sender, string e)
+        {
+            DestTxt.Text = e;
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)

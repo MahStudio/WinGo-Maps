@@ -1,23 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Windows.Web.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using GoogleMapsUnofficial.View;
+using Windows.Devices.Geolocation;
 
-namespace GoogleMapsUnofficial.View.GeocodControls
+namespace GoogleMapsUnofficial.ViewModel.GeocodControls
 {
     public class GeocodeHelper
     {
-        public static async Task<string> GetAddress()
+        public static async Task<string> GetAddress(Geopoint cn)
         {
             try
             {
-                var cn = MapView.MapControl.Center;
                 var http = new HttpClient();
                 http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.GoogleMapAPIKey);
-                var r = await http.GetStringAsync(new Uri($"https://maps.googleapis.com/maps/api/geocode/json?latlng={cn.Position.Latitude},{cn.Position.Longitude}&sensor=false&key={AppCore.GoogleMapAPIKey}", UriKind.RelativeOrAbsolute));
+                var r = await http.GetStringAsync(new Uri($"https://maps.googleapis.com/maps/api/geocode/json?latlng={cn.Position.Latitude},{cn.Position.Longitude}&sensor=false&language={AppCore.GoogleMapRequestsLanguage}&key={AppCore.GoogleMapAPIKey}", UriKind.RelativeOrAbsolute));
                 var res = JsonConvert.DeserializeObject<Rootobject>(r);
                 return res.results.FirstOrDefault().formatted_address;
             }

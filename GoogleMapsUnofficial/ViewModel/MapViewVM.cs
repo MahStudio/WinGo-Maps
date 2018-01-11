@@ -1,10 +1,8 @@
 ﻿using GoogleMapsUnofficial.View.DirectionsControls;
-using GoogleMapsUnofficial.View.GeocodControls;
+using GoogleMapsUnofficial.ViewModel.GeocodControls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
@@ -83,6 +81,7 @@ namespace GoogleMapsUnofficial.ViewModel
                     Title = "Origin",
                     Image = RandomAccessStreamReference.CreateFromFile(Pointer),
                 });
+                DirectionsMainUserControl.OriginAddress = await GeocodeHelper.GetAddress(Map.Center);
             }
             else if(DirectionsMainUserControl.Destination == null)
             {
@@ -94,6 +93,7 @@ namespace GoogleMapsUnofficial.ViewModel
                     Title = "Destination",
                     Image = RandomAccessStreamReference.CreateFromFile(Pointer)
                 });
+                DirectionsMainUserControl.DestinationAddress = await GeocodeHelper.GetAddress(Map.Center);
             }
         }
 
@@ -151,7 +151,6 @@ namespace GoogleMapsUnofficial.ViewModel
                     msg.Commands.Add(new UICommand("Cancel", delegate { }));
                     await msg.ShowAsync();
                 }
-                await new MessageDialog(await GeocodeHelper.GetAddress()).ShowAsync();
             });
         }
 
