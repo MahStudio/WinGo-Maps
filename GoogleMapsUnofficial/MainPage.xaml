@@ -18,8 +18,8 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Button Content="Download Map" Click="Button_Click" Grid.Column="0"/>
-            <Button Content="Directions" Grid.Column="1" Click="DirBtn_Click"/>
+            <Button Content="&#xE826;" FontSize="18" FontFamily="Segoe MDL2 Assets" Click="Button_Click" Grid.Column="0"/>
+            <Button Content="&#xE816;" FontSize="18" FontFamily="Segoe MDL2 Assets" Grid.Column="1" Click="DirBtn_Click"/>
         </Grid>
         <SplitView Grid.Row="1">
             <SplitView.Pane>
