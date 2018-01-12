@@ -20,7 +20,15 @@ namespace GoogleMapsUnofficial.ViewModel.SearchControls
             MostExpensive = 4,
             NonSpecified = 5
         }
-
+        /// <summary>
+        /// Search nearby places in the mentioned Radius
+        /// </summary>
+        /// <param name="Location"> The latitude/longitude around which to retrieve place information. This must be specified as latitude,longitude</param>
+        /// <param name="Radius">Defines the distance (in meters) within which to return place results. The maximum allowed radius is 50 000 meters. </param>
+        /// <param name="Keyword">A term to be matched against all content that Google has indexed for this place, including but not limited to name, type, and address, as well as customer reviews and other third-party content.</param>
+        /// <param name="MinPrice">Restricts results to only those places within the specified range. Valid values range between 0 (most affordable) to 4 (most expensive), inclusive.</param>
+        /// <param name="MaxPrice">Restricts results to only those places within the specified range. Valid values range between 0 (most affordable) to 4 (most expensive), inclusive.</param>
+        /// <returns>Search Result. LOL :D</returns>
         public static async Task<Rootobject> NearbySearch(BasicGeoposition Location, int Radius, string Keyword = "", SearchPriceEnum MinPrice = SearchPriceEnum.NonSpecified, SearchPriceEnum MaxPrice = SearchPriceEnum.NonSpecified)
         {
             try
@@ -32,7 +40,7 @@ namespace GoogleMapsUnofficial.ViewModel.SearchControls
                 string para = "";
                 para += $"location={Location.Latitude},{Location.Longitude}&radius={Radius}";
                 if (Keyword != "") para += $"&keyword={Keyword}"; if (MinPrice != SearchPriceEnum.NonSpecified) para += $"&minprice={(int)MinPrice}"; if (MaxPrice != SearchPriceEnum.NonSpecified) para += $"&maxprice={(int)MaxPrice}";
-                para += $"&key={AppCore.GoogleMapAPIKey}";
+                para += $"&key={AppCore.GoogleMapAPIKey}&language={AppCore.GoogleMapRequestsLanguage}";
                 var http = new HttpClient();
                 http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);
                 var st = await http.GetStringAsync(new Uri("https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + para, UriKind.RelativeOrAbsolute));
@@ -43,6 +51,29 @@ namespace GoogleMapsUnofficial.ViewModel.SearchControls
                 return null;
             }
         }
+
+        //public static async Task TextSearch(BasicGeoposition Location, int Radius, string Region = "", string query = "", SearchPriceEnum MinPrice = SearchPriceEnum.NonSpecified, SearchPriceEnum MaxPrice = SearchPriceEnum.NonSpecified)
+        //{
+        //    try
+        //    {
+        //        if (Radius > 50000)
+        //        {
+        //            throw new IndexOutOfRangeException("Radious Value is out of expected range.");
+        //        }
+        //        string para = "";
+        //        para += $"location={Location.Latitude},{Location.Longitude}&radius={Radius}";
+        //        if (query != "") para += $"&query={query}"; if (Region != "") para += $"&region={Region}"; if (MinPrice != SearchPriceEnum.NonSpecified) para += $"&minprice={(int)MinPrice}"; if (MaxPrice != SearchPriceEnum.NonSpecified) para += $"&maxprice={(int)MaxPrice}";
+        //        para += $"&key={AppCore.GoogleMapAPIKey}&language={AppCore.GoogleMapRequestsLanguage}";
+        //        var http = new HttpClient();
+        //        http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);
+        //        var st = await http.GetStringAsync(new Uri("https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + para, UriKind.RelativeOrAbsolute));
+        //        return JsonConvert.DeserializeObject<Rootobject>(st);
+        //    }
+        //    catch
+        //    {
+        //        return null;
+        //    }
+        //}
 
         public class Rootobject
         {

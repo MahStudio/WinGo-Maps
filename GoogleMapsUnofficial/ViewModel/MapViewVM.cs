@@ -152,7 +152,6 @@ namespace GoogleMapsUnofficial.ViewModel
                     msg.Commands.Add(new UICommand("Cancel", delegate { }));
                     await msg.ShowAsync();
                 }
-                SearchHelper.NearbySearch(Map.Center.Position, 500);
             });
         }
 
