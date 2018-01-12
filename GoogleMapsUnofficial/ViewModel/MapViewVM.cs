@@ -1,5 +1,6 @@
 ﻿using GoogleMapsUnofficial.View.DirectionsControls;
 using GoogleMapsUnofficial.ViewModel.GeocodControls;
+using GoogleMapsUnofficial.ViewModel.SearchControls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -151,6 +152,7 @@ namespace GoogleMapsUnofficial.ViewModel
                     msg.Commands.Add(new UICommand("Cancel", delegate { }));
                     await msg.ShowAsync();
                 }
+                SearchHelper.NearbySearch(Map.Center.Position, 500);
             });
         }
 

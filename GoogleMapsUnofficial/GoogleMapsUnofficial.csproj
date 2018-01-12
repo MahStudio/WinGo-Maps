@@ -110,6 +110,7 @@
     <Compile Include="ViewModel\DirectionsControls\DirectionsHelper.cs" />
     <Compile Include="ViewModel\MapViewVM.cs" />
     <Compile Include="ViewModel\OfflineMapDownloader\MapDLHelper.cs" />
+    <Compile Include="ViewModel\SearchControls\SearchHelper.cs" />
     <Compile Include="ViewModel\VoiceNavigation\VoiceHelper.cs" />
     <Compile Include="View\DirectionsControls\DirectionsMainUserControl.xaml.cs">
       <DependentUpon>DirectionsMainUserControl.xaml</DependentUpon>
@@ -230,6 +231,7 @@
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
