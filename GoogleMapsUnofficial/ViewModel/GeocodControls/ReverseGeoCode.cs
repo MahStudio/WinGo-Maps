@@ -1,33 +1,34 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Linq;
-using Windows.Web.Http;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using GoogleMapsUnofficial.View;
 using Windows.Devices.Geolocation;
 
 namespace GoogleMapsUnofficial.ViewModel.GeocodControls
 {
-    public class GeocodeHelper
-    {
-        /// <summary>
-        /// Get Address of the GeoPoint you provided 
-        /// </summary>
-        /// <param name="cn">GeoPoint of you want it's address</param>
-        /// <returns>Address of Provided GeoPoint. throwing in Exception cause returning "Earth :D" as Address</returns>
-        public static async Task<string> GetAddress(Geopoint cn)
+    class ReverseGeoCode
+    {/// <summary>
+     /// Get Location Latitude and Longitude from Address
+     /// </summary>
+     /// <param name="Address">The address for reverse geocoding</param>
+     /// <returns>returns a geopoint contains address Latitude and Longitude</returns>
+        public static async Task<Geopoint> GetLocation(string Address)
         {
             try
             {
                 var http = new HttpClient();
                 http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.GoogleMapAPIKey);
-                var r = await http.GetStringAsync(new Uri($"https://maps.googleapis.com/maps/api/geocode/json?latlng={cn.Position.Latitude},{cn.Position.Longitude}&sensor=false&language={AppCore.GoogleMapRequestsLanguage}&key={AppCore.GoogleMapAPIKey}", UriKind.RelativeOrAbsolute));
-                var res = JsonConvert.DeserializeObject<Rootobject>(r);
-                return res.results.FirstOrDefault().formatted_address;
+                var r = await http.GetStringAsync(new Uri($"http://maps.googleapis.com/maps/api/geocode/json?address={Address}&sensor=false", UriKind.RelativeOrAbsolute));
+                var res = JsonConvert.DeserializeObject<Rootobject>(r).results.FirstOrDefault().geometry.location;
+                return new Geopoint(new BasicGeoposition() { Latitude = res.lat, Longitude = res.lng });
             }
-            catch { return "Earth :D"; }
+            catch { return null; }
         }
-        
+
+
         public class Rootobject
         {
             public Result[] results { get; set; }
@@ -39,6 +40,7 @@ namespace GoogleMapsUnofficial.ViewModel.GeocodControls
             public Address_Components[] address_components { get; set; }
             public string formatted_address { get; set; }
             public Geometry geometry { get; set; }
+            public bool partial_match { get; set; }
             public string place_id { get; set; }
             public string[] types { get; set; }
         }

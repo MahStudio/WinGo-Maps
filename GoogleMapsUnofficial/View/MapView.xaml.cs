@@ -33,6 +33,7 @@ namespace GoogleMapsUnofficial.View
         {
             this.InitializeComponent();
             MapControl = Map;
+
             Map.TileSources.Clear();
             ConnectionProfile connections = NetworkInformation.GetInternetConnectionProfile();
             if (connections != null && connections.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess)
