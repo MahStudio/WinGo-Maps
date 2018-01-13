@@ -18,6 +18,7 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
 {
     public class VoiceHelper
     {
+        DateTime LastWarn { get; set; }
         static double DistanceTo(double lat1, double lon1, double lat2, double lon2, char unit = 'K')
         {
             double rlat1 = Math.PI * lat1 / 180;
@@ -56,6 +57,7 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
 
         private async void GeoLocate_PositionChanged(Geolocator sender, PositionChangedEventArgs args)
         {
+            if (DateTime.Now.Subtract(new TimeSpan(0, 0, 6)).Second < 0) return;
             foreach (var items in Route.legs)
             {
                 foreach (var item in items.steps)
