@@ -3,6 +3,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using Windows.Devices.Geolocation;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -95,6 +96,12 @@ namespace GoogleMapsUnofficial.View.OnMapControls
         private void Control2_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             SearchBox.Text = "";
+            MapView.MapControl.Center = new Geopoint(
+                new BasicGeoposition()
+                {
+                    Latitude = (args.SelectedItem as SearchHelper.Result).geometry.location.lat,
+                    Longitude = (args.SelectedItem as SearchHelper.Result).geometry.location.lng
+                });
             //SearchReq.Invoke(args.SelectedItem as ClassProduct.Product, null);
             SearchBox.Visibility = Visibility.Collapsed;
             BTNExpand.Visibility = Visibility.Visible;
