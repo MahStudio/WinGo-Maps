@@ -57,7 +57,8 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
 
         private async void GeoLocate_PositionChanged(Geolocator sender, PositionChangedEventArgs args)
         {
-            if (DateTime.Now.Subtract(new TimeSpan(0, 0, 6)).Second < 0) return;
+            if (DateTime.Now.Subtract(LastWarn).TotalSeconds < 6) return;
+            LastWarn = DateTime.Now;
             foreach (var items in Route.legs)
             {
                 foreach (var item in items.steps)
