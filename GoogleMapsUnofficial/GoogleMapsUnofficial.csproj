@@ -108,6 +108,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\DirectionsControls\DirectionsHelper.cs" />
+    <Compile Include="ViewModel\GeocodControls\ReverseGeoCode.cs" />
     <Compile Include="ViewModel\MapViewVM.cs" />
     <Compile Include="ViewModel\OfflineMapDownloader\MapDLHelper.cs" />
     <Compile Include="ViewModel\SearchControls\SearchHelper.cs" />

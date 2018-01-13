@@ -20,7 +20,7 @@ namespace GoogleMapsUnofficial.ViewModel.GeocodControls
             try
             {
                 var http = new HttpClient();
-                http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.GoogleMapAPIKey);
+                http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);
                 var r = await http.GetStringAsync(new Uri($"https://maps.googleapis.com/maps/api/geocode/json?latlng={cn.Position.Latitude},{cn.Position.Longitude}&sensor=false&language={AppCore.GoogleMapRequestsLanguage}&key={AppCore.GoogleMapAPIKey}", UriKind.RelativeOrAbsolute));
                 var res = JsonConvert.DeserializeObject<Rootobject>(r);
                 return res.results.FirstOrDefault().formatted_address;
