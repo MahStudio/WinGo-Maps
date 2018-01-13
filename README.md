@@ -17,3 +17,5 @@ NuGet Library and Class Library (DLL/Winmd) to work with Google Map APIs will be
 -Reverse GeoCoding (Converting Address to latitude and longitude)
 
 -Nearby Search
+
+-Text Search
