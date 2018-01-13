@@ -52,28 +52,30 @@ namespace GoogleMapsUnofficial.ViewModel.SearchControls
             }
         }
 
-        //public static async Task TextSearch(BasicGeoposition Location, int Radius, string Region = "", string query = "", SearchPriceEnum MinPrice = SearchPriceEnum.NonSpecified, SearchPriceEnum MaxPrice = SearchPriceEnum.NonSpecified)
-        //{
-        //    try
-        //    {
-        //        if (Radius > 50000)
-        //        {
-        //            throw new IndexOutOfRangeException("Radious Value is out of expected range.");
-        //        }
-        //        string para = "";
-        //        para += $"location={Location.Latitude},{Location.Longitude}&radius={Radius}";
-        //        if (query != "") para += $"&query={query}"; if (Region != "") para += $"&region={Region}"; if (MinPrice != SearchPriceEnum.NonSpecified) para += $"&minprice={(int)MinPrice}"; if (MaxPrice != SearchPriceEnum.NonSpecified) para += $"&maxprice={(int)MaxPrice}";
-        //        para += $"&key={AppCore.GoogleMapAPIKey}&language={AppCore.GoogleMapRequestsLanguage}";
-        //        var http = new HttpClient();
-        //        http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);
-        //        var st = await http.GetStringAsync(new Uri("https://maps.googleapis.com/maps/api/place/nearbysearch/json?" + para, UriKind.RelativeOrAbsolute));
-        //        return JsonConvert.DeserializeObject<Rootobject>(st);
-        //    }
-        //    catch
-        //    {
-        //        return null;
-        //    }
-        //}
+        public static async Task<Rootobject> TextSearch(string query, Geopoint Location = null, int Radius = 0, string Region = "", string NextPageToken = "", SearchPriceEnum MinPrice = SearchPriceEnum.NonSpecified, SearchPriceEnum MaxPrice = SearchPriceEnum.NonSpecified)
+        {
+            try
+            {
+                if (Radius > 50000)
+                {
+                    throw new IndexOutOfRangeException("Radious Value is out of expected range.");
+                }
+                if (Location != null && Radius == 0) { throw new Exception("Location and radius values must having values"); }
+                string para = "";
+                para += $"query={query.Replace(" ", "+")}";
+                if (Location != null) para += $"location={Location.Position.Latitude},{Location.Position.Longitude}&radius={Radius}";
+                if (Region != "") para += $"&region={Region}"; if (MinPrice != SearchPriceEnum.NonSpecified) para += $"&minprice={(int)MinPrice}"; if (MaxPrice != SearchPriceEnum.NonSpecified) para += $"&maxprice={(int)MaxPrice}";
+                para += $"&key={AppCore.GoogleMapAPIKey}&language={AppCore.GoogleMapRequestsLanguage}";
+                var http = new HttpClient();
+                http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);
+                var st = await http.GetStringAsync(new Uri("https://maps.googleapis.com/maps/api/place/textsearch/json?" + para, UriKind.RelativeOrAbsolute));
+                return JsonConvert.DeserializeObject<Rootobject>(st);
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
         public class Rootobject
         {

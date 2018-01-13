@@ -39,6 +39,7 @@ namespace GoogleMapsUnofficial.View.OfflineMapDownloader
         public MapDownloaderView()
         {
             this.InitializeComponent();
+            Map.Style = MapStyle.None;
             TopLeft.Visibility = Visibility.Collapsed;
             BottomRight.Visibility = Visibility.Collapsed;
             Map.TileSources.Add(new MapTileSource(new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=r@405000000&hl=x-local&z={zoomlevel}&x={x}&y={y}") { AllowCaching = true }));

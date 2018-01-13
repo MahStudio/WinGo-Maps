@@ -7,7 +7,35 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
 
+        <Button x:Name="BTNExpand" Width="45"
+                Opacity="0.75" Background="Transparent"
+                Visibility="Visible" 
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Stretch" 
+                Click="BTNExpand_Click">
+            <SymbolIcon Symbol="Find"/>
+        </Button>
+        <AutoSuggestBox FontFamily="B Koodak" PlaceholderText="جستجو..."
+            ItemsSource="{Binding SearchResults}"
+            TextChanged="Control2_TextChanged" x:Name="SearchBox"
+            QueryIcon="Find" Visibility="Collapsed"
+            QuerySubmitted="Control2_QuerySubmitted"
+            VerticalAlignment="Center" MinWidth="250"
+            SuggestionChosen="Control2_SuggestionChosen">
+            <AutoSuggestBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Height="100" Width="100" Source="{Binding images[0].src}"/>
+                        <StackPanel>
+                            <TextBlock Text="{Binding name}" FontFamily="B Koodak"/>
+                            <TextBlock Text="{Binding price}" FontFamily="B Koodak"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </AutoSuggestBox.ItemTemplate>
+
+        </AutoSuggestBox>
     </Grid>
 </Page>
