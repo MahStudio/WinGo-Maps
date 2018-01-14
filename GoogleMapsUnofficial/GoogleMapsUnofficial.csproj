@@ -111,6 +111,7 @@
     <Compile Include="ViewModel\GeocodControls\ReverseGeoCode.cs" />
     <Compile Include="ViewModel\MapViewVM.cs" />
     <Compile Include="ViewModel\OfflineMapDownloader\MapDLHelper.cs" />
+    <Compile Include="ViewModel\PhotoControls\PhotoHelper.cs" />
     <Compile Include="ViewModel\PlaceControls\PlaceDetailsHelper.cs" />
     <Compile Include="ViewModel\PlaceControls\PlaceAddHelper.cs" />
     <Compile Include="ViewModel\PlaceControls\SearchHelper.cs" />
