@@ -17,7 +17,7 @@
                 Click="BTNExpand_Click">
             <SymbolIcon Symbol="Find"/>
         </Button>
-        <AutoSuggestBox FontFamily="B Koodak" PlaceholderText="جستجو..."
+        <AutoSuggestBox FontFamily="B Koodak" PlaceholderText="Search..."
             ItemsSource="{Binding SearchResults}"
             TextChanged="Control2_TextChanged" x:Name="SearchBox"
             QueryIcon="Find" Visibility="Collapsed"
