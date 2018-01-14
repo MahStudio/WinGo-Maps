@@ -32,8 +32,7 @@
                             <ToggleButton Checked="SatelliteMapView_Checked" Click="SatelliteMapView_Click" x:Name="SatelliteMapView" Content="Satellite" Margin="3,0"/>
                         </StackPanel>
                         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,3">
-                            <ToggleButton Checked="ShowTraffic_Checked" Click="ShowTraffic_Click" x:Name="ShowTraffic" Content="Traffic" Margin="3,0"/>
-                            <ToggleButton Checked="ShowTransit_Checked" Click="ShowTransit_Click" x:Name="ShowTransit" Content="Transit" Margin="3,0"/>
+                            <ToggleSwitch Toggled="ShowTraffic_Toggled" x:Name="ShowTraffic" Header="Traffic" Margin="3,0"/>
                         </StackPanel>
                     </Grid>
                 </Flyout>

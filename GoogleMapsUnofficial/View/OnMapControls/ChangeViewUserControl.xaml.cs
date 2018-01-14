@@ -32,7 +32,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             {
                 Map = MapView.MapControl;
                 DefaultMapView.IsChecked = true;
-                ShowTraffic.IsChecked = true;
+                ShowTraffic.IsOn = true;
             }
         }
 
@@ -47,32 +47,13 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             DefaultMapView.IsChecked = false;
             SatelliteMapView.IsChecked = true;
         }
-
-        private void ShowTraffic_Click(object sender, RoutedEventArgs e)
-        {
-            ShowTraffic.IsChecked = true;
-            ShowTransit.IsChecked = false;
-        }
-
-        private void ShowTransit_Click(object sender, RoutedEventArgs e)
-        {
-            ShowTraffic.IsChecked = false;
-            ShowTransit.IsChecked = true;
-        }
-
+        
         private void DefaultMapView_Checked(object sender, RoutedEventArgs e)
         {
-            if(ShowTraffic.IsChecked.Value)
+            if(ShowTraffic.IsOn)
             {
                 Map.TileSources.Clear();
                 var dataSource = new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=r@221097413,traffic&hl=x-local&z={zoomlevel}&x={x}&y={y}");
-                dataSource.AllowCaching = true;
-                Map.TileSources.Add(new MapTileSource(dataSource));
-            }
-            else if(ShowTransit.IsChecked.Value)
-            {
-                Map.TileSources.Clear();
-                var dataSource = new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=r@221097413,transit&hl=x-local&z={zoomlevel}&x={x}&y={y}");
                 dataSource.AllowCaching = true;
                 Map.TileSources.Add(new MapTileSource(dataSource));
             }
@@ -87,17 +68,10 @@ namespace GoogleMapsUnofficial.View.OnMapControls
 
         private void SatelliteMapView_Checked(object sender, RoutedEventArgs e)
         {
-            if (ShowTraffic.IsChecked.Value)
+            if (ShowTraffic.IsOn)
             {
                 Map.TileSources.Clear();
                 var dataSource = new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=s@221097413,traffic&hl=x-local&z={zoomlevel}&x={x}&y={y}");
-                dataSource.AllowCaching = true;
-                Map.TileSources.Add(new MapTileSource(dataSource));
-            }
-            else if (ShowTransit.IsChecked.Value)
-            {
-                Map.TileSources.Clear();
-                var dataSource = new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=s@221097413,transit&hl=x-local&z={zoomlevel}&x={x}&y={y}");
                 dataSource.AllowCaching = true;
                 Map.TileSources.Add(new MapTileSource(dataSource));
             }
@@ -109,74 +83,15 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                 Map.TileSources.Add(new MapTileSource(dataSource));
             }
         }
-
-        private void ShowTraffic_Checked(object sender, RoutedEventArgs e)
-        {
-            if(DefaultMapView.IsChecked.Value)
-            {
-                if (ShowTraffic.IsChecked.Value)
-                {
-                    Map.TileSources.Clear();
-                    var dataSource = new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=r@221097413,traffic&hl=x-local&z={zoomlevel}&x={x}&y={y}");
-                    dataSource.AllowCaching = true;
-                    Map.TileSources.Add(new MapTileSource(dataSource));
-                }
-                else if (ShowTransit.IsChecked.Value)
-                {
-                    Map.TileSources.Clear();
-                    var dataSource = new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=r@221097413,transit&hl=x-local&z={zoomlevel}&x={x}&y={y}");
-                    dataSource.AllowCaching = true;
-                    Map.TileSources.Add(new MapTileSource(dataSource));
-                }
-                else
-                {
-                    Map.TileSources.Clear();
-                    var dataSource = new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=r&hl=x-local&z={zoomlevel}&x={x}&y={y}");
-                    dataSource.AllowCaching = true;
-                    Map.TileSources.Add(new MapTileSource(dataSource));
-                }
-            }
-            else if(SatelliteMapView.IsChecked.Value)
-            {
-                if (ShowTraffic.IsChecked.Value)
-                {
-                    Map.TileSources.Clear();
-                    var dataSource = new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=s@221097413,traffic&hl=x-local&z={zoomlevel}&x={x}&y={y}");
-                    dataSource.AllowCaching = true;
-                    Map.TileSources.Add(new MapTileSource(dataSource));
-                }
-                else if (ShowTransit.IsChecked.Value)
-                {
-                    Map.TileSources.Clear();
-                    var dataSource = new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=s@221097413,transit&hl=x-local&z={zoomlevel}&x={x}&y={y}");
-                    dataSource.AllowCaching = true;
-                    Map.TileSources.Add(new MapTileSource(dataSource));
-                }
-                else
-                {
-                    Map.TileSources.Clear();
-                    var dataSource = new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=s&hl=x-local&z={zoomlevel}&x={x}&y={y}");
-                    dataSource.AllowCaching = true;
-                    Map.TileSources.Add(new MapTileSource(dataSource));
-                }
-            }
-        }
-
-        private void ShowTransit_Checked(object sender, RoutedEventArgs e)
+        
+        private void ShowTraffic_Toggled(object sender, RoutedEventArgs e)
         {
             if (DefaultMapView.IsChecked.Value)
             {
-                if (ShowTraffic.IsChecked.Value)
+                if (ShowTraffic.IsOn)
                 {
                     Map.TileSources.Clear();
                     var dataSource = new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=r@221097413,traffic&hl=x-local&z={zoomlevel}&x={x}&y={y}");
-                    dataSource.AllowCaching = true;
-                    Map.TileSources.Add(new MapTileSource(dataSource));
-                }
-                else if (ShowTransit.IsChecked.Value)
-                {
-                    Map.TileSources.Clear();
-                    var dataSource = new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=r@221097413,transit&hl=x-local&z={zoomlevel}&x={x}&y={y}");
                     dataSource.AllowCaching = true;
                     Map.TileSources.Add(new MapTileSource(dataSource));
                 }
@@ -190,17 +105,10 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             }
             else if (SatelliteMapView.IsChecked.Value)
             {
-                if (ShowTraffic.IsChecked.Value)
+                if (ShowTraffic.IsOn)
                 {
                     Map.TileSources.Clear();
                     var dataSource = new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=s@221097413,traffic&hl=x-local&z={zoomlevel}&x={x}&y={y}");
-                    dataSource.AllowCaching = true;
-                    Map.TileSources.Add(new MapTileSource(dataSource));
-                }
-                else if (ShowTransit.IsChecked.Value)
-                {
-                    Map.TileSources.Clear();
-                    var dataSource = new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=s@221097413,transit&hl=x-local&z={zoomlevel}&x={x}&y={y}");
                     dataSource.AllowCaching = true;
                     Map.TileSources.Add(new MapTileSource(dataSource));
                 }
