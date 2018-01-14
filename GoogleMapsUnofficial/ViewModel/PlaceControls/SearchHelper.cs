@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.Web.Http;
 
-namespace GoogleMapsUnofficial.ViewModel.SearchControls
+namespace GoogleMapsUnofficial.ViewModel.PlaceControls
 {
     class SearchHelper
     {

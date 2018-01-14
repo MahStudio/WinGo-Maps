@@ -1,6 +1,6 @@
 ﻿using GoogleMapsUnofficial.View.DirectionsControls;
 using GoogleMapsUnofficial.ViewModel.GeocodControls;
-using GoogleMapsUnofficial.ViewModel.SearchControls;
+using GoogleMapsUnofficial.ViewModel.PlaceControls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

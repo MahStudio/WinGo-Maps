@@ -1,4 +1,4 @@
-﻿using GoogleMapsUnofficial.ViewModel.SearchControls;
+﻿using GoogleMapsUnofficial.ViewModel.PlaceControls;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
