@@ -16,7 +16,7 @@
     </Page.DataContext>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <maps:MapControl x:Name="Map" TiltInteractionMode="GestureAndControl" ZoomInteractionMode="GestureAndControl" MapServiceToken="Qe4rzjfqSL7zZlp8xb8A~4o8bBFXIWVuiCUT9pX2cUg~Auk92xku8o5QuFTpMvN0_7Os9b6pREma6NBC8ojGjU0N3Eq3BBzkI9ehNfu065Wv" >
+        <maps:MapControl x:Name="Map" RotateInteractionMode="GestureAndControl" TiltInteractionMode="GestureAndControl" ZoomInteractionMode="GestureAndControl" MapServiceToken="Qe4rzjfqSL7zZlp8xb8A~4o8bBFXIWVuiCUT9pX2cUg~Auk92xku8o5QuFTpMvN0_7Os9b6pREma6NBC8ojGjU0N3Eq3BBzkI9ehNfu065Wv" >
             <Grid HorizontalAlignment="Left" maps:MapControl.Location="{Binding UserLocation.Location,Mode=OneWay}" maps:MapControl.NormalizedAnchorPoint="0,1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
