@@ -8,7 +8,7 @@ using Windows.Web.Http;
 
 namespace GoogleMapsUnofficial.ViewModel.PlaceControls
 {
-    class DetailsHelper
+    class PlaceDetailsHelper
     {
         /// <summary>
         /// Get a place details using place id
@@ -17,10 +17,17 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
         /// <returns>Details of a place including phone number, address and etc.</returns>
         public static async Task<Rootobject> GetPlaceDetails(string PlaceID)
         {
-            var http = new HttpClient();
-            http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);
-            var res = await http.GetStringAsync(new Uri($"https://maps.googleapis.com/maps/api/place/details/json?placeid={PlaceID}&key={AppCore.GoogleMapAPIKey}", UriKind.RelativeOrAbsolute));
-            return JsonConvert.DeserializeObject<Rootobject>(res);
+            try
+            {
+                var http = new HttpClient();
+                http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);
+                var res = await http.GetStringAsync(new Uri($"https://maps.googleapis.com/maps/api/place/details/json?placeid={PlaceID}&key={AppCore.GoogleMapAPIKey}", UriKind.RelativeOrAbsolute));
+                return JsonConvert.DeserializeObject<Rootobject>(res);
+            }
+            catch
+            {
+                return null;
+            }
         }
         
         public class Rootobject
