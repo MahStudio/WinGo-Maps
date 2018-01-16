@@ -35,7 +35,7 @@ namespace GoogleMapsUnofficial.View
             MapControl = Map;
             Map.Style = MapStyle.None;
             Map.TileSources.Clear();
-            if(InternalHelper.InternetConnection())
+            if (InternalHelper.InternetConnection())
             {
                 //var hm = new HttpMapTileDataSource() { AllowCaching = true };
                 //var md = new MapTileSource(hm) { AllowOverstretch = false };
@@ -48,7 +48,7 @@ namespace GoogleMapsUnofficial.View
                 Map.TileSources.Add(new MapTileSource(new LocalMapTileDataSource("ms-appdata:///local/MahMaps/mah_x_{x}-y_{y}-z_{zoomlevel}.jpeg")) { AllowOverstretch = false });
             }
         }
-
+        
         private void Hm_UriRequested(HttpMapTileDataSource sender, MapTileUriRequestedEventArgs args)
         {
             var res = TileCoordinate.ReverseGeoPoint(args.X, args.Y, args.ZoomLevel);

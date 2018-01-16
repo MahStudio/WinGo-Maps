@@ -12,7 +12,7 @@ public class AppCore
     static AppCore()
     {
         HttpUserAgent = "WindowsUniversalGoogleMapsV1Beta";
-        GoogleMapAPIKey = "AIzaSyCS5gpejHZIpgK7StAfFCcTqZ8cQsuHVnw";
+        GoogleMapAPIKey = "AIzaSyCFQ-I2-SPtdtVR4TCa6665mLMX5n_I5Sc";
         GoogleMapRequestsLanguage = "en-US";
     }
 }
