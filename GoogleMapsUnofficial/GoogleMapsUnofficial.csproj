@@ -114,6 +114,7 @@
     <Compile Include="ViewModel\PhotoControls\PhotoHelper.cs" />
     <Compile Include="ViewModel\PlaceControls\PlaceDetailsHelper.cs" />
     <Compile Include="ViewModel\PlaceControls\PlaceAddHelper.cs" />
+    <Compile Include="ViewModel\PlaceControls\SavedPlacesVM.cs" />
     <Compile Include="ViewModel\PlaceControls\SearchHelper.cs" />
     <Compile Include="ViewModel\VoiceNavigation\VoiceHelper.cs" />
     <Compile Include="View\DirectionsControls\DirectionsMainUserControl.xaml.cs">
