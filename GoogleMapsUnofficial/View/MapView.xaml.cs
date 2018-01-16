@@ -35,8 +35,7 @@ namespace GoogleMapsUnofficial.View
             MapControl = Map;
             Map.Style = MapStyle.None;
             Map.TileSources.Clear();
-            ConnectionProfile connections = NetworkInformation.GetInternetConnectionProfile();
-            if (connections != null && connections.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess)
+            if(InternalHelper.InternetConnection())
             {
                 //var hm = new HttpMapTileDataSource() { AllowCaching = true };
                 //var md = new MapTileSource(hm) { AllowOverstretch = false };

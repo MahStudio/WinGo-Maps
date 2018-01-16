@@ -101,6 +101,7 @@
     <Compile Include="AppCommand.cs" />
     <Compile Include="AppCore.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
+    <Compile Include="Helpers\InternalHelper.cs" />
     <Compile Include="Helpers\TileCoordinateHelper.cs" />
     <Compile Include="Helpers\ClassInfo.cs" />
     <Compile Include="MainPage.xaml.cs">

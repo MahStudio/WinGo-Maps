@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace GoogleMapsUnofficial.ViewModel.PlaceControls
@@ -25,6 +23,7 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
                 return new List<SavedPlaceClass>();
             }
         }
+
         /// <summary>
         /// Save a place to saved places
         /// </summary>
