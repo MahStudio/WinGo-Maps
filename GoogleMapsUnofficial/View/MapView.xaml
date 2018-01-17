@@ -31,6 +31,5 @@
         </maps:MapControl>
         <OMC:MyLocationUserControl VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10" />
         <OMC:ChangeViewUserControl VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10" />
-
     </Grid>
 </Page>

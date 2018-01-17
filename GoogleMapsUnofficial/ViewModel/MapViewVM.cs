@@ -110,6 +110,15 @@ namespace GoogleMapsUnofficial.ViewModel
                     Map.CenterChanged += Map_CenterChanged;
                     Map.ZoomLevel = 16;
                     GeoLocate = geolocator;
+                    var savedplaces = SavedPlacesVM.GetSavedPlaces();
+                    foreach (var item in savedplaces)
+                    {
+                        Map.MapElements.Add(new MapIcon()
+                        {
+                            Location = new Geopoint(new BasicGeoposition() { Latitude = item.Latitude, Longitude = item.Longitude }),
+                            Title = item.PlaceName
+                        });
+                    }
                 }
                 else
                 {

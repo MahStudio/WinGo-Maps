@@ -47,7 +47,8 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
         private void DirectionsMainUserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             var gr = MapView.MapControl.FindName("OrDesSelector") as DraggablePin;
-            MapView.MapControl.Children.Remove(gr);
+            if (gr != null)
+                MapView.MapControl.Children.Remove(gr);
             Origin = null;
             Destination = null;
             MainPage.Grid.Children.Remove(this);
@@ -55,7 +56,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
 
         private void DirectionsMainUserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            DraggablePin pin = new DraggablePin(MapView.MapControl);
+            DraggablePin pin = new DraggablePin(MapView.MapControl, this);
             pin.Name = "OrDesSelector";
             MapControl.SetLocation(pin, MapView.MapControl.Center);
 
@@ -71,11 +72,11 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
 
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(Piv.SelectedIndex == 0)
+            if (Piv.SelectedIndex == 0)
             {
                 SelectedDirectionMode = DirectionsMode.Walking;
             }
-            else if (Piv.SelectedIndex ==1)
+            else if (Piv.SelectedIndex == 1)
             {
                 SelectedDirectionMode = DirectionsMode.Transit;
             }

@@ -36,7 +36,7 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
             try
             {
                 var r = GetSavedPlaces();
-                if (r.Where(x => x.PlaceName == Place.PlaceName).Any())
+                if (r.Where(x => x.PlaceName.ToLower() == Place.PlaceName.ToLower()).Any())
                     throw new ArgumentOutOfRangeException("PlaceName is already exists");
                 r.Add(Place);
                 ApplicationData.Current.RoamingSettings.Values["SavedPlaces"] = JsonConvert.SerializeObject(r);
@@ -59,7 +59,7 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
             try
             {
                 var r = GetSavedPlaces();
-                var p = r.Where(x => x.PlaceName == PlaceName);
+                var p = r.Where(x => x.PlaceName.ToLower() == PlaceName.ToLower());
                 if (p.Count() == 0) throw new KeyNotFoundException("PlaceName not found");
                 r.Remove(p.FirstOrDefault());
                 ApplicationData.Current.RoamingSettings.Values["SavedPlaces"] = JsonConvert.SerializeObject(r);

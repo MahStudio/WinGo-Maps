@@ -1,4 +1,6 @@
-﻿using GoogleMapsUnofficial.ViewModel.OfflineMapDownloader;
+﻿using GoogleMapsUnofficial.View;
+using GoogleMapsUnofficial.View.OnMapControls;
+using GoogleMapsUnofficial.ViewModel.OfflineMapDownloader;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -57,8 +59,11 @@ namespace GoogleMapsUnofficial
             var dir = Gr.FindName("DirectionUC") as View.DirectionsControls.DirectionsMainUserControl;
             if (dir == null)
             {
-                Gr.Children.Add(new View.DirectionsControls.DirectionsMainUserControl() { Name = "DirectionUC", VerticalAlignment = VerticalAlignment.Top, HorizontalAlignment = HorizontalAlignment.Left });
-                await new MessageDialog("Navigate the point added on your screen to the Origin point and click on it. Then move it to Destination point and click on it again. Select navigation mode from top left menu and hit the navigate button.").ShowAsync();
+                if (MapView.MapControl.FindName("OrDesSelector") as DraggablePin == null)
+                {
+                    Gr.Children.Add(new View.DirectionsControls.DirectionsMainUserControl() { Name = "DirectionUC", VerticalAlignment = VerticalAlignment.Top, HorizontalAlignment = HorizontalAlignment.Left });
+                    await new MessageDialog("Navigate the point added on your screen to the Origin point and click on it. Then move it to Destination point and click on it again. Select navigation mode from top left menu and hit the navigate button.").ShowAsync();
+                }
             }
             else
                 Gr.Children.Remove(dir);
@@ -74,7 +79,18 @@ namespace GoogleMapsUnofficial
 
         private void FavPlaces_Click(object sender, RoutedEventArgs e)
         {
-
+            var FavPlaces = Gr.FindName("FavPlaces") as SavedPlacesUserControl;
+            if (FavPlaces == null)
+            {
+                if (MapView.MapControl.FindName("OrDesSelector") as DraggablePin == null)
+                {
+                    Gr.Children.Add(new SavedPlacesUserControl() { Name = "FavPlaces", Width = 180, VerticalAlignment = VerticalAlignment.Stretch, HorizontalAlignment = HorizontalAlignment.Left });
+                }
+            }
+            else
+            {
+                Gr.Children.Remove(FavPlaces);
+            }
         }
     }
 }
