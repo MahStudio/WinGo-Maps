@@ -49,6 +49,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             {
                 SearchResults.Clear();
                 var s = await SearchHelper.TextSearch(query: searchExpression);
+                if (s == null) return;
                 foreach (var item in s.results)
                 {
                     SearchResults.Add(item);
