@@ -54,7 +54,6 @@ namespace GoogleMapsUnofficial.ViewModel
     }
     class MapViewVM : INotifyPropertyChanged
     {
-        public AppCommand OrigDestinCommand { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
         private MapControl Map;
         private CoreWindow CoreWindow;
@@ -66,39 +65,8 @@ namespace GoogleMapsUnofficial.ViewModel
             CoreWindow = CoreWindow.GetForCurrentThread();
             LoadPage();
             UserLocation = new ViewModel() { AttractionName = "My Location" };
-            OrigDestinCommand = AppCommand.GetInstance();
-            OrigDestinCommand.ExecuteFunc = OrigDestinCmd;
         }
-
-        private async void OrigDestinCmd(object obj)
-        {
-            var Pointer = (await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/InAppIcons/GMP.png")));
-            if(DirectionsMainUserControl.Origin == null)
-            {
-                DirectionsMainUserControl.Origin = Map.Center;
-                Map.MapElements.Add(new MapIcon()
-                {
-                    Location = Map.Center,
-                    NormalizedAnchorPoint = new Point(0.5, 1.0),
-                    Title = "Origin",
-                    Image = RandomAccessStreamReference.CreateFromFile(Pointer),
-                });
-                DirectionsMainUserControl.OriginAddress = await GeocodeHelper.GetAddress(Map.Center);
-            }
-            else if(DirectionsMainUserControl.Destination == null)
-            {
-                DirectionsMainUserControl.Destination = Map.Center;
-                Map.MapElements.Add(new MapIcon()
-                {
-                    Location = Map.Center,
-                    NormalizedAnchorPoint = new Point(0.5, 1.0),
-                    Title = "Destination",
-                    Image = RandomAccessStreamReference.CreateFromFile(Pointer)
-                });
-                DirectionsMainUserControl.DestinationAddress = await GeocodeHelper.GetAddress(Map.Center);
-            }
-        }
-
+        
         ~MapViewVM()
         {
             geolocator.PositionChanged -= Geolocator_PositionChanged;
@@ -142,16 +110,6 @@ namespace GoogleMapsUnofficial.ViewModel
                     Map.CenterChanged += Map_CenterChanged;
                     Map.ZoomLevel = 16;
                     GeoLocate = geolocator;
-                    //-------------
-                    DraggablePin pin = new DraggablePin(Map);
-
-                    MapControl.SetLocation(pin, Map.Center);
-
-                    //Set the pin as draggable.
-                    pin.Draggable = true;
-
-                    //Add the pin to the map.
-                    Map.Children.Add(pin);
                 }
                 else
                 {

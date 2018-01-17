@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoogleMapsUnofficial.View.OnMapControls;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +9,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
@@ -44,8 +46,8 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
 
         private void DirectionsMainUserControl_Unloaded(object sender, RoutedEventArgs e)
         {
-            var gr = MapView.MapControl.FindName("OrigDesPointer") as Grid;
-            gr.Visibility = Visibility.Collapsed;
+            var gr = MapView.MapControl.FindName("OrDesSelector") as DraggablePin;
+            MapView.MapControl.Children.Remove(gr);
             Origin = null;
             Destination = null;
             MainPage.Grid.Children.Remove(this);
@@ -53,8 +55,18 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
 
         private void DirectionsMainUserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            var gr = MapView.MapControl.FindName("OrigDesPointer") as Grid;
-            gr.Visibility = Visibility.Visible;
+            DraggablePin pin = new DraggablePin(MapView.MapControl);
+            pin.Name = "OrDesSelector";
+            MapControl.SetLocation(pin, MapView.MapControl.Center);
+
+            //Set the pin as draggable.
+            pin.Draggable = true;
+
+            //Add the pin to the map.
+            MapView.MapControl.Children.Add(pin);
+
+            //var gr = MapView.MapControl.FindName("OrigDesPointer") as Grid;
+            //gr.Visibility = Visibility.Visible;
         }
 
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)

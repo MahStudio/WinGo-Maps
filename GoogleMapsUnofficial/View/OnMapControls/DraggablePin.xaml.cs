@@ -1,5 +1,10 @@
-﻿using System;
+﻿using GoogleMapsUnofficial.View.DirectionsControls;
+using GoogleMapsUnofficial.ViewModel.GeocodControls;
+using System;
 using Windows.Devices.Geolocation;
+using Windows.Foundation;
+using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Input;
@@ -25,7 +30,38 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             this.InitializeComponent();
             _map = map;
             _map.CenterChanged += _map_CenterChanged;
+            this.Tapped += DraggablePin_Tapped;
         }
+
+        private async void DraggablePin_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            var Pointer = (await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/InAppIcons/GMP.png")));
+            if (DirectionsMainUserControl.Origin == null)
+            {
+                DirectionsMainUserControl.Origin = _map.Center;
+                _map.MapElements.Add(new MapIcon()
+                {
+                    Location = _map.Center,
+                    NormalizedAnchorPoint = new Point(0.5, 1.0),
+                    Title = "Origin",
+                    Image = RandomAccessStreamReference.CreateFromFile(Pointer),
+                });
+                DirectionsMainUserControl.OriginAddress = await GeocodeHelper.GetAddress(_map.Center);
+            }
+            else if (DirectionsMainUserControl.Destination == null)
+            {
+                DirectionsMainUserControl.Destination = _map.Center;
+                _map.MapElements.Add(new MapIcon()
+                {
+                    Location = _map.Center,
+                    NormalizedAnchorPoint = new Point(0.5, 1.0),
+                    Title = "Destination",
+                    Image = RandomAccessStreamReference.CreateFromFile(Pointer)
+                });
+                DirectionsMainUserControl.DestinationAddress = await GeocodeHelper.GetAddress(_map.Center);
+            }
+        }
+
         ~DraggablePin()
         {
             _map.CenterChanged -= _map_CenterChanged;
