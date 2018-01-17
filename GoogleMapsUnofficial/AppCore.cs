@@ -11,7 +11,7 @@ public class AppCore
     public static string HttpUserAgent { get; private set; }
     static AppCore()
     {
-        HttpUserAgent = "WindowsUniversalGoogleMapsV1Beta";
+        HttpUserAgent = "WindowsUniversalGoogleMapsV2ALPHA";
         GoogleMapAPIKey = "AIzaSyCFQ-I2-SPtdtVR4TCa6665mLMX5n_I5Sc";
         GoogleMapRequestsLanguage = "en-US";
     }

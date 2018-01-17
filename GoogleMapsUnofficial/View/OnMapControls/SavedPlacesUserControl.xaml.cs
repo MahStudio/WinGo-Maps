@@ -38,8 +38,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
         {
             PName = "";
             var OrDesSelector = MapView.MapControl.FindName("OrDesSelector") as DraggablePin;
-            if (OrDesSelector != null)
-                MapView.MapControl.Children.Remove(OrDesSelector);
+            MapView.MapControl.Children.Remove(OrDesSelector);
         }
         
         private async void AddPlace_Click(object sender, RoutedEventArgs e)

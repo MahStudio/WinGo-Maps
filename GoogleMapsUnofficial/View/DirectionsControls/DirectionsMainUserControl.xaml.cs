@@ -47,8 +47,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
         private void DirectionsMainUserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             var gr = MapView.MapControl.FindName("OrDesSelector") as DraggablePin;
-            if (gr != null)
-                MapView.MapControl.Children.Remove(gr);
+            MapView.MapControl.Children.Remove(gr);
             Origin = null;
             Destination = null;
             MainPage.Grid.Children.Remove(this);
