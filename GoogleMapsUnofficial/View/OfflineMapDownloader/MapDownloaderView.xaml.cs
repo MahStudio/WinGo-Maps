@@ -51,6 +51,7 @@ namespace GoogleMapsUnofficial.View.OfflineMapDownloader
             {
                 TopLeft.Visibility = Visibility.Visible;
                 TopLeftPos = args.Location.Position;
+                MapControl.SetLocation(TopLeft, args.Location);
                 fp = true;
             }
             else
@@ -59,6 +60,7 @@ namespace GoogleMapsUnofficial.View.OfflineMapDownloader
                 {
                     BottomRight.Visibility = Visibility.Visible;
                     BottomRightPos = args.Location.Position;
+                    MapControl.SetLocation(BottomRight, args.Location);
                     sp = true;
                     DLButton.IsEnabled = true;
                 }

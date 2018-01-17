@@ -38,7 +38,7 @@
                     </Grid.RowDefinitions>
 
                     <Border Background="{ThemeResource SystemControlBackgroundAccentBrush}" Grid.Row="0">
-                        <TextBlock Text="Top Left" HorizontalAlignment="Left" />
+                        <TextBlock Text="Bottom Right" HorizontalAlignment="Left" />
                     </Border>
                     <Polygon Points="0,0 12.5,0 0,20" Fill="{ThemeResource SystemControlBackgroundAccentBrush}" StrokeThickness="0" Grid.Row="1" />
                 </Grid>
