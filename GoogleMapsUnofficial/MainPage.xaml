@@ -17,11 +17,13 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Content="&#xE826;" FontSize="18" FontFamily="Segoe MDL2 Assets" Click="Button_Click" Grid.Column="0"/>
+            <Button Content="&#xE826;" FontSize="18" FontFamily="Segoe MDL2 Assets" Grid.Column="0" Click="Button_Click"/>
             <Button Content="&#xE816;" FontSize="18" FontFamily="Segoe MDL2 Assets" Grid.Column="1" Click="DirBtn_Click"/>
-            <local:SearchUserControl Grid.Column="2"/>
+            <Button Content="&#xE728;" FontSize="18" FontFamily="Segoe MDL2 Assets" Grid.Column="2" Click="FavPlaces_Click"/>
+            <local:SearchUserControl Grid.Column="3"/>
         </Grid>
         <SplitView Grid.Row="1">
             <SplitView.Pane>

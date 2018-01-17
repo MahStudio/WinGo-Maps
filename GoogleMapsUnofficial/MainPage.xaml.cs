@@ -71,5 +71,10 @@ namespace GoogleMapsUnofficial
             else SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
 
         }
+
+        private void FavPlaces_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

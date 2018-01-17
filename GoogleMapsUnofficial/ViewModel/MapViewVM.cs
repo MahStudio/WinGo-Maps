@@ -1,4 +1,5 @@
 ﻿using GoogleMapsUnofficial.View.DirectionsControls;
+using GoogleMapsUnofficial.View.OnMapControls;
 using GoogleMapsUnofficial.ViewModel.GeocodControls;
 using GoogleMapsUnofficial.ViewModel.PlaceControls;
 using System;
@@ -141,6 +142,16 @@ namespace GoogleMapsUnofficial.ViewModel
                     Map.CenterChanged += Map_CenterChanged;
                     Map.ZoomLevel = 16;
                     GeoLocate = geolocator;
+                    //-------------
+                    DraggablePin pin = new DraggablePin(Map);
+
+                    MapControl.SetLocation(pin, Map.Center);
+
+                    //Set the pin as draggable.
+                    pin.Draggable = true;
+
+                    //Add the pin to the map.
+                    Map.Children.Add(pin);
                 }
                 else
                 {
@@ -154,7 +165,7 @@ namespace GoogleMapsUnofficial.ViewModel
                 }
             });
         }
-
+        
         private void Map_CenterChanged(MapControl sender, object args)
         {
             try
