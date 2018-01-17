@@ -94,15 +94,6 @@ namespace GoogleMapsUnofficial.ViewModel
                     BasicGeoposition snPosition = new BasicGeoposition { Latitude = pos.Coordinate.Point.Position.Latitude, Longitude = pos.Coordinate.Point.Position.Longitude };
                     Geopoint snPoint = new Geopoint(snPosition);
                     UserLocation.Location = snPoint;
-                    //UserLoction = new MapIcon
-                    //{
-                    //    CollisionBehaviorDesired = MapElementCollisionBehavior.RemainVisible,
-                    //    Location = snPoint,
-                    //    NormalizedAnchorPoint = new Point(0.5, 1.0),
-                    //    ZIndex = 0,
-                    //    Title = "Your Location"
-                    //};
-                    //MyLandmarks.Add(UserLoction);
                     await Task.Delay(10);
                     Map = View.MapView.MapControl;
                     //Map.MapElements.Add(UserLoction);

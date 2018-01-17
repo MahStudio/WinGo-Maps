@@ -41,7 +41,7 @@ namespace GoogleMapsUnofficial.View
                 //var md = new MapTileSource(hm) { AllowOverstretch = false };
                 //Map.TileSources.Add(md);
                 //hm.UriRequested += Hm_UriRequested;
-                Map.TileSources.Add(new MapTileSource(new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=r@221097413,traffic&hl=x-local&z={zoomlevel}&x={x}&y={y}") { AllowCaching = true }) { AllowOverstretch = false });
+                Map.TileSources.Add(new MapTileSource(new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=r@221097413,traffic&hl=x-local&z={zoomlevel}&x={x}&y={y}") { AllowCaching = true }) { AllowOverstretch = false, IsFadingEnabled = false, ZoomLevelRange = new MapZoomLevelRange() { Max = 22, Min = 1 } });
             }
             else
             {
