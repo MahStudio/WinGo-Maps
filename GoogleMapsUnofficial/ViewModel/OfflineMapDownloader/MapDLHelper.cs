@@ -75,6 +75,16 @@ namespace GoogleMapsUnofficial.ViewModel.OfflineMapDownloader
         {
             return new MapDLHelper();
         }
+
+        /// <summary>
+        /// Get map offline storage folder
+        /// </summary>
+        /// <returns>StorageFolder of offline data</returns>
+        public StorageFolder GetMapDownloadFolder()
+        {
+            return MapFolder;
+        }
+
         private async void AsyncInitialize()
         {
             MapFolder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("MahMaps", CreationCollisionOption.OpenIfExists);
