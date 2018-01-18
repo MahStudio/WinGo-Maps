@@ -10,6 +10,8 @@ NuGet Library to work with Google Map APIs will be available soon too.
 # What is supported in project till now 
 -Show and Download Google Maps Tiles in UWP map control
 
+-Offline map download (+Backup/Restore)
+
 -Find directions and navigation
 
 -Voice Navigation
@@ -21,3 +23,8 @@ NuGet Library to work with Google Map APIs will be available soon too.
 -Nearby Search
 
 -Text Search
+
+-Place Helper
+
+-Save Favorite places (+Sync between devices)
+
