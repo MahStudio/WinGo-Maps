@@ -57,9 +57,11 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Button IsEnabled="False" x:Name="DLButton" Click="DownloadMap_Click" Grid.Column="0" Content="Start Download"/>
             <Button x:Name="BackupBTN" Content="Backup" Click="BackupBTN_Click" Grid.Column="1" Margin="5,0"/>
+            <Button x:Name="RestoreBtn" Content="Restore" Click="RestoreBtn_Click" Grid.Column="2" />
         </Grid>
     </Grid>
 </Page>
