@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -47,23 +48,16 @@ namespace GoogleMapsUnofficial.View.OnMapControls
 
             public async void SuggestForSearch(string searchExpression)
             {
-                SearchResults.Clear();
-                var s = await SearchHelper.TextSearch(query: searchExpression);
-                if (s == null) return;
-                foreach (var item in s.results)
+                await CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
                 {
-                    SearchResults.Add(item);
-                }
-                //foreach (var item in res.products)
-                //{
-                //    SuggestedApps.Add(new SearchResult()
-                //    {
-                //        Id = item.id,
-                //        Image = new BitmapImage(new Uri(item.images[0].src, UriKind.RelativeOrAbsolute)),
-                //        Price = item.price == null ? "نا موجود" : $"{item.price} ریـال",
-                //        Title = item.title
-                //    });
-                //}
+                    SearchResults.Clear();
+                    var s = await SearchHelper.TextSearch(query: searchExpression);
+                    if (s == null) return;
+                    foreach (var item in s.results)
+                    {
+                        SearchResults.Add(item);
+                    }
+                });
 
             }
 

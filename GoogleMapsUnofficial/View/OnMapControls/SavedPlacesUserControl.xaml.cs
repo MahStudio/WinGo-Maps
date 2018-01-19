@@ -1,20 +1,9 @@
 ﻿using GoogleMapsUnofficial.ViewModel.PlaceControls;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -43,26 +32,29 @@ namespace GoogleMapsUnofficial.View.OnMapControls
         
         private async void AddPlace_Click(object sender, RoutedEventArgs e)
         {
-            if (PName == string.Empty)
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
             {
-                await new MessageDialog("Specify a name for this place").ShowAsync();
-            }
-            else
-            {
-                try
+                if (PName == string.Empty)
                 {
-                    SavedPlacesVM.AddNewPlace(new SavedPlacesVM.SavedPlaceClass()
+                    await new MessageDialog("Specify a name for this place").ShowAsync();
+                }
+                else
+                {
+                    try
                     {
-                        Latitude = MapView.MapControl.Center.Position.Latitude,
-                        Longitude = MapView.MapControl.Center.Position.Longitude,
-                        PlaceName = PNameHolder.Text
-                    });
+                        SavedPlacesVM.AddNewPlace(new SavedPlacesVM.SavedPlaceClass()
+                        {
+                            Latitude = MapView.MapControl.Center.Position.Latitude,
+                            Longitude = MapView.MapControl.Center.Position.Longitude,
+                            PlaceName = PNameHolder.Text
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        await new MessageDialog(ex.Message).ShowAsync();
+                    }
                 }
-                catch (Exception ex)
-                {
-                    await new MessageDialog(ex.Message).ShowAsync();
-                }
-            }
+            });
         }
 
         private void PNameHolder_TextChanged(object sender, TextChangedEventArgs e)

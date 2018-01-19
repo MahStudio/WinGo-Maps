@@ -1,17 +1,9 @@
-﻿using GoogleMapsUnofficial.View;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
 using Windows.Devices.Geolocation;
 using Windows.Media.Core;
 using Windows.Media.Playback;
 using Windows.Media.SpeechSynthesis;
-using Windows.UI.Core;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using static GoogleMapsUnofficial.ViewModel.DirectionsControls.DirectionsHelper;
 
 namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation

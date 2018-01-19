@@ -1,25 +1,12 @@
 ﻿using GoogleMapsUnofficial.ViewModel.OfflineMapDownloader;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage.Pickers;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Markup;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -46,32 +33,34 @@ namespace GoogleMapsUnofficial.View.OfflineMapDownloader
             BottomRight.Visibility = Visibility.Collapsed;
             Map.TileSources.Add(new MapTileSource(new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=r@405000000&hl=x-local&z={zoomlevel}&x={x}&y={y}") { AllowCaching = true }));
         }
-        
+
         private async void Map_MapTapped(MapControl sender, MapInputEventArgs args)
         {
-            if (fp == false)
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
             {
-                TopLeft.Visibility = Visibility.Visible;
-                TopLeftPos = args.Location.Position;
-                MapControl.SetLocation(TopLeft, args.Location);
-                fp = true;
-            }
-            else
-            {
-                if(sp == false)
+                if (fp == false)
                 {
-                    BottomRight.Visibility = Visibility.Visible;
-                    BottomRightPos = args.Location.Position;
-                    MapControl.SetLocation(BottomRight, args.Location);
-                    sp = true;
-                    DLButton.IsEnabled = true;
+                    TopLeft.Visibility = Visibility.Visible;
+                    TopLeftPos = args.Location.Position;
+                    MapControl.SetLocation(TopLeft, args.Location);
+                    fp = true;
                 }
                 else
                 {
-                    await new MessageDialog("You selected 2 points.").ShowAsync();
+                    if (sp == false)
+                    {
+                        BottomRight.Visibility = Visibility.Visible;
+                        BottomRightPos = args.Location.Position;
+                        MapControl.SetLocation(BottomRight, args.Location);
+                        sp = true;
+                        DLButton.IsEnabled = true;
+                    }
+                    else
+                    {
+                        await new MessageDialog("You selected 2 points.").ShowAsync();
+                    }
                 }
-            }
-
+            });
         }
 
         private void DownloadMap_Click(object sender, RoutedEventArgs e)
@@ -98,22 +87,25 @@ namespace GoogleMapsUnofficial.View.OfflineMapDownloader
             fop.FileTypeFilter.Add(".png");
             fop.FileTypeFilter.Add(".jpg");
             var fol = await fop.PickSingleFolderAsync();
-            if(fol != null)
+            if (fol != null)
             {
-                var OfflineMap = MDH.GetMapDownloadFolder();
-                var files = await OfflineMap.GetFilesAsync();
-                var Count = files.Count;
-                var Counter = 0;
-                foreach (var item in files)
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
                 {
-                    try
+                    var OfflineMap = MDH.GetMapDownloadFolder();
+                    var files = await OfflineMap.GetFilesAsync();
+                    var Count = files.Count;
+                    var Counter = 0;
+                    foreach (var item in files)
                     {
-                        await item.CopyAsync(fol);
-                        Counter++;
-                        DLPB.Value = (((float)Counter / (float)Count) * 100);
+                        try
+                        {
+                            await item.CopyAsync(fol);
+                            Counter++;
+                            DLPB.Value = (((float)Counter / (float)Count) * 100);
+                        }
+                        catch { }
                     }
-                    catch { }
-                }
+                });
             }
         }
 
@@ -125,20 +117,23 @@ namespace GoogleMapsUnofficial.View.OfflineMapDownloader
             var fol = await fop.PickSingleFolderAsync();
             if (fol != null)
             {
-                var OfflineMap = MDH.GetMapDownloadFolder();
-                var files = await fol.GetFilesAsync();
-                var Count = files.Count;
-                var Counter = 0;
-                foreach (var item in files)
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
                 {
-                    try
+                    var OfflineMap = MDH.GetMapDownloadFolder();
+                    var files = await fol.GetFilesAsync();
+                    var Count = files.Count;
+                    var Counter = 0;
+                    foreach (var item in files)
                     {
-                        await item.CopyAsync(OfflineMap);
-                        Counter++;
-                        DLPB.Value = (((float)Counter / (float)Count) * 100);
+                        try
+                        {
+                            await item.CopyAsync(OfflineMap);
+                            Counter++;
+                            DLPB.Value = (((float)Counter / (float)Count) * 100);
+                        }
+                        catch { }
                     }
-                    catch { }
-                }
+                });
             }
         }
     }

@@ -20,9 +20,6 @@ namespace GoogleMapsUnofficial.View.OnMapControls
         #region Private Properties
         private object ClassInitializer;
         private MapControl _map;
-        private bool isDragging = false;
-        Geopoint _center;
-
         #endregion
 
         #region Constructor
@@ -38,57 +35,60 @@ namespace GoogleMapsUnofficial.View.OnMapControls
 
         private async void DraggablePin_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (ClassInitializer.GetType() == typeof(DirectionsMainUserControl))
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
             {
-                var Pointer = (await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/InAppIcons/GMP.png")));
-                if (DirectionsMainUserControl.Origin == null)
+                if (ClassInitializer.GetType() == typeof(DirectionsMainUserControl))
                 {
-                    DirectionsMainUserControl.Origin = _map.Center;
-                    _map.MapElements.Add(new MapIcon()
+                    var Pointer = (await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/InAppIcons/GMP.png")));
+                    if (DirectionsMainUserControl.Origin == null)
                     {
-                        Location = _map.Center,
-                        NormalizedAnchorPoint = new Point(0.5, 1.0),
-                        Title = "Origin",
-                        Image = RandomAccessStreamReference.CreateFromFile(Pointer),
-                    });
-                    DirectionsMainUserControl.OriginAddress = await GeocodeHelper.GetAddress(_map.Center);
-                }
-                else if (DirectionsMainUserControl.Destination == null)
-                {
-                    DirectionsMainUserControl.Destination = _map.Center;
-                    _map.MapElements.Add(new MapIcon()
-                    {
-                        Location = _map.Center,
-                        NormalizedAnchorPoint = new Point(0.5, 1.0),
-                        Title = "Destination",
-                        Image = RandomAccessStreamReference.CreateFromFile(Pointer)
-                    });
-                    DirectionsMainUserControl.DestinationAddress = await GeocodeHelper.GetAddress(_map.Center);
-                }
-            }
-            if (ClassInitializer.GetType() == typeof(SavedPlacesUserControl))
-            {
-                if(SavedPlacesUserControl.PName == string.Empty)
-                {
-                    await new MessageDialog("Specify a name for this place").ShowAsync();
-                }
-                else
-                {
-                    try
-                    {
-                        SavedPlacesVM.AddNewPlace(new SavedPlacesVM.SavedPlaceClass()
+                        DirectionsMainUserControl.Origin = _map.Center;
+                        _map.MapElements.Add(new MapIcon()
                         {
-                            Latitude = _map.Center.Position.Latitude,
-                            Longitude = _map.Center.Position.Longitude,
-                            PlaceName = SavedPlacesUserControl.PName
+                            Location = _map.Center,
+                            NormalizedAnchorPoint = new Point(0.5, 1.0),
+                            Title = "Origin",
+                            Image = RandomAccessStreamReference.CreateFromFile(Pointer),
                         });
+                        DirectionsMainUserControl.OriginAddress = await GeocodeHelper.GetAddress(_map.Center);
                     }
-                    catch (Exception ex)
+                    else if (DirectionsMainUserControl.Destination == null)
                     {
-                        await new MessageDialog(ex.Message).ShowAsync();
+                        DirectionsMainUserControl.Destination = _map.Center;
+                        _map.MapElements.Add(new MapIcon()
+                        {
+                            Location = _map.Center,
+                            NormalizedAnchorPoint = new Point(0.5, 1.0),
+                            Title = "Destination",
+                            Image = RandomAccessStreamReference.CreateFromFile(Pointer)
+                        });
+                        DirectionsMainUserControl.DestinationAddress = await GeocodeHelper.GetAddress(_map.Center);
                     }
                 }
-            }
+                if (ClassInitializer.GetType() == typeof(SavedPlacesUserControl))
+                {
+                    if (SavedPlacesUserControl.PName == string.Empty)
+                    {
+                        await new MessageDialog("Specify a name for this place").ShowAsync();
+                    }
+                    else
+                    {
+                        try
+                        {
+                            SavedPlacesVM.AddNewPlace(new SavedPlacesVM.SavedPlaceClass()
+                            {
+                                Latitude = _map.Center.Position.Latitude,
+                                Longitude = _map.Center.Position.Longitude,
+                                PlaceName = SavedPlacesUserControl.PName
+                            });
+                        }
+                        catch (Exception ex)
+                        {
+                            await new MessageDialog(ex.Message).ShowAsync();
+                        }
+                    }
+                }
+            });
         }
 
         ~DraggablePin()
