@@ -100,6 +100,7 @@
     </Compile>
     <Compile Include="AppCommand.cs" />
     <Compile Include="AppCore.cs" />
+    <Compile Include="Helpers\CountryCodesHelper.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Helpers\InternalHelper.cs" />
     <Compile Include="Helpers\TileCoordinateHelper.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="ViewModel\PlaceControls\PlaceAddHelper.cs" />
     <Compile Include="ViewModel\PlaceControls\SavedPlacesVM.cs" />
     <Compile Include="ViewModel\PlaceControls\SearchHelper.cs" />
+    <Compile Include="ViewModel\TilesAPIControls\TileApiHelper.cs" />
     <Compile Include="ViewModel\VoiceNavigation\VoiceHelper.cs" />
     <Compile Include="View\DirectionsControls\DirectionsMainUserControl.xaml.cs">
       <DependentUpon>DirectionsMainUserControl.xaml</DependentUpon>

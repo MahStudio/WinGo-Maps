@@ -5,9 +5,12 @@ using GoogleMapsUnofficial.ViewModel.PlaceControls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
+using Windows.Services.Maps;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.System;
@@ -66,7 +69,7 @@ namespace GoogleMapsUnofficial.ViewModel
             LoadPage();
             UserLocation = new ViewModel() { AttractionName = "My Location" };
         }
-        
+
         ~MapViewVM()
         {
             geolocator.PositionChanged -= Geolocator_PositionChanged;
@@ -79,10 +82,7 @@ namespace GoogleMapsUnofficial.ViewModel
                 var accessStatus = await Geolocator.RequestAccessAsync();
                 if (accessStatus == GeolocationAccessStatus.Allowed)
                 {
-                    if(ClassInfo.DeviceType() != ClassInfo.DeviceTypeEnum.Phone)
-                    {
-                        geolocator.DesiredAccuracy = PositionAccuracy.High;
-                    }
+                    geolocator.DesiredAccuracyInMeters = 15;
                     // Subscribe to the StatusChanged event to get updates of location status changes.
                     //geolocator.StatusChanged += Geolocator_StatusChanged;
                     geolocator.PositionChanged += Geolocator_PositionChanged;
@@ -110,6 +110,13 @@ namespace GoogleMapsUnofficial.ViewModel
                             Title = item.PlaceName
                         });
                     }
+                    //var r = await MapLocationFinder.FindLocationsAtAsync(snPoint);
+                    //if(r.Locations != null)
+                    //{
+                    //    var re = r.Locations.FirstOrDefault();
+                    //    var rg = RegionInfo.CurrentRegion;
+                    //    var rg2 = new RegionInfo(re.Address.Country);
+                    //}
                 }
                 else
                 {
@@ -123,7 +130,7 @@ namespace GoogleMapsUnofficial.ViewModel
                 }
             });
         }
-        
+
         private void Map_CenterChanged(MapControl sender, object args)
         {
             try

@@ -41,20 +41,25 @@ namespace GoogleMapsUnofficial.View
                 //var md = new MapTileSource(hm) { AllowOverstretch = false };
                 //Map.TileSources.Add(md);
                 //hm.UriRequested += Hm_UriRequested;
+                //New
+                //Map.TileSources.Add(new MapTileSource(new HttpMapTileDataSource("https://www.googleapis.com/tile/v1/tiles/{x}/{y}/{zoomlevel}?session=sessiontoken&key=AIzaSyCFQ-I2-SPtdtVR4TCa6665mLMX5n_I5Sc")
+                //{ AllowCaching = true })
+                //{ AllowOverstretch = false, IsFadingEnabled = false, ZoomLevelRange = new MapZoomLevelRange() { Max = 22, Min = 1 } });
+                //OLD
                 Map.TileSources.Add(new MapTileSource(new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=r@221097413,traffic&hl=x-local&z={zoomlevel}&x={x}&y={y}")
-                        { AllowCaching = true })
-                            { AllowOverstretch = false, IsFadingEnabled = false, ZoomLevelRange = new MapZoomLevelRange() { Max = 22, Min = 1 } });
+                    { AllowCaching = true })
+                        { AllowOverstretch = false, IsFadingEnabled = false, ZoomLevelRange = new MapZoomLevelRange() { Max = 22, Min = 0 } });
             }
             else
             {
                 Map.TileSources.Add(new MapTileSource(new LocalMapTileDataSource("ms-appdata:///local/MahMaps/mah_x_{x}-y_{y}-z_{zoomlevel}.jpeg")) { AllowOverstretch = false });
             }
         }
-        
+
         private void Hm_UriRequested(HttpMapTileDataSource sender, MapTileUriRequestedEventArgs args)
         {
             var res = TileCoordinate.ReverseGeoPoint(args.X, args.Y, args.ZoomLevel);
-            args.Request.Uri = new Uri($"https://maps.googleapis.com/maps/api/staticmap?center={res.Latitude},{res.Longitude}&zoom={args.ZoomLevel}&maptype=traffic&size=256x256&key=AIzaSyCVXdJEPpeVNh7anwX1zzDZkXZ8LMYEtco", UriKind.RelativeOrAbsolute);
+            args.Request.Uri = new Uri($"https://maps.googleapis.com/maps/api/staticmap?center={res.Latitude},{res.Longitude}&zoom={args.ZoomLevel}&maptype=traffic&size=256x256&key={AppCore.GoogleMapAPIKey}", UriKind.RelativeOrAbsolute);
         }
     }
 }
