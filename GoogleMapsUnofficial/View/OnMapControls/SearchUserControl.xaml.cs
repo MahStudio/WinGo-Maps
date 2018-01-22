@@ -92,10 +92,11 @@ namespace GoogleMapsUnofficial.View.OnMapControls
 
         private async void Control2_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
-            SearchBox.Text = "";
             var select = (args.SelectedItem as PlaceAutoComplete.Prediction);
+            if (select == null) return;
             var res = await GeocodeHelper.GetInfo(select.place_id);
             if (res == null) return;
+            SearchBox.Text = "";
             var ploc = res.results.FirstOrDefault().geometry.location;
             MapView.MapControl.Center = new Geopoint(
                 new BasicGeoposition()
