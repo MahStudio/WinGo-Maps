@@ -53,7 +53,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                 await CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
                 {
                     SearchResults.Clear();
-                    var s = await PlaceAutoComplete.GetAutoCompleteResults(searchExpression, location: MapView.MapControl.Center);
+                    var s = await PlaceAutoComplete.GetAutoCompleteResults(searchExpression, location: MapView.MapControl.Center, radius: 50000);
                     if (s == null) return;
                     foreach (var item in s.predictions)
                     {
@@ -110,10 +110,13 @@ namespace GoogleMapsUnofficial.View.OnMapControls
 
         private void Control2_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
-            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            if (sender.Text.Length >= 3)
             {
-                if (SearchBox.Text != string.Empty)
-                    (this.DataContext as ViewModel).SuggestForSearch((sender as AutoSuggestBox).Text);
+                if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+                {
+                    if (SearchBox.Text != string.Empty)
+                        (this.DataContext as ViewModel).SuggestForSearch((sender as AutoSuggestBox).Text);
+                }
             }
         }
 

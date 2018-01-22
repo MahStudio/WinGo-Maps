@@ -11,11 +11,11 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
 {
     class PlaceAutoComplete
     {
-        public static async Task<Rootobject> GetAutoCompleteResults(string input, int offset = 0, Geopoint location = null)
+        public static async Task<Rootobject> GetAutoCompleteResults(string input, int radius = 0, Geopoint location = null)
         {
             var http = new HttpClient();
             var para = $"input={input}&language={AppCore.GoogleMapRequestsLanguage}&key={AppCore.GoogleMapAPIKey}";
-            if (offset != 0) para += $"&offset={offset}"; if (location != null) para += $"&location={location.Position.Latitude},{location.Position.Longitude}";
+            if (radius != 0) para += $"&radius={radius}"; if (location != null) para += $"&location={location.Position.Latitude},{location.Position.Longitude}";
 
             http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);
             var r = await http.GetStringAsync(new Uri($"https://maps.googleapis.com/maps/api/place/autocomplete/json?{para}"));
