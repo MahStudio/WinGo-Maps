@@ -20,9 +20,7 @@ NuGet Library to work with Google Map APIs will be available soon too.
 
 -Reverse GeoCoding (Converting Address to latitude and longitude)
 
--Nearby Search
-
--Text Search
+-Search (Nearby / Text / Place Auto Complete)
 
 -Place Helper
 
