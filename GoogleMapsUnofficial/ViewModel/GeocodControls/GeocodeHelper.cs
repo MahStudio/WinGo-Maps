@@ -27,7 +27,18 @@ namespace GoogleMapsUnofficial.ViewModel.GeocodControls
             }
             catch { return "Earth :D"; }
         }
-        
+
+        public static async Task<Rootobject> GetInfo(string PlaceID)
+        {
+            try
+            {
+                var http = new HttpClient();
+                http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);
+                var r = await http.GetStringAsync(new Uri($"https://maps.googleapis.com/maps/api/geocode/json?place_id={PlaceID}&language={AppCore.GoogleMapRequestsLanguage}&key={AppCore.GoogleMapAPIKey}", UriKind.RelativeOrAbsolute));
+                return JsonConvert.DeserializeObject<Rootobject>(r);
+            }
+            catch { return null; }
+        }
         public class Rootobject
         {
             public Result[] results { get; set; }

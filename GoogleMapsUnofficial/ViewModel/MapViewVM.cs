@@ -69,6 +69,7 @@ namespace GoogleMapsUnofficial.ViewModel
             CoreWindow = CoreWindow.GetForCurrentThread();
             LoadPage();
             UserLocation = new ViewModel() { AttractionName = "My Location" };
+            geolocator = GeoLocate;
         }
 
         ~MapViewVM()
@@ -83,7 +84,6 @@ namespace GoogleMapsUnofficial.ViewModel
                 var accessStatus = await Geolocator.RequestAccessAsync();
                 if (accessStatus == GeolocationAccessStatus.Allowed)
                 {
-                    geolocator.DesiredAccuracyInMeters = 15;
                     // Subscribe to the StatusChanged event to get updates of location status changes.
                     //geolocator.StatusChanged += Geolocator_StatusChanged;
                     geolocator.PositionChanged += Geolocator_PositionChanged;

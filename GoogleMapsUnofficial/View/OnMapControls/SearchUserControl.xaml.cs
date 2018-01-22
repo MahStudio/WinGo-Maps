@@ -1,7 +1,9 @@
-﻿using GoogleMapsUnofficial.ViewModel.PlaceControls;
+﻿using GoogleMapsUnofficial.ViewModel.GeocodControls;
+using GoogleMapsUnofficial.ViewModel.PlaceControls;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.UI.Core;
@@ -22,7 +24,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
         {
             public ViewModel()
             {
-                SearchResults = new ObservableCollection<SearchHelper.Result>();
+                SearchResults = new ObservableCollection<PlaceAutoComplete.Prediction>();
                 SearchResults.CollectionChanged += SuggestedApps_CollectionChanged;
             }
 
@@ -31,9 +33,9 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                 OnPropertyChanged("SearchResults");
             }
 
-            private ObservableCollection<SearchHelper.Result> _searchres;
+            private ObservableCollection<PlaceAutoComplete.Prediction> _searchres;
 
-            public ObservableCollection<SearchHelper.Result> SearchResults
+            public ObservableCollection<PlaceAutoComplete.Prediction> SearchResults
             {
                 get
                 {
@@ -51,9 +53,9 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                 await CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
                 {
                     SearchResults.Clear();
-                    var s = await SearchHelper.TextSearch(query: searchExpression);
+                    var s = await PlaceAutoComplete.GetAutoCompleteResults(searchExpression, location: MapView.MapControl.Center);
                     if (s == null) return;
-                    foreach (var item in s.results)
+                    foreach (var item in s.predictions)
                     {
                         SearchResults.Add(item);
                     }
@@ -88,14 +90,18 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             BTNExpand.Visibility = Visibility.Visible;
         }
 
-        private void Control2_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        private async void Control2_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             SearchBox.Text = "";
+            var select = (args.SelectedItem as PlaceAutoComplete.Prediction);
+            var res = await GeocodeHelper.GetInfo(select.place_id);
+            if (res == null) return;
+            var ploc = res.results.FirstOrDefault().geometry.location;
             MapView.MapControl.Center = new Geopoint(
                 new BasicGeoposition()
                 {
-                    Latitude = (args.SelectedItem as SearchHelper.Result).geometry.location.lat,
-                    Longitude = (args.SelectedItem as SearchHelper.Result).geometry.location.lng
+                    Latitude = ploc.lat,
+                    Longitude = ploc.lng
                 });
             //SearchReq.Invoke(args.SelectedItem as ClassProduct.Product, null);
             SearchBox.Visibility = Visibility.Collapsed;
