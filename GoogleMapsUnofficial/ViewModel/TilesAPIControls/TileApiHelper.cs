@@ -39,6 +39,7 @@ namespace GoogleMapsUnofficial.ViewModel.TilesAPIControls
             terrain,
             streetview
         }
+        
         public static async Task<ResponseClass> GetSessionToken(SessionTokenRequest Request)
         {
             RequestClass req = new RequestClass() { mapType = Request.mapType.ToString(), region = Request.region, language = AppCore.GoogleMapRequestsLanguage };
@@ -67,6 +68,12 @@ namespace GoogleMapsUnofficial.ViewModel.TilesAPIControls
                 tileWidth = res.tileWidth
             };
         }
+
+        public static Uri GetMapUri(string SessionToken)
+        {
+            return new Uri("https://www.googleapis.com/tile/v1/tiles/{x}/{y}/{zoomlevel}?session=" + SessionToken +"&key=" + AppCore.GoogleMapAPIKey, UriKind.RelativeOrAbsolute);
+        }
+
         public class SessionTokenRequest
         {
             /// <summary>

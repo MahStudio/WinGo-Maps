@@ -34,6 +34,12 @@ namespace GoogleMapsUnofficial
             this.InitializeComponent();
             Grid = Gr;
             SystemNavigationManager.GetForCurrentView().BackRequested += MainPage_BackRequested;
+            this.Loaded += MainPage_Loaded;
+        }
+
+        private void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            Fr.Navigate(typeof(View.MapView));
         }
 
         private void MainPage_BackRequested(object sender, BackRequestedEventArgs e)
@@ -41,14 +47,7 @@ namespace GoogleMapsUnofficial
             if (Fr.CanGoBack) Fr.GoBack();
             else App.Current.Exit();
         }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            Fr.Navigate(typeof(View.MapView));
-
-        }
-
+        
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Fr.Navigate(typeof(View.OfflineMapDownloader.MapDownloaderView));
