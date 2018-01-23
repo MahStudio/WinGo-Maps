@@ -122,6 +122,8 @@
     <Compile Include="ViewModel\PlaceControls\PlaceAddHelper.cs" />
     <Compile Include="ViewModel\PlaceControls\SavedPlacesVM.cs" />
     <Compile Include="ViewModel\PlaceControls\SearchHelper.cs" />
+    <Compile Include="ViewModel\SearchProviderControls\NearbySearchProviderVM.cs" />
+    <Compile Include="ViewModel\SearchProviderControls\TextSearchProviderVM.cs" />
     <Compile Include="ViewModel\TilesAPIControls\TileApiHelper.cs" />
     <Compile Include="ViewModel\VoiceNavigation\VoiceHelper.cs" />
     <Compile Include="View\DirectionsControls\DirectionsMainUserControl.xaml.cs">
@@ -158,8 +160,17 @@
     <Compile Include="View\OnMapControls\SavedPlacesUserControl.xaml.cs">
       <DependentUpon>SavedPlacesUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\OnMapControls\SearchOptionsUserControl.xaml.cs">
+      <DependentUpon>SearchOptionsUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\OnMapControls\SearchUserControl.xaml.cs">
       <DependentUpon>SearchUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SearchProviderControls\NearbySearchProviderUserControl.xaml.cs">
+      <DependentUpon>NearbySearchProviderUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SearchProviderControls\TextSearchProviderUserControl.xaml.cs">
+      <DependentUpon>TextSearchProviderUserControl.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -257,9 +268,21 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\OnMapControls\SearchOptionsUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\OnMapControls\SearchUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SearchProviderControls\NearbySearchProviderUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SearchProviderControls\TextSearchProviderUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

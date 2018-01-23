@@ -11,7 +11,6 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <!--<RowDefinition Height="54"/>-->
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <!--<Grid Grid.Row="0" Background="{StaticResource SystemControlBackgroundAccentBrush}">
@@ -26,7 +25,7 @@
             <Button Content="&#xE728;" FontSize="18" FontFamily="Segoe MDL2 Assets" Grid.Column="2" Click="FavPlaces_Click"/>
             <local:SearchUserControl Grid.Column="3"/>
         </Grid>-->
-        <SplitView Grid.Row="1">
+        <SplitView Grid.Row="0">
             <SplitView.Pane>
                 <Grid>
 

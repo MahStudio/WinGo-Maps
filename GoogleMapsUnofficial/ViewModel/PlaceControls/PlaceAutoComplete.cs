@@ -19,6 +19,7 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
 
             http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);
             var r = await http.GetStringAsync(new Uri($"https://maps.googleapis.com/maps/api/place/autocomplete/json?{para}"));
+
             return JsonConvert.DeserializeObject<Rootobject>(r);
         }
 

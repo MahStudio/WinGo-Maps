@@ -34,6 +34,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <OMC:MenuUserControl Grid.Column="0" Margin="32,15" />
+            <OMC:SearchOptionsUserControl Grid.Column="1" Margin="0,15" HorizontalAlignment="Center"/>
             <OMC:MyLocationUserControl Grid.Column="2" Margin="32,15" />
         </Grid>
         <OMC:ChangeViewUserControl VerticalAlignment="Top" HorizontalAlignment="Right" Margin="32,15" />
