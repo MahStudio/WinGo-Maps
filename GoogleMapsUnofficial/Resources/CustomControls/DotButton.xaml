@@ -8,6 +8,7 @@
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="UseSystemFocusVisuals" Value="True"/>
         <Setter Property="Foreground" Value="#828282"/>
+        <Setter Property="Opacity" Value="1"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">

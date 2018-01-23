@@ -28,13 +28,15 @@ namespace GoogleMapsUnofficial
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public static Frame RootFrame { get; set; }
         public static Grid Grid { get; set; }
         public MainPage()
         {
             this.InitializeComponent();
-            Grid = Gr;
             SystemNavigationManager.GetForCurrentView().BackRequested += MainPage_BackRequested;
             this.Loaded += MainPage_Loaded;
+            RootFrame = Fr;
+            Grid = Gr;
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
@@ -44,6 +46,7 @@ namespace GoogleMapsUnofficial
 
         private void MainPage_BackRequested(object sender, BackRequestedEventArgs e)
         {
+            e.Handled = true;
             if (Fr.CanGoBack) Fr.GoBack();
             else App.Current.Exit();
         }

@@ -13,13 +13,7 @@
         <ResourceDictionary Source="/Resources/CustomControls/DotButton.xaml"/>
     </UserControl.Resources>
     <Grid>
-        <Button Width="35" Height="35" Style="{StaticResource dotbut}" VerticalAlignment="Top" HorizontalAlignment="Right" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0">
-            <Button.Content>
-                <Grid>
-                    <Ellipse Stroke="White" Margin="9"/>
-                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Text="C"/>
-                </Grid>
-            </Button.Content>
+        <Button Width="35" Height="35" Style="{StaticResource dotbut}" VerticalAlignment="Top" HorizontalAlignment="Right" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" FontSize="18" Content="&#xE81E;" FontFamily="Segoe MDL2 Assets">
             <Button.Flyout>
                 <Flyout x:Name="FL" Opened="Flyout_Opened" Placement="Left" LightDismissOverlayMode="On">
                     <Grid>

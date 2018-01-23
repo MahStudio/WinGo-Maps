@@ -149,6 +149,9 @@
     <Compile Include="View\OnMapControls\DraggablePin.xaml.cs">
       <DependentUpon>DraggablePin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\OnMapControls\MenuUserControl.xaml.cs">
+      <DependentUpon>MenuUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\OnMapControls\MyLocationUserControl.xaml.cs">
       <DependentUpon>MyLocationUserControl.xaml</DependentUpon>
     </Compile>
@@ -239,6 +242,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\OnMapControls\DraggablePin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\OnMapControls\MenuUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
