@@ -27,7 +27,7 @@
                 <Polygon Points="0,0 12.5,0 0,20" Fill="{ThemeResource SystemControlBackgroundAccentBrush}" StrokeThickness="0" Grid.Row="1" />
             </Grid>
         </maps:MapControl>
-        <OMC:MyLocationUserControl VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10" />
-        <OMC:ChangeViewUserControl VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10" />
+        <OMC:MyLocationUserControl VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="32,15" />
+        <OMC:ChangeViewUserControl VerticalAlignment="Top" HorizontalAlignment="Right" Margin="32,15" />
     </Grid>
 </Page>

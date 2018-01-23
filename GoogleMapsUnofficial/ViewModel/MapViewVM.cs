@@ -147,7 +147,7 @@ namespace GoogleMapsUnofficial.ViewModel
                 await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, delegate
                 {
                     if (Map == null || UserLocation == null) return;
-                    UserLocation.Location = new Geopoint(args.Position.Coordinate.Point.Position);
+                    UserLocation.Location = args.Position.Coordinate.Point;
                 });
             }
             catch { }

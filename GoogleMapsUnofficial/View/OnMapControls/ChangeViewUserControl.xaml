@@ -13,7 +13,7 @@
         <ResourceDictionary Source="/Resources/CustomControls/DotButton.xaml"/>
     </UserControl.Resources>
     <Grid>
-        <Button Background="Gray" Width="30" Height="30" Style="{StaticResource dotbut}" VerticalAlignment="Top" HorizontalAlignment="Right" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0">
+        <Button Width="35" Height="35" Style="{StaticResource dotbut}" VerticalAlignment="Top" HorizontalAlignment="Right" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0">
             <Button.Content>
                 <Grid>
                     <Ellipse Stroke="White" Margin="9"/>

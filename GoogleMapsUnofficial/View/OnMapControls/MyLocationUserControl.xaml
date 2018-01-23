@@ -4,16 +4,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Height="30" Width="30">
+    mc:Ignorable="d" Height="35" Width="35">
 
     <UserControl.Resources>
         <ResourceDictionary Source="/Resources/CustomControls/DotButton.xaml"/>
     </UserControl.Resources>
     <Grid>
-        <Button Click="Button_Click" Background="Gray" Style="{StaticResource dotbut}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0">
+        <Button x:Name="thisbtn" Click="Button_Click" Style="{StaticResource dotbut}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0">
             <Grid>
-                <Ellipse Margin="5" Stroke="White"/>
-                <Ellipse Margin="11" Fill="White"/>
+                <Ellipse Margin="5" Stroke="#828282"/>
+                <Ellipse Margin="11" Fill="#828282"/>
             </Grid>
         </Button>
     </Grid>
