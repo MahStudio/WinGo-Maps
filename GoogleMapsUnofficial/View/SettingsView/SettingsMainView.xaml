@@ -2,12 +2,22 @@
     x:Class="GoogleMapsUnofficial.View.SettingsView.SettingsMainView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:GoogleMapsUnofficial.View.SettingsView"
+    xmlns:local="using:GoogleMapsUnofficial.ViewModel.SettingsView"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    </Grid>
+    <Page.DataContext>
+        <local:SettingsMainVM/>
+    </Page.DataContext>
+    <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid Margin="12,8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <ToggleSwitch Grid.Row="0" Header="Allow over strech on map" IsOn="{Binding AllowOverstretch, Mode=TwoWay}"/>
+            <ToggleSwitch Grid.Row="1" Header="Enable Fade Animation on loading map tiles" IsOn="{Binding AllowOverstretch, Mode=TwoWay}"/>
+        </Grid>
+    </ScrollViewer>
 </Page>

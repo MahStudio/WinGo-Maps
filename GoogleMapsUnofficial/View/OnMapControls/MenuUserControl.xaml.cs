@@ -1,4 +1,5 @@
 ﻿using GoogleMapsUnofficial.View.OfflineMapDownloader;
+using GoogleMapsUnofficial.View.SettingsView;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,7 +35,8 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             {
                 new MenuClass(){ Icon = "", Text = "Offline Maps", Tag = "Offline Maps"},
                 new MenuClass(){ Icon = "", Text = "Directions", Tag= "Directions"},
-                new MenuClass(){ Icon = "", Text = "Saved Locations", Tag = "Saved Locations"}
+                new MenuClass(){ Icon = "", Text = "Saved Locations", Tag = "Saved Locations"},
+                new MenuClass(){ Icon = "", Text = "Settings", Tag = "Settings" }
             };
             DataContext = menu;
         }
@@ -45,6 +47,9 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             var Gr = MainPage.Grid;
             switch (clk.Tag)
             {
+                case "Settings":
+                    MainPage.RootFrame.Navigate(typeof(SettingsMainView));
+                    break;
                 case "Offline Maps":
                     MainPage.RootFrame.Navigate(typeof(MapDownloaderView));
                     break;
