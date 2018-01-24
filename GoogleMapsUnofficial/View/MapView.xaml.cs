@@ -38,6 +38,8 @@ namespace GoogleMapsUnofficial.View
             Map.TileSources.Clear();
             var AllowOverstretch = SettingsSetters.GetAllowOverstretch();
             var FadeAnimationEnabled = SettingsSetters.GetFadeAnimationEnabled();
+            Map.ZoomInteractionMode = SettingsSetters.GetZoomControlsVisible();
+            Map.RotateInteractionMode = SettingsSetters.GetRotationControlsVisible();
             if (InternalHelper.InternetConnection())
             {
                 //var hm = new HttpMapTileDataSource() { AllowCaching = true };
