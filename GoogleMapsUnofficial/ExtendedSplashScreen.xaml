@@ -10,7 +10,7 @@
     <Grid Background="{ThemeResource SystemControlBackgroundAccentBrush}">
         <Image Source="Assets/Square150x150Logo.scale-200.png" Height="300" Width="300" VerticalAlignment="Center"/>
         <ProgressRing Foreground="White" IsActive="True"
-        MaxHeight="50" MinHeight="50" MaxWidth="80"
-        MinWidth="30" Margin="668,560,620,234" Width="78" Height="74"/>
+        MaxHeight="50" MinHeight="50" MaxWidth="80" Margin="0,400,0,0"
+        MinWidth="30" Width="78" Height="74"/>
     </Grid>
 </Page>
