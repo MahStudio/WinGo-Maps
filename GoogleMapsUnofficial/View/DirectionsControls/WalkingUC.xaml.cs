@@ -48,6 +48,8 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                     var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
                     var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
                     await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
+                    MapView.MapControl.ZoomLevel = 18;
+                    MapView.MapControl.Center = DirectionsMainUserControl.Origin;
                 }
                 else
                 {
