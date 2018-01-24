@@ -15,9 +15,36 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <ToggleSwitch Grid.Row="0" Header="Allow over strech on map" IsOn="{Binding AllowOverstretch, Mode=TwoWay}"/>
             <ToggleSwitch Grid.Row="1" Header="Enable Fade Animation on loading map tiles" IsOn="{Binding AllowOverstretch, Mode=TwoWay}"/>
+            <Grid Grid.Row="5">
+                <TextBlock TextWrapping="Wrap">
+                    <Run FontSize="22">About</Run>
+                    <LineBreak/>
+                    <Run>WinGoMaps</Run>
+                    <Run Text="{Binding ApplicationVersion,Mode=OneWay}"/>
+                    <LineBreak/>
+                    <Run>© 2018 MahStudio </Run>
+                    <LineBreak/>
+                    <Run FontSize="20">Developers Team</Run>
+                    <LineBreak/>
+                    <Run>Maryam Garaeli Shekh, Ali Noshahi, Mohsen Seifi, Poura Riyahi, Mehdi Ardakani</Run>
+                    <LineBreak/>
+                    <Run FontSize="20">Graphic Designing Team</Run>
+                    <LineBreak/>
+                    <Run>Mohammad Alidoost, Amir Estefad</Run>
+                    <LineBreak/>
+                    <Run FontSize="20">Special Thanks to</Run>
+                    <LineBreak/>
+                    <Run>Ahmad Karaki for his calculations and formulas</Run>
+                    <LineBreak/>
+                    <Run>Ali Ghamari and Marco Antonari for his testings and reporting lots of issues</Run>
+                    <LineBreak/>
+                    <Run>Insiders on Telegram who have provide many ideas and did lots of debugging to make this app better</Run>
+                </TextBlock>
+            </Grid>
         </Grid>
     </ScrollViewer>
 </Page>

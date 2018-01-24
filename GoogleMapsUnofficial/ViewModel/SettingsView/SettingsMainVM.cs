@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.Storage;
 
 namespace GoogleMapsUnofficial.ViewModel.SettingsView
@@ -23,7 +24,10 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
             get { return _fadeanimationEnabled; }
             set { _fadeanimationEnabled = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("FadeAnimationEnabled")); }
         }
-
+        public string ApplicationVersion
+        {
+            get { var ver = Package.Current.Id.Version; return $"{ver.Major}.{ver.Minor}.{ver.Build}.{ver.Revision}"; }
+        }
         public SettingsMainVM()
         {
             AllowOverstretch = SettingsSetters.GetAllowOverstretch();
