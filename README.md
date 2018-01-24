@@ -26,3 +26,21 @@ NuGet Library to work with Google Map APIs will be available soon too.
 
 -Save Favorite places (+Sync between devices)
 
+# Building Solution
+Right click on the solution file in Visual Studio solution explorer and add a new Class called AppCore.cs
+
+write this code in the class and save it . 
+```
+public class AppCore
+{
+    public static string GoogleMapRequestsLanguage { get; private set; }
+    public static string GoogleMapAPIKey { get; private set; }
+    public static string HttpUserAgent { get; private set; }
+    static AppCore()
+    {
+        HttpUserAgent = "WindowsUniversalGoogleMapsV2ALPHA";
+        GoogleMapAPIKey = "Your GoogleMap API Key";
+        GoogleMapRequestsLanguage = "en-US";
+    }
+}
+```
