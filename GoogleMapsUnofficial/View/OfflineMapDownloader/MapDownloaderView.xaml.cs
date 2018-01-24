@@ -1,4 +1,5 @@
-﻿using GoogleMapsUnofficial.ViewModel.OfflineMapDownloader;
+﻿using GoogleMapsUnofficial.ViewModel;
+using GoogleMapsUnofficial.ViewModel.OfflineMapDownloader;
 using System;
 using System.ComponentModel;
 using Windows.Devices.Geolocation;
@@ -29,6 +30,8 @@ namespace GoogleMapsUnofficial.View.OfflineMapDownloader
         {
             this.InitializeComponent();
             Map.Style = MapStyle.None;
+            Map.Center = MapViewVM.FastLoadGeoPosition.Coordinate.Point;
+            Map.ZoomLevel = 10;
             TopLeft.Visibility = Visibility.Collapsed;
             BottomRight.Visibility = Visibility.Collapsed;
             Map.TileSources.Add(new MapTileSource(new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=r@405000000&hl=x-local&z={zoomlevel}&x={x}&y={y}") { AllowCaching = true }));
