@@ -12,8 +12,8 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
 {
     class SettingsMainVM : INotifyPropertyChanged
     {
-        private int _rotationcontrolsVisible;
-        private int _zoomcontrolsVisible;
+        private int _rotationcontrolsVisible = -1;
+        private int _zoomcontrolsVisible = -1;
         private bool _fadeanimationEnabled;
         private bool _allowOverstretch;
         public event PropertyChangedEventHandler PropertyChanged;
@@ -43,7 +43,10 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
             set
             {
                 _zoomcontrolsVisible = value;
-                SettingsSetters.SetZoomControlsVisible((MapInteractionMode)value);
+                if (_zoomcontrolsVisible != -1)
+                {
+                    SettingsSetters.SetZoomControlsVisible(StringToEnumConverter(MapInteractionModeOptions[value]));
+                }
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ZoomControlsVisible"));
             }
         }
@@ -53,11 +56,18 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
             set
             {
                 _rotationcontrolsVisible = value;
-                SettingsSetters.SetRotationControlsVisible((MapInteractionMode)value);
+                if (_rotationcontrolsVisible != -1)
+                {
+                    SettingsSetters.SetRotationControlsVisible(StringToEnumConverter(MapInteractionModeOptions[value]));
+                }
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("RotationControlsVisible"));
             }
         }
         public List<string> MapInteractionModeOptions
+        {
+            get { return Enum.GetNames(typeof(MapInteractionMode)).ToList(); }
+        }
+        public static List<string> MapInteractionModeOptionsstatic
         {
             get { return Enum.GetNames(typeof(MapInteractionMode)).ToList(); }
         }
@@ -69,11 +79,42 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
         {
             AllowOverstretch = SettingsSetters.GetAllowOverstretch();
             FadeAnimationEnabled = SettingsSetters.GetFadeAnimationEnabled();
-            ZoomControlsVisible = (int)SettingsSetters.GetZoomControlsVisible();
-            RotationControlsVisible = (int)SettingsSetters.GetRotationControlsVisible();
+            ZoomControlsVisible = EnumToIndexConverter(SettingsSetters.GetZoomControlsVisible());
+            RotationControlsVisible = EnumToIndexConverter(SettingsSetters.GetRotationControlsVisible());
+        }
+
+        public static int EnumToIndexConverter(MapInteractionMode Entry)
+        {
+            return MapInteractionModeOptionsstatic.FindIndex(x => x == Entry.ToString());
+        }
+
+        public static MapInteractionMode StringToEnumConverter(string option)
+        {
+            return (MapInteractionMode)Enum.Parse(typeof(MapInteractionMode), option);
+            //switch (Index)
+            //{
+            //    case "Auto":
+            //        return MapInteractionMode.Auto;
+            //    case "ControlOnly":
+            //        return MapInteractionMode.ControlOnly;
+            //    case "Disabled":
+            //        return MapInteractionMode.Disabled;
+            //    case "GestureAndControl":
+            //        return MapInteractionMode.GestureAndControl;
+            //    case "GestureOnly":
+            //        return MapInteractionMode.GestureOnly;
+            //    case "PointerAndKeyboard":
+            //        return MapInteractionMode.PointerAndKeyboard;
+            //    case "PointerKeyboardAndControl":
+            //        return MapInteractionMode.PointerKeyboardAndControl;
+            //    case "PointerOnly":
+            //        return MapInteractionMode.PointerOnly;
+            //    default:
+            //        return MapInteractionMode.Auto;
+            //}
         }
     }
-
+    
     class SettingsSetters
     {
         public static bool GetFadeAnimationEnabled()
@@ -116,7 +157,9 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
         {
             try
             {
-                return (MapInteractionMode)ApplicationData.Current.LocalSettings.Values["ZoomControlsVisible"];
+                var r = ApplicationData.Current.LocalSettings.Values["ZoomControlsVisible2"].ToString();
+                return SettingsMainVM.StringToEnumConverter(r);
+                //return (MapInteractionMode)ApplicationData.Current.LocalSettings.Values["ZoomControlsVisible"];
             }
             catch
             {
@@ -127,18 +170,20 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
 
         public static void SetZoomControlsVisible(MapInteractionMode Value)
         {
-            ApplicationData.Current.LocalSettings.Values["ZoomControlsVisible"] = (int)Value;
+            ApplicationData.Current.LocalSettings.Values["ZoomControlsVisible2"] = Value.ToString();
         }
 
         public static MapInteractionMode GetRotationControlsVisible()
         {
             try
             {
-                return (MapInteractionMode)ApplicationData.Current.LocalSettings.Values["RotationControlsVisible"];
+                var r = ApplicationData.Current.LocalSettings.Values["RotationControlsVisible2"].ToString();
+                return SettingsMainVM.StringToEnumConverter(r);
+                //return (MapInteractionMode)ApplicationData.Current.LocalSettings.Values["RotationControlsVisible"];
             }
             catch
             {
-                if(ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone)
+                if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone)
                 {
                     SetRotationControlsVisible(MapInteractionMode.GestureOnly);
                     return MapInteractionMode.GestureAndControl;
@@ -153,7 +198,8 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
 
         public static void SetRotationControlsVisible(MapInteractionMode Value)
         {
-            ApplicationData.Current.LocalSettings.Values["RotationControlsVisible"] = (int)Value;
+            ApplicationData.Current.LocalSettings.Values["RotationControlsVisible2"] = Value.ToString();
         }
+
     }
 }
