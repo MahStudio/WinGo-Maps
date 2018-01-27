@@ -68,8 +68,8 @@ namespace GoogleMapsUnofficial.View.SearchProviderControls
                 case "Pharmacy":
                     NearbySearchProviderVM.PlaceType = SearchHelper.PlaceTypesEnum.pharmacy;
                     break;
-                case "Super market":
-                    NearbySearchProviderVM.PlaceType = SearchHelper.PlaceTypesEnum.supermarket;
+                case "NONE":
+                    NearbySearchProviderVM.PlaceType = SearchHelper.PlaceTypesEnum.NOTMENTIONED;
                     break;
                 default:
                     break;

@@ -38,7 +38,7 @@
             <Button Grid.Column="2" Grid.Row="0" Click="PlaceType_Click" HorizontalAlignment="Stretch" Content="Book Store" Tag="Book Store"/>
             <Button Grid.Column="0" Grid.Row="1" Click="PlaceType_Click" HorizontalAlignment="Stretch" Content="ATM" Tag="ATM"/>
             <Button Grid.Column="1" Grid.Row="1" Click="PlaceType_Click" HorizontalAlignment="Stretch" Content="Pharmacy" Tag="Pharmacy"/>
-            <Button Grid.Column="2" Grid.Row="1" Click="PlaceType_Click" HorizontalAlignment="Stretch" Content="Super market" Tag="Super market"/>
+            <Button Grid.Column="2" Grid.Row="1" Click="PlaceType_Click" HorizontalAlignment="Stretch" Content="NONE" Tag="NONE"/>
         </Grid>
         <ListView ItemClick="ListView_ItemClick" ItemsSource="{Binding Source={StaticResource cvs}}" SelectionMode="None" IsItemClickEnabled="True" Grid.Row="2">
             <ListView.ItemTemplate>

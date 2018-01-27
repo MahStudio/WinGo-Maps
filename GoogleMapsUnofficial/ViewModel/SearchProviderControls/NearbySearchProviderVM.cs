@@ -30,7 +30,16 @@ namespace GoogleMapsUnofficial.ViewModel.SearchProviderControls
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SearchQuery"));
             }
         }
-        public SearchHelper.PlaceTypesEnum PlaceType { get { return _pt; } set { _pt = value; Search();PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("PlaceType")); } }
+        public SearchHelper.PlaceTypesEnum PlaceType
+        {
+            get { return _pt; }
+            set
+            {
+                _pt = value;
+                Search();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("PlaceType"));
+            }
+        }
         public ObservableCollection<SearchHelper.Result> SearchResults
         {
             get { return _searchres; }
@@ -53,7 +62,7 @@ namespace GoogleMapsUnofficial.ViewModel.SearchProviderControls
                 }
                 else
                 {
-                    s = await SearchHelper.NearbySearch(MapView.MapControl.Center.Position, 5000, Keyword: SearchQuery,type: PlaceType);
+                    s = await SearchHelper.NearbySearch(MapView.MapControl.Center.Position, 5000, Keyword: SearchQuery, type: PlaceType);
                 }
                 if (s == null) return;
                 foreach (var item in s.results)
