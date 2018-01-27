@@ -11,6 +11,21 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
 {
     class SearchHelper
     {
+        public enum PlaceTypesEnum
+        {
+            NOTMENTIONED,
+            accounting, airport, amusement_park, aquarium, art_gallery, atm, bakery, bank, bar, beauty_salon,
+            bicycle_store, book_store, bowling_alley, bus_station, cafe, campground, car_dealer, car_rental,
+            car_repair, car_wash, casino, cemetery, church, city_hall, clothing_store, convenience_store,
+            courthouse, dentist, department_store, doctor, electrician, electronics_store, embassy, fire_station,
+            florist, funeral_home, furniture_store, gas_station, gym, hair_care, hardware_store, hindu_temple,
+            home_goods_store, hospital, insurance_agency, jewelry_store, laundry, lawyer, library, liquor_store,
+            local_government_office, locksmith, lodging, meal_delivery, meal_takeaway, mosque, movie_rental,
+            movie_theater, moving_company, museum, night_club, painter, park, parking, pet_store, pharmacy,
+            physiotherapist, plumber, police, post_office, real_estate_agency, restaurant, roofing_contractor,
+            rv_park, school, shoe_store, shopping_mall, spa, stadium, storage, store, subway_station, supermarket,
+            synagogue, taxi_stand, train_station, transit_station, travel_agency, veterinary_care, zoo
+        }
         public enum SearchPriceEnum
         {
             MostAffordable = 0,
@@ -29,7 +44,7 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
         /// <param name="MinPrice">Restricts results to only those places within the specified range. Valid values range between 0 (most affordable) to 4 (most expensive), inclusive.</param>
         /// <param name="MaxPrice">Restricts results to only those places within the specified range. Valid values range between 0 (most affordable) to 4 (most expensive), inclusive.</param>
         /// <returns>Search Result. LOL :D</returns>
-        public static async Task<Rootobject> NearbySearch(BasicGeoposition Location, int Radius, string Keyword = "", SearchPriceEnum MinPrice = SearchPriceEnum.NonSpecified, SearchPriceEnum MaxPrice = SearchPriceEnum.NonSpecified)
+        public static async Task<Rootobject> NearbySearch(BasicGeoposition Location, int Radius, string Keyword = "", SearchPriceEnum MinPrice = SearchPriceEnum.NonSpecified, SearchPriceEnum MaxPrice = SearchPriceEnum.NonSpecified, PlaceTypesEnum type = PlaceTypesEnum.NOTMENTIONED)
         {
             try
             {
@@ -39,7 +54,7 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
                 }
                 string para = "";
                 para += $"location={Location.Latitude},{Location.Longitude}&radius={Radius}";
-                if (Keyword != "") para += $"&keyword={Keyword}"; if (MinPrice != SearchPriceEnum.NonSpecified) para += $"&minprice={(int)MinPrice}"; if (MaxPrice != SearchPriceEnum.NonSpecified) para += $"&maxprice={(int)MaxPrice}";
+                if (Keyword != "") para += $"&keyword={Keyword}"; if (MinPrice != SearchPriceEnum.NonSpecified) para += $"&minprice={(int)MinPrice}"; if (MaxPrice != SearchPriceEnum.NonSpecified) para += $"&maxprice={(int)MaxPrice}";if(type != PlaceTypesEnum.NOTMENTIONED) para += $"&type={type.ToString()}";
                 para += $"&key={AppCore.GoogleMapAPIKey}&language={AppCore.GoogleMapRequestsLanguage}";
                 var http = new HttpClient();
                 http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);
@@ -52,7 +67,7 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
             }
         }
 
-        public static async Task<Rootobject> TextSearch(string query, Geopoint Location = null, int Radius = 0, string Region = "", string NextPageToken = "", SearchPriceEnum MinPrice = SearchPriceEnum.NonSpecified, SearchPriceEnum MaxPrice = SearchPriceEnum.NonSpecified)
+        public static async Task<Rootobject> TextSearch(string query, Geopoint Location = null, int Radius = 0, string Region = "", string NextPageToken = "", SearchPriceEnum MinPrice = SearchPriceEnum.NonSpecified, SearchPriceEnum MaxPrice = SearchPriceEnum.NonSpecified, PlaceTypesEnum type = PlaceTypesEnum.NOTMENTIONED)
         {
             try
             {
@@ -64,7 +79,7 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
                 string para = "";
                 para += $"query={query.Replace(" ", "+")}";
                 if (Location != null) para += $"location={Location.Position.Latitude},{Location.Position.Longitude}&radius={Radius}";
-                if (Region != "") para += $"&region={Region}"; if (MinPrice != SearchPriceEnum.NonSpecified) para += $"&minprice={(int)MinPrice}"; if (MaxPrice != SearchPriceEnum.NonSpecified) para += $"&maxprice={(int)MaxPrice}";
+                if (Region != "") para += $"&region={Region}"; if (MinPrice != SearchPriceEnum.NonSpecified) para += $"&minprice={(int)MinPrice}"; if (MaxPrice != SearchPriceEnum.NonSpecified) para += $"&maxprice={(int)MaxPrice}"; if (type != PlaceTypesEnum.NOTMENTIONED) para += $"&type={type.ToString()}";
                 para += $"&key={AppCore.GoogleMapAPIKey}&language={AppCore.GoogleMapRequestsLanguage}";
                 var http = new HttpClient();
                 http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);
