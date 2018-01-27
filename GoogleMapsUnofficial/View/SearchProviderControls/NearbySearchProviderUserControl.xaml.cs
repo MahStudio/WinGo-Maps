@@ -48,5 +48,32 @@ namespace GoogleMapsUnofficial.View.SearchProviderControls
                     Longitude = ploc.lng
                 });
         }
+
+        private void PlaceType_Click(object sender, RoutedEventArgs e)
+        {
+            switch ((sender as Button).Tag.ToString())
+            {
+                case "Restaurant":
+                    NearbySearchProviderVM.PlaceType = SearchHelper.PlaceTypesEnum.restaurant;
+                    break;
+                case "Cafe":
+                    NearbySearchProviderVM.PlaceType = SearchHelper.PlaceTypesEnum.cafe;
+                    break;
+                case "Book Store":
+                    NearbySearchProviderVM.PlaceType = SearchHelper.PlaceTypesEnum.book_store;
+                    break;
+                case "ATM":
+                    NearbySearchProviderVM.PlaceType = SearchHelper.PlaceTypesEnum.atm;
+                    break;
+                case "Pharmacy":
+                    NearbySearchProviderVM.PlaceType = SearchHelper.PlaceTypesEnum.pharmacy;
+                    break;
+                case "Super market":
+                    NearbySearchProviderVM.PlaceType = SearchHelper.PlaceTypesEnum.supermarket;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
