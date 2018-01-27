@@ -28,13 +28,24 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
         /// <param name="Destination">The Destination BasicGeoposition</param>
         /// <param name="Mode">Mode for example Driving, walking or etc.</param>
         /// <returns></returns>
-        public static async Task<Rootobject> GetDirections(BasicGeoposition Origin, BasicGeoposition Destination, DirectionModes Mode = DirectionModes.driving)
+        public static async Task<Rootobject> GetDirections(BasicGeoposition Origin, BasicGeoposition Destination, DirectionModes Mode = DirectionModes.driving, List<BasicGeoposition> WayPoints = null)
         {
             try
             {
                 var m = Mode.ToString();
                 var requestUrl = String.Format("http://maps.google.com/maps/api/directions/json?origin=" + Origin.Latitude + "," + Origin.Longitude + "&destination=" + Destination.Latitude + "," + Destination.Longitude + "&units=metric&mode=" + Mode);
-
+                if (WayPoints != null)
+                {
+                    requestUrl += "&waypoints=";
+                    for (int i = 0; i <= WayPoints.Count - 1; i++)
+                    {
+                        if (i < WayPoints.Count - 1)
+                            requestUrl += $"{WayPoints[i].Latitude},{WayPoints[i].Longitude}|";
+                        else
+                            requestUrl += $"{WayPoints[i].Latitude},{WayPoints[i].Longitude}";
+                    }
+                }
+                requestUrl += $"&key={AppCore.GoogleMapAPIKey}";
                 var http = new HttpClient();
                 http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);
                 var s = await http.GetStringAsync(new Uri(requestUrl, UriKind.RelativeOrAbsolute));
