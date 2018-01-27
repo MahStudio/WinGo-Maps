@@ -8,5 +8,5 @@
     mc:Ignorable="d">
 
     <Ellipse Height="30" Width="30" Fill="Blue" 
-             Stroke="White" StrokeThickness="5" Margin="-15,-15,0,0"/>
+             Stroke="White" StrokeThickness="5"/>
 </UserControl>

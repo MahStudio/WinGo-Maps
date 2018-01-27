@@ -59,7 +59,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                     {
                         if (MapView.MapControl.FindName("OrDesSelector") as DraggablePin == null)
                         {
-                            Gr.Children.Add(new SavedPlacesUserControl() { Name = "FavPlaces", Width = 180, VerticalAlignment = VerticalAlignment.Stretch, HorizontalAlignment = HorizontalAlignment.Left });
+                            Gr.Children.Add(new SavedPlacesUserControl() { Name = "FavPlaces", Width = 180, VerticalAlignment = VerticalAlignment.Stretch, HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(0,0,0,80) });
                         }
                     }
                     else
