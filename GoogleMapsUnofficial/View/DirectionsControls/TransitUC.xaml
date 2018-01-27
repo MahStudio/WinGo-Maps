@@ -14,9 +14,32 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="OriginTxt" Header="A" Grid.Row="0"/>
-        <TextBox x:Name="DestTxt" Header="B" Grid.Row="1"/>
-        <Button Grid.Row="2" Content="Navigate" Margin="0,10" Click="Button_Click"/>
+        <AutoSuggestBox x:Name="OriginTxt" Header="A" Grid.Row="0">
+            <AutoSuggestBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding description}" TextAlignment="DetectFromContent" FontFamily="B Koodak"/>
+                </DataTemplate>
+            </AutoSuggestBox.ItemTemplate>
+        </AutoSuggestBox>
+        <AutoSuggestBox x:Name="DestTxt" Header="B" Grid.Row="1">
+            <AutoSuggestBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding description}" TextAlignment="DetectFromContent" FontFamily="B Koodak"/>
+                </DataTemplate>
+            </AutoSuggestBox.ItemTemplate>
+        </AutoSuggestBox>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Navigate" Margin="0,10" Click="Button_Click"/>
+            <Button Grid.Column="1" Content="+ Way point" Margin="5,10" Click="AddPoint_Click"/>
+        </Grid>
+        <StackPanel x:Name="WaypointsStack" Grid.Row="3">
+
+        </StackPanel>
     </Grid>
 </UserControl>

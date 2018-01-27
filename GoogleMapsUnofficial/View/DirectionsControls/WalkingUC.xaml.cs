@@ -1,10 +1,14 @@
 ﻿using GoogleMapsUnofficial.ViewModel.DirectionsControls;
+using GoogleMapsUnofficial.ViewModel.GeocodControls;
+using GoogleMapsUnofficial.ViewModel.PlaceControls;
 using System;
 using System.Linq;
+using Windows.Devices.Geolocation;
 using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -15,8 +19,55 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
         public WalkingUC()
         {
             this.InitializeComponent();
+            OriginTxt.DataContext = new ACSuggestionProviderVM();
+            DestTxt.DataContext = new ACSuggestionProviderVM();
+            OriginTxt.SetBinding(AutoSuggestBox.ItemsSourceProperty, new Binding() { Path = new PropertyPath("SearchResults"), Mode = BindingMode.OneWay });
+            DestTxt.SetBinding(AutoSuggestBox.ItemsSourceProperty, new Binding() { Path = new PropertyPath("SearchResults"), Mode = BindingMode.OneWay });
+            OriginTxt.TextChanged += OriginTxt_TextChanged;
+            DestTxt.TextChanged += OriginTxt_TextChanged;
+            OriginTxt.SuggestionChosen += OriginTxt_SuggestionChosen;
+            DestTxt.SuggestionChosen += OriginTxt_SuggestionChosen;
             DirectionsMainUserControl.DestinationAddressChanged += DirectionsMainUserControl_DestinationAddressChanged;
             DirectionsMainUserControl.OriginAddressChanged += DirectionsMainUserControl_OriginAddressChanged;
+        }
+
+        private async void OriginTxt_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            var pre = args.SelectedItem as PlaceAutoComplete.Prediction;
+            if (pre == null) return;
+            sender.Text = pre.description;
+
+            if (pre.description == "MyLocation")
+            {
+                if (sender.Name == "OriginTxt")
+                {
+                    DirectionsMainUserControl.Origin = (await ViewModel.MapViewVM.GeoLocate.GetGeopositionAsync()).Coordinate.Point;
+                }
+                if (sender.Name == "DestTxt")
+                {
+                    DirectionsMainUserControl.Destination = (await ViewModel.MapViewVM.GeoLocate.GetGeopositionAsync()).Coordinate.Point;
+                }
+            }
+            else
+            {
+                var res = await GeocodeHelper.GetInfo(pre.place_id);
+                if (res == null) return;
+                var ploc = res.results.FirstOrDefault().geometry.location;
+                if (sender.Name == "OriginTxt")
+                {
+                    DirectionsMainUserControl.Origin = new Geopoint(new BasicGeoposition() { Latitude = ploc.lat, Longitude = ploc.lng });
+                }
+                if (sender.Name == "DestTxt")
+                {
+                    DirectionsMainUserControl.Destination = new Geopoint(new BasicGeoposition() { Latitude = ploc.lat, Longitude = ploc.lng });
+                }
+            }
+        }
+
+        private void OriginTxt_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            if (args.Reason != AutoSuggestionBoxTextChangeReason.UserInput) return;
+            (sender.DataContext as ACSuggestionProviderVM).SuggestForSearch(sender.Text);
         }
 
         private void DirectionsMainUserControl_OriginAddressChanged(object sender, string e)
@@ -56,6 +107,10 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                     await new MessageDialog("You didn't select both origin and destination points").ShowAsync();
                 }
             });
+        }
+        private void AddPoint_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

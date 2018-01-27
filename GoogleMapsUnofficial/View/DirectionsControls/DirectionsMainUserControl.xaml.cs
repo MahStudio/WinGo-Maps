@@ -1,5 +1,6 @@
 ﻿using GoogleMapsUnofficial.View.OnMapControls;
 using System;
+using System.Collections.Generic;
 using Windows.Devices.Geolocation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -24,11 +25,13 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
         public static event EventHandler<string> OriginAddressChanged;
         public static event EventHandler<string> DestinationAddressChanged;
         public static Geopoint Origin { get; set; }
+        public static List<Geopoint> WayPoints { get; set; }
         public static Geopoint Destination { get; set; }
         public static DirectionsMode SelectedDirectionMode;
         public DirectionsMainUserControl()
         {
             this.InitializeComponent();
+            WayPoints = null;
             this.Loaded += DirectionsMainUserControl_Loaded;
             this.Unloaded += DirectionsMainUserControl_Unloaded;
         }
@@ -38,6 +41,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
             var gr = MapView.MapControl.FindName("OrDesSelector") as DraggablePin;
             MapView.MapControl.Children.Remove(gr);
             Origin = null;
+            WayPoints = null;
             Destination = null;
             MainPage.Grid.Children.Remove(this);
         }
