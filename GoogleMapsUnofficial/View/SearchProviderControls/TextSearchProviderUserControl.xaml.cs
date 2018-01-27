@@ -50,5 +50,6 @@ namespace GoogleMapsUnofficial.View.SearchProviderControls
                     Longitude = ploc.lng
                 });
         }
+        
     }
 }

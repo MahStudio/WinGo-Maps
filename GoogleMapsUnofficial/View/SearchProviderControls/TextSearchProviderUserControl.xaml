@@ -10,7 +10,7 @@
     <UserControl.DataContext>
         <local:TextSearchProviderVM x:Name="TextSearchProviderVM"/>
     </UserControl.DataContext>
-    
+
     <UserControl.Resources>
         <CollectionViewSource x:Name="cvs" x:Key="cvs" Source="{Binding SearchResults,Mode=OneWay}"/>
     </UserControl.Resources>
