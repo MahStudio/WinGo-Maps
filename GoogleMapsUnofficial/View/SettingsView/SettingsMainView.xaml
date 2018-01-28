@@ -10,6 +10,7 @@
     <Page.DataContext>
         <local:SettingsMainVM/>
     </Page.DataContext>
+    
     <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid Margin="12,8">
             <Grid.RowDefinitions>

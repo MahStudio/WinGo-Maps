@@ -8,7 +8,7 @@
     xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Padding="12,12,12,0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -19,7 +19,7 @@
         <TextBlock Grid.Row="0" TextWrapping="Wrap">
             <Run>This tool will let you to download offline map for a selected range of world map. Please select a region and hit start download.</Run>
             <LineBreak/>
-            <Run>Touch 2 points on map to select region. First point Top Left, Second point Bottom Right.</Run>
+            <Run>Touch 2 points on map to select region. First point Top Left, Second point Bottom Right. If you want to change pointers position click on the flag and try to set it in any position you want</Run>
         </TextBlock>
         <Border Grid.Row="1" Width="300" Height="300" HorizontalAlignment="Center" VerticalAlignment="Center">
             <maps:MapControl MapTapped="Map_MapTapped" x:Name="Map" MapServiceToken="Qe4rzjfqSL7zZlp8xb8A~4o8bBFXIWVuiCUT9pX2cUg~Auk92xku8o5QuFTpMvN0_7Os9b6pREma6NBC8ojGjU0N3Eq3BBzkI9ehNfu065Wv">
