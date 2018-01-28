@@ -41,12 +41,13 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
                 var s = await PlaceAutoComplete.GetAutoCompleteResults(searchExpression, location: MapView.MapControl.Center, radius: 50000);
                 var savedplaces = SavedPlacesVM.GetSavedPlaces();
                 var spres = savedplaces.Where(x => x.PlaceName.ToLower().Contains(searchExpression));
-                if (s == null) return;
+                
                 SearchResults.Add(new PlaceAutoComplete.Prediction() { description = "MyLocation" });
                 foreach (var item in spres)
                 {
                     SearchResults.Add(new PlaceAutoComplete.Prediction() { description = "Saved:" + item.PlaceName });
                 }
+                if (s == null) return;
                 foreach (var item in s.predictions)
                 {
                     SearchResults.Add(item);
