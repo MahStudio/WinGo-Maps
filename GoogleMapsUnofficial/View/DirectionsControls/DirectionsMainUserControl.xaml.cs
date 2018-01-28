@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 using Windows.Devices.Geolocation;
+using Windows.Foundation;
+using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
@@ -73,6 +76,17 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
             {
                 SelectedDirectionMode = DirectionsMode.Driving;
             }
+        }
+        public static async void AddPointer(Geopoint ploc, string Title)
+        {
+            var Pointer = (await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/InAppIcons/GMP.png")));
+            MapView.MapControl.MapElements.Add(new MapIcon()
+            {
+                Location = ploc,
+                NormalizedAnchorPoint = new Point(0.5, 1.0),
+                Title = Title,
+                Image = RandomAccessStreamReference.CreateFromFile(Pointer),
+            });
         }
     }
 }

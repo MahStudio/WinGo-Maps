@@ -42,11 +42,15 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
             {
                 if (sender.Name == "OriginTxt")
                 {
-                    DirectionsMainUserControl.Origin = (await ViewModel.MapViewVM.GeoLocate.GetGeopositionAsync()).Coordinate.Point;
+                    var p = (await ViewModel.MapViewVM.GeoLocate.GetGeopositionAsync()).Coordinate.Point;
+                    DirectionsMainUserControl.Origin = p;
+                    DirectionsMainUserControl.AddPointer(p, "Origin");
                 }
                 if (sender.Name == "DestTxt")
                 {
-                    DirectionsMainUserControl.Destination = (await ViewModel.MapViewVM.GeoLocate.GetGeopositionAsync()).Coordinate.Point;
+                    var p = (await ViewModel.MapViewVM.GeoLocate.GetGeopositionAsync()).Coordinate.Point;
+                    DirectionsMainUserControl.Destination = p;
+                    DirectionsMainUserControl.AddPointer(p, "Destination");
                 }
             }
             else if (pre.description.StartsWith("Saved:"))
@@ -55,11 +59,15 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                 var res = savedplaces.Where(x => x.PlaceName == pre.description.Replace("Saved:", string.Empty)).FirstOrDefault();
                 if (sender.Name == "OriginTxt")
                 {
-                    DirectionsMainUserControl.Origin = new Geopoint(new BasicGeoposition() { Latitude = res.Latitude, Longitude = res.Longitude });
+                    var p = new Geopoint(new BasicGeoposition() { Latitude = res.Latitude, Longitude = res.Longitude });
+                    DirectionsMainUserControl.Origin = p;
+                    DirectionsMainUserControl.AddPointer(p, "Origin");
                 }
                 if (sender.Name == "DestTxt")
                 {
-                    DirectionsMainUserControl.Destination = new Geopoint(new BasicGeoposition() { Latitude = res.Latitude, Longitude = res.Longitude });
+                    var p = new Geopoint(new BasicGeoposition() { Latitude = res.Latitude, Longitude = res.Longitude });
+                    DirectionsMainUserControl.Destination = p;
+                    DirectionsMainUserControl.AddPointer(p, "Destination");
                 }
             }
             else
@@ -69,11 +77,15 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                 var ploc = res.results.FirstOrDefault().geometry.location;
                 if (sender.Name == "OriginTxt")
                 {
-                    DirectionsMainUserControl.Origin = new Geopoint(new BasicGeoposition() { Latitude = ploc.lat, Longitude = ploc.lng });
+                    var p = new Geopoint(new BasicGeoposition() { Latitude = ploc.lat, Longitude = ploc.lng });
+                    DirectionsMainUserControl.Origin = p;
+                    DirectionsMainUserControl.AddPointer(p, "Origin");
                 }
                 if (sender.Name == "DestTxt")
                 {
-                    DirectionsMainUserControl.Destination = new Geopoint(new BasicGeoposition() { Latitude = ploc.lat, Longitude = ploc.lng });
+                    var p = new Geopoint(new BasicGeoposition() { Latitude = ploc.lat, Longitude = ploc.lng });
+                    DirectionsMainUserControl.Destination = p;
+                    DirectionsMainUserControl.AddPointer(p, "Destination");
                 }
             }
         }
@@ -120,7 +132,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                             if (item != null)
                                 lst.Add(new BasicGeoposition() { Latitude = item.Position.Latitude, Longitude = item.Position.Longitude });
                         }
-                        if(lst.Count > 0)
+                        if (lst.Count > 0)
                             r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.driving, lst);
                         else
                             r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.driving);
