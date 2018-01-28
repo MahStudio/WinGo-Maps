@@ -139,5 +139,19 @@ namespace GoogleMapsUnofficial.View.OfflineMapDownloader
                 });
             }
         }
+
+        private void BottomRight_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            BottomRight.Visibility = Visibility.Collapsed;
+            sp = false;
+            DLButton.IsEnabled = false;
+        }
+
+        private void TopLeft_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            TopLeft.Visibility = Visibility.Collapsed;
+            fp = false;
+            DLButton.IsEnabled = false;
+        }
     }
 }
