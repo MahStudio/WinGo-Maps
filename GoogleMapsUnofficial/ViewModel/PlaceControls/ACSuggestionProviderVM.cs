@@ -2,6 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using Windows.Devices.Geolocation;
 using Windows.UI.Core;
 
@@ -12,7 +13,7 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
         private ObservableCollection<PlaceAutoComplete.Prediction> _searchres;
 
         public event PropertyChangedEventHandler PropertyChanged;
-        
+
         public ObservableCollection<PlaceAutoComplete.Prediction> SearchResults
         {
             get
@@ -22,7 +23,7 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
             set
             {
                 _searchres = value;
-                PropertyChanged?.Invoke(this , new PropertyChangedEventArgs("SearchResults"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SearchResults"));
             }
         }
 
@@ -37,8 +38,14 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
             {
                 SearchResults.Clear();
                 var s = await PlaceAutoComplete.GetAutoCompleteResults(searchExpression, location: MapView.MapControl.Center, radius: 50000);
+                var savedplaces = SavedPlacesVM.GetSavedPlaces();
+                var spres = savedplaces.Where(x => x.PlaceName.ToLower().Contains(searchExpression));
                 if (s == null) return;
                 SearchResults.Add(new PlaceAutoComplete.Prediction() { description = "MyLocation" });
+                foreach (var item in spres)
+                {
+                    SearchResults.Add(new PlaceAutoComplete.Prediction() { description = "Saved:" + item.PlaceName });
+                }
                 foreach (var item in s.predictions)
                 {
                     SearchResults.Add(item);

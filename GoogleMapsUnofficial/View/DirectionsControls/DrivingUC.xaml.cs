@@ -48,6 +48,19 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                     DirectionsMainUserControl.Destination = (await ViewModel.MapViewVM.GeoLocate.GetGeopositionAsync()).Coordinate.Point;
                 }
             }
+            else if(pre.description.StartsWith("Saved:"))
+            {
+                var savedplaces = SavedPlacesVM.GetSavedPlaces();
+                var res = savedplaces.Where(x => x.PlaceName == pre.description.Replace("Saved:", string.Empty)).FirstOrDefault();
+                if (sender.Name == "OriginTxt")
+                {
+                    DirectionsMainUserControl.Origin = new Geopoint(new BasicGeoposition() { Latitude = res.Latitude, Longitude = res.Longitude });
+                }
+                if (sender.Name == "DestTxt")
+                {
+                    DirectionsMainUserControl.Destination = new Geopoint(new BasicGeoposition() { Latitude = res.Latitude, Longitude = res.Longitude });
+                }
+            }
             else
             {
                 var res = await GeocodeHelper.GetInfo(pre.place_id);

@@ -33,7 +33,7 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
             try
             {
                 var m = Mode.ToString();
-                var requestUrl = String.Format("https://maps.google.com/maps/api/directions/json?origin=" + Origin.Latitude + "," + Origin.Longitude + "&destination=" + Destination.Latitude + "," + Destination.Longitude + "&units=metric&mode=" + Mode);
+                var requestUrl = String.Format("http://maps.google.com/maps/api/directions/json?origin=" + Origin.Latitude + "," + Origin.Longitude + "&destination=" + Destination.Latitude + "," + Destination.Longitude + "&units=metric&mode=" + Mode);
                 if (WayPoints != null)
                 {
                     requestUrl += "&waypoints=";
@@ -45,7 +45,7 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
                             requestUrl += $"{WayPoints[i].Latitude},{WayPoints[i].Longitude}";
                     }
                 }
-                requestUrl += $"&key={AppCore.GoogleMapAPIKey}";
+                //requestUrl += $"&key={AppCore.GoogleMapAPIKey}";
                 var http = new HttpClient();
                 http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);
                 var s = await http.GetStringAsync(new Uri(requestUrl, UriKind.RelativeOrAbsolute));
