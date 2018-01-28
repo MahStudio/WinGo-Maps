@@ -8,6 +8,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -25,6 +26,20 @@ namespace GoogleMapsUnofficial.View.SearchProviderControls
         public NearbySearchProviderUserControl()
         {
             this.InitializeComponent();
+            this.Loaded += NearbySearchProviderUserControl_Loaded;
+        }
+
+        private void NearbySearchProviderUserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                txtsearch.Focus(FocusState.Programmatic);
+                InputPane.GetForCurrentView().TryShow();
+            }
+            catch
+            {
+
+            }
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)

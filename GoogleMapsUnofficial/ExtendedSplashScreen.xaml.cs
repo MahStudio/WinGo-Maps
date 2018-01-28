@@ -43,6 +43,7 @@ namespace GoogleMapsUnofficial
                 if (accessStatus == GeolocationAccessStatus.Allowed)
                 {
                     geolocator = new Geolocator();
+                    geolocator.ReportInterval = 5000;
                     geolocator.DesiredAccuracyInMeters = 200;
                     Geoposition pos = await geolocator.GetGeopositionAsync();
                     MapViewVM.FastLoadGeoPosition = pos;

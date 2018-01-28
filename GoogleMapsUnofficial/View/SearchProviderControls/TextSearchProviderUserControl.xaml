@@ -19,7 +19,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBox TextChanged="TextBox_TextChanged" Grid.Row="0"/>
+        <TextBox x:Name="txtsearch" TextChanged="TextBox_TextChanged" Grid.Row="0"/>
         <ListView ItemClick="ListView_ItemClick" ItemsSource="{Binding Source={StaticResource cvs}}" SelectionMode="None" IsItemClickEnabled="True" Grid.Row="1">
             <ListView.ItemTemplate>
                 <DataTemplate>
