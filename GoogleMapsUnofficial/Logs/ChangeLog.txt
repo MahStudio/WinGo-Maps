@@ -1,3 +1,0 @@
-﻿-Fixed continuse location using after closing app
--Added Walking mode navigation
--Minor fixes and improvements

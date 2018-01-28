@@ -32,6 +32,7 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
             SearchResults = new ObservableCollection<PlaceAutoComplete.Prediction>();
             SearchResults.CollectionChanged += SuggestedApps_CollectionChanged;
         }
+
         public async void SuggestForSearch(string searchExpression)
         {
             await CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
@@ -53,6 +54,7 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
             });
 
         }
+
         private void SuggestedApps_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SearchResults"));
