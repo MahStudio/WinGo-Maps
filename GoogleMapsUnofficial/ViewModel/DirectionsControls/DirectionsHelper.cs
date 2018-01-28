@@ -27,14 +27,20 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
         /// <param name="Origin">The Origin BasicGeoposition</param>
         /// <param name="Destination">The Destination BasicGeoposition</param>
         /// <param name="Mode">Mode for example Driving, walking or etc.</param>
+        /// <param name="WayPoints">Points you want to go in your way</param>
+        /// <exception cref="ArgumentOutOfRangeException">Waypoints are not available in transit mode.</exception>
         /// <returns></returns>
         public static async Task<Rootobject> GetDirections(BasicGeoposition Origin, BasicGeoposition Destination, DirectionModes Mode = DirectionModes.driving, List<BasicGeoposition> WayPoints = null)
         {
             try
             {
+                if(Mode == DirectionModes.transit && WayPoints != null)
+                {
+                    throw new ArgumentOutOfRangeException("Waypoints are not available in transit mode.");
+                }
                 var m = Mode.ToString();
                 var requestUrl = String.Format("http://maps.google.com/maps/api/directions/json?origin=" + Origin.Latitude + "," + Origin.Longitude + "&destination=" + Destination.Latitude + "," + Destination.Longitude + "&units=metric&mode=" + Mode);
-                if (WayPoints != null)
+                if (WayPoints != null && WayPoints.Count != 0)
                 {
                     requestUrl += "&waypoints=";
                     for (int i = 0; i <= WayPoints.Count - 1; i++)

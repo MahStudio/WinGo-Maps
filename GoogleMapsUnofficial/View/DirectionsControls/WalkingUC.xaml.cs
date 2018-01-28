@@ -2,6 +2,7 @@
 using GoogleMapsUnofficial.ViewModel.GeocodControls;
 using GoogleMapsUnofficial.ViewModel.PlaceControls;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Windows.Devices.Geolocation;
 using Windows.UI;
@@ -101,7 +102,22 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                 {
                     var Origin = DirectionsMainUserControl.Origin;
                     var Destination = DirectionsMainUserControl.Destination;
-                    var r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.walking);
+                    DirectionsHelper.Rootobject r = null;
+                    if(DirectionsMainUserControl.WayPoints == null)
+                        r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.walking);
+                    else
+                    {
+                        var lst = new List<BasicGeoposition>();
+                        foreach (var item in DirectionsMainUserControl.WayPoints)
+                        {
+                            if (item != null)
+                                lst.Add(new BasicGeoposition() { Latitude = item.Position.Latitude, Longitude = item.Position.Longitude });
+                        }
+                        if (lst.Count > 0)
+                            r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.walking, lst);
+                        else
+                            r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.walking);
+                    }
                     if (r == null || r.routes.Count() == 0)
                     {
                         await new MessageDialog("No way to your destination!!!").ShowAsync();

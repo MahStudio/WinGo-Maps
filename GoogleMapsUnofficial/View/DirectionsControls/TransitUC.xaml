@@ -36,7 +36,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Content="Navigate" Margin="0,10" Click="Button_Click"/>
-            <Button Grid.Column="1" Content="+ Way point" Margin="5,10" Click="AddPoint_Click"/>
+            <Button Grid.Column="1" IsEnabled="False" Content="+ Way point" Margin="5,10" Click="AddPoint_Click"/>
         </Grid>
         <StackPanel x:Name="WaypointsStack" Grid.Row="3">
 

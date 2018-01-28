@@ -130,9 +130,9 @@ namespace GoogleMapsUnofficial.View.OfflineMapDownloader
                     {
                         try
                         {
-                            await item.CopyAsync(OfflineMap);
                             Counter++;
                             DLPB.Value = (((float)Counter / (float)Count) * 100);
+                            await item.CopyAsync(OfflineMap);
                         }
                         catch { }
                     }
