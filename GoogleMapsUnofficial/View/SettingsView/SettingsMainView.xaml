@@ -20,12 +20,21 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="Settings" FontSize="22" Margin="0,0,0,15"/>
             <ToggleSwitch Grid.Row="1" Header="Allow over strech on map" IsOn="{Binding AllowOverstretch, Mode=TwoWay}"/>
             <ToggleSwitch Grid.Row="2" Header="Enable Fade Animation on loading map tiles" IsOn="{Binding AllowOverstretch, Mode=TwoWay}"/>
             <ComboBox Grid.Row="3" Header="Show zoom controls on map" ItemsSource="{Binding MapInteractionModeOptions,Mode=OneWay}" SelectedIndex="{Binding ZoomControlsVisible, Mode=TwoWay}"/>
             <ComboBox Grid.Row="4" Header="Show rotation controls on map" ItemsSource="{Binding MapInteractionModeOptions,Mode=OneWay}" SelectedIndex="{Binding RotationControlsVisible, Mode=TwoWay}"/>
+            <Grid Grid.Row="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Laguage Settings" FontSize="22" Margin="0,15"/>
+                <Button Grid.Row="1" Content="Language Settings" Click="LanguageSets_Click"/>
+            </Grid>
             <Grid Grid.Row="10" Margin="0,15">
                 <TextBlock TextWrapping="Wrap">
                     <Run FontSize="22">About</Run>

@@ -5,7 +5,7 @@ namespace GoogleMapsUnofficial.Helpers
 {
     class CountryCodesHelper
     {
-        Dictionary<string, string> CountriesAndLanguageCodes = new Dictionary<string, string>()
+        public Dictionary<string, string> CountriesAndLanguageCodes = new Dictionary<string, string>()
         {
             { "Afghanistan - Dari",    "prs-AF" },
             {"Afghanistan - Pashto",    "ps-AF" },
@@ -219,7 +219,7 @@ namespace GoogleMapsUnofficial.Helpers
 {"Zimbabwe - English",    "en-ZW"}
         };
 
-        Dictionary<string, string> countryCodesMapping = new Dictionary<string, string>() {
+        public Dictionary<string, string> countryCodesMapping = new Dictionary<string, string>() {
    { "AFG", "AF" },    // Afghanistan
    { "ALB", "AL" },    // Albania
    { "ARE", "AE" },    // U.A.E.
@@ -348,7 +348,7 @@ namespace GoogleMapsUnofficial.Helpers
    { "ZWE", "ZW" },    // Zimbabwe
 };
 
-        Dictionary<string, string> countriesAndCodes = new Dictionary<string, string>() {
+        public Dictionary<string, string> countriesAndCodes = new Dictionary<string, string>() {
    { "Afghanistan", "AF" },    // Afghanistan
    { "Albania", "AL" },    // Albania
    { "U.A.E", "AE" },    // U.A.E.

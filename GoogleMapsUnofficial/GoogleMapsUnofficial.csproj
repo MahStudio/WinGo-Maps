@@ -126,6 +126,7 @@
     <Compile Include="ViewModel\PlaceControls\SearchHelper.cs" />
     <Compile Include="ViewModel\SearchProviderControls\NearbySearchProviderVM.cs" />
     <Compile Include="ViewModel\SearchProviderControls\TextSearchProviderVM.cs" />
+    <Compile Include="ViewModel\SettingsView\SettingsLanguageVM.cs" />
     <Compile Include="ViewModel\SettingsView\SettingsMainVM.cs" />
     <Compile Include="ViewModel\TilesAPIControls\TileApiHelper.cs" />
     <Compile Include="ViewModel\VoiceNavigation\VoiceHelper.cs" />
@@ -174,6 +175,9 @@
     </Compile>
     <Compile Include="View\SearchProviderControls\TextSearchProviderUserControl.xaml.cs">
       <DependentUpon>TextSearchProviderUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingsView\SettingsLanguageView.xaml.cs">
+      <DependentUpon>SettingsLanguageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SettingsView\SettingsMainView.xaml.cs">
       <DependentUpon>SettingsMainView.xaml</DependentUpon>
@@ -288,6 +292,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\SearchProviderControls\TextSearchProviderUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingsView\SettingsLanguageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
