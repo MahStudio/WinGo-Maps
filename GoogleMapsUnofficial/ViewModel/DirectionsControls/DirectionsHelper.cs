@@ -90,6 +90,7 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
             MapPolyline line = new MapPolyline()
             {
                 StrokeThickness = 5,
+                StrokeDashed = true,
                 StrokeColor = Colors.Purple,
                 Path = new Geopath(loclist)
             };
@@ -124,6 +125,7 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
             MapPolyline line = new MapPolyline()
             {
                 StrokeThickness = 5,
+                StrokeDashed = true,
                 StrokeColor = ResultColor,
                 Path = new Geopath(loclist)
             };
