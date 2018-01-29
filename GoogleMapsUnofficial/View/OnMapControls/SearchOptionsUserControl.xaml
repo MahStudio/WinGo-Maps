@@ -13,14 +13,14 @@
         <ResourceDictionary Source="/Resources/CustomControls/DotButton.xaml"/>
     </UserControl.Resources>
     
-    <Grid>
-        <Button Width="35" Height="35" Style="{StaticResource dotbut}" VerticalAlignment="Top" HorizontalAlignment="Right" Content="&#xE094;" FontSize="18" FontFamily="Segoe MDL2 Assets" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0">
+    <Grid x:Name="gr">
+        <Button x:Name="SearchBTN" Width="35" Height="35" Style="{StaticResource dotbut}" VerticalAlignment="Top" HorizontalAlignment="Right" Content="&#xE094;" FontSize="18" FontFamily="Segoe MDL2 Assets" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0">
             <Button.Flyout>
                 <Flyout x:Name="FL" Placement="Full" LightDismissOverlayMode="On">
                     <Grid>
                         <Pivot Width="400">
                             <PivotItem Header="Text">
-                                <local:TextSearchProviderUserControl/>
+                                <local:TextSearchProviderUserControl x:Name="TextSearchProviderUserControl"/>
                             </PivotItem>
                             <PivotItem Header="Nearby">
                                 <local:NearbySearchProviderUserControl/>

@@ -26,11 +26,12 @@ namespace GoogleMapsUnofficial
     /// </summary>
     public sealed partial class ExtendedSplashScreen : Page
     {
-        public ExtendedSplashScreen(SplashScreen splash)
+        object para = null;
+        public ExtendedSplashScreen(SplashScreen splash, object parameter = null)
         {
             this.InitializeComponent();
             this.Loaded += ExtendedSplashScreen_Loaded;
-
+            para = parameter;
         }
 
         private async void ExtendedSplashScreen_Loaded(object sender, RoutedEventArgs e)
@@ -56,7 +57,7 @@ namespace GoogleMapsUnofficial
         async void RemoveExtendedSplash()
         {
             await Task.Delay(2000);
-            Window.Current.Content = new MainPage();
+            Window.Current.Content = new MainPage(para);
             Window.Current.Activate();
         }
     }

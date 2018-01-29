@@ -28,20 +28,23 @@ namespace GoogleMapsUnofficial
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        object para = null;
         public static Frame RootFrame { get; set; }
         public static Grid Grid { get; set; }
-        public MainPage()
+        public MainPage(object parameter = null)
         {
             this.InitializeComponent();
             SystemNavigationManager.GetForCurrentView().BackRequested += MainPage_BackRequested;
             this.Loaded += MainPage_Loaded;
             RootFrame = Fr;
             Grid = Gr;
+            para = parameter;
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            Fr.Navigate(typeof(View.MapView));
+            Fr.Navigate(typeof(View.MapView), para);
+            return;
         }
 
         private void MainPage_BackRequested(object sender, BackRequestedEventArgs e)
@@ -50,7 +53,7 @@ namespace GoogleMapsUnofficial
             if (Fr.CanGoBack) Fr.GoBack();
             else App.Current.Exit();
         }
-        
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Fr.Navigate(typeof(View.OfflineMapDownloader.MapDownloaderView));

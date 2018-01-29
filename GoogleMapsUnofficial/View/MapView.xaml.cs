@@ -1,9 +1,11 @@
 ﻿using GoogleMapsUnofficial.ViewModel.SettingsView;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -45,6 +47,20 @@ namespace GoogleMapsUnofficial.View
             else
             {
                 Map.TileSources.Add(new MapTileSource(new LocalMapTileDataSource("ms-appdata:///local/MahMaps/mah_x_{x}-y_{y}-z_{zoomlevel}.jpeg")) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
+            }
+        }
+
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if(e.Parameter != null)
+            {
+                await Task.Delay(500);
+                if(e.Parameter.ToString().StartsWith("search,"))
+                {
+                    Searchgrid.PopUP = true;
+                    Searchgrid.SearchText = e.Parameter.ToString().Replace("search,?api=1&query=", string.Empty);
+                }
             }
         }
 

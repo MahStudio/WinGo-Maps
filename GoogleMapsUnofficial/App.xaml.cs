@@ -62,6 +62,53 @@ namespace GoogleMapsUnofficial
             Window.Current.Activate();
         }
 
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            base.OnActivated(args);
+            #region Start app
+
+            Frame rootFrame = Window.Current.Content as Frame;
+
+            // Do not repeat app initialization when the Window already has content,
+            // just ensure that the window is active
+            if (rootFrame == null)
+            {
+                // Create a Frame to act as the navigation context and navigate to the first page
+                rootFrame = new Frame();
+
+                rootFrame.NavigationFailed += OnNavigationFailed;
+
+                // Place the frame in the current Window
+                Window.Current.Content = rootFrame;
+            }
+            #endregion
+
+            if (args.Kind == ActivationKind.Protocol)
+            {
+                var protocolArgs = (ProtocolActivatedEventArgs)args;
+                var x = protocolArgs.Uri.ToString();
+
+                SplashScreen splashScreen = args.SplashScreen;
+                ExtendedSplashScreen eSplash = null;
+                // Register an event handler to be executed when the splash screen has been dismissed.
+                //Type deepLinkPageType = typeof(PageLogin);
+                if (rootFrame.Content == null)
+                {
+                    switch (protocolArgs.Uri.AbsolutePath.ToLower().Replace("/maps", string.Empty).Split('/')[1].ToString())
+                    {
+                        case "search":
+                            eSplash = new ExtendedSplashScreen(splashScreen, "search," + protocolArgs.Uri.Query);
+                            break;
+                        default:
+                            eSplash = new ExtendedSplashScreen(splashScreen);
+                            break;
+                    }
+                }
+                Window.Current.Content = eSplash;
+                Window.Current.Activate();
+            }
+        }
+
         /// <summary>
         /// Invoked when Navigation to a certain page fails
         /// </summary>

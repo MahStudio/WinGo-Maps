@@ -23,6 +23,25 @@ namespace GoogleMapsUnofficial.View.SearchProviderControls
 {
     public sealed partial class TextSearchProviderUserControl : UserControl
     {
+
+        public string SearchText
+        {
+            get
+            {
+                return (string)GetValue(SearchTextProperty);
+            }
+            set
+            {
+                SetValue(SearchTextProperty, value);
+                TextSearchProviderVM.SearchQuery = value;
+            }
+        }
+        public static readonly DependencyProperty SearchTextProperty = DependencyProperty.Register(
+         "SearchText",
+         typeof(string),
+         typeof(TextSearchProviderUserControl),
+         new PropertyMetadata(null)
+        );
         public TextSearchProviderUserControl()
         {
             this.InitializeComponent();
