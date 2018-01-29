@@ -30,6 +30,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             {
                 SetValue(SearchTextProperty, value);
                 TextSearchProviderUserControl.SearchText = value;
+                NearbySearchProviderUserControl.SearchText = value;
             }
         }
         public static readonly DependencyProperty SearchTextProperty = DependencyProperty.Register(

@@ -20,14 +20,14 @@
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
-      <Extensions>
+      <!--<Extensions>
         <Extension xmlns="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" Category="windows.appUriHandler">
           <AppUriHandler>
             <Host Name="google.com" />
             <Host Name="www.google.com" />
           </AppUriHandler>
         </Extension>
-      </Extensions>
+      </Extensions>-->
     </Application>
   </Applications>
   <Capabilities>

@@ -23,7 +23,7 @@
                                 <local:TextSearchProviderUserControl x:Name="TextSearchProviderUserControl"/>
                             </PivotItem>
                             <PivotItem Header="Nearby">
-                                <local:NearbySearchProviderUserControl/>
+                                <local:NearbySearchProviderUserControl x:Name="NearbySearchProviderUserControl"/>
                             </PivotItem>
                         </Pivot>
                     </Grid>
