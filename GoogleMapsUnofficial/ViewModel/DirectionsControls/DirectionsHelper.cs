@@ -34,7 +34,7 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
         {
             try
             {
-                if(Mode == DirectionModes.transit && WayPoints != null)
+                if (Mode == DirectionModes.transit && WayPoints != null)
                 {
                     throw new ArgumentOutOfRangeException("Waypoints are not available in transit mode.");
                 }
@@ -70,18 +70,23 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
         public static MapPolyline GetDirectionAsRoute(Rootobject FuncResp, Color ResultColor)
         {
             var loclist = new List<BasicGeoposition>();
-            foreach (var leg in FuncResp.routes.FirstOrDefault().legs)
+            var points = DecodePolylinePoints(FuncResp.routes.FirstOrDefault().overview_polyline.points);
+            foreach (var item in points)
             {
-                foreach (var step in leg.steps)
-                {
-                    loclist.Add(
-                        new BasicGeoposition()
-                        { Latitude = step.start_location.lat, Longitude = step.start_location.lng });
-                    loclist.Add(
-                        new BasicGeoposition()
-                        { Latitude = step.end_location.lat, Longitude = step.end_location.lng });
-                }
+                loclist.Add(item);
             }
+            //foreach (var leg in FuncResp.routes.FirstOrDefault().legs)
+            //{
+            //    foreach (var step in leg.steps)
+            //    {
+            //        loclist.Add(
+            //            new BasicGeoposition()
+            //            { Latitude = step.start_location.lat, Longitude = step.start_location.lng });
+            //        loclist.Add(
+            //            new BasicGeoposition()
+            //            { Latitude = step.end_location.lat, Longitude = step.end_location.lng });
+            //    }
+            //}
             MapPolyline line = new MapPolyline()
             {
                 StrokeThickness = 5,
@@ -99,18 +104,23 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
         public static MapPolyline GetDirectionAsRoute(Route Route, Color ResultColor)
         {
             var loclist = new List<BasicGeoposition>();
-            foreach (var leg in Route.legs)
+            var points = DecodePolylinePoints(Route.overview_polyline.points);
+            foreach (var item in points)
             {
-                foreach (var step in leg.steps)
-                {
-                    loclist.Add(
-                        new BasicGeoposition()
-                        { Latitude = step.start_location.lat, Longitude = step.start_location.lng });
-                    loclist.Add(
-                        new BasicGeoposition()
-                        { Latitude = step.end_location.lat, Longitude = step.end_location.lng });
-                }
+                loclist.Add(item);
             }
+            //foreach (var leg in Route.legs)
+            //{
+            //    foreach (var step in leg.steps)
+            //    {
+            //        loclist.Add(
+            //            new BasicGeoposition()
+            //            { Latitude = step.start_location.lat, Longitude = step.start_location.lng });
+            //        loclist.Add(
+            //            new BasicGeoposition()
+            //            { Latitude = step.end_location.lat, Longitude = step.end_location.lng });
+            //    }
+            //}
             MapPolyline line = new MapPolyline()
             {
                 StrokeThickness = 5,
@@ -141,13 +151,64 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
             return $"{Convert.ToInt32((EstimatedTime / 60))} minutes";
         }
 
-        //public static async Task<List<GoogleMapPlaceAutoCompleteModel.Prediction>> GetAutoCompleteResults(string Input, string Lat, string Lng)
-        //{
-        //    var http = new HttpClient();
-        //    var r = await http.GetStringAsync(new Uri($"https://maps.googleapis.com/maps/api/place/autocomplete/json?input={Input.Replace(" ", "+")}&location={Lat},{Lng}&radius=50000&key=AIzaSyCS5gpejHZIpgK7StAfFCcTqZ8cQsuHVnw"));
-        //    var res = JsonConvert.DeserializeObject<GoogleMapPlaceAutoCompleteModel.Rootobject>(r);
-        //    return res.predictions.ToList();
-        //}
+        public static List<BasicGeoposition> DecodePolylinePoints(string encodedPoints)
+        {
+            if (encodedPoints == null || encodedPoints == "") return null;
+            List<BasicGeoposition> poly = new List<BasicGeoposition>();
+            char[] polylinechars = encodedPoints.ToCharArray();
+            int index = 0;
+
+            int currentLat = 0;
+            int currentLng = 0;
+            int next5bits;
+            int sum;
+            int shifter;
+
+            try
+            {
+                while (index < polylinechars.Length)
+                {
+                    // calculate next latitude
+                    sum = 0;
+                    shifter = 0;
+                    do
+                    {
+                        next5bits = (int)polylinechars[index++] - 63;
+                        sum |= (next5bits & 31) << shifter;
+                        shifter += 5;
+                    } while (next5bits >= 32 && index < polylinechars.Length);
+
+                    if (index >= polylinechars.Length)
+                        break;
+
+                    currentLat += (sum & 1) == 1 ? ~(sum >> 1) : (sum >> 1);
+
+                    //calculate next longitude
+                    sum = 0;
+                    shifter = 0;
+                    do
+                    {
+                        next5bits = (int)polylinechars[index++] - 63;
+                        sum |= (next5bits & 31) << shifter;
+                        shifter += 5;
+                    } while (next5bits >= 32 && index < polylinechars.Length);
+
+                    if (index >= polylinechars.Length && next5bits >= 32)
+                        break;
+
+                    currentLng += (sum & 1) == 1 ? ~(sum >> 1) : (sum >> 1);
+                    BasicGeoposition p = new BasicGeoposition();
+                    p.Latitude = Convert.ToDouble(currentLat) / 100000.0;
+                    p.Longitude = Convert.ToDouble(currentLng) / 100000.0;
+                    poly.Add(p);
+                }
+            }
+            catch (Exception ex)
+            {
+                // logo it
+            }
+            return poly;
+        }
 
         public class Rootobject
         {
