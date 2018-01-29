@@ -33,6 +33,7 @@ write this code in the class and save it .
 ```
 public class AppCore
 {
+    public static string OnMapLanguage { get; set; }
     public static string GoogleMapRequestsLanguage { get; set; }
     public static string GoogleMapAPIKey { get; private set; }
     public static string HttpUserAgent { get; private set; }
@@ -41,6 +42,7 @@ public class AppCore
         HttpUserAgent = "WindowsUniversalGoogleMapsV2ALPHA";
         GoogleMapAPIKey = "Your GoogleMap API Key";
         GoogleMapRequestsLanguage = LanguageSettingsSetters.GetAPILanguage();
+        OnMapLanguage = LanguageSettingsSetters.GetOnMapLanguage();
     }
 }
 ```
