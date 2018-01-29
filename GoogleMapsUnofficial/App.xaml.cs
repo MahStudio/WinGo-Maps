@@ -97,7 +97,7 @@ namespace GoogleMapsUnofficial
                     switch (protocolArgs.Uri.AbsolutePath.ToLower().Replace("/maps", string.Empty).Split('/')[1].ToString())
                     {
                         case "search":
-                            eSplash = new ExtendedSplashScreen(splashScreen, "search," + protocolArgs.Uri.Query);
+                            eSplash = new ExtendedSplashScreen(splashScreen, protocolArgs.Uri);
                             break;
                         default:
                             eSplash = new ExtendedSplashScreen(splashScreen);

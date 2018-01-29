@@ -56,10 +56,10 @@ namespace GoogleMapsUnofficial.View
             if(e.Parameter != null)
             {
                 await Task.Delay(500);
-                if(e.Parameter.ToString().StartsWith("search,"))
+                if(((Uri)e.Parameter).Segments[2].ToLower() == "search/")
                 {
                     Searchgrid.PopUP = true;
-                    Searchgrid.SearchText = e.Parameter.ToString().Replace("search,?api=1&query=", string.Empty);
+                    Searchgrid.SearchText = ((Uri)e.Parameter).DecodeQueryParameters().Where(x => x.Key == "query").FirstOrDefault().Value;
                 }
             }
         }
