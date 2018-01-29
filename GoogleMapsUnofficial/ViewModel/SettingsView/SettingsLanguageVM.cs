@@ -79,6 +79,7 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
         public static void SetAPILanguage(string LanguageCode)
         {
             ApplicationData.Current.LocalSettings.Values["APILanguage"] = LanguageCode.ToLower();
+            AppCore.GoogleMapRequestsLanguage = LanguageCode.ToLower();
         }
 
         public static string GetAPILanguage()

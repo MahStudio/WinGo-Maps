@@ -25,7 +25,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             {
                 Map = MapView.MapControl;
                 DefaultMapView.IsChecked = true;
-                ShowTraffic.IsOn = true;
+                ShowTraffic.IsOn = false;
             }
         }
 
@@ -46,13 +46,15 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             if (ShowTraffic.IsOn)
             {
                 Map.TileSources.Clear();
-                var dataSource = new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=r@221097413,traffic&hl=x-local&z={zoomlevel}&x={x}&y={y}") { AllowCaching = true };
+                var mapuri = "http://mt1.google.com/vt/lyrs=r@221097413,traffic&hl=" + AppCore.OnMapLanguage + "&z={zoomlevel}&x={x}&y={y}";
+                var dataSource = new HttpMapTileDataSource(mapuri) { AllowCaching = true };
                 Map.TileSources.Add(new MapTileSource(dataSource) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
             }
             else
             {
                 Map.TileSources.Clear();
-                var dataSource = new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=r&hl=x-local&z={zoomlevel}&x={x}&y={y}") { AllowCaching = true };
+                var mapuri = "http://mt1.google.com/vt/lyrs=r&hl=" + AppCore.OnMapLanguage + "&z={zoomlevel}&x={x}&y={y}";
+                var dataSource = new HttpMapTileDataSource(mapuri) { AllowCaching = true };
                 Map.TileSources.Add(new MapTileSource(dataSource) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
             }
         }
@@ -62,13 +64,15 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             if (ShowTraffic.IsOn)
             {
                 Map.TileSources.Clear();
-                var dataSource = new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=s@221097413,traffic&hl=x-local&z={zoomlevel}&x={x}&y={y}") { AllowCaching = true };
+                var mapuri = "http://mt1.google.com/vt/lyrs=s@221097413,traffic&hl=" + AppCore.OnMapLanguage + "&z={zoomlevel}&x={x}&y={y}";
+                var dataSource = new HttpMapTileDataSource(mapuri) { AllowCaching = true };
                 Map.TileSources.Add(new MapTileSource(dataSource) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
             }
             else
             {
                 Map.TileSources.Clear();
-                var dataSource = new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=s&hl=x-local&z={zoomlevel}&x={x}&y={y}") { AllowCaching = true };
+                var mapuri = "http://mt1.google.com/vt/lyrs=s&hl=" + AppCore.OnMapLanguage + "&z={zoomlevel}&x={x}&y={y}";
+                var dataSource = new HttpMapTileDataSource(mapuri) { AllowCaching = true };
                 Map.TileSources.Add(new MapTileSource(dataSource) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
             }
         }
@@ -80,13 +84,15 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                 if (ShowTraffic.IsOn)
                 {
                     Map.TileSources.Clear();
-                    var dataSource = new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=r@221097413,traffic&hl=x-local&z={zoomlevel}&x={x}&y={y}") { AllowCaching = true };
+                    var mapuri = "http://mt1.google.com/vt/lyrs=r@221097413,traffic&hl=" + AppCore.OnMapLanguage + "&z={zoomlevel}&x={x}&y={y}";
+                    var dataSource = new HttpMapTileDataSource(mapuri) { AllowCaching = true };
                     Map.TileSources.Add(new MapTileSource(dataSource) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
                 }
                 else
                 {
                     Map.TileSources.Clear();
-                    var dataSource = new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=r&hl=x-local&z={zoomlevel}&x={x}&y={y}") { AllowCaching = true };
+                    var mapuri = "http://mt1.google.com/vt/lyrs=r&hl=" + AppCore.OnMapLanguage + "&z={zoomlevel}&x={x}&y={y}";
+                    var dataSource = new HttpMapTileDataSource(mapuri) { AllowCaching = true };
                     Map.TileSources.Add(new MapTileSource(dataSource) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
                 }
             }
@@ -95,13 +101,15 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                 if (ShowTraffic.IsOn)
                 {
                     Map.TileSources.Clear();
-                    var dataSource = new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=s@221097413,traffic&hl=x-local&z={zoomlevel}&x={x}&y={y}") { AllowCaching = true };
+                    var mapuri = "http://mt1.google.com/vt/lyrs=s@221097413,traffic&hl=" + AppCore.OnMapLanguage + "&z={zoomlevel}&x={x}&y={y}";
+                    var dataSource = new HttpMapTileDataSource(mapuri) { AllowCaching = true };
                     Map.TileSources.Add(new MapTileSource(dataSource) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
                 }
                 else
                 {
                     Map.TileSources.Clear();
-                    var dataSource = new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=s&hl=x-local&z={zoomlevel}&x={x}&y={y}") { AllowCaching = true };
+                    var mapuri = "http://mt1.google.com/vt/lyrs=s&hl=" + AppCore.OnMapLanguage + "&z={zoomlevel}&x={x}&y={y}";
+                    var dataSource = new HttpMapTileDataSource(mapuri) { AllowCaching = true };
                     Map.TileSources.Add(new MapTileSource(dataSource) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
                 }
             }
