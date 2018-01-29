@@ -33,14 +33,14 @@ write this code in the class and save it .
 ```
 public class AppCore
 {
-    public static string GoogleMapRequestsLanguage { get; private set; }
+    public static string GoogleMapRequestsLanguage { get; set; }
     public static string GoogleMapAPIKey { get; private set; }
     public static string HttpUserAgent { get; private set; }
     static AppCore()
     {
         HttpUserAgent = "WindowsUniversalGoogleMapsV2ALPHA";
         GoogleMapAPIKey = "Your GoogleMap API Key";
-        GoogleMapRequestsLanguage = "en-US";
+        GoogleMapRequestsLanguage = LanguageSettingsSetters.GetAPILanguage();
     }
 }
 ```
