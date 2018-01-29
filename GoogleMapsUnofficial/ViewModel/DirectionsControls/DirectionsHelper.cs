@@ -39,7 +39,7 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
                     throw new ArgumentOutOfRangeException("Waypoints are not available in transit mode.");
                 }
                 var m = Mode.ToString();
-                var requestUrl = String.Format("http://maps.google.com/maps/api/directions/json?origin=" + Origin.Latitude + "," + Origin.Longitude + "&destination=" + Destination.Latitude + "," + Destination.Longitude + "&units=metric&mode=" + Mode);
+                var requestUrl = String.Format("http://maps.google.com/maps/api/directions/json?origin=" + Origin.Latitude + "," + Origin.Longitude + "&destination=" + Destination.Latitude + "," + Destination.Longitude + "&units=metric&mode=" + Mode + "&lang=" + AppCore.GoogleMapRequestsLanguage);
                 if (WayPoints != null && WayPoints.Count != 0)
                 {
                     requestUrl += "&waypoints=";
