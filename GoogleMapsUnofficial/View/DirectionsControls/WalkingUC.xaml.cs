@@ -182,5 +182,17 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
             txtbox.SuggestionChosen += OriginTxt_SuggestionChosen;
             WaypointsStack.Children.Add(txtbox);
         }
+
+        private void ChangeDirection_Click(object sender, RoutedEventArgs e)
+        {
+            var tempor = DirectionsMainUserControl.Origin;
+            DirectionsMainUserControl.Origin = DirectionsMainUserControl.Destination;
+            DirectionsMainUserControl.Destination = tempor;
+            var temptxt = OriginTxt.Text;
+            OriginTxt.Text = DestTxt.Text;
+            DestTxt.Text = temptxt;
+            //(MapView.MapControl.MapElements.Where(x => (x as MapIcon).Title.ToLower() == "origin").FirstOrDefault() as MapIcon).Title = "Destination";
+            //(MapView.MapControl.MapElements.Where(x => (x as MapIcon).Title.ToLower() == "destination").FirstOrDefault() as MapIcon).Title = "Origin";
+        }
     }
 }

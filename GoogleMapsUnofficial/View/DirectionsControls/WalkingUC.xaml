@@ -16,20 +16,27 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <AutoSuggestBox x:Name="OriginTxt" Header="A" Grid.Row="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <AutoSuggestBox Grid.Column="0" x:Name="OriginTxt" Header="A" Grid.Row="0">
             <AutoSuggestBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding description}" TextAlignment="DetectFromContent" FontFamily="B Koodak"/>
                 </DataTemplate>
             </AutoSuggestBox.ItemTemplate>
         </AutoSuggestBox>
-        <AutoSuggestBox x:Name="DestTxt" Header="B" Grid.Row="1">
+        <AutoSuggestBox Grid.Column="0" x:Name="DestTxt" Header="B" Grid.Row="1">
             <AutoSuggestBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding description}" TextAlignment="DetectFromContent" FontFamily="B Koodak"/>
                 </DataTemplate>
             </AutoSuggestBox.ItemTemplate>
         </AutoSuggestBox>
+        <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" VerticalAlignment="Stretch">
+            <Button x:Name="ChangeDirection" Content="&#xE8CB;" FontSize="18" FontFamily="Segoe MDL2 Assets" Background="Transparent" VerticalAlignment="Center" Click="ChangeDirection_Click"/>
+        </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
