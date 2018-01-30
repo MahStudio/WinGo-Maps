@@ -99,6 +99,9 @@ namespace GoogleMapsUnofficial
                         case "search":
                             eSplash = new ExtendedSplashScreen(splashScreen, protocolArgs.Uri);
                             break;
+                        case "dir":
+                            eSplash = new ExtendedSplashScreen(splashScreen, protocolArgs.Uri);
+                            break;
                         default:
                             eSplash = new ExtendedSplashScreen(splashScreen);
                             break;

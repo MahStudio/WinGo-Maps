@@ -1,7 +1,10 @@
 ﻿using GoogleMapsUnofficial.ViewModel.SettingsView;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Devices.Geolocation;
+using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Input;
@@ -53,13 +56,78 @@ namespace GoogleMapsUnofficial.View
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            if(e.Parameter != null)
+            if (e.Parameter != null)
             {
                 await Task.Delay(500);
-                if(((Uri)e.Parameter).Segments[2].ToLower() == "search/")
+                if (((Uri)e.Parameter).Segments[2].ToLower() == "search/")
                 {
                     Searchgrid.PopUP = true;
                     Searchgrid.SearchText = ((Uri)e.Parameter).DecodeQueryParameters().Where(x => x.Key == "query").FirstOrDefault().Value;
+                }
+                if (((Uri)e.Parameter).Segments[2].ToLower() == "dir/")
+                {
+                    var parameters = ((Uri)e.Parameter).DecodeQueryParameters();
+                    var origin = parameters.Where(x => x.Key == "origin").FirstOrDefault();
+                    var destination = parameters.Where(x => x.Key == "destination").FirstOrDefault();
+                    var travelmode = parameters.Where(x => x.Key == "travelmode").FirstOrDefault();
+                    var waypoints = parameters.Where(x => x.Key == "waypoints").FirstOrDefault();
+                    ViewModel.DirectionsControls.DirectionsHelper.DirectionModes Mode = ViewModel.DirectionsControls.DirectionsHelper.DirectionModes.walking;
+                    Geopoint OriginPoint = null;
+                    Geopoint DestinationPoint = null;
+                    List<BasicGeoposition> lst = null;
+                    if (travelmode.Value != null)
+                    {
+                        if (travelmode.Value.ToString() == "driving") Mode = ViewModel.DirectionsControls.DirectionsHelper.DirectionModes.driving;
+                        else if (travelmode.Value.ToString() == "bicycling ") Mode = ViewModel.DirectionsControls.DirectionsHelper.DirectionModes.bicycling;
+                        else if (travelmode.Value.ToString() == "transit") Mode = ViewModel.DirectionsControls.DirectionsHelper.DirectionModes.transit;
+                    }
+                    if (origin.Value != null)
+                    {
+                        var latlng = origin.Value.Split(',');
+                        var Latitude = Convert.ToDouble(latlng[0]);
+                        var Longitude = Convert.ToDouble(latlng[1]);
+                        OriginPoint = new Geopoint(new BasicGeoposition()
+                        {
+                            Latitude = Latitude,
+                            Longitude = Longitude
+                        });
+                    }
+                    if (destination.Value != null)
+                    {
+                        var latlng = destination.Value.Split(',');
+                        var Latitude = Convert.ToDouble(latlng[0]);
+                        var Longitude = Convert.ToDouble(latlng[1]);
+                        DestinationPoint = new Geopoint(new BasicGeoposition()
+                        {
+                            Latitude = Latitude,
+                            Longitude = Longitude
+                        });
+                    }
+                    if (waypoints.Value != null)
+                    {
+                        lst = new List<BasicGeoposition>();
+                        var latlngs = destination.Value.Split('|');
+                        foreach (var item in latlngs)
+                        {
+                            var latlng = item.Split(',');
+                            BasicGeoposition point = new BasicGeoposition();
+                            point.Latitude = Convert.ToDouble(latlng[0]);
+                            point.Longitude = Convert.ToDouble(latlng[1]);
+                            lst.Add(point);
+                        }
+                    }
+                    if (OriginPoint != null && DestinationPoint != null)
+                    {
+                        ViewModel.DirectionsControls.DirectionsHelper.Rootobject Result = null;
+                        if (lst == null)
+                            Result = await ViewModel.DirectionsControls.DirectionsHelper.GetDirections(OriginPoint.Position, DestinationPoint.Position, Mode);
+                        else
+                            Result = await ViewModel.DirectionsControls.DirectionsHelper.GetDirections(OriginPoint.Position, DestinationPoint.Position, Mode, lst);
+                        if(Result != null)
+                        {
+                            Map.MapElements.Add( ViewModel.DirectionsControls.DirectionsHelper.GetDirectionAsRoute(Result, Colors.Purple) );
+                        }
+                    }
                 }
             }
         }
