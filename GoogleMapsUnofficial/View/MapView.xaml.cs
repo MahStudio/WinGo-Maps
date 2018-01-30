@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Input;
@@ -135,6 +136,11 @@ namespace GoogleMapsUnofficial.View
                 {
                     await Task.Delay(1500);
                     var parameters = ((Uri)e.Parameter).DecodeQueryParameters();
+                    var mapaction = parameters.Where(x => x.Key == "map_action").FirstOrDefault();
+                    if(mapaction.Value != null && mapaction.Value == "pano")
+                    {
+                        await new MessageDialog("StreetView Not Supported yet").ShowAsync();
+                    }
                     var center = parameters.Where(x => x.Key == "center").FirstOrDefault();
                     var zoom = parameters.Where(x => x.Key == "zoom").FirstOrDefault();
                     var cp = center.Value.Split(',');

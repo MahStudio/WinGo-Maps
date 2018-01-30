@@ -76,6 +76,7 @@ namespace GoogleMapsUnofficial.View.OfflineMapDownloader
 
         private async void DLComplete(object sender, bool e)
         {
+            MDH.DownloadCompleted -= DLComplete;
             await new MessageDialog("Download Completed.").ShowAsync();
         }
 
