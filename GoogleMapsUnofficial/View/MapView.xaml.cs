@@ -58,12 +58,13 @@ namespace GoogleMapsUnofficial.View
             base.OnNavigatedTo(e);
             if (e.Parameter != null)
             {
-                await Task.Delay(500);
+                //Search Uri association handler
                 if (((Uri)e.Parameter).Segments[2].ToLower() == "search/")
                 {
                     Searchgrid.PopUP = true;
                     Searchgrid.SearchText = ((Uri)e.Parameter).DecodeQueryParameters().Where(x => x.Key == "query").FirstOrDefault().Value;
                 }
+                //Directions Uri association handler
                 if (((Uri)e.Parameter).Segments[2].ToLower() == "dir/")
                 {
                     var parameters = ((Uri)e.Parameter).DecodeQueryParameters();
@@ -123,11 +124,25 @@ namespace GoogleMapsUnofficial.View
                             Result = await ViewModel.DirectionsControls.DirectionsHelper.GetDirections(OriginPoint.Position, DestinationPoint.Position, Mode);
                         else
                             Result = await ViewModel.DirectionsControls.DirectionsHelper.GetDirections(OriginPoint.Position, DestinationPoint.Position, Mode, lst);
-                        if(Result != null)
+                        if (Result != null)
                         {
-                            Map.MapElements.Add( ViewModel.DirectionsControls.DirectionsHelper.GetDirectionAsRoute(Result, Colors.Purple) );
+                            Map.MapElements.Add(ViewModel.DirectionsControls.DirectionsHelper.GetDirectionAsRoute(Result, Colors.Purple));
                         }
                     }
+                }
+                //Display a map
+                if (((Uri)e.Parameter).Segments[2].ToLower() == "@")
+                {
+                    await Task.Delay(1500);
+                    var parameters = ((Uri)e.Parameter).DecodeQueryParameters();
+                    var center = parameters.Where(x => x.Key == "center").FirstOrDefault();
+                    var zoom = parameters.Where(x => x.Key == "zoom").FirstOrDefault();
+                    var cp = center.Value.Split(',');
+                    BasicGeoposition pointer = new BasicGeoposition() { Latitude = Convert.ToDouble(cp[0]), Longitude = Convert.ToDouble(cp[1]) };
+                    Map.Center = new Geopoint(pointer);
+                    if (zoom.Value != null)
+                        Map.ZoomLevel = Convert.ToDouble(zoom.Value);
+
                 }
             }
         }
