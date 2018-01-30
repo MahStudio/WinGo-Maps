@@ -46,11 +46,16 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                     DirectionsMainUserControl.Origin = p;
                     DirectionsMainUserControl.AddPointer(p, "Origin");
                 }
-                if (sender.Name == "DestTxt")
+                else if (sender.Name == "DestTxt")
                 {
                     var p = (await ViewModel.MapViewVM.GeoLocate.GetGeopositionAsync()).Coordinate.Point;
                     DirectionsMainUserControl.Destination = p;
                     DirectionsMainUserControl.AddPointer(p, "Destination");
+                }
+                else
+                {
+                    var index = sender.Name.Replace("WayPoint", string.Empty);
+                    DirectionsMainUserControl.WayPoints[Convert.ToInt32(index)] = (await ViewModel.MapViewVM.GeoLocate.GetGeopositionAsync()).Coordinate.Point;
                 }
             }
             else if (pre.description.StartsWith("Saved:"))
@@ -63,11 +68,16 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                     DirectionsMainUserControl.Origin = p;
                     DirectionsMainUserControl.AddPointer(p, "Origin");
                 }
-                if (sender.Name == "DestTxt")
+                else if (sender.Name == "DestTxt")
                 {
                     var p = new Geopoint(new BasicGeoposition() { Latitude = res.Latitude, Longitude = res.Longitude });
                     DirectionsMainUserControl.Destination = p;
                     DirectionsMainUserControl.AddPointer(p, "Destination");
+                }
+                else
+                {
+                    var index = sender.Name.Replace("WayPoint", string.Empty);
+                    DirectionsMainUserControl.WayPoints[Convert.ToInt32(index)] = new Geopoint(new BasicGeoposition() { Latitude = res.Latitude, Longitude = res.Longitude });
                 }
             }
             else
@@ -81,11 +91,16 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                     DirectionsMainUserControl.Origin = p;
                     DirectionsMainUserControl.AddPointer(p, "Origin");
                 }
-                if (sender.Name == "DestTxt")
+                else if (sender.Name == "DestTxt")
                 {
                     var p = new Geopoint(new BasicGeoposition() { Latitude = ploc.lat, Longitude = ploc.lng });
                     DirectionsMainUserControl.Destination = p;
                     DirectionsMainUserControl.AddPointer(p, "Destination");
+                }
+                else
+                {
+                    var index = sender.Name.Replace("WayPoint", string.Empty);
+                    DirectionsMainUserControl.WayPoints[Convert.ToInt32(index)] = new Geopoint(new BasicGeoposition() { Latitude = ploc.lat, Longitude = ploc.lng });
                 }
             }
         }
@@ -151,7 +166,21 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
         }
         private void AddPoint_Click(object sender, RoutedEventArgs e)
         {
-
+            if (DirectionsMainUserControl.WayPoints == null) DirectionsMainUserControl.WayPoints = new List<Geopoint>();
+            var c = DirectionsMainUserControl.WayPoints.Count;
+            var dt = new ACSuggestionProviderVM();
+            var txtbox = new AutoSuggestBox()
+            {
+                Name = "WayPoint" + c,
+                Header = "WayPoint",
+                DataContext = dt,
+                ItemTemplate = OriginTxt.ItemTemplate
+            };
+            txtbox.SetBinding(AutoSuggestBox.ItemsSourceProperty, new Binding() { Path = new PropertyPath("SearchResults"), Mode = BindingMode.OneWay });
+            DirectionsMainUserControl.WayPoints.Add(null);
+            txtbox.TextChanged += OriginTxt_TextChanged;
+            txtbox.SuggestionChosen += OriginTxt_SuggestionChosen;
+            WaypointsStack.Children.Add(txtbox);
         }
     }
 }
