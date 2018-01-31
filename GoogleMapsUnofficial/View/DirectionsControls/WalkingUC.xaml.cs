@@ -9,6 +9,7 @@ using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Data;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
@@ -130,7 +131,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                     var Origin = DirectionsMainUserControl.Origin;
                     var Destination = DirectionsMainUserControl.Destination;
                     DirectionsHelper.Rootobject r = null;
-                    if(DirectionsMainUserControl.WayPoints == null)
+                    if (DirectionsMainUserControl.WayPoints == null)
                         r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.walking);
                     else
                     {
@@ -151,6 +152,15 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                         return;
                     }
                     var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), Colors.Purple);
+                    try
+                    {
+                        foreach (var item in MapView.MapControl.MapElements)
+                        {
+                            if (item.GetType() == typeof(MapPolyline))
+                                MapView.MapControl.MapElements.Remove(item);
+                        }
+                    }
+                    catch { }
                     MapView.MapControl.MapElements.Add(route);
                     var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
                     var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());

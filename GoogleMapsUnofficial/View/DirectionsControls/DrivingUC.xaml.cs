@@ -159,7 +159,15 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                         return;
                     }
                     var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), Colors.Purple);
-
+                    try
+                    {
+                        foreach (var item in MapView.MapControl.MapElements)
+                        {
+                            if (item.GetType() == typeof(MapPolyline))
+                                MapView.MapControl.MapElements.Remove(item);
+                        }
+                    }
+                    catch { }
                     MapView.MapControl.MapElements.Add(route);
                     var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
                     var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());

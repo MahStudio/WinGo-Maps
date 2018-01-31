@@ -8,8 +8,9 @@ using static GoogleMapsUnofficial.ViewModel.DirectionsControls.DirectionsHelper;
 
 namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
 {
-    public class VoiceHelper
+    public class VoiceHelper : IDisposable
     {
+        static VoiceHelper AvailableInstance { get; set; }
         DateTime LastWarn { get; set; }
         static double DistanceTo(double lat1, double lon1, double lat2, double lon2, char unit = 'K')
         {
@@ -39,7 +40,13 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
         {
             Route = route;
             MapViewVM.GeoLocate.PositionChanged += GeoLocate_PositionChanged;
+            if(AvailableInstance != null)
+            {
+                AvailableInstance.Dispose();
+            }
+            AvailableInstance = this;
         }
+        
         ~VoiceHelper()
         {
             MapViewVM.GeoLocate.PositionChanged -= GeoLocate_PositionChanged;
@@ -107,5 +114,11 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
             }
         }
 
+        public void Dispose()
+        {
+            MapViewVM.GeoLocate.PositionChanged -= GeoLocate_PositionChanged;
+            Route = null;
+            LastStep = null;
+        }
     }
 }
