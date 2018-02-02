@@ -9,6 +9,8 @@ using Windows.ApplicationModel.Activation;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -38,6 +40,18 @@ namespace GoogleMapsUnofficial
         {
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
             {
+                try
+                {
+                    var crashrep = ApplicationData.Current.LocalSettings.Values["CrashDump"].ToString();
+                    var file = await KnownFolders.PicturesLibrary.CreateFileAsync("WinGoMapsCrash.txt", CreationCollisionOption.GenerateUniqueName);
+                    await FileIO.WriteTextAsync(file, crashrep);
+                    ApplicationData.Current.LocalSettings.Values["CrashDump"] = null;
+                    await new MessageDialog("We detected a crash on your last session. It has been saved in" + file.Path).ShowAsync();
+                }
+                catch
+                {
+                    
+                }
                 var geolocator = MapViewVM.GeoLocate;
                 var accessStatus = await Geolocator.RequestAccessAsync();
 

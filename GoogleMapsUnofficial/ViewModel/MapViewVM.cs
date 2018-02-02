@@ -110,6 +110,12 @@ namespace GoogleMapsUnofficial.ViewModel
                             Title = item.PlaceName
                         });
                     }
+                    //if (Map.Is3DSupported)
+                    //{
+                    //    Map.Style = MapStyle.Aerial3DWithRoads;
+                    //    MapScene mapScene = MapScene.CreateFromLocationAndRadius(snPoint, 500, 150, 70);
+                    //    await Map.TrySetSceneAsync(mapScene);
+                    //}
                     //var r = await MapLocationFinder.FindLocationsAtAsync(snPoint);
                     //if(r.Locations != null)
                     //{
