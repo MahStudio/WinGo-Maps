@@ -60,7 +60,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
             pin.Draggable = true;
 
             //Add the pin to the map.
-            MapView.MapControl.MapElements.Add(pin);
+            MapView.MapControl.Children.Add(pin);
             //MapView.MapControl.CenterChanged += MapControl_CenterChanged;
         }
 

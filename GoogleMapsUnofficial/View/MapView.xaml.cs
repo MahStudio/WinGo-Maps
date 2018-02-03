@@ -62,8 +62,8 @@ namespace GoogleMapsUnofficial.View
                 //Search Uri association handler
                 if (((Uri)e.Parameter).Segments[2].ToLower() == "search/")
                 {
-                    Searchgrid.PopUP = true;
-                    Searchgrid.SearchText = ((Uri)e.Parameter).DecodeQueryParameters().Where(x => x.Key == "query").FirstOrDefault().Value;
+                    //Searchgrid.PopUP = true;
+                    //Searchgrid.SearchText = ((Uri)e.Parameter).DecodeQueryParameters().Where(x => x.Key == "query").FirstOrDefault().Value;
                 }
                 //Directions Uri association handler
                 if (((Uri)e.Parameter).Segments[2].ToLower() == "dir/")

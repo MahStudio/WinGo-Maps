@@ -7,20 +7,22 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
-
+    <UserControl.Resources>
+        <ResourceDictionary Source="/Resources/CustomControls/AutoSuggestionBox.xaml"/>
+    </UserControl.Resources>
+    <Grid Background="White">
         <Button x:Name="BTNExpand" Width="45"
                 Opacity="0.75" Background="Transparent"
-                Visibility="Visible" 
+                Visibility="Collapsed" 
                 HorizontalAlignment="Right" 
                 VerticalAlignment="Stretch" 
                 Click="BTNExpand_Click">
             <SymbolIcon Symbol="Find"/>
         </Button>
-        <AutoSuggestBox FontFamily="B Koodak" PlaceholderText="Search..."
+        <AutoSuggestBox Style="{StaticResource MyAutoSuggestBox}" BorderBrush="White" FontFamily="B Koodak" PlaceholderText="Search..."
             ItemsSource="{Binding SearchResults}"
             TextChanged="Control2_TextChanged" x:Name="SearchBox"
-            QueryIcon="Find" Visibility="Collapsed"
+            QueryIcon="Find" Visibility="Visible"
             QuerySubmitted="Control2_QuerySubmitted"
             VerticalAlignment="Center" MinWidth="250"
             SuggestionChosen="Control2_SuggestionChosen">

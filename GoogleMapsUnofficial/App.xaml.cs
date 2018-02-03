@@ -5,8 +5,10 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.UI;
 using Windows.UI.ViewManagement;
@@ -54,6 +56,17 @@ namespace GoogleMapsUnofficial
             //await FileIO.WriteTextAsync(doc, CrashReport);
         }
 
+        private void StartFluent()
+        {
+            if (ApiInformation.IsMethodPresent("Windows.UI.Xaml.Hosting.ElementCompositionPreview", "SetElementChildVisual"))
+            {
+                ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+                formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
+                CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+                coreTitleBar.ExtendViewIntoTitleBar = true;
+            }
+        }
+
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -75,6 +88,7 @@ namespace GoogleMapsUnofficial
                 StatusBar.GetForCurrentView().ForegroundColor = Colors.Black;
             }
             catch { }
+            StartFluent();
             SplashScreen splashScreen = e.SplashScreen;
             var eSplash = new ExtendedSplashScreen(splashScreen);
             // Register an event handler to be executed when the splash screen has been dismissed.
@@ -102,7 +116,12 @@ namespace GoogleMapsUnofficial
                 Window.Current.Content = rootFrame;
             }
             #endregion
-
+            try
+            {
+                StatusBar.GetForCurrentView().ForegroundColor = Colors.Black;
+            }
+            catch { }
+            StartFluent();
             if (args.Kind == ActivationKind.Protocol)
             {
                 var protocolArgs = (ProtocolActivatedEventArgs)args;

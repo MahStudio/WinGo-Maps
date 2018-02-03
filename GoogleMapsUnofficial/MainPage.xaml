@@ -8,32 +8,23 @@
     xmlns:directionscontrols="using:GoogleMapsUnofficial.View.DirectionsControls"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <!--<RowDefinition Height="54"/>-->
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <!--<Grid Grid.Row="0" Background="{StaticResource SystemControlBackgroundAccentBrush}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Button Content="&#xE826;" FontSize="18" FontFamily="Segoe MDL2 Assets" Grid.Column="0" Click="Button_Click"/>
-            <Button Content="&#xE816;" FontSize="18" FontFamily="Segoe MDL2 Assets" Grid.Column="1" Click="DirBtn_Click"/>
-            <Button Content="&#xE728;" FontSize="18" FontFamily="Segoe MDL2 Assets" Grid.Column="2" Click="FavPlaces_Click"/>
-            <local:SearchUserControl Grid.Column="3"/>
-        </Grid>-->
-        <SplitView Grid.Row="0">
-            <SplitView.Pane>
-                <Grid>
-
+    <Grid>
+        <RelativePanel Grid.Column="0" Grid.ColumnSpan="2" MinWidth="40" x:Name="MainGrid" SizeChanged="Page_SizeChanged"/>
+        <RelativePanel x:Name="MyGrid" Grid.Column="0" Width="{Binding ElementName=MainGrid,Path=Width}" Background="#28000000"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <SplitView Grid.Row="0" PaneBackground="Transparent" IsPaneOpen="True" DisplayMode="Inline">
+                <SplitView.Pane>
+                    <Grid>
+                        
+                    </Grid>
+                </SplitView.Pane>
+                <Grid x:Name="Gr">
+                    <Frame x:Name="Fr" Navigated="Fr_Navigated"/>
                 </Grid>
-            </SplitView.Pane>
-            <Grid x:Name="Gr">
-                <Frame x:Name="Fr" Navigated="Fr_Navigated"/>
-            </Grid>
-        </SplitView>
+            </SplitView>
+        </Grid>
     </Grid>
 </Page>

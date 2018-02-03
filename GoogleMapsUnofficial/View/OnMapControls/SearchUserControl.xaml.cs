@@ -80,14 +80,14 @@ namespace GoogleMapsUnofficial.View.OnMapControls
         }
         private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            SearchBox.Visibility = Visibility.Collapsed;
-            BTNExpand.Visibility = Visibility.Visible;
+            //SearchBox.Visibility = Visibility.Collapsed;
+            //BTNExpand.Visibility = Visibility.Visible;
         }
         private void Control2_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             //SearchReq.Invoke(args.QueryText, null);
-            SearchBox.Visibility = Visibility.Collapsed;
-            BTNExpand.Visibility = Visibility.Visible;
+            //SearchBox.Visibility = Visibility.Collapsed;
+            //BTNExpand.Visibility = Visibility.Visible;
         }
 
         private async void Control2_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
@@ -105,8 +105,8 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                     Longitude = ploc.lng
                 });
             //SearchReq.Invoke(args.SelectedItem as ClassProduct.Product, null);
-            SearchBox.Visibility = Visibility.Collapsed;
-            BTNExpand.Visibility = Visibility.Visible;
+            //SearchBox.Visibility = Visibility.Collapsed;
+            //BTNExpand.Visibility = Visibility.Visible;
         }
 
         private void Control2_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
