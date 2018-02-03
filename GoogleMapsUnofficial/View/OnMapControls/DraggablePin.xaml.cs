@@ -2,19 +2,56 @@
 using GoogleMapsUnofficial.ViewModel.GeocodControls;
 using GoogleMapsUnofficial.ViewModel.PlaceControls;
 using System;
+using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
+using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media.Imaging;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace GoogleMapsUnofficial.View.OnMapControls
 {
+    public class TestPin
+    {
+        public static async Task<MapElement> Run(MapControl map)
+        {
+            var imgContainer = new DraggablePin(map, null);
+            map.Children.Add(imgContainer);
+            await Task.Delay(50);
+            //render symbolicon to bmp
+            RenderTargetBitmap renderbmp = new RenderTargetBitmap();
+            await renderbmp.RenderAsync(imgContainer);
+            map.Children.Remove(imgContainer);
+            using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
+            {
+                //create a bitmap encoder
+                BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, stream);
+                //write pixels into this encoder
+                var pixels = await renderbmp.GetPixelsAsync();
+                var reader = DataReader.FromBuffer(pixels);
+                byte[] bytes = new byte[reader.UnconsumedBufferLength];
+                reader.ReadBytes(bytes);
+                encoder.SetPixelData(BitmapPixelFormat.Bgra8, BitmapAlphaMode.Straight,
+                    (uint)renderbmp.PixelWidth, (uint)renderbmp.PixelHeight, 0, 0, bytes);
+                await encoder.FlushAsync();
+                var mapIconStreamReference = RandomAccessStreamReference.CreateFromStream(stream);
+
+                //create mapIcon
+                var mapIcon = new MapIcon();
+                mapIcon.Image = mapIconStreamReference;
+                mapIcon.Location = map.Center;
+                mapIcon.Title = "Some label".ToString();
+                return mapIcon;
+            }
+        }
+    }
     public sealed partial class DraggablePin : UserControl
     {
         #region Private Properties

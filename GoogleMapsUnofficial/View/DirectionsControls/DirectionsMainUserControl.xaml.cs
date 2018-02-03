@@ -51,7 +51,8 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
 
         private void DirectionsMainUserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            DraggablePin pin = new DraggablePin(MapView.MapControl, this);
+            //var pin = (MapIcon)await TestPin.Run(MapView.MapControl);
+            var pin = new DraggablePin(MapView.MapControl, this);
             pin.Name = "OrDesSelector";
             MapControl.SetLocation(pin, MapView.MapControl.Center);
 
@@ -59,8 +60,20 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
             pin.Draggable = true;
 
             //Add the pin to the map.
-            MapView.MapControl.Children.Add(pin);
+            MapView.MapControl.MapElements.Add(pin);
+            //MapView.MapControl.CenterChanged += MapControl_CenterChanged;
         }
+
+        //private void MapControl_CenterChanged(MapControl sender, object args)
+        //{
+        //    foreach (var item in sender.MapElements)
+        //    {
+        //        if((item as MapIcon).Title == "Some label")
+        //        {
+        //            (item as MapIcon).Location = sender.Center;
+        //        }
+        //    }
+        //}
 
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
