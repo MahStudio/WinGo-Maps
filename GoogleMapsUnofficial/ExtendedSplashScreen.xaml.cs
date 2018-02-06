@@ -1,23 +1,12 @@
 ﻿using GoogleMapsUnofficial.ViewModel;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.Devices.Geolocation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -28,12 +17,22 @@ namespace GoogleMapsUnofficial
     /// </summary>
     public sealed partial class ExtendedSplashScreen : Page
     {
+        DispatcherTimer DispatcherTime;
         object para = null;
         public ExtendedSplashScreen(SplashScreen splash, object parameter = null)
         {
             this.InitializeComponent();
             this.Loaded += ExtendedSplashScreen_Loaded;
             para = parameter;
+            DispatcherTime = new DispatcherTimer();
+            DispatcherTime.Interval = new TimeSpan(0, 0, 10);
+            DispatcherTime.Tick += DispatcherTime_Tick;
+            DispatcherTime.Start();
+        }
+
+        private void DispatcherTime_Tick(object sender, object e)
+        {
+            RemoveExtendedSplash();
         }
 
         private async void ExtendedSplashScreen_Loaded(object sender, RoutedEventArgs e)
@@ -50,7 +49,7 @@ namespace GoogleMapsUnofficial
                 }
                 catch
                 {
-                    
+
                 }
                 var geolocator = MapViewVM.GeoLocate;
                 var accessStatus = await Geolocator.RequestAccessAsync();
@@ -70,7 +69,10 @@ namespace GoogleMapsUnofficial
 
         async void RemoveExtendedSplash()
         {
-            await Task.Delay(2000);
+            DispatcherTime.Stop();
+            DispatcherTime.Tick -= DispatcherTime_Tick;
+            DispatcherTime = null;
+            await Task.Delay(500);
             Window.Current.Content = new MainPage(para);
             Window.Current.Activate();
         }
