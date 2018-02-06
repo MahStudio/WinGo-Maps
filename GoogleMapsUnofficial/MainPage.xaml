@@ -17,7 +17,7 @@
             </Grid.RowDefinitions>
             <SplitView x:Name="Split" Grid.Row="0" PaneBackground="Transparent" IsPaneOpen="True" DisplayMode="Inline">
                 <SplitView.Pane>
-                    <Grid Margin="0,100,0,35">
+                    <Grid Margin="0,100,0,25">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
