@@ -194,8 +194,17 @@ namespace GoogleMapsUnofficial.View
                         {
                             UriSource = ViewModel.PhotoControls.PhotosHelper.GetPhotoUri(pic.photos.FirstOrDefault().photo_reference, 350, 350)
                         };
-                        PlaceName.Text = pic.name; ;
-                        PlaceAddress.Text = pic.vicinity;
+                        var det = await ViewModel.PlaceControls.PlaceDetailsHelper.GetPlaceDetails(pic.place_id);
+                        if (det != null)
+                        {
+                            PlaceAddress.Text = det.result.formatted_address;
+                            PlaceName.Text = det.result.name;
+                        }
+                        else
+                        {
+                            PlaceName.Text = pic.name;
+                            PlaceAddress.Text = pic.vicinity;
+                        }
                     }
                     else
                     {

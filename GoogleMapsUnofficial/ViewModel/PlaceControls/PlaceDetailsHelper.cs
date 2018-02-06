@@ -140,6 +140,7 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
             public string[] html_attributions { get; set; }
             public string photo_reference { get; set; }
             public int width { get; set; }
+            public Uri PhotoThumbnail { get { return PhotoControls.PhotosHelper.GetPhotoUri(photo_reference, 350,350); } }
         }
 
         public class Review

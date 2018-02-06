@@ -73,16 +73,25 @@
                             </Grid>
                         </Grid>
                     </ScrollViewer>
-                    <Button x:Name="GetDirections" Height="80" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Grid.Row="2" Click="GetDirections_Click">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="" HorizontalAlignment="Center" Grid.Row="0" FontFamily="Segoe MDL2 Assets" FontSize="28"/>
-                            <TextBlock Text="Directions" Grid.Row="1"/>
-                        </Grid>
-                    </Button>
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <HyperlinkButton FontStyle="Normal" Margin="0,10" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Text="More Information" FontWeight="SemiBold"/>
+                        </HyperlinkButton>
+                        <Button x:Name="GetDirections" Grid.Row="1" Height="80" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Click="GetDirections_Click">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="" HorizontalAlignment="Center" Grid.Row="0" FontFamily="Segoe MDL2 Assets" FontSize="28"/>
+                                <TextBlock Text="Directions" Grid.Row="1"/>
+                            </Grid>
+                        </Button>
+                    </Grid>
                 </Grid>
             </SplitView.Pane>
             <Grid>

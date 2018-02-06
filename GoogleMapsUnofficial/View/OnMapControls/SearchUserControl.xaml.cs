@@ -82,12 +82,14 @@ namespace GoogleMapsUnofficial.View.OnMapControls
         {
             //SearchBox.Visibility = Visibility.Collapsed;
             //BTNExpand.Visibility = Visibility.Visible;
+            SearchBox.Text = "";
         }
         private void Control2_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             //SearchReq.Invoke(args.QueryText, null);
             //SearchBox.Visibility = Visibility.Collapsed;
             //BTNExpand.Visibility = Visibility.Visible;
+            SearchBox.Text = "";
         }
 
         private async void Control2_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)

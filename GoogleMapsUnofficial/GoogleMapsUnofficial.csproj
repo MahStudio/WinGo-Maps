@@ -243,6 +243,11 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
+    <Page Include="Resources\CustomControls\MoreInfoHyperLink.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
     <Page Include="Resources\CustomControls\TabbedPivot.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

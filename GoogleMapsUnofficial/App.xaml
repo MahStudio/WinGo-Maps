@@ -20,11 +20,10 @@
                 <Setter Property="Padding" Value="0"/>
             </Style>
 
-
             <!-- Default style for Windows.UI.Xaml.Controls.Button -->
             <Style x:Key="AccentButtonStyle" TargetType="Button">
                 <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAccentBrush}" />
-                <Setter Property="Foreground" Value="{ThemeResource ButtonForeground}" />
+                <Setter Property="Foreground" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
                 <Setter Property="BorderBrush" Value="{ThemeResource SystemControlBackgroundAccentBrush}" />
                 <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}" />
                 <Setter Property="Padding" Value="8,4,8,4" />
@@ -49,13 +48,13 @@
                                         <VisualState x:Name="PointerOver">
                                             <Storyboard>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPointerOver}" />
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundAccentBrush}" />
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPointerOver}" />
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPointerOver}" />
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
                                             </Storyboard>
@@ -69,7 +68,7 @@
                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPressed}" />
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPressed}" />
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <PointerDownThemeAnimation Storyboard.TargetName="RootGrid" />
                                             </Storyboard>

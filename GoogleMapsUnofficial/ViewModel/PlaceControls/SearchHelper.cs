@@ -158,7 +158,7 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
             public string[] html_attributions { get; set; }
             public string photo_reference { get; set; }
             public int width { get; set; }
-            public Uri PlaceThumbnail { get { return PhotoControls.PhotosHelper.GetPhotoUri(photo_reference, 100, 100); } }
+            public Uri PlaceThumbnail { get { return PhotoControls.PhotosHelper.GetPhotoUri(photo_reference, 350, 350); } }
         }
 
     }

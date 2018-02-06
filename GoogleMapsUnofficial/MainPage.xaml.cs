@@ -55,7 +55,7 @@ namespace GoogleMapsUnofficial
                 var ac = new AcrylicBrush();
                 var brush = Resources["SystemControlChromeMediumLowAcrylicElementMediumBrush"] as AcrylicBrush;
                 ac = brush;
-                ac.TintOpacity = 0.8;
+                ac.TintOpacity = 0.7;
                 ac.BackgroundSource = AcrylicBackgroundSource.HostBackdrop;
                 Split.PaneBackground = ac;
                 return;
