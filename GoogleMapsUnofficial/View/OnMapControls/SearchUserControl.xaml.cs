@@ -83,6 +83,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             //SearchBox.Visibility = Visibility.Collapsed;
             //BTNExpand.Visibility = Visibility.Visible;
             SearchBox.Text = "";
+            (DataContext as ViewModel).SearchResults.Clear();
         }
         private void Control2_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
@@ -90,6 +91,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             //SearchBox.Visibility = Visibility.Collapsed;
             //BTNExpand.Visibility = Visibility.Visible;
             SearchBox.Text = "";
+            (DataContext as ViewModel).SearchResults.Clear();
         }
 
         private async void Control2_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
@@ -106,6 +108,13 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                     Latitude = ploc.lat,
                     Longitude = ploc.lng
                 });
+            MapView.StaticMapView.SearchResultPoint = new Geopoint(
+                new BasicGeoposition()
+                {
+                    Latitude = ploc.lat,
+                    Longitude = ploc.lng
+                });
+            (DataContext as ViewModel).SearchResults.Clear();
             //SearchReq.Invoke(args.SelectedItem as ClassProduct.Product, null);
             //SearchBox.Visibility = Visibility.Collapsed;
             //BTNExpand.Visibility = Visibility.Visible;

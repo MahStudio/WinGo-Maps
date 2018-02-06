@@ -29,12 +29,32 @@ namespace GoogleMapsUnofficial.View
     /// </summary>
     public sealed partial class MapView : Page
     {
+        public Geopoint SearchResultPoint
+        {
+            get
+            {
+                return (Geopoint)GetValue(SearchResultPointProperty);
+            }
+            set
+            {
+                SetValue(SearchResultPointProperty, value);
+                RunMapRightTapped(Map, value);
+            }
+        }
+        public static readonly DependencyProperty SearchResultPointProperty = DependencyProperty.Register(
+         "SearchResultPoint",
+         typeof(Geopoint),
+         typeof(MapView),
+         new PropertyMetadata(null)
+        );
         Geopoint LastRightTap { get; set; }
         public static MapControl MapControl;
+        public static MapView StaticMapView { get; set; }
         public MapView()
         {
             this.InitializeComponent();
             MapControl = Map;
+            StaticMapView = this;
             Map.Style = MapStyle.None;
             Map.TileSources.Clear();
             var AllowOverstretch = SettingsSetters.GetAllowOverstretch();
@@ -161,7 +181,7 @@ namespace GoogleMapsUnofficial.View
 
                 }
             }
-            if(ApiInformation.IsTypePresent("Windows.UI.Xaml.Media.AcrylicBrush"))
+            if (ApiInformation.IsTypePresent("Windows.UI.Xaml.Media.AcrylicBrush"))
             {
                 var ac = new Windows.UI.Xaml.Media.AcrylicBrush();
                 var brush = Resources["SystemControlChromeLowAcrylicWindowBrush"] as Windows.UI.Xaml.Media.AcrylicBrush;
@@ -178,13 +198,13 @@ namespace GoogleMapsUnofficial.View
             args.Request.Uri = new Uri($"https://maps.googleapis.com/maps/api/staticmap?center={res.Latitude},{res.Longitude}&zoom={args.ZoomLevel}&maptype=traffic&size=256x256&key={AppCore.GoogleMapAPIKey}", UriKind.RelativeOrAbsolute);
         }
 
-        private async void Map_MapRightTapped(MapControl sender, MapRightTappedEventArgs args)
+        private async void RunMapRightTapped(MapControl sender, Geopoint Location)
         {
             InfoPane.IsPaneOpen = true;
-            LastRightTap = args.Location;
+            LastRightTap = Location;
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
             {
-                var t = (await ViewModel.PlaceControls.SearchHelper.NearbySearch(args.Location.Position, 5));
+                var t = (await ViewModel.PlaceControls.SearchHelper.NearbySearch(Location.Position, 5));
                 if (t != null)
                 {
                     var pic = t.results.Where(x => x.photos != null).LastOrDefault();
@@ -208,7 +228,7 @@ namespace GoogleMapsUnofficial.View
                     }
                     else
                     {
-                        var res = (await GeocodeHelper.GetInfo(args.Location)).results.FirstOrDefault();
+                        var res = (await GeocodeHelper.GetInfo(Location)).results.FirstOrDefault();
                         if (res != null)
                         {
                             PlaceName.Text = res.address_components.FirstOrDefault().short_name;
@@ -223,8 +243,8 @@ namespace GoogleMapsUnofficial.View
                 }
                 else
                 {
-                    var r1 = (await GeocodeHelper.GetInfo(args.Location));
-                    if(r1 != null)
+                    var r1 = (await GeocodeHelper.GetInfo(Location));
+                    if (r1 != null)
                     {
                         var res = r1.results.FirstOrDefault();
                         if (res != null)
@@ -247,9 +267,14 @@ namespace GoogleMapsUnofficial.View
             });
         }
 
+        private void Map_MapRightTapped(MapControl sender, MapRightTappedEventArgs args)
+        {
+            RunMapRightTapped(Map, args.Location);
+        }
+
         private void GetDirections_Click(object sender, RoutedEventArgs e)
         {
-            if(DirectionsControl.Origin == null)
+            if (DirectionsControl.Origin == null)
             {
                 DirectionsControl.Origin = MapViewVM.UserLocation.Location;
             }
@@ -263,7 +288,7 @@ namespace GoogleMapsUnofficial.View
             DirectionsControl.Waypoints.Add(LastRightTap);
             InfoPane.IsPaneOpen = false;
         }
-        
+
         private void ShareLocation_Click(object sender, TappedRoutedEventArgs e)
         {
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
@@ -275,7 +300,7 @@ namespace GoogleMapsUnofficial.View
         private void DataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
         {
             DataRequest request = args.Request;
-            request.Data.SetWebLink(new Uri($"https://www.google.com/maps/@?api=1&map_action=map&center={LastRightTap.Position.Latitude},{LastRightTap.Position.Longitude}&zoom={Convert.ToInt16(Map.ZoomLevel)}" ,
+            request.Data.SetWebLink(new Uri($"https://www.google.com/maps/@?api=1&map_action=map&center={LastRightTap.Position.Latitude},{LastRightTap.Position.Longitude}&zoom={Convert.ToInt16(Map.ZoomLevel)}",
                 UriKind.RelativeOrAbsolute));
             request.Data.Properties.Title = $"{PlaceName.Text} on Google maps";
             request.Data.Properties.Description = $"See {PlaceName.Text} on Google Maps. Shared using WinGo Maps for Windows 10.";
