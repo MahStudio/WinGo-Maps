@@ -4,12 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Height="35" Width="35">
+    mc:Ignorable="d" Height="50" Width="50">
 
     <UserControl.Resources>
         <ResourceDictionary Source="/Resources/CustomControls/DotButton.xaml"/>
     </UserControl.Resources>
     <Grid>
-        <Button x:Name="thisbtn" Click="Button_Click" Style="{StaticResource dotbut}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Content="&#xE1D2;" FontFamily="Segoe MDL2 Assets" FontSize="18"/>
+        <Button x:Name="thisbtn" BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Foreground="White" Click="Button_Click" Style="{StaticResource dotbut}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Content="&#xE1D2;" FontFamily="Segoe MDL2 Assets" FontSize="18"/>
     </Grid>
 </UserControl>

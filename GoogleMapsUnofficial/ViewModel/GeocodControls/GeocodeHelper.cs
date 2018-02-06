@@ -39,6 +39,17 @@ namespace GoogleMapsUnofficial.ViewModel.GeocodControls
             }
             catch { return null; }
         }
+        public static async Task<Rootobject> GetInfo(Geopoint cn)
+        {
+            try
+            {
+                var http = new HttpClient();
+                http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);
+                var r = await http.GetStringAsync(new Uri($"https://maps.googleapis.com/maps/api/geocode/json?latlng={cn.Position.Latitude},{cn.Position.Longitude}&language={AppCore.GoogleMapRequestsLanguage}&key={AppCore.GoogleMapAPIKey}", UriKind.RelativeOrAbsolute));
+                return JsonConvert.DeserializeObject<Rootobject>(r);
+            }
+            catch { return null; }
+        }
         public class Rootobject
         {
             public Result[] results { get; set; }

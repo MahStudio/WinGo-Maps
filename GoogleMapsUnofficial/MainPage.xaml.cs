@@ -1,5 +1,7 @@
 ﻿using GoogleMapsUnofficial.View;
+using GoogleMapsUnofficial.View.OfflineMapDownloader;
 using GoogleMapsUnofficial.View.OnMapControls;
+using GoogleMapsUnofficial.View.SettingsView;
 using GoogleMapsUnofficial.ViewModel.OfflineMapDownloader;
 using System;
 using System.Collections.Generic;
@@ -11,6 +13,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Foundation.Metadata;
+using Windows.System;
 using Windows.UI.Composition;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -46,6 +49,7 @@ namespace GoogleMapsUnofficial
         }
         private void applyAcrylicAccent(Panel panel)
         {
+            if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone) return;
             if(ApiInformation.IsMethodPresent("Windows.UI.Xaml.Hosting.ElementCompositionPreview", "SetElementChildVisual"))
             {
                 _compositor = ElementCompositionPreview.GetElementVisual(this).Compositor;
@@ -69,6 +73,11 @@ namespace GoogleMapsUnofficial
         {
             Fr.Navigate(typeof(View.MapView), para);
             applyAcrylicAccent(MainGrid);
+            HMenuTopLst.Items.Add(new MenuClass { Text = "Map View", Icon = "", Tag = "Map View" });
+            HMenuTopLst.Items.Add(new MenuClass { Text = "Offline Maps", Icon = "", Tag = "Offline Maps" });
+            HMenuBottomLst.Items.Add(new MenuClass { Text = "Send feedback", Icon = "", Tag = "Send feedback" });
+            HMenuBottomLst.Items.Add(new MenuClass { Text = "Settings", Icon = "", Tag = "Settings" });
+
             return;
         }
 
@@ -122,5 +131,39 @@ namespace GoogleMapsUnofficial
                 Gr.Children.Remove(FavPlaces);
             }
         }
+
+        private void HmenuBTN_Click(object sender, RoutedEventArgs e)
+        {
+            Split.IsPaneOpen = !Split.IsPaneOpen;
+        }
+
+        private async void MenuItem_Click(object sender, ItemClickEventArgs e)
+        {
+            switch ((e.ClickedItem as MenuClass).Tag)
+            {
+                case "Map View":
+                    MainPage.RootFrame.Navigate(typeof(MapView));
+                    break;
+                case "Settings":
+                    MainPage.RootFrame.Navigate(typeof(SettingsMainView));
+                    break;
+                case "Offline Maps":
+                    MainPage.RootFrame.Navigate(typeof(MapDownloaderView));
+                    break;
+                case "Send feedback":
+                    await Launcher.LaunchUriAsync(new Uri("mailto:ngame1390@live.com"));
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private class MenuClass
+        {
+            public string Tag { get; set; }
+            public string Icon { get; set; }
+            public string Text { get; set; }
+        }
+
     }
 }

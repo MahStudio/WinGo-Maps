@@ -24,11 +24,12 @@
             TextChanged="Control2_TextChanged" x:Name="SearchBox"
             QueryIcon="Find" Visibility="Visible"
             QuerySubmitted="Control2_QuerySubmitted"
-            VerticalAlignment="Center" MinWidth="250"
+            VerticalContentAlignment="Center"
+            VerticalAlignment="Center" MinWidth="250" Height="36"
             SuggestionChosen="Control2_SuggestionChosen">
             <AutoSuggestBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding description}" FontFamily="B Koodak"/>
+                    <TextBlock Text="{Binding description}" TextAlignment="DetectFromContent" FontFamily="B Koodak"/>
                 </DataTemplate>
             </AutoSuggestBox.ItemTemplate>
 

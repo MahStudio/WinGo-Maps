@@ -3,11 +3,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!--Round Buttons-->
     <Style x:Key="dotbut" TargetType="Button">
-        <Setter Property="Background" Value="#f2f2f2" />
-        <Setter Property="BorderBrush" Value="#d5d5d2" />
+        <Setter Property="Background" Value="#fafafa" />
+        <Setter Property="BorderBrush" Value="#fafafa" />
         <Setter Property="BorderThickness" Value="2" />
         <Setter Property="UseSystemFocusVisuals" Value="True"/>
-        <Setter Property="Foreground" Value="#828282"/>
+        <Setter Property="Foreground" Value="#7d7d7d"/>
         <Setter Property="Opacity" Value="1"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -22,9 +22,6 @@
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="RootGrid">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundAccentBrush}"/>
-                                        </ObjectAnimationUsingKeyFrames>
                                         <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
                                     </Storyboard>
                                 </VisualState>

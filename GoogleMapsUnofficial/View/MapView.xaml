@@ -5,39 +5,114 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
+    xmlns:dir="using:GoogleMapsUnofficial.View.DirectionsControls"
     xmlns:OMC="using:GoogleMapsUnofficial.View.OnMapControls"
     xmlns:viewmodel="using:GoogleMapsUnofficial.ViewModel"
     mc:Ignorable="d">
 
     <Page.DataContext>
-        <viewmodel:MapViewVM/>
+        <viewmodel:MapViewVM x:Name="MapViewVM"/>
     </Page.DataContext>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <maps:MapControl x:Name="Map" RotateInteractionMode="GestureAndControl" TiltInteractionMode="GestureAndControl" ZoomInteractionMode="GestureAndControl" MapServiceToken="Qe4rzjfqSL7zZlp8xb8A~4o8bBFXIWVuiCUT9pX2cUg~Auk92xku8o5QuFTpMvN0_7Os9b6pREma6NBC8ojGjU0N3Eq3BBzkI9ehNfu065Wv" >
-            <Grid HorizontalAlignment="Left" maps:MapControl.Location="{Binding UserLocation.Location,Mode=OneWay}" maps:MapControl.NormalizedAnchorPoint="0,1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+    <Grid x:Name="MainGrid">
 
-                <Border Background="{ThemeResource SystemControlBackgroundAccentBrush}" Grid.Row="0">
-                    <TextBlock Text="{Binding UserLocation.AttractionName}" HorizontalAlignment="Left" />
-                </Border>
-                <Polygon Points="0,0 12.5,0 0,20" Fill="{ThemeResource SystemControlBackgroundAccentBrush}" StrokeThickness="0" Grid.Row="1" />
+        <SplitView x:Name="InfoPane" IsPaneOpen="False">
+            <SplitView.Pane>
+                <Grid x:Name="InfoPaneGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Image Grid.Row="0" MaxHeight="350" x:Name="PlaceImage" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                    <ScrollViewer Grid.Row="1">
+                        <Grid Margin="12">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock x:Name="PlaceName" FontWeight="SemiBold" Grid.Row="0" TextAlignment="DetectFromContent"/>
+                            <TextBlock x:Name="PlaceAddress" Grid.Row="1" TextAlignment="DetectFromContent"/>
+                            <Grid Grid.Row="2" Margin="0,12">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <ListViewItem Tapped="AddBookmark_Click" Height="55" Background="Transparent" Grid.Row="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="48"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="&#xE1CB;" Foreground="#808284" FontSize="18" FontFamily="Segoe MDL2 Assets"/>
+                                        <TextBlock Grid.Column="1" Text="Bookmark" Foreground="#808284"/>
+                                    </Grid>
+                                </ListViewItem>
+                                <ListViewItem Tapped="AddWaypoint_Click" Height="55" Background="Transparent" Grid.Row="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="48"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="&#xE1D2;" Foreground="#808284" FontSize="18" FontFamily="Segoe MDL2 Assets"/>
+                                        <TextBlock Grid.Column="1" Text="Add waypoint" Foreground="#808284"/>
+                                    </Grid>
+                                </ListViewItem>
+                                <ListViewItem Tapped="ShareLocation_Click" Height="55" Background="Transparent" Grid.Row="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="48"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="&#xE72D;" Foreground="#808284" FontSize="18" FontFamily="Segoe MDL2 Assets"/>
+                                        <TextBlock Grid.Column="1" Text="Share" Foreground="#808284"/>
+                                    </Grid>
+                                </ListViewItem>
+                            </Grid>
+                        </Grid>
+                    </ScrollViewer>
+                    <Button x:Name="GetDirections" Height="80" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Grid.Row="2" Click="GetDirections_Click">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="" HorizontalAlignment="Center" Grid.Row="0" FontFamily="Segoe MDL2 Assets" FontSize="28"/>
+                            <TextBlock Text="Directions" Grid.Row="1"/>
+                        </Grid>
+                    </Button>
+                </Grid>
+            </SplitView.Pane>
+            <Grid>
+                <maps:MapControl MapRightTapped="Map_MapRightTapped" x:Name="Map" RotateInteractionMode="GestureAndControl" TiltInteractionMode="GestureAndControl" ZoomInteractionMode="GestureAndControl" MapServiceToken="Qe4rzjfqSL7zZlp8xb8A~4o8bBFXIWVuiCUT9pX2cUg~Auk92xku8o5QuFTpMvN0_7Os9b6pREma6NBC8ojGjU0N3Eq3BBzkI9ehNfu065Wv" >
+                    <Grid HorizontalAlignment="Left" maps:MapControl.Location="{Binding UserLocation.Location,Mode=OneWay}" maps:MapControl.NormalizedAnchorPoint="0,1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Border Background="{ThemeResource SystemControlBackgroundAccentBrush}" Grid.Row="0">
+                            <TextBlock Text="{Binding UserLocation.AttractionName}" HorizontalAlignment="Left" />
+                        </Border>
+                        <Polygon Points="0,0 12.5,0 0,20" Fill="{ThemeResource SystemControlBackgroundAccentBrush}" StrokeThickness="0" Grid.Row="1" />
+                    </Grid>
+                </maps:MapControl>
+                <Grid VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <!--<OMC:MenuUserControl Grid.Column="0" Margin="32,15" />-->
+                    <!--<OMC:SearchOptionsUserControl x:Name="Searchgrid" Grid.Column="1" Margin="0,15" HorizontalAlignment="Center"/>-->
+                    <dir:NewDirections x:Name="DirectionsControl" Grid.Column="1" Height="80" MaxWidth="500" Margin="32,0"/>
+                    <OMC:MyLocationUserControl Grid.Column="2" Margin="32,32" />
+                </Grid>
+                <OMC:SearchUserControl VerticalAlignment="Top" HorizontalAlignment="Right" Margin="32,40,32,0" />
+                <OMC:ChangeViewUserControl VerticalAlignment="Top" HorizontalAlignment="Right" Margin="32,95,32,0" />
             </Grid>
-        </maps:MapControl>
-        <Grid VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <OMC:MenuUserControl Grid.Column="0" Margin="32,15" />
-            <!--<OMC:SearchOptionsUserControl x:Name="Searchgrid" Grid.Column="1" Margin="0,15" HorizontalAlignment="Center"/>-->
-            <OMC:MyLocationUserControl Grid.Column="2" Margin="32,15" />
-        </Grid>
-        <OMC:SearchUserControl VerticalAlignment="Top" HorizontalAlignment="Right" Margin="32,40,32,0" />
-        <!--<OMC:ChangeViewUserControl VerticalAlignment="Top" HorizontalAlignment="Right" Margin="32,15" />-->
+        </SplitView>
     </Grid>
 </Page>

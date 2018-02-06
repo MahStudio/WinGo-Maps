@@ -26,7 +26,20 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
                 return null;
             }
         }
-        
+        public static async Task<Rootobject> GetPlaceDetailsbyReference(string ReferenceID)
+        {
+            try
+            {
+                var http = new HttpClient();
+                http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);
+                var res = await http.GetStringAsync(new Uri($"https://maps.googleapis.com/maps/api/place/details/json?reference={ReferenceID}&key={AppCore.GoogleMapAPIKey}", UriKind.RelativeOrAbsolute));
+                return JsonConvert.DeserializeObject<Rootobject>(res);
+            }
+            catch
+            {
+                return null;
+            }
+        }
         public class Rootobject
         {
             public object[] html_attributions { get; set; }

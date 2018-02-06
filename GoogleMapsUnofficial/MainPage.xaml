@@ -1,4 +1,4 @@
-﻿ <Page
+﻿<Page
     x:Class="GoogleMapsUnofficial.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -15,16 +15,101 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <SplitView Grid.Row="0" PaneBackground="Transparent" IsPaneOpen="True" DisplayMode="Inline">
+            <SplitView x:Name="Split" Grid.Row="0" PaneBackground="Transparent" IsPaneOpen="True" DisplayMode="Inline">
                 <SplitView.Pane>
-                    <Grid>
-                        
+                    <Grid Margin="0,100,0,35">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <ListViewItem Style="{StaticResource ListViewStrecher}" VerticalContentAlignment="Center" Height="55" Grid.Row="0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Ellipse VerticalAlignment="Center" Height="35" Width="35" Grid.Column="0" Margin="39,0,39,0">
+                                    <Ellipse.Fill>
+                                        <ImageBrush Stretch="Fill" ImageSource="/Assets/StoreLogo.png"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock FontWeight="SemiBold" Text="WinGo Maps"/>
+                                    <TextBlock Text="Internal build"/>
+                                </StackPanel>
+                            </Grid>
+                        </ListViewItem>
+                        <ListView x:Name="HMenuTopLst" IsItemClickEnabled="True" SelectionMode="None" ItemContainerStyle="{StaticResource ListViewStrecher}" Grid.Row="1" ItemClick="MenuItem_Click">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="0,10" Height="55">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Width="35" FontSize="18" Text="{Binding Icon}" TextAlignment="Center" VerticalAlignment="Center"
+                                                  FontFamily="Segoe MDL2 Assets" Grid.Column="0" Margin="39,0,39,0" HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" FontWeight="SemiBold" Text="{Binding Text}" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <ListView x:Name="HMenuBottomLst" IsItemClickEnabled="True" SelectionMode="None" ItemContainerStyle="{StaticResource ListViewStrecher}" Grid.Row="2" ItemClick="MenuItem_Click">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="0,10" Height="55">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Width="35" FontSize="18" Text="{Binding Icon}" TextAlignment="Center" VerticalAlignment="Center"
+                                                  FontFamily="Segoe MDL2 Assets" Grid.Column="0" Margin="39,0,39,0" HorizontalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" FontWeight="SemiBold" Text="{Binding Text}" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </Grid>
                 </SplitView.Pane>
                 <Grid x:Name="Gr">
                     <Frame x:Name="Fr" Navigated="Fr_Navigated"/>
                 </Grid>
             </SplitView>
+            <Button x:Name="HmenuBTN" Content="&#xE700;" Background="Transparent" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="35" FontSize="18" Click="HmenuBTN_Click"/>
         </Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowStates">
+                <VisualState x:Name="UltraWideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="900" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Split.IsPaneOpen" Value="True"/>
+                        <Setter Target="Split.DisplayMode" Value="Inline"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Split.IsPaneOpen" Value="False" />
+                        <Setter Target="Split.DisplayMode" Value="Overlay" />
+                        <Setter Target="Split.PaneBackground" Value="#fbfbfb"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Split.IsPaneOpen" Value="False" />
+                        <Setter Target="Split.DisplayMode" Value="Overlay" />
+                        <Setter Target="Split.PaneBackground" Value="#fbfbfb"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>

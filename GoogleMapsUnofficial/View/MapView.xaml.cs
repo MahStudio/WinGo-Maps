@@ -1,14 +1,22 @@
-﻿using GoogleMapsUnofficial.ViewModel.SettingsView;
+﻿using GoogleMapsUnofficial.ViewModel.GeocodControls;
+using GoogleMapsUnofficial.ViewModel.SettingsView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Devices.Geolocation;
+using Windows.Foundation.Metadata;
 using Windows.UI;
+using Windows.UI.Composition;
 using Windows.UI.Popups;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
+using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 
@@ -21,6 +29,7 @@ namespace GoogleMapsUnofficial.View
     /// </summary>
     public sealed partial class MapView : Page
     {
+        Geopoint LastRightTap { get; set; }
         public static MapControl MapControl;
         public MapView()
         {
@@ -43,6 +52,7 @@ namespace GoogleMapsUnofficial.View
                 //{ AllowCaching = true })
                 //{ AllowOverstretch = false, IsFadingEnabled = false, ZoomLevelRange = new MapZoomLevelRange() { Max = 22, Min = 1 } });
                 //OLD
+                //lyrs parameter h = dark, y = hybrid
                 string mapuri = "http://mt1.google.com/vt/lyrs=r&hl=" + AppCore.OnMapLanguage + "&z={zoomlevel}&x={x}&y={y}";
                 Map.TileSources.Add(new MapTileSource(new HttpMapTileDataSource(mapuri)
                 { AllowCaching = true })
@@ -137,7 +147,7 @@ namespace GoogleMapsUnofficial.View
                     await Task.Delay(1500);
                     var parameters = ((Uri)e.Parameter).DecodeQueryParameters();
                     var mapaction = parameters.Where(x => x.Key == "map_action").FirstOrDefault();
-                    if(mapaction.Value != null && mapaction.Value == "pano")
+                    if (mapaction.Value != null && mapaction.Value == "pano")
                     {
                         await new MessageDialog("StreetView Not Supported yet").ShowAsync();
                     }
@@ -151,12 +161,83 @@ namespace GoogleMapsUnofficial.View
 
                 }
             }
+            if(ApiInformation.IsTypePresent("Windows.UI.Xaml.Media.AcrylicBrush"))
+            {
+                var ac = new Windows.UI.Xaml.Media.AcrylicBrush();
+                var brush = Resources["SystemControlChromeLowAcrylicWindowBrush"] as Windows.UI.Xaml.Media.AcrylicBrush;
+                ac = brush;
+                ac.TintOpacity = 0.8;
+                ac.BackgroundSource = Windows.UI.Xaml.Media.AcrylicBackgroundSource.HostBackdrop;
+                InfoPane.PaneBackground = ac;
+            }
         }
 
         private void Hm_UriRequested(HttpMapTileDataSource sender, MapTileUriRequestedEventArgs args)
         {
             var res = TileCoordinate.ReverseGeoPoint(args.X, args.Y, args.ZoomLevel);
             args.Request.Uri = new Uri($"https://maps.googleapis.com/maps/api/staticmap?center={res.Latitude},{res.Longitude}&zoom={args.ZoomLevel}&maptype=traffic&size=256x256&key={AppCore.GoogleMapAPIKey}", UriKind.RelativeOrAbsolute);
+        }
+
+        private async void Map_MapRightTapped(MapControl sender, MapRightTappedEventArgs args)
+        {
+            InfoPane.IsPaneOpen = true;
+            LastRightTap = args.Location;
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
+            {
+                var t = (await ViewModel.PlaceControls.SearchHelper.NearbySearch(args.Location.Position, 5));
+                var pic = t.results.Where(x => x.photos != null).LastOrDefault();
+                if (pic != null)
+                {
+                    PlaceImage.Source = new BitmapImage()
+                    {
+                        UriSource = ViewModel.PhotoControls.PhotosHelper.GetPhotoUri(pic.photos.FirstOrDefault().photo_reference, 350, 350)
+                    };
+                    PlaceName.Text = pic.name; ;
+                    PlaceAddress.Text = pic.vicinity;
+                }
+                else
+                {
+                    var res = (await GeocodeHelper.GetInfo(args.Location)).results.FirstOrDefault();
+                    PlaceName.Text = res.address_components.FirstOrDefault().short_name;
+                    PlaceAddress.Text = res.formatted_address;
+                }
+            });
+        }
+
+        private void GetDirections_Click(object sender, RoutedEventArgs e)
+        {
+            if(DirectionsControl.Origin == null)
+            {
+                DirectionsControl.Origin = MapViewVM.UserLocation.Location;
+            }
+            DirectionsControl.Destination = LastRightTap;
+            DirectionsControl.DirectionFinder();
+        }
+
+        private void AddWaypoint_Click(object sender, TappedRoutedEventArgs e)
+        {
+            DirectionsControl.Waypoints.Add(LastRightTap);
+        }
+        
+        private void ShareLocation_Click(object sender, TappedRoutedEventArgs e)
+        {
+            DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
+            dataTransferManager.DataRequested += DataTransferManager_DataRequested;
+            DataTransferManager.ShowShareUI();
+        }
+
+        private void DataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
+        {
+            DataRequest request = args.Request;
+            request.Data.SetWebLink(new Uri($"https://www.google.com/maps/@?api=1&map_action=map&center={LastRightTap.Position.Latitude},{LastRightTap.Position.Longitude}&zoom={Convert.ToInt16(Map.ZoomLevel)}" ,
+                UriKind.RelativeOrAbsolute));
+            request.Data.Properties.Title = $"{PlaceName.Text} on Google maps";
+            request.Data.Properties.Description = $"See {PlaceName.Text} on Google Maps. Shared using WinGo Maps for Windows 10.";
+        }
+
+        private async void AddBookmark_Click(object sender, TappedRoutedEventArgs e)
+        {
+            await new MessageDialog("NotImplementedYet").ShowAsync();
         }
     }
 }

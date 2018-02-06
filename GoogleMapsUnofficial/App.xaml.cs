@@ -58,6 +58,7 @@ namespace GoogleMapsUnofficial
 
         private void StartFluent()
         {
+            if(ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone) return;
             if (ApiInformation.IsMethodPresent("Windows.UI.Xaml.Hosting.ElementCompositionPreview", "SetElementChildVisual"))
             {
                 ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;

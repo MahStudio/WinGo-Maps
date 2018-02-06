@@ -10,7 +10,7 @@
         <Setter Property="Background" Value="{ThemeResource TextControlBackground}" />
         <Setter Property="BorderBrush" Value="{ThemeResource TextControlBorderBrush}" />
         <Setter Property="SelectionHighlightColor" Value="{ThemeResource TextControlSelectionHighlightColor}" />
-        <Setter Property="BorderThickness" Value="{ThemeResource TextControlBorderThemeThickness}" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
         <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
         <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Auto" />
@@ -39,9 +39,6 @@
                                                             <Storyboard>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonLayoutGrid" Storyboard.TargetProperty="Background">
                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlButtonBackgroundPointerOver}" />
-                                                                </ObjectAnimationUsingKeyFrames>
-                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonLayoutGrid" Storyboard.TargetProperty="BorderBrush">
-                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlButtonBorderBrushPointerOver}" />
                                                                 </ObjectAnimationUsingKeyFrames>
                                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GlyphElement" Storyboard.TargetProperty="Foreground">
                                                                     <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TextControlButtonForegroundPointerOver}" />
@@ -206,7 +203,7 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DeleteButton" Storyboard.TargetProperty="Visibility">
                                             <DiscreteObjectKeyFrame KeyTime="0">
                                                 <DiscreteObjectKeyFrame.Value>
-                                                    <Visibility>Visible</Visibility>
+                                                    <Visibility>Collapsed</Visibility>
                                                 </DiscreteObjectKeyFrame.Value>
                                             </DiscreteObjectKeyFrame>
                                         </ObjectAnimationUsingKeyFrames>
@@ -253,7 +250,7 @@
                             IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
                             Margin="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}"
-                            IsTabStop="False"
+                            IsTabStop="False" VerticalContentAlignment="Center" VerticalAlignment="Center"
                             AutomationProperties.AccessibilityView="Raw"
                             ZoomMode="Disabled" />
                         <ContentControl x:Name="PlaceholderTextContentPresenter"
@@ -261,7 +258,7 @@
                             Foreground="{ThemeResource TextControlPlaceholderForeground}"
                             Margin="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}"
-                            IsTabStop="False"
+                            IsTabStop="False" VerticalContentAlignment="Center"
                             Content="{TemplateBinding PlaceholderText}"
                             IsHitTestVisible="False" />
                         <Button x:Name="DeleteButton"
@@ -307,7 +304,7 @@
                                 <VisualState x:Name="Portrait" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <TextBox x:Name="TextBox" BorderBrush="White"
+                        <TextBox x:Name="TextBox" Opacity="0.8"
                             Style="{TemplateBinding TextBoxStyle}"
                             PlaceholderText="{TemplateBinding PlaceholderText}"
                             Header="{TemplateBinding Header}"
