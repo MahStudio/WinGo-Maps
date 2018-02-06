@@ -198,8 +198,16 @@ namespace GoogleMapsUnofficial.View
                 else
                 {
                     var res = (await GeocodeHelper.GetInfo(args.Location)).results.FirstOrDefault();
-                    PlaceName.Text = res.address_components.FirstOrDefault().short_name;
-                    PlaceAddress.Text = res.formatted_address;
+                    if(res != null)
+                    {
+                        PlaceName.Text = res.address_components.FirstOrDefault().short_name;
+                        PlaceAddress.Text = res.formatted_address;
+                    }
+                    else
+                    {
+                        await new MessageDialog("We didn't find anything here. Maybe an internet connection issue.").ShowAsync();
+                        InfoPane.IsPaneOpen = false;
+                    }
                 }
             });
         }
@@ -212,11 +220,13 @@ namespace GoogleMapsUnofficial.View
             }
             DirectionsControl.Destination = LastRightTap;
             DirectionsControl.DirectionFinder();
+            InfoPane.IsPaneOpen = false;
         }
 
         private void AddWaypoint_Click(object sender, TappedRoutedEventArgs e)
         {
             DirectionsControl.Waypoints.Add(LastRightTap);
+            InfoPane.IsPaneOpen = false;
         }
         
         private void ShareLocation_Click(object sender, TappedRoutedEventArgs e)
@@ -224,6 +234,7 @@ namespace GoogleMapsUnofficial.View
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
             dataTransferManager.DataRequested += DataTransferManager_DataRequested;
             DataTransferManager.ShowShareUI();
+            InfoPane.IsPaneOpen = false;
         }
 
         private void DataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
@@ -238,6 +249,7 @@ namespace GoogleMapsUnofficial.View
         private async void AddBookmark_Click(object sender, TappedRoutedEventArgs e)
         {
             await new MessageDialog("NotImplementedYet").ShowAsync();
+            InfoPane.IsPaneOpen = false;
         }
     }
 }

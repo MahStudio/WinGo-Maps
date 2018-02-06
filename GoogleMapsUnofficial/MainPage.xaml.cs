@@ -156,6 +156,10 @@ namespace GoogleMapsUnofficial
                 default:
                     break;
             }
+            if(Split.DisplayMode == SplitViewDisplayMode.Overlay)
+            {
+                Split.IsPaneOpen = false;
+            }
         }
 
         private class MenuClass
