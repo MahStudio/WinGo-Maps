@@ -92,11 +92,20 @@ namespace GoogleMapsUnofficial
             return;
         }
 
-        private void MainPage_BackRequested(object sender, BackRequestedEventArgs e)
+        private async void MainPage_BackRequested(object sender, BackRequestedEventArgs e)
         {
             e.Handled = true;
             if (Fr.CanGoBack) Fr.GoBack();
-            else App.Current.Exit();
+            else
+            {
+                var msg = new MessageDialog("Are you sure you want to exit?");
+                msg.Commands.Add(new UICommand("Yes", delegate
+                {
+                    App.Current.Exit();
+                }));
+                msg.Commands.Add(new UICommand("No", delegate { }));
+                await msg.ShowAsync();
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -167,7 +176,7 @@ namespace GoogleMapsUnofficial
                 default:
                     break;
             }
-            if(Split.DisplayMode == SplitViewDisplayMode.Overlay)
+            if (Split.DisplayMode == SplitViewDisplayMode.Overlay)
             {
                 Split.IsPaneOpen = false;
             }
