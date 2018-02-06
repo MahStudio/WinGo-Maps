@@ -185,23 +185,49 @@ namespace GoogleMapsUnofficial.View
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
             {
                 var t = (await ViewModel.PlaceControls.SearchHelper.NearbySearch(args.Location.Position, 5));
-                var pic = t.results.Where(x => x.photos != null).LastOrDefault();
-                if (pic != null)
+                if (t != null)
                 {
-                    PlaceImage.Source = new BitmapImage()
+                    var pic = t.results.Where(x => x.photos != null).LastOrDefault();
+                    if (pic != null)
                     {
-                        UriSource = ViewModel.PhotoControls.PhotosHelper.GetPhotoUri(pic.photos.FirstOrDefault().photo_reference, 350, 350)
-                    };
-                    PlaceName.Text = pic.name; ;
-                    PlaceAddress.Text = pic.vicinity;
+                        PlaceImage.Source = new BitmapImage()
+                        {
+                            UriSource = ViewModel.PhotoControls.PhotosHelper.GetPhotoUri(pic.photos.FirstOrDefault().photo_reference, 350, 350)
+                        };
+                        PlaceName.Text = pic.name; ;
+                        PlaceAddress.Text = pic.vicinity;
+                    }
+                    else
+                    {
+                        var res = (await GeocodeHelper.GetInfo(args.Location)).results.FirstOrDefault();
+                        if (res != null)
+                        {
+                            PlaceName.Text = res.address_components.FirstOrDefault().short_name;
+                            PlaceAddress.Text = res.formatted_address;
+                        }
+                        else
+                        {
+                            await new MessageDialog("We didn't find anything here. Maybe an internet connection issue.").ShowAsync();
+                            InfoPane.IsPaneOpen = false;
+                        }
+                    }
                 }
                 else
                 {
-                    var res = (await GeocodeHelper.GetInfo(args.Location)).results.FirstOrDefault();
-                    if(res != null)
+                    var r1 = (await GeocodeHelper.GetInfo(args.Location));
+                    if(r1 != null)
                     {
-                        PlaceName.Text = res.address_components.FirstOrDefault().short_name;
-                        PlaceAddress.Text = res.formatted_address;
+                        var res = r1.results.FirstOrDefault();
+                        if (res != null)
+                        {
+                            PlaceName.Text = res.address_components.FirstOrDefault().short_name;
+                            PlaceAddress.Text = res.formatted_address;
+                        }
+                        else
+                        {
+                            await new MessageDialog("We didn't find anything here. Maybe an internet connection issue.").ShowAsync();
+                            InfoPane.IsPaneOpen = false;
+                        }
                     }
                     else
                     {
