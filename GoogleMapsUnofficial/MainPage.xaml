@@ -76,7 +76,7 @@
                     <Frame x:Name="Fr" Navigated="Fr_Navigated"/>
                 </Grid>
             </SplitView>
-            <Button x:Name="HmenuBTN" Content="&#xE700;" Background="Transparent" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="35" FontSize="18" Click="HmenuBTN_Click"/>
+            <Button x:Name="HmenuBTN" Content="&#xE700;" Background="Transparent" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="35" FontSize="18" Click="HmenuBTN_Click" Height="48" Width="48"/>
         </Grid>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="WindowStates">

@@ -50,13 +50,24 @@ namespace GoogleMapsUnofficial
         private void applyAcrylicAccent(Panel panel)
         {
             if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone) return;
-            if(ApiInformation.IsMethodPresent("Windows.UI.Xaml.Hosting.ElementCompositionPreview", "SetElementChildVisual"))
+            if (ApiInformation.IsTypePresent("Windows.UI.Xaml.Media.AcrylicBrush"))
+            {
+                var ac = new AcrylicBrush();
+                var brush = Resources["SystemControlChromeMediumLowAcrylicElementMediumBrush"] as AcrylicBrush;
+                ac = brush;
+                ac.TintOpacity = 0.8;
+                ac.BackgroundSource = AcrylicBackgroundSource.HostBackdrop;
+                Split.PaneBackground = ac;
+                return;
+            }
+            if (ApiInformation.IsMethodPresent("Windows.UI.Xaml.Hosting.ElementCompositionPreview", "SetElementChildVisual"))
             {
                 _compositor = ElementCompositionPreview.GetElementVisual(this).Compositor;
                 _hostSprite = _compositor.CreateSpriteVisual();
                 _hostSprite.Size = new Vector2((float)panel.ActualWidth, (float)panel.ActualHeight);
 
                 ElementCompositionPreview.SetElementChildVisual(panel, _hostSprite);
+                var b = _compositor.CreateHostBackdropBrush();
                 _hostSprite.Brush = _compositor.CreateHostBackdropBrush();
             }
         }
