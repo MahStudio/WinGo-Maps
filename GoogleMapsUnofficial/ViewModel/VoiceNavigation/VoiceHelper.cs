@@ -86,7 +86,7 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
                                 }
                             }
                             LastStep = item;
-                            var r = Route.legs.FirstOrDefault().steps.Where(x => DistanceTo(cp.Point.Position.Latitude, cp.Point.Position.Longitude, x.end_location.lat, x.end_location.lng) < 0.1);
+                            var r = Route.legs.FirstOrDefault().steps.Where(x => DistanceTo(cp.Point.Position.Latitude, cp.Point.Position.Longitude, x.end_location.lat, x.end_location.lng) < 0.02);
                             if (r.Any())
                             {
                                 var res = Route.legs.FirstOrDefault().steps.ToList();
