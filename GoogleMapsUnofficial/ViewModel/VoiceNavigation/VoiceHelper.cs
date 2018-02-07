@@ -56,13 +56,13 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
 
         private async void GeoLocate_PositionChanged(Geolocator sender, PositionChangedEventArgs args)
         {
+            var cp = args.Position.Coordinate;
             if (DateTime.Now.Subtract(LastWarn).TotalSeconds < 6) return;
             LastWarn = DateTime.Now;
             foreach (var items in Route.legs)
             {
                 foreach (var item in items.steps)
                 {
-                    var cp = args.Position.Coordinate;
                     var d = DistanceTo(cp.Point.Position.Latitude, cp.Point.Position.Longitude, item.end_location.lat, item.end_location.lng);
                     if (d <= 0.4)
                     {
@@ -86,26 +86,12 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
                                 }
                             }
                             LastStep = item;
-                            return;
-                        }
-                        else if(d < 0.05)
-                        {
-                            using (var speech = new SpeechSynthesizer())
+                            var r = Route.legs.FirstOrDefault().steps.Where(x => DistanceTo(cp.Point.Position.Latitude, cp.Point.Position.Longitude, x.end_location.lat, x.end_location.lng) < 0.1);
+                            if (r.Any())
                             {
-                                var mediaplayer = new MediaPlayer() { AudioCategory = MediaPlayerAudioCategory.Other };
-                                speech.Voice = SpeechSynthesizer.AllVoices.First(gender => gender.Gender == VoiceGender.Female);
-                                if (item.maneuver == null)
-                                {
-                                    SpeechSynthesisStream stream = await speech.SynthesizeTextToStreamAsync(item.html_instructions.NoHTMLString());
-                                    mediaplayer.Source = MediaSource.CreateFromStream(stream, stream.ContentType);
-                                    mediaplayer.Play();
-                                }
-                                else
-                                {
-                                    SpeechSynthesisStream stream = await speech.SynthesizeTextToStreamAsync(item.maneuver + "\n" + item.html_instructions.NoHTMLString());
-                                    mediaplayer.Source = MediaSource.CreateFromStream(stream, stream.ContentType);
-                                    mediaplayer.Play();
-                                }
+                                var res = Route.legs.FirstOrDefault().steps.ToList();
+                                res.Remove(r.FirstOrDefault());
+                                Route.legs.FirstOrDefault().steps = res.ToArray();
                             }
                             return;
                         }
