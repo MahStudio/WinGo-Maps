@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Calls;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Devices.Geolocation;
 using Windows.Foundation.Metadata;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Popups;
@@ -219,6 +221,27 @@ namespace GoogleMapsUnofficial.View
                         {
                             PlaceAddress.Text = det.result.formatted_address;
                             PlaceName.Text = det.result.name;
+                            if(det.result.formatted_phone_number != null)
+                            {
+                                PlacePhone.Text = det.result.formatted_phone_number;
+                                PlacePhoneItem.IsEnabled = true;
+                            }
+                            if(det.result.website != null)
+                            {
+                                PlaceWebSite.Text = det.result.website;
+                                PlaceWebSiteItem.IsEnabled = true;
+                            }
+                            if(det.result.opening_hours != null)
+                            {
+                                var hours = det.result.opening_hours.weekday_text;
+                                string MyStr = "Is open : " + det.result.opening_hours.open_now;
+                                if(hours != null)
+                                    foreach (var item in hours)
+                                    {
+                                        MyStr += Environment.NewLine + item;
+                                    }
+                                PlaceOpenNow.Text = MyStr;
+                            }
                         }
                         else
                         {
@@ -310,6 +333,35 @@ namespace GoogleMapsUnofficial.View
         {
             await new MessageDialog("NotImplementedYet").ShowAsync();
             InfoPane.IsPaneOpen = false;
+        }
+
+        private void PlacePhone_Click(object sender, TappedRoutedEventArgs e)
+        {
+            PhoneCallManager.ShowPhoneCallUI(PlacePhone.Text, PlaceName.Text);
+        }
+
+        private async void PlaceWebsite_Click(object sender, TappedRoutedEventArgs e)
+        {
+            await Launcher.LaunchUriAsync(new Uri(PlaceWebSite.Text, UriKind.RelativeOrAbsolute));
+        }
+
+        private void InfoPane_PaneClosed(SplitView sender, object args)
+        {
+            PlaceAddress.Text = "";
+            PlaceName.Text = "";
+            PlaceOpenNow.Text = "";
+            PlacePhone.Text = "";
+            PlacePhoneItem.IsEnabled = false;
+            PlaceWebSite.Text = "";
+            PlaceWebSiteItem.IsEnabled = false;
+            MoreInfoGrid.Visibility = Visibility.Collapsed;
+            MoreInfoHyperLink.Visibility = Visibility.Visible;
+        }
+
+        private void MoreInfoHyperLink_Click(object sender, RoutedEventArgs e)
+        {
+            MoreInfoGrid.Visibility = Visibility.Visible;
+            MoreInfoHyperLink.Visibility = Visibility.Collapsed;
         }
     }
 }
