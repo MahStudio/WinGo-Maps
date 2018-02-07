@@ -241,6 +241,7 @@ namespace GoogleMapsUnofficial.View
                                         MyStr += Environment.NewLine + item;
                                     }
                                 PlaceOpenNow.Text = MyStr;
+                                PlaceOpenNowItem.IsEnabled = true;
                             }
                         }
                         else
@@ -350,6 +351,7 @@ namespace GoogleMapsUnofficial.View
             PlaceAddress.Text = "";
             PlaceName.Text = "";
             PlaceOpenNow.Text = "";
+            PlaceOpenNowItem.IsEnabled = false;
             PlacePhone.Text = "";
             PlacePhoneItem.IsEnabled = false;
             PlaceWebSite.Text = "";

@@ -43,7 +43,8 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
 
         private void NewDirections_Loaded(object sender, RoutedEventArgs e)
         {
-            WalkBTN.Foreground = Resources["SystemControlBackgroundAccentBrush"] as SolidColorBrush;
+            var c = (Color)Resources["SystemControlBackgroundAccentBrush"];
+            WalkBTN.Foreground = new SolidColorBrush(c);
         }
 
         private void NavMode_Click(object sender, RoutedEventArgs e)
@@ -61,7 +62,8 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
             WalkBTN.Foreground = bg;
             DriveBTN.Foreground = bg;
             TransitBTN.Foreground = bg;
-            (sender as Button).Foreground = Resources["SystemControlBackgroundAccentBrush"] as SolidColorBrush;
+            var c = (Color)Resources["SystemControlBackgroundAccentBrush"];
+            (sender as Button).Foreground = new SolidColorBrush(c);
             switch ((sender as Button).Name)
             {
                 case "WalkBTN":

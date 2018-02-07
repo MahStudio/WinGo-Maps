@@ -83,6 +83,11 @@ namespace GoogleMapsUnofficial
             }
             catch { }
             StartFluent();
+            Resources["ToggleButtonBackgroundChecked"] = Color.FromArgb(255, 96, 165, 255);
+            Resources["SystemControlHighlightListAccentLowBrush"] = Color.FromArgb(255, 96, 165, 255);
+            Resources["ToggleSwitchFillOn"] = Color.FromArgb(255, 96, 165, 255);
+            Resources["HyperlinkButtonForeground"] = Color.FromArgb(255, 96, 165, 255);
+            Resources["SystemControlBackgroundAccentBrush"] = Color.FromArgb(255, 96, 165, 255);
             SplashScreen splashScreen = e.SplashScreen;
             var eSplash = new ExtendedSplashScreen(splashScreen);
             // Register an event handler to be executed when the splash screen has been dismissed.

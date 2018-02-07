@@ -88,7 +88,7 @@
                                             <TextBlock x:Name="PlacePhone" Grid.Column="1" Foreground="#808284"/>
                                         </Grid>
                                     </ListViewItem>
-                                    <ListViewItem x:Name="PlaceOpenNowItem" IsEnabled="True" MinHeight="55" Height="Auto" Background="Transparent" Grid.Row="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                    <ListViewItem x:Name="PlaceOpenNowItem" IsEnabled="False" MinHeight="55" Height="Auto" Background="Transparent" Grid.Row="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="48"/>
