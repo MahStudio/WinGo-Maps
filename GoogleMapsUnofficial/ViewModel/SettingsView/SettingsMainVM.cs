@@ -6,8 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
+using Windows.ApplicationModel.Background;
+using Windows.Data.Xml.Dom;
+using Windows.Devices.Geolocation;
 using Windows.Storage;
+using Windows.UI.Notifications;
 using Windows.UI.Xaml.Controls.Maps;
+using Windows.Web.Http;
 
 namespace GoogleMapsUnofficial.ViewModel.SettingsView
 {
@@ -17,7 +22,18 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
         private int _zoomcontrolsVisible = -1;
         private bool _fadeanimationEnabled;
         private bool _allowOverstretch;
+        private bool _livetileenable;
         public event PropertyChangedEventHandler PropertyChanged;
+        public bool LiveTileEnable
+        {
+            get { return _livetileenable; }
+            set
+            {
+                _livetileenable = value;
+                SettingsSetters.SetLiveTileBackgroundTask(value);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("LiveTileEnable"));
+            }
+        }
         public bool AllowOverstretch
         {
             get { return _allowOverstretch; }
@@ -82,6 +98,23 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
             FadeAnimationEnabled = SettingsSetters.GetFadeAnimationEnabled();
             ZoomControlsVisible = EnumToIndexConverter(SettingsSetters.GetZoomControlsVisible());
             RotationControlsVisible = EnumToIndexConverter(SettingsSetters.GetRotationControlsVisible());
+            BackgroundHandler();
+        }
+
+        async void BackgroundHandler()
+        {
+            try
+            {
+                var req = await BackgroundExecutionManager.RequestAccessAsync();
+                if (req == BackgroundAccessStatus.AlwaysAllowed || req == BackgroundAccessStatus.AllowedSubjectToSystemPolicy ||
+                         req == BackgroundAccessStatus.AllowedWithAlwaysOnRealTimeConnectivity || req == BackgroundAccessStatus.AllowedMayUseActiveRealTimeConnectivity)
+                {
+                    var list = BackgroundTaskRegistration.AllTasks.Where(x => x.Value.Name == "WinGoMapsTile");
+                    if (list.Count() != 0) LiveTileEnable = true;
+                    else LiveTileEnable = false;
+                }
+            }
+            catch { LiveTileEnable = false; }
         }
 
         public static int EnumToIndexConverter(MapInteractionMode Entry)
@@ -115,7 +148,7 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
             //}
         }
     }
-    
+
     class SettingsSetters
     {
         public static bool GetFadeAnimationEnabled()
@@ -202,5 +235,48 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
             ApplicationData.Current.LocalSettings.Values["RotationControlsVisible2"] = Value.ToString();
         }
 
+        public static async void SetLiveTileBackgroundTask(bool Val)
+        {
+            try
+            {
+                var req = await BackgroundExecutionManager.RequestAccessAsync();
+                if (req == BackgroundAccessStatus.AlwaysAllowed || req == BackgroundAccessStatus.AllowedSubjectToSystemPolicy ||
+                         req == BackgroundAccessStatus.AllowedWithAlwaysOnRealTimeConnectivity || req == BackgroundAccessStatus.AllowedMayUseActiveRealTimeConnectivity)
+                {
+                    var list = BackgroundTaskRegistration.AllTasks.Where(x => x.Value.Name == "WinGoMapsTile");
+                    foreach (var item in list)
+                    {
+                        item.Value.Unregister(false);
+                    }
+                    if (Val)
+                    {
+                        BackgroundTaskBuilder build = new BackgroundTaskBuilder();
+                        build.IsNetworkRequested = true;
+                        build.Name = "WinGoMapsTile";
+                        build.TaskEntryPoint = "LiveTileTask.Update";
+                        build.SetTrigger(new TimeTrigger(15, false));
+                        var b = build.Register();
+                        if (await Geolocator.RequestAccessAsync() == GeolocationAccessStatus.Allowed)
+                        {
+                            var geolocator = new Geolocator();
+                            var Location = await geolocator.GetGeopositionAsync();
+                            var ul = Location.Coordinate.Point.Position;
+                            var http = new HttpClient();
+                            http.DefaultRequestHeaders.UserAgent.ParseAdd("MahStudioWinGoMaps");
+                            var res = await (await http.GetAsync(new Uri($"https://maps.googleapis.com/maps/api/staticmap?center={ul.Latitude},{ul.Longitude}&zoom=16&size=200x200", UriKind.RelativeOrAbsolute))).Content.ReadAsBufferAsync();
+                            var f = await ApplicationData.Current.LocalFolder.CreateFileAsync("LiveTile.png", CreationCollisionOption.OpenIfExists);
+                            var str = await f.OpenAsync(FileAccessMode.ReadWrite);
+                            await str.WriteAsync(res);
+                            str.Dispose();
+                            var update = TileUpdateManager.CreateTileUpdaterForApplication();
+                            XmlDocument tileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileSquare150x150Image);
+                            tileXml.GetElementsByTagName("image")[0].Attributes[1].NodeValue = "ms-appdata:///local/LiveTile.png";
+                            update.Update(new TileNotification(tileXml));
+                        }
+                    }
+                }
+            }
+            catch { }
+        }
     }
 }

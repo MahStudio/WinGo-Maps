@@ -209,13 +209,18 @@ namespace GoogleMapsUnofficial.View
                 var t = (await ViewModel.PlaceControls.SearchHelper.NearbySearch(Location.Position, 5));
                 if (t != null)
                 {
-                    var pic = t.results.Where(x => x.photos != null).LastOrDefault();
+                    var pic = t.results.Where(x => LastRightTap.DistanceTo(new Geopoint(new BasicGeoposition() { Latitude = x.geometry.location.lat, Longitude = x.geometry.location.lng })) < 1)
+                        .OrderBy(x=> LastRightTap.DistanceTo(new Geopoint(new BasicGeoposition() { Latitude = x.geometry.location.lat, Longitude = x.geometry.location.lng }))).FirstOrDefault();
+                    //var pic = t.results.Where(x => x.photos != null).LastOrDefault();
                     if (pic != null)
                     {
-                        PlaceImage.Source = new BitmapImage()
+                        if(pic.photos != null)
                         {
-                            UriSource = ViewModel.PhotoControls.PhotosHelper.GetPhotoUri(pic.photos.FirstOrDefault().photo_reference, 350, 350)
-                        };
+                            PlaceImage.Source = new BitmapImage()
+                            {
+                                UriSource = ViewModel.PhotoControls.PhotosHelper.GetPhotoUri(pic.photos.FirstOrDefault().photo_reference, 350, 350)
+                            };
+                        }
                         var det = await ViewModel.PlaceControls.PlaceDetailsHelper.GetPlaceDetails(pic.place_id);
                         if (det != null)
                         {
@@ -250,23 +255,26 @@ namespace GoogleMapsUnofficial.View
                             PlaceAddress.Text = pic.vicinity;
                         }
                     }
-                    else
-                    {
-                        var res = (await GeocodeHelper.GetInfo(Location)).results.FirstOrDefault();
-                        if (res != null)
-                        {
-                            PlaceName.Text = res.address_components.FirstOrDefault().short_name;
-                            PlaceAddress.Text = res.formatted_address;
-                        }
-                        else
-                        {
-                            await new MessageDialog("We didn't find anything here. Maybe an internet connection issue.").ShowAsync();
-                            InfoPane.IsPaneOpen = false;
-                        }
-                    }
+                    //else
+                    //{
+                    //    var res = (await GeocodeHelper.GetInfo(Location)).results.FirstOrDefault();
+                    //    if (res != null)
+                    //    {
+                    //        PlaceName.Text = res.address_components.FirstOrDefault().short_name;
+                    //        PlaceAddress.Text = res.formatted_address;
+                    //    }
+                    //    else
+                    //    {
+                    //        await new MessageDialog("We didn't find anything here. Maybe an internet connection issue.").ShowAsync();
+                    //        InfoPane.IsPaneOpen = false;
+                    //    }
+                    //}
                 }
                 else
                 {
+                    await new MessageDialog("We didn't find anything here. Maybe an internet connection issue.").ShowAsync();
+                    InfoPane.IsPaneOpen = false;
+                    return;
                     var r1 = (await GeocodeHelper.GetInfo(Location));
                     if (r1 != null)
                     {
@@ -348,6 +356,7 @@ namespace GoogleMapsUnofficial.View
 
         private void InfoPane_PaneClosed(SplitView sender, object args)
         {
+            PlaceImage.Source = null;
             PlaceAddress.Text = "";
             PlaceName.Text = "";
             PlaceOpenNow.Text = "";

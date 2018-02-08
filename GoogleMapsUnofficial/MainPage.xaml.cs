@@ -10,6 +10,7 @@ using System.Linq;
 using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Foundation.Metadata;
@@ -88,7 +89,6 @@ namespace GoogleMapsUnofficial
             HMenuTopLst.Items.Add(new MenuClass { Text = "Offline Maps", Icon = "", Tag = "Offline Maps" });
             HMenuBottomLst.Items.Add(new MenuClass { Text = "Send feedback", Icon = "", Tag = "Send feedback" });
             HMenuBottomLst.Items.Add(new MenuClass { Text = "Settings", Icon = "", Tag = "Settings" });
-
             return;
         }
 

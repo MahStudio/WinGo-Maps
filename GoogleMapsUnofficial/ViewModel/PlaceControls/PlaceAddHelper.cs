@@ -9,11 +9,12 @@ using System.Threading.Tasks;
 namespace GoogleMapsUnofficial.ViewModel.PlaceControls
 {
     class PlaceAddHelper
-    {/// <summary>
-     /// Add a missing place to Google Maps 
-     /// </summary>
-     /// <param name="PlaceInfo">Information about the place you want to add</param>
-     /// <returns>return status about the place you added</returns>
+    {
+        /// <summary>
+        /// Add a missing place to Google Maps 
+        /// </summary>
+        /// <param name="PlaceInfo">Information about the place you want to add</param>
+        /// <returns>return status about the place you added</returns>
         public static async Task<Response> AddPlace(Rootobject PlaceInfo)
         {
             try
