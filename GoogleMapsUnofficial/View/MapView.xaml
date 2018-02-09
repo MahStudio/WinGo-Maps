@@ -134,7 +134,9 @@
                                                                 <RowDefinition Height="Auto"/>
                                                                 <RowDefinition Height="Auto"/>
                                                             </Grid.RowDefinitions>
-                                                            <TextBlock Grid.Row="0" Foreground="#808284" TextAlignment="DetectFromContent" MaxLines="1" FontWeight="SemiBold" Text="{Binding author_name}"/>
+                                                            <HyperlinkButton Grid.Row="0" NavigateUri="{Binding author_url}" Foreground="#808284" FontWeight="SemiBold">
+                                                                <TextBlock Text="{Binding author_name}" TextAlignment="DetectFromContent" MaxLines="1"/>
+                                                            </HyperlinkButton>
                                                             <TextBlock TextWrapping="Wrap" Foreground="#808284" TextAlignment="DetectFromContent" Grid.Row="1" Text="{Binding text}" Margin="0,8,0,0"/>
                                                         </Grid>
                                                     </Grid>

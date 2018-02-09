@@ -254,7 +254,7 @@ namespace GoogleMapsUnofficial.View
                             {
                                 PlaceReviews.ItemsSource = det.result.reviews;
                                 PlaceReviewsItem.IsEnabled = true;
-                                //det.result.reviews.First().text
+                                //det.result.reviews.First().author_url
                             }
                         }
                         else

@@ -27,12 +27,12 @@
             <Task Type="timer" />
           </BackgroundTasks>
         </Extension>
-        <Extension xmlns="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" Category="windows.appUriHandler">
+        <!--<Extension xmlns="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" Category="windows.appUriHandler">
           <AppUriHandler>
             <Host Name="google.com" />
             <Host Name="www.google.com" />
           </AppUriHandler>
-        </Extension>
+        </Extension>-->
       </Extensions>
     </Application>
   </Applications>
