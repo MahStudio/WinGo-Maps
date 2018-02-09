@@ -26,6 +26,15 @@ NuGet Library to work with Google Map APIs will be available soon too.
 
 -Save Favorite places (+Sync between devices)
 
+# Screenshots
+![Screenshot](http://s9.picofile.com/file/8319001000/image_2018_02_09_23_23_27.png)
+
+![Screenshot](http://s8.picofile.com/file/8319001034/image_2018_02_09_23_23_01.png)
+
+![Screenshot](http://s8.picofile.com/file/8319001042/image_2018_02_09_23_25_39.png)
+
+![Screenshot](http://s8.picofile.com/file/8319001100/image_2018_02_09_23_28_07.png)
+
 # Building Solution
 Right click on the solution file in Visual Studio solution explorer and add a new Class called AppCore.cs
 
