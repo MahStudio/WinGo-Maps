@@ -252,7 +252,7 @@ namespace GoogleMapsUnofficial.View
                             PlaceRateItem.IsEnabled = true;
                             if(det.result.reviews != null)
                             {
-                                PlaceReviews.ItemsSource = det.result.reviews;
+                                PlaceReviewsItem.ItemsSource = det.result.reviews;
                                 PlaceReviewsItem.IsEnabled = true;
                                 //det.result.reviews.First().author_url
                             }
@@ -377,7 +377,7 @@ namespace GoogleMapsUnofficial.View
             PlaceWebSiteItem.IsEnabled = false;
             MoreInfoGrid.Visibility = Visibility.Collapsed;
             MoreInfoHyperLink.Visibility = Visibility.Visible;
-            PlaceReviews.ItemsSource = null;
+            PlaceReviewsItem.ItemsSource = null;
             PlaceReviewsItem.IsEnabled = false;
         }
 

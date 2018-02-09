@@ -119,10 +119,10 @@
                                             <TextBlock x:Name="PlaceRate" Grid.Column="1" Foreground="#808284"/>
                                         </Grid>
                                     </ListViewItem>
-                                    <ListViewItem x:Name="PlaceReviewsItem" IsEnabled="False" Background="Transparent" Grid.Row="4" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
-                                        <ItemsControl x:Name="PlaceReviews">
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
+                                    <ItemsControl x:Name="PlaceReviewsItem" IsEnabled="False" Background="Transparent" Grid.Row="4" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <ListViewItem>
                                                     <Grid Margin="0,8">
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="48"/>
@@ -140,10 +140,10 @@
                                                             <TextBlock TextWrapping="Wrap" Foreground="#808284" TextAlignment="DetectFromContent" Grid.Row="1" Text="{Binding text}" Margin="0,8,0,0"/>
                                                         </Grid>
                                                     </Grid>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
-                                    </ListViewItem>
+                                                </ListViewItem>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
                                 </Grid>
                             </Grid>
                         </Grid>
