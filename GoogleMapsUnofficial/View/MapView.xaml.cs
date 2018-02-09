@@ -248,6 +248,14 @@ namespace GoogleMapsUnofficial.View
                                 PlaceOpenNow.Text = MyStr;
                                 PlaceOpenNowItem.IsEnabled = true;
                             }
+                            PlaceRate.Text = det.result.rating.ToString();
+                            PlaceRateItem.IsEnabled = true;
+                            if(det.result.reviews != null)
+                            {
+                                PlaceReviews.ItemsSource = det.result.reviews;
+                                PlaceReviewsItem.IsEnabled = true;
+                                //det.result.reviews.First().text
+                            }
                         }
                         else
                         {
@@ -356,6 +364,8 @@ namespace GoogleMapsUnofficial.View
 
         private void InfoPane_PaneClosed(SplitView sender, object args)
         {
+            PlaceRate.Text = "0";
+            PlaceRateItem.IsEnabled = false;
             PlaceImage.Source = null;
             PlaceAddress.Text = "";
             PlaceName.Text = "";
@@ -367,6 +377,8 @@ namespace GoogleMapsUnofficial.View
             PlaceWebSiteItem.IsEnabled = false;
             MoreInfoGrid.Visibility = Visibility.Collapsed;
             MoreInfoHyperLink.Visibility = Visibility.Visible;
+            PlaceReviews.ItemsSource = null;
+            PlaceReviewsItem.IsEnabled = false;
         }
 
         private void MoreInfoHyperLink_Click(object sender, RoutedEventArgs e)

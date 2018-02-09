@@ -77,6 +77,7 @@
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
                                     <ListViewItem x:Name="PlacePhoneItem" IsEnabled="False" Tapped="PlacePhone_Click" Height="55" Background="Transparent" Grid.Row="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                                         <Grid>
@@ -89,7 +90,7 @@
                                         </Grid>
                                     </ListViewItem>
                                     <ListViewItem x:Name="PlaceOpenNowItem" IsEnabled="False" MinHeight="55" Height="Auto" Background="Transparent" Grid.Row="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
-                                        <Grid>
+                                        <Grid Margin="0,8">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="48"/>
                                                 <ColumnDefinition Width="*"/>
@@ -107,6 +108,39 @@
                                             <TextBlock Grid.Column="0" Text="&#xE774;" Foreground="#808284" FontSize="18" FontFamily="Segoe MDL2 Assets"/>
                                             <TextBlock x:Name="PlaceWebSite" Grid.Column="1" Foreground="#808284"/>
                                         </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem x:Name="PlaceRateItem" IsEnabled="False" Height="55" Background="Transparent" Grid.Row="3" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="48"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="&#xE224;" Foreground="#808284" FontSize="18" FontFamily="Segoe MDL2 Assets"/>
+                                            <TextBlock x:Name="PlaceRate" Grid.Column="1" Foreground="#808284"/>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem x:Name="PlaceReviewsItem" IsEnabled="False" Background="Transparent" Grid.Row="4" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                        <ItemsControl x:Name="PlaceReviews">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid Margin="0,8">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="48"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Image VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,0,8,0" Grid.Column="0" Source="{Binding profile_photo_url}"/>
+                                                        <Grid Grid.Column="1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="Auto"/>
+                                                                <RowDefinition Height="Auto"/>
+                                                            </Grid.RowDefinitions>
+                                                            <TextBlock Grid.Row="0" Foreground="#808284" TextAlignment="DetectFromContent" MaxLines="1" FontWeight="SemiBold" Text="{Binding author_name}"/>
+                                                            <TextBlock TextWrapping="Wrap" Foreground="#808284" TextAlignment="DetectFromContent" Grid.Row="1" Text="{Binding text}" Margin="0,8,0,0"/>
+                                                        </Grid>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
                                     </ListViewItem>
                                 </Grid>
                             </Grid>
