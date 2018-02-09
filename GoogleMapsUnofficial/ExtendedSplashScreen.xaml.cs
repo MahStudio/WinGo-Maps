@@ -32,6 +32,10 @@ namespace GoogleMapsUnofficial
 
         private void DispatcherTime_Tick(object sender, object e)
         {
+            if (Geolocator.DefaultGeoposition.HasValue && Geolocator.IsDefaultGeopositionRecommended)
+            {
+                MapViewVM.FastLoadGeoPosition = new Geopoint(Geolocator.DefaultGeoposition.Value);
+            }
             RemoveExtendedSplash();
         }
 
@@ -57,10 +61,11 @@ namespace GoogleMapsUnofficial
                 if (accessStatus == GeolocationAccessStatus.Allowed)
                 {
                     geolocator = new Geolocator();
-                    geolocator.ReportInterval = 5000;
-                    geolocator.DesiredAccuracyInMeters = 200;
+                    geolocator.MovementThreshold = 1;
+                    geolocator.ReportInterval = 1000;
+                    geolocator.DesiredAccuracyInMeters = 1;
                     Geoposition pos = await geolocator.GetGeopositionAsync();
-                    MapViewVM.FastLoadGeoPosition = pos;
+                    MapViewVM.FastLoadGeoPosition = pos.Coordinate.Point;
                     MapViewVM.GeoLocate = geolocator;
                 }
                 RemoveExtendedSplash();

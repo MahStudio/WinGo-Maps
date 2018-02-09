@@ -30,7 +30,7 @@ namespace GoogleMapsUnofficial.View.OfflineMapDownloader
         {
             this.InitializeComponent();
             Map.Style = MapStyle.None;
-            Map.Center = MapViewVM.FastLoadGeoPosition.Coordinate.Point;
+            Map.Center = MapViewVM.FastLoadGeoPosition;
             Map.ZoomLevel = 10;
             TopLeft.Visibility = Visibility.Collapsed;
             BottomRight.Visibility = Visibility.Collapsed;

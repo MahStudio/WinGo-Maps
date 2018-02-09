@@ -63,7 +63,7 @@ namespace GoogleMapsUnofficial.ViewModel
         public ViewModel UserLocation { get; set; }
         Geolocator geolocator = new Geolocator();
         public static Geolocator GeoLocate { get; set; }
-        public static Geoposition FastLoadGeoPosition { get; set; }
+        public static Geopoint FastLoadGeoPosition { get; set; }
         public MapViewVM()
         {
             CoreWindow = CoreWindow.GetForCurrentThread();
@@ -92,11 +92,11 @@ namespace GoogleMapsUnofficial.ViewModel
                             //geolocator.StatusChanged += Geolocator_StatusChanged;
                             geolocator.PositionChanged += Geolocator_PositionChanged;
                             // Carry out the operation.
-                            Geoposition pos = FastLoadGeoPosition;
+                            Geopoint pos = FastLoadGeoPosition;
 
                             var MyLandmarks = new List<MapElement>();
 
-                            Geopoint snPoint = new Geopoint(new BasicGeoposition { Latitude = pos.Coordinate.Point.Position.Latitude, Longitude = pos.Coordinate.Point.Position.Longitude });
+                            Geopoint snPoint = new Geopoint(new BasicGeoposition { Latitude = pos.Position.Latitude, Longitude = pos.Position.Longitude });
                             UserLocation.Location = snPoint;
                             await Task.Delay(10);
                             Map = View.MapView.MapControl;

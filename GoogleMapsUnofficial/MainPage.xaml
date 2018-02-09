@@ -36,7 +36,7 @@
                                 </Ellipse>
                                 <StackPanel Grid.Column="1">
                                     <TextBlock FontWeight="SemiBold" Text="WinGo Maps"/>
-                                    <TextBlock Text="Internal build"/>
+                                    <TextBlock Text="MahStudio"/>
                                 </StackPanel>
                             </Grid>
                         </ListViewItem>

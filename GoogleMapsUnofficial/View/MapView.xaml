@@ -124,21 +124,31 @@
                                             <DataTemplate>
                                                 <ListViewItem>
                                                     <Grid Margin="0,8">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto"/>
+                                                            <RowDefinition Height="Auto"/>
+                                                        </Grid.RowDefinitions>
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="48"/>
                                                             <ColumnDefinition Width="*"/>
                                                         </Grid.ColumnDefinitions>
-                                                        <Image VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,0,8,0" Grid.Column="0" Source="{Binding profile_photo_url}"/>
-                                                        <Grid Grid.Column="1">
+                                                        <Image Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,0,8,0" Grid.Column="0" Source="{Binding profile_photo_url}"/>
+                                                        <Grid Grid.Column="1" Grid.Row="0">
                                                             <Grid.RowDefinitions>
                                                                 <RowDefinition Height="Auto"/>
                                                                 <RowDefinition Height="Auto"/>
                                                             </Grid.RowDefinitions>
                                                             <HyperlinkButton Grid.Row="0" NavigateUri="{Binding author_url}" Foreground="#808284" FontWeight="SemiBold">
-                                                                <TextBlock Text="{Binding author_name}" TextAlignment="DetectFromContent" MaxLines="1"/>
+                                                                <TextBlock TextAlignment="DetectFromContent" MaxLines="1">
+                                                                    <Run Text="{Binding author_name}"/>
+                                                                    <Run Text="("/>
+                                                                    <Run Text="{Binding rating}"/>
+                                                                    <Run Text=")"/>
+                                                                </TextBlock>
                                                             </HyperlinkButton>
                                                             <TextBlock TextWrapping="Wrap" Foreground="#808284" TextAlignment="DetectFromContent" Grid.Row="1" Text="{Binding text}" Margin="0,8,0,0"/>
                                                         </Grid>
+                                                        <TextBlock Text="{Binding relative_time_description}" Foreground="#808284" TextAlignment="DetectFromContent" Grid.Row="1" Grid.ColumnSpan="2"/>
                                                     </Grid>
                                                 </ListViewItem>
                                             </DataTemplate>
