@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -99,8 +100,12 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             var select = (args.SelectedItem as PlaceAutoComplete.Prediction);
             if (select == null) return;
             var res = await GeocodeHelper.GetInfo(select.place_id);
-            if (res == null) return;
             SearchBox.Text = "";
+            if (res == null || res.results.Length == 0)
+            {
+                await new MessageDialog("We couldn't find place location!").ShowAsync();
+                return;
+            }
             var ploc = res.results.FirstOrDefault().geometry.location;
             MapView.MapControl.Center = new Geopoint(
                 new BasicGeoposition()
