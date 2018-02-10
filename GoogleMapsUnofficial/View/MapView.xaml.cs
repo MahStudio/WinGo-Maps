@@ -387,5 +387,10 @@ namespace GoogleMapsUnofficial.View
         {
             DirectionsControl.Origin = LastRightTap;
         }
+
+        private void Map_MapTapped(MapControl sender, MapInputEventArgs args)
+        {
+            RunMapRightTapped(Map, args.Location);
+        }
     }
 }
