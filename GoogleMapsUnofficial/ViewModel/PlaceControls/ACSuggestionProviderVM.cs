@@ -3,7 +3,6 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using Windows.Devices.Geolocation;
 using Windows.UI.Core;
 
 namespace GoogleMapsUnofficial.ViewModel.PlaceControls

@@ -3,7 +3,6 @@ using GoogleMapsUnofficial.ViewModel.SettingsView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Calls;
 using Windows.ApplicationModel.DataTransfer;
@@ -11,16 +10,13 @@ using Windows.Devices.Geolocation;
 using Windows.Foundation.Metadata;
 using Windows.System;
 using Windows.UI;
-using Windows.UI.Composition;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
-using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
-using Windows.UI.Xaml.Shapes;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -210,11 +206,11 @@ namespace GoogleMapsUnofficial.View
                 if (t != null)
                 {
                     var pic = t.results.Where(x => LastRightTap.DistanceTo(new Geopoint(new BasicGeoposition() { Latitude = x.geometry.location.lat, Longitude = x.geometry.location.lng })) < 1)
-                        .OrderBy(x=> LastRightTap.DistanceTo(new Geopoint(new BasicGeoposition() { Latitude = x.geometry.location.lat, Longitude = x.geometry.location.lng }))).FirstOrDefault();
+                        .OrderBy(x => LastRightTap.DistanceTo(new Geopoint(new BasicGeoposition() { Latitude = x.geometry.location.lat, Longitude = x.geometry.location.lng }))).FirstOrDefault();
                     //var pic = t.results.Where(x => x.photos != null).LastOrDefault();
                     if (pic != null)
                     {
-                        if(pic.photos != null)
+                        if (pic.photos != null)
                         {
                             PlaceImage.Source = new BitmapImage()
                             {
@@ -226,21 +222,21 @@ namespace GoogleMapsUnofficial.View
                         {
                             PlaceAddress.Text = det.result.formatted_address;
                             PlaceName.Text = det.result.name;
-                            if(det.result.formatted_phone_number != null)
+                            if (det.result.formatted_phone_number != null)
                             {
                                 PlacePhone.Text = det.result.formatted_phone_number;
                                 PlacePhoneItem.IsEnabled = true;
                             }
-                            if(det.result.website != null)
+                            if (det.result.website != null)
                             {
                                 PlaceWebSite.Text = det.result.website;
                                 PlaceWebSiteItem.IsEnabled = true;
                             }
-                            if(det.result.opening_hours != null)
+                            if (det.result.opening_hours != null)
                             {
                                 var hours = det.result.opening_hours.weekday_text;
                                 string MyStr = "Is open : " + det.result.opening_hours.open_now;
-                                if(hours != null)
+                                if (hours != null)
                                     foreach (var item in hours)
                                     {
                                         MyStr += Environment.NewLine + item;
@@ -250,7 +246,7 @@ namespace GoogleMapsUnofficial.View
                             }
                             PlaceRate.Text = det.result.rating.ToString();
                             PlaceRateItem.IsEnabled = true;
-                            if(det.result.reviews != null)
+                            if (det.result.reviews != null)
                             {
                                 PlaceReviewsItem.ItemsSource = det.result.reviews;
                                 PlaceReviewsItem.IsEnabled = true;
@@ -386,5 +382,6 @@ namespace GoogleMapsUnofficial.View
             MoreInfoGrid.Visibility = Visibility.Visible;
             MoreInfoHyperLink.Visibility = Visibility.Collapsed;
         }
+        
     }
 }

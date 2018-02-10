@@ -3,7 +3,6 @@ using System.Linq;
 using Windows.Web.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using GoogleMapsUnofficial.View;
 using Windows.Devices.Geolocation;
 
 namespace GoogleMapsUnofficial.ViewModel.GeocodControls

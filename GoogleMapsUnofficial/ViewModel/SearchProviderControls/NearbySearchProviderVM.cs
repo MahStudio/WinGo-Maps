@@ -1,12 +1,8 @@
 ﻿using GoogleMapsUnofficial.View;
 using GoogleMapsUnofficial.ViewModel.PlaceControls;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Core;
 
 namespace GoogleMapsUnofficial.ViewModel.SearchProviderControls
