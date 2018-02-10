@@ -382,6 +382,10 @@ namespace GoogleMapsUnofficial.View
             MoreInfoGrid.Visibility = Visibility.Visible;
             MoreInfoHyperLink.Visibility = Visibility.Collapsed;
         }
-        
+
+        private void SetOrigin_Click(object sender, TappedRoutedEventArgs e)
+        {
+            DirectionsControl.Origin = LastRightTap;
+        }
     }
 }

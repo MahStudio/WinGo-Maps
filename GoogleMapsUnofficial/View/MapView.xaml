@@ -40,8 +40,19 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <ListViewItem Tapped="AddBookmark_Click" Height="55" Background="Transparent" Grid.Row="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                <ListViewItem Tapped="SetOrigin_Click" Height="55" Background="Transparent" Grid.Row="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="48"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="&#xE7C1;" Foreground="#808284" FontSize="18" FontFamily="Segoe MDL2 Assets"/>
+                                        <TextBlock Grid.Column="1" Text="Set as origin" Foreground="#808284"/>
+                                    </Grid>
+                                </ListViewItem>
+                                <ListViewItem Tapped="AddBookmark_Click" Height="55" Background="Transparent" Grid.Row="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="48"/>
@@ -51,7 +62,7 @@
                                         <TextBlock Grid.Column="1" Text="Bookmark" Foreground="#808284"/>
                                     </Grid>
                                 </ListViewItem>
-                                <ListViewItem Tapped="AddWaypoint_Click" Height="55" Background="Transparent" Grid.Row="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                <ListViewItem Tapped="AddWaypoint_Click" Height="55" Background="Transparent" Grid.Row="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="48"/>
@@ -61,7 +72,7 @@
                                         <TextBlock Grid.Column="1" Text="Add waypoint" Foreground="#808284"/>
                                     </Grid>
                                 </ListViewItem>
-                                <ListViewItem Tapped="ShareLocation_Click" Height="55" Background="Transparent" Grid.Row="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                <ListViewItem Tapped="ShareLocation_Click" Height="55" Background="Transparent" Grid.Row="3" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="48"/>
@@ -71,7 +82,7 @@
                                         <TextBlock Grid.Column="1" Text="Share" Foreground="#808284"/>
                                     </Grid>
                                 </ListViewItem>
-                                <Grid x:Name="MoreInfoGrid" Visibility="Collapsed" Grid.Row="3" Margin="0,10">
+                                <Grid x:Name="MoreInfoGrid" Visibility="Collapsed" Grid.Row="4" Margin="0,10">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
