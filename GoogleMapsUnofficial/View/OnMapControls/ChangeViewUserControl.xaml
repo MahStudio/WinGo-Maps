@@ -13,7 +13,7 @@
         <ResourceDictionary Source="/Resources/CustomControls/DotButton.xaml"/>
     </UserControl.Resources>
     <Grid>
-        <Button Width="35" Height="35" Style="{StaticResource dotbut}" VerticalAlignment="Top" HorizontalAlignment="Right" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" FontSize="18" Content="&#xE81E;" FontFamily="Segoe MDL2 Assets">
+        <Button x:Name="CVBTN" Width="35" Height="35" Style="{StaticResource dotbut}" VerticalAlignment="Top" HorizontalAlignment="Right" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" FontSize="18" Content="&#xE81E;" FontFamily="Segoe MDL2 Assets">
             <Button.Flyout>
                 <Flyout x:Name="FL" Opened="Flyout_Opened" Placement="Left" LightDismissOverlayMode="On">
                     <Grid>

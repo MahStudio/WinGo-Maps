@@ -17,6 +17,8 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             AllowOverstretch = SettingsSetters.GetAllowOverstretch();
             FadeAnimationEnabled = SettingsSetters.GetFadeAnimationEnabled();
             this.InitializeComponent();
+            if (!InternalHelper.InternetConnection())
+                CVBTN.IsEnabled = false;
         }
 
         private void Flyout_Opened(object sender, object e)
