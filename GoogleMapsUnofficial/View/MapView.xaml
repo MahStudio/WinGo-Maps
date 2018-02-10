@@ -133,7 +133,7 @@
                                     <ItemsControl x:Name="PlaceReviewsItem" IsEnabled="False" Background="Transparent" Grid.Row="4" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <ListViewItem>
+                                                <ListViewItem Style="{StaticResource ListViewStrecher}">
                                                     <Grid Margin="0,8">
                                                         <Grid.RowDefinitions>
                                                             <RowDefinition Height="Auto"/>
