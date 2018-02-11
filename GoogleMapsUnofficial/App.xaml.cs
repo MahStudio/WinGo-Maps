@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
@@ -76,6 +77,10 @@ namespace GoogleMapsUnofficial
                 {
                     //TODO: Load state from previously suspended application
                 }
+                if(e.Kind == ActivationKind.VoiceCommand)
+                {
+
+                }
             }
             try
             {
@@ -121,13 +126,27 @@ namespace GoogleMapsUnofficial
             }
             catch { }
             StartFluent();
+            SplashScreen splashScreen = args.SplashScreen;
+            ExtendedSplashScreen eSplash = null;
+            if (args.Kind == ActivationKind.VoiceCommand)
+            {
+                var voiceArgs = (VoiceCommandActivatedEventArgs)args;
+                var Rule = voiceArgs.Result.RulePath.FirstOrDefault();
+                var input = voiceArgs.Result.SemanticInterpretation.Properties.Where(x => x.Key == "UserInput").FirstOrDefault().Value.FirstOrDefault();
+                if(Rule == "DirectionsCommand")
+                {
+
+                }
+                if(Rule == "FindPlace")
+                {
+                    eSplash = new ExtendedSplashScreen(splashScreen, new Uri("https://google.com/maps/@searchplace=" + input, UriKind.RelativeOrAbsolute));
+                }
+            }
             if (args.Kind == ActivationKind.Protocol)
             {
                 var protocolArgs = (ProtocolActivatedEventArgs)args;
                 var x = protocolArgs.Uri.ToString();
 
-                SplashScreen splashScreen = args.SplashScreen;
-                ExtendedSplashScreen eSplash = null;
                 // Register an event handler to be executed when the splash screen has been dismissed.
                 //Type deepLinkPageType = typeof(PageLogin);
                 if (rootFrame.Content == null)
@@ -148,9 +167,9 @@ namespace GoogleMapsUnofficial
                             break;
                     }
                 }
-                Window.Current.Content = eSplash;
-                Window.Current.Activate();
             }
+            Window.Current.Content = eSplash;
+            Window.Current.Activate();
         }
 
         /// <summary>

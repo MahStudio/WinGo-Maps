@@ -75,9 +75,9 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
                 if (Location != null && Radius == 0) { throw new Exception("Location and radius values must having values"); }
                 string para = "";
                 para += $"query={query.Replace(" ", "+")}";
-                if (Location != null) para += $"location={Location.Position.Latitude},{Location.Position.Longitude}&radius={Radius}";
+                if (Location != null) para += $"&location={Location.Position.Latitude},{Location.Position.Longitude}&radius={Radius}";
                 if (Region != "") para += $"&region={Region}"; if (MinPrice != SearchPriceEnum.NonSpecified) para += $"&minprice={(int)MinPrice}"; if (MaxPrice != SearchPriceEnum.NonSpecified) para += $"&maxprice={(int)MaxPrice}"; if (type != PlaceTypesEnum.NOTMENTIONED) para += $"&type={type.ToString()}";
-                para += $"&key={AppCore.GoogleMapAPIKey}&language={AppCore.GoogleMapRequestsLanguage}";
+                para += $"&language={AppCore.GoogleMapRequestsLanguage}&key={AppCore.GoogleMapAPIKey}";
                 var http = new HttpClient();
                 http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);
                 var st = await http.GetStringAsync(new Uri("https://maps.googleapis.com/maps/api/place/textsearch/json?" + para, UriKind.RelativeOrAbsolute));

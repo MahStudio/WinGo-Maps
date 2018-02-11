@@ -160,23 +160,48 @@ namespace GoogleMapsUnofficial.View
                     }
                 }
                 //Display a map
-                if (((Uri)e.Parameter).Segments[2].ToLower() == "@")
+                if (((Uri)e.Parameter).Segments[2].ToLower().StartsWith("@"))
                 {
                     await Task.Delay(1500);
-                    var parameters = ((Uri)e.Parameter).DecodeQueryParameters();
-                    var mapaction = parameters.Where(x => x.Key == "map_action").FirstOrDefault();
-                    if (mapaction.Value != null && mapaction.Value == "pano")
+                    try
                     {
-                        await new MessageDialog("StreetView Not Supported yet").ShowAsync();
-                    }
-                    var center = parameters.Where(x => x.Key == "center").FirstOrDefault();
-                    var zoom = parameters.Where(x => x.Key == "zoom").FirstOrDefault();
-                    var cp = center.Value.Split(',');
-                    BasicGeoposition pointer = new BasicGeoposition() { Latitude = Convert.ToDouble(cp[0]), Longitude = Convert.ToDouble(cp[1]) };
-                    Map.Center = new Geopoint(pointer);
-                    if (zoom.Value != null)
-                        Map.ZoomLevel = Convert.ToDouble(zoom.Value);
+                        if (!e.Parameter.ToString().Contains("searchplace"))
+                        {
+                            var parameters = ((Uri)e.Parameter).DecodeQueryParameters();
+                            var mapaction = parameters.Where(x => x.Key == "map_action").FirstOrDefault();
+                            if (mapaction.Value != null && mapaction.Value == "pano")
+                            {
+                                await new MessageDialog("StreetView Not Supported yet").ShowAsync();
+                            }
+                            var center = parameters.Where(x => x.Key == "center").FirstOrDefault();
+                            var zoom = parameters.Where(x => x.Key == "zoom").FirstOrDefault();
+                            var cp = center.Value.Split(',');
+                            BasicGeoposition pointer = new BasicGeoposition() { Latitude = Convert.ToDouble(cp[0]), Longitude = Convert.ToDouble(cp[1]) };
+                            Map.Center = new Geopoint(pointer);
+                            if (zoom.Value != null)
+                                Map.ZoomLevel = Convert.ToDouble(zoom.Value);
 
+                        }
+                        else
+                        {
+                            var search = ((Uri)e.Parameter).ToString().Replace("https://google.com/maps/@searchplace=", "");
+                            //var search = parameters.Where(x => x.Key == "searchplace").FirstOrDefault();
+                            var res = await ViewModel.PlaceControls.SearchHelper.TextSearch(search,Location:Map.Center, Radius:15000);
+                            if (res == null || res.results.Length == 0)
+                            {
+                                await new MessageDialog("No search results found").ShowAsync();
+                                return;
+                            }
+                            var ploc = res.results.FirstOrDefault().geometry.location;
+                            var geopoint = new Geopoint(new BasicGeoposition() { Latitude = ploc.lat, Longitude = ploc.lng });
+                            Map.Center = geopoint;
+                            Map.ZoomLevel = 16;
+                            SearchResultPoint = geopoint;
+                        }
+                    }
+                    catch
+                    {
+                    }
                 }
             }
             if (ApiInformation.IsTypePresent("Windows.UI.Xaml.Media.AcrylicBrush"))

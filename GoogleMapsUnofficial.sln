@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleMapsUnofficial", "Goo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveTileTask", "LiveTileTask\LiveTileTask.csproj", "{F5E2423A-05F4-4877-B31D-F3C10DF6082F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinGoService", "WinGoService\WinGoService.csproj", "{DF428A8C-75D3-4551-9636-0AE8CB1A0FAD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,22 @@ Global
 		{F5E2423A-05F4-4877-B31D-F3C10DF6082F}.Release|x64.Build.0 = Release|x64
 		{F5E2423A-05F4-4877-B31D-F3C10DF6082F}.Release|x86.ActiveCfg = Release|x86
 		{F5E2423A-05F4-4877-B31D-F3C10DF6082F}.Release|x86.Build.0 = Release|x86
+		{DF428A8C-75D3-4551-9636-0AE8CB1A0FAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF428A8C-75D3-4551-9636-0AE8CB1A0FAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF428A8C-75D3-4551-9636-0AE8CB1A0FAD}.Debug|ARM.ActiveCfg = Debug|ARM
+		{DF428A8C-75D3-4551-9636-0AE8CB1A0FAD}.Debug|ARM.Build.0 = Debug|ARM
+		{DF428A8C-75D3-4551-9636-0AE8CB1A0FAD}.Debug|x64.ActiveCfg = Debug|x64
+		{DF428A8C-75D3-4551-9636-0AE8CB1A0FAD}.Debug|x64.Build.0 = Debug|x64
+		{DF428A8C-75D3-4551-9636-0AE8CB1A0FAD}.Debug|x86.ActiveCfg = Debug|x86
+		{DF428A8C-75D3-4551-9636-0AE8CB1A0FAD}.Debug|x86.Build.0 = Debug|x86
+		{DF428A8C-75D3-4551-9636-0AE8CB1A0FAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF428A8C-75D3-4551-9636-0AE8CB1A0FAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF428A8C-75D3-4551-9636-0AE8CB1A0FAD}.Release|ARM.ActiveCfg = Release|ARM
+		{DF428A8C-75D3-4551-9636-0AE8CB1A0FAD}.Release|ARM.Build.0 = Release|ARM
+		{DF428A8C-75D3-4551-9636-0AE8CB1A0FAD}.Release|x64.ActiveCfg = Release|x64
+		{DF428A8C-75D3-4551-9636-0AE8CB1A0FAD}.Release|x64.Build.0 = Release|x64
+		{DF428A8C-75D3-4551-9636-0AE8CB1A0FAD}.Release|x86.ActiveCfg = Release|x86
+		{DF428A8C-75D3-4551-9636-0AE8CB1A0FAD}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

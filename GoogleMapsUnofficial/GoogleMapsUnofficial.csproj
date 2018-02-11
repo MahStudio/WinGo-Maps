@@ -350,6 +350,10 @@
       <Project>{f5e2423a-05f4-4877-b31d-f3c10df6082f}</Project>
       <Name>LiveTileTask</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WinGoService\WinGoService.csproj">
+      <Project>{df428a8c-75d3-4551-9636-0ae8cb1a0fad}</Project>
+      <Name>WinGoService</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

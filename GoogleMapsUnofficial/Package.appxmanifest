@@ -27,6 +27,10 @@
             <Task Type="timer" />
           </BackgroundTasks>
         </Extension>
+        <uap:Extension Category="windows.appService" EntryPoint="WinGoService.Cortana">
+          <uap:AppService Name="CortanaBackgroundTask" />
+        </uap:Extension>
+        <uap:Extension Category="windows.personalAssistantLaunch" />
         <!--<Extension xmlns="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" Category="windows.appUriHandler">
           <AppUriHandler>
             <Host Name="google.com" />
