@@ -5,12 +5,138 @@
     xmlns:local="using:GoogleMapsUnofficial"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" 
+    xmlns:Core="using:Microsoft.Xaml.Interactions.Core" 
+    xmlns:Media="using:Microsoft.Xaml.Interactions.Media"
     mc:Ignorable="d">
+    
+    <Page.Resources>
+        <Storyboard x:Name="Storyboard1"  AutoReverse="False" RepeatBehavior="Forever">
+            <DoubleAnimation Duration="0:0:4" To="720" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="Ring1" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <SineEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Duration="0:0:4.5" To="720" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="Ring2" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <SineEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Duration="0:0:5" To="720" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="Ring3" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <SineEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Duration="0:0:5.5" To="720" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="Ring4" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <SineEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation Duration="0:0:6" To="720" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="Ring5" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <SineEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Ring1">
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:4" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Ring2">
+                <EasingDoubleKeyFrame KeyTime="0:0:1.5" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:4.5" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Ring3">
+                <EasingDoubleKeyFrame KeyTime="0:0:2" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:5" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Ring4">
+                <EasingDoubleKeyFrame KeyTime="0:0:2.5" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:5.5" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Ring5">
+                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:6" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimation Duration="0:0:6" To="360" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="Earth" d:IsOptimized="True"/>
+        </Storyboard>
+    </Page.Resources>
+    <Interactivity:Interaction.Behaviors>
+        <Core:EventTriggerBehavior EventName="Loaded">
+            <Media:ControlStoryboardAction Storyboard="{StaticResource Storyboard1}"/>
+        </Core:EventTriggerBehavior>
+    </Interactivity:Interaction.Behaviors>
+    <Grid x:Name="Grid1"  Background="{ThemeResource SystemControlBackgroundAccentBrush}">
 
-    <Grid Background="{ThemeResource SystemControlBackgroundAccentBrush}">
-        <Image Source="Assets/Square150x150Logo.scale-200.png" Height="300" Width="300" VerticalAlignment="Center"/>
+        <!--<Image Source="Assets/Square150x150Logo.scale-200.png" Height="300" Width="300" VerticalAlignment="Center"/>
         <ProgressRing Foreground="White" IsActive="True"
         MaxHeight="50" MinHeight="50" MaxWidth="80" Margin="0,400,0,0"
-        MinWidth="30" Width="78" Height="74"/>
+        MinWidth="30" Width="78" Height="74"/>-->
+        <Grid>
+            <Grid.Resources>
+                <DataTemplate x:Name="Dot1">
+                    <Path Data="M386.25,288.75 L373,268.25 391.5,249 388.75,245.5 378.75,255.25 365.25,239.5 375,228.75 373,226 362.75,236.5 348.75,220.5 358.75,210 357,207.5 347.25,218 332.75,202.25 356.25,178.5 370.25,194.75 359,206 360.25,208.25 372,196.5 386.25,213 374.75,224.25 376.75,227.25 388.25,215 402.75,231.5&#xd;&#xa;392.5,242.5 395,245.5 406.375,234.125 413,227.5 437.25,244 449.5,264.25 431,282.75 433.75,286.75 443,277.75 457,293.5 447.25,303.5 449,305.5 458.25,295.25 472.25,311.5 461.75,322.25 464.5,326 475.75,314.75 489,330.5 465.5,355.25 452.75,339.25 463.25,328 460.25,323.5 449,335&#xd;&#xa;434.75,319.25 446.25,307.5 444.75,305.5 433,316.5 419.75,301 430.75,289.5 428,285.5 409.5,304.5 z" Stretch="Uniform" Width="25" Height="25" Fill="#FFFFFFFF" RenderTransformOrigin="0.5,0.5">
+                        <Path.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="-45"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Path.RenderTransform>
+                    </Path>
+                </DataTemplate>
+                <DataTemplate x:Name="Dot2">
+                    <Path Data="M386.25,288.75 L373,268.25 391.5,249 388.75,245.5 378.75,255.25 365.25,239.5 375,228.75 373,226 362.75,236.5 348.75,220.5 358.75,210 357,207.5 347.25,218 332.75,202.25 356.25,178.5 370.25,194.75 359,206 360.25,208.25 372,196.5 386.25,213 374.75,224.25 376.75,227.25 388.25,215 402.75,231.5&#xd;&#xa;392.5,242.5 395,245.5 406.375,234.125 413,227.5 437.25,244 449.5,264.25 431,282.75 433.75,286.75 443,277.75 457,293.5 447.25,303.5 449,305.5 458.25,295.25 472.25,311.5 461.75,322.25 464.5,326 475.75,314.75 489,330.5 465.5,355.25 452.75,339.25 463.25,328 460.25,323.5 449,335&#xd;&#xa;434.75,319.25 446.25,307.5 444.75,305.5 433,316.5 419.75,301 430.75,289.5 428,285.5 409.5,304.5 z" Stretch="Uniform" Width="25" Height="25" Fill="#FFFFFFFF" RenderTransformOrigin="0.5,0.5">
+                        <Path.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="-45"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Path.RenderTransform>
+                    </Path>
+                </DataTemplate>
+            </Grid.Resources>
+            <Grid Height="200" Width="200">
+                <Grid x:Name="Ring1" RenderTransformOrigin="0.5,0.5" Opacity="0" >
+                    <Grid.RenderTransform>
+                        <CompositeTransform/>
+                    </Grid.RenderTransform>
+                    <ContentControl ContentTemplate="{StaticResource Dot1}" Content="{x:Null}" HorizontalAlignment="Center" />
+                </Grid>
+                <Grid x:Name="Ring2" RenderTransformOrigin="0.5,0.5" Opacity="0" >
+                    <Grid.RenderTransform>
+                        <CompositeTransform/>
+                    </Grid.RenderTransform>
+                    <ContentControl ContentTemplate="{StaticResource Dot2}" Content="{x:Null}" HorizontalAlignment="Center" />
+                </Grid>
+                <Grid x:Name="Ring3" RenderTransformOrigin="0.5,0.5" Opacity="0" >
+                    <Grid.RenderTransform>
+                        <CompositeTransform/>
+                    </Grid.RenderTransform>
+                    <ContentControl ContentTemplate="{StaticResource Dot1}" Content="{x:Null}" HorizontalAlignment="Center" />
+                </Grid>
+                <Grid x:Name="Ring4" RenderTransformOrigin="0.5,0.5" Opacity="0" >
+                    <Grid.RenderTransform>
+                        <CompositeTransform/>
+                    </Grid.RenderTransform>
+                    <ContentControl ContentTemplate="{StaticResource Dot2}" Content="{x:Null}" HorizontalAlignment="Center" />
+                </Grid>
+                <Grid x:Name="Ring5" RenderTransformOrigin="0.5,0.5" Opacity="0" >
+                    <Grid.RenderTransform>
+                        <CompositeTransform/>
+                    </Grid.RenderTransform>
+                    <ContentControl ContentTemplate="{StaticResource Dot1}" Content="{x:Null}" HorizontalAlignment="Center" />
+                </Grid>
+                <Grid x:Name="Earth" RenderTransformOrigin="0.5,0.5">
+                    <Grid.RenderTransform>
+                        <CompositeTransform/>
+                    </Grid.RenderTransform>
+                    <TextBlock Text="&#xE128;" FontFamily="Segoe MDL2 Assets" FontSize="94" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+            </Grid>
+        </Grid>
     </Grid>
+
 </Page>
