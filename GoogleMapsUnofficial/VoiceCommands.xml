@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
+  <CommandSet xml:lang="en" Name="EnglishCommands-us">
+    <!-- The CommandPrefix provides an alternative name for your app -->
+    <CommandPrefix>Wingo</CommandPrefix>
+    <!-- The CommandSet Example appears beside your app's name in the global help -->
+    <Example>Directions to somewhere</Example>
+    <Command Name="DirectionsCommand">
+      <Example>Directions to somewhere</Example>
+      <ListenFor>directions</ListenFor>
+      <Feedback>Here is directions to </Feedback>
+    </Command>
+  </CommandSet>
+
+  <!--<CommandSet xml:lang="en-gb" Name="EnglishCommands-gb">
+    <CommandPrefix>Resistor</CommandPrefix>
+    <Example>Open</Example>
+    <Command Name="OpenCommand">
+      <Example>Open</Example>
+      <ListenFor>Open</ListenFor>
+      <Feedback>I'm on it!</Feedback>
+      <Navigate Target="MainPage.xaml" />
+    </Command>
+  </CommandSet>-->
+</VoiceCommands>
