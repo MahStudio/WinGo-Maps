@@ -141,6 +141,10 @@ namespace GoogleMapsUnofficial
                 {
                     eSplash = new ExtendedSplashScreen(splashScreen, new Uri("https://google.com/maps/@searchplace=" + input, UriKind.RelativeOrAbsolute));
                 }
+                if(Rule == "WhereAmI")
+                {
+                    eSplash = new ExtendedSplashScreen(splashScreen);
+                }
             }
             if (args.Kind == ActivationKind.Protocol)
             {

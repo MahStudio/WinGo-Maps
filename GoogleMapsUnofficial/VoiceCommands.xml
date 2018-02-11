@@ -18,6 +18,13 @@
       <Navigate Target="MainPage.xaml"/>
     </Command>
     
+    <Command Name="WhereAmI">
+      <Example>Where Am I</Example>
+      <ListenFor>Where [am] [I] [am]</ListenFor>
+      <Feedback>Looking for Your location</Feedback>
+      <Navigate Target="MainPage.xaml"/>
+    </Command>
+    
     <PhraseTopic Label="UserInput" Scenario="Natural Language"/>
   </CommandSet>
 
