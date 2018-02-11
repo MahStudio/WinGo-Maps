@@ -30,13 +30,20 @@ namespace GoogleMapsUnofficial
             DispatcherTime.Start();
         }
 
-        private void DispatcherTime_Tick(object sender, object e)
+        private async void DispatcherTime_Tick(object sender, object e)
         {
-            if (Geolocator.DefaultGeoposition.HasValue && Geolocator.IsDefaultGeopositionRecommended)
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, delegate
             {
-                MapViewVM.FastLoadGeoPosition = new Geopoint(Geolocator.DefaultGeoposition.Value);
-            }
-            RemoveExtendedSplash();
+                try
+                {
+                    if (Geolocator.DefaultGeoposition.HasValue && Geolocator.IsDefaultGeopositionRecommended)
+                    {
+                        MapViewVM.FastLoadGeoPosition = new Geopoint(Geolocator.DefaultGeoposition.Value);
+                    }
+                }
+                catch { }
+                RemoveExtendedSplash();
+            });
         }
 
         private async void ExtendedSplashScreen_Loaded(object sender, RoutedEventArgs e)

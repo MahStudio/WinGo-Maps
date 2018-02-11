@@ -15,7 +15,6 @@
     </Page.DataContext>
 
     <Grid x:Name="MainGrid">
-
         <SplitView x:Name="InfoPane" PaneClosed="InfoPane_PaneClosed" IsPaneOpen="False">
             <SplitView.Pane>
                 <Grid x:Name="InfoPaneGrid">
