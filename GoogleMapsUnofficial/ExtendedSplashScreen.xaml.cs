@@ -35,6 +35,7 @@ namespace GoogleMapsUnofficial
             DispatcherTime.Tick += DispatcherTime_Tick;
             DispatcherTime.Start();
         }
+
         private void applyAcrylicAccent(Grid Grid1)
         {
             if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone) return;
