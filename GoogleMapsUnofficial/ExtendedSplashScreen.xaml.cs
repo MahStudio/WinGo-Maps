@@ -81,12 +81,16 @@ namespace GoogleMapsUnofficial
 
         async void RemoveExtendedSplash()
         {
-            DispatcherTime.Stop();
-            DispatcherTime.Tick -= DispatcherTime_Tick;
-            DispatcherTime = null;
-            await Task.Delay(500);
-            Window.Current.Content = new MainPage(para);
-            Window.Current.Activate();
+            try
+            {
+                DispatcherTime.Stop();
+                DispatcherTime.Tick -= DispatcherTime_Tick;
+                DispatcherTime = null;
+                await Task.Delay(500);
+                Window.Current.Content = new MainPage(para);
+                Window.Current.Activate();
+            }
+            catch { }
         }
     }
 }
