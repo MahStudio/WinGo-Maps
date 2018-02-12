@@ -44,15 +44,7 @@ namespace WinGoService
                     }
                     else
                     {
-                        if (text.Equals("I"))
-                        {
-                            RespondTouser("Hi, How are your doing ?");
-                        }
-                        else
-                        {
-                            //Here you call up any api's to create a meaning full response to user/call // services like Bot/Luis etc... to create a meaningful response.  
-                            RespondTouser("You Said ," + text);
-                        }
+                        RespondTouser("I can't access to your location! Where are you?");
                     }
                 }
                 catch (Exception ex) { }
@@ -70,18 +62,26 @@ namespace WinGoService
             if (point != null)
             {
                 destinationTile.Title = await GeocodeHelper.GetAddress(point);
-                var http = new HttpClient();
-                var httpres = await http.GetAsync(new Uri($"https://maps.googleapis.com/maps/api/staticmap?center={point.Position.Latitude},{point.Position.Longitude}&zoom=16&size=280x140&markers=Red|label:G|{point.Position.Latitude},{point.Position.Longitude}", UriKind.RelativeOrAbsolute));
-                var buf = await httpres.Content.ReadAsBufferAsync();
-                var f = await ApplicationData.Current.LocalFolder.CreateFileAsync("CortanaResp.png", CreationCollisionOption.OpenIfExists);
-                var fread = await f.OpenAsync(FileAccessMode.ReadWrite);
-                await fread.WriteAsync(buf);
-                fread.Dispose();
-                destinationTile.Image = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appdata:///local/CortanaResp.png", UriKind.RelativeOrAbsolute));
+                try
+                {
+                    var http = new HttpClient();
+                    var httpres = await http.GetAsync(new Uri($"https://maps.googleapis.com/maps/api/staticmap?center={point.Position.Latitude},{point.Position.Longitude}&zoom=16&size=280x140&markers=Red|label:G|{point.Position.Latitude},{point.Position.Longitude}", UriKind.RelativeOrAbsolute));
+                    var buf = await httpres.Content.ReadAsBufferAsync();
+                    var f = await ApplicationData.Current.LocalFolder.CreateFileAsync("CortanaResp.png", CreationCollisionOption.OpenIfExists);
+                    var fread = await f.OpenAsync(FileAccessMode.ReadWrite);
+                    await fread.WriteAsync(buf);
+                    fread.Dispose();
+                    destinationTile.Image = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appdata:///local/CortanaResp.png", UriKind.RelativeOrAbsolute));
+                }
+                catch
+                {
+                    destinationTile.Title = text;
+                    destinationTile.Image = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/
+                }
             }
             else
             {
-                destinationTile.Title = "Mashad, Iran";
+                destinationTile.Title = text;
                 destinationTile.Image = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/SplashScreen.scale-200.png", UriKind.RelativeOrAbsolute));
             }
             destinationsContentTiles.Add(destinationTile);
