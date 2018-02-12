@@ -76,7 +76,7 @@ namespace WinGoService
                 catch
                 {
                     destinationTile.Title = text;
-                    destinationTile.Image = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/
+                    destinationTile.Image = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/SplashScreen.scale-200.png", UriKind.RelativeOrAbsolute));
                 }
             }
             else

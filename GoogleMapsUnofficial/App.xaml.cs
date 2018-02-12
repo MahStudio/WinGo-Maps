@@ -135,7 +135,7 @@ namespace GoogleMapsUnofficial
                 var input = voiceArgs.Result.SemanticInterpretation.Properties.Where(x => x.Key == "UserInput").FirstOrDefault().Value.FirstOrDefault();
                 if(Rule == "DirectionsCommand")
                 {
-
+                    eSplash = new ExtendedSplashScreen(splashScreen, new Uri("https://google.com/maps/@searchplace=" + input, UriKind.RelativeOrAbsolute));
                 }
                 if(Rule == "FindPlace")
                 {
