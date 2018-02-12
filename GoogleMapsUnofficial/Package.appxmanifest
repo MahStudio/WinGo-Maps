@@ -28,7 +28,7 @@
           </BackgroundTasks>
         </Extension>
         <uap:Extension Category="windows.appService" EntryPoint="WinGoService.Cortana">
-          <uap:AppService Name="CortanaBackgroundTask" />
+          <uap:AppService Name="Cortana" />
         </uap:Extension>
         <uap:Extension Category="windows.personalAssistantLaunch" />
         <!--<Extension xmlns="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" Category="windows.appUriHandler">

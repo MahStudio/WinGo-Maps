@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
   <CommandSet xml:lang="en" Name="EnglishCommands_us">
-    <CommandPrefix>Wingo</CommandPrefix>
+    <CommandPrefix>Bingo</CommandPrefix>
     <Example>Directions to somewhere</Example>
     
     <Command Name="DirectionsCommand">
@@ -22,7 +22,7 @@
       <Example>Where Am I</Example>
       <ListenFor>Where [am] [I] [am]</ListenFor>
       <Feedback>Looking for Your location</Feedback>
-      <Navigate Target="MainPage.xaml"/>
+      <VoiceCommandService Target="Cortana" />
     </Command>
     
     <PhraseTopic Label="UserInput" Scenario="Natural Language"/>
