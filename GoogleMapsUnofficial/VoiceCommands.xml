@@ -2,7 +2,7 @@
 <VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.2">
   <CommandSet xml:lang="en" Name="EnglishCommands_us">
     <CommandPrefix>Bingo</CommandPrefix>
-    <Example>Directions to somewhere</Example>
+    <Example>Get me directions to somewhere</Example>
     
     <Command Name="DirectionsCommand">
       <Example>Directions to somewhere</Example>

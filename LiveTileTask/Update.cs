@@ -78,7 +78,7 @@ namespace LiveTileTask
         public double lat;
         public double lon;
         public int zoom;
-        public bool locationCoord()
+        public bool LocationCoord()
         {
             if (Math.Abs(this.lat) > 85.0511287798066)
                 return false;

@@ -47,7 +47,7 @@ namespace WinGoService
                         RespondTouser("I can't access to your location! Where are you?");
                     }
                 }
-                catch (Exception ex) { }
+                catch { }
             }
         }
         private async void RespondTouser(string text, Geopoint point = null)

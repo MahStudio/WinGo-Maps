@@ -11,6 +11,7 @@ using Windows.Foundation.Metadata;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Popups;
+using Windows.UI.StartScreen;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
@@ -180,13 +181,13 @@ namespace GoogleMapsUnofficial.View
                             Map.Center = new Geopoint(pointer);
                             if (zoom.Value != null)
                                 Map.ZoomLevel = Convert.ToDouble(zoom.Value);
-
+                            RunMapRightTapped(Map, new Geopoint(pointer));
                         }
                         else
                         {
                             var search = ((Uri)e.Parameter).ToString().Replace("https://google.com/maps/@searchplace=", "");
                             //var search = parameters.Where(x => x.Key == "searchplace").FirstOrDefault();
-                            var res = await ViewModel.PlaceControls.SearchHelper.TextSearch(search,Location:Map.Center, Radius:15000);
+                            var res = await ViewModel.PlaceControls.SearchHelper.TextSearch(search, Location: Map.Center, Radius: 15000);
                             if (res == null || res.results.Length == 0)
                             {
                                 await new MessageDialog("No search results found").ShowAsync();
@@ -369,7 +370,13 @@ namespace GoogleMapsUnofficial.View
 
         private async void AddBookmark_Click(object sender, TappedRoutedEventArgs e)
         {
-            await new MessageDialog("NotImplementedYet").ShowAsync();
+            Uri square150x150Logo = new Uri("ms-appx:///Assets/StoreLogo.png");
+            SecondaryTile tile = new SecondaryTile(new Random(1).Next(10000).ToString(), "Home", $"{LastRightTap.Position.Latitude},{LastRightTap.Position.Longitude}", square150x150Logo, TileSize.Square150x150);
+            if (PlaceName.Text != "") tile.DisplayName = PlaceName.Text;
+            tile.VisualElements.ShowNameOnSquare150x150Logo = true;
+            tile.VisualElements.ShowNameOnWide310x150Logo = true;
+            tile.VisualElements.Wide310x150Logo = new Uri("ms-appx:///Assets/Wide310x150Logo.scale-200.png");
+            await tile.RequestCreateAsync();
             InfoPane.IsPaneOpen = false;
         }
 

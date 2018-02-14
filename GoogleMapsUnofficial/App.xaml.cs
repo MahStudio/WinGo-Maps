@@ -6,6 +6,7 @@ using Windows.ApplicationModel.Core;
 using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -94,7 +95,16 @@ namespace GoogleMapsUnofficial
             Resources["HyperlinkButtonForeground"] = Color.FromArgb(255, 96, 165, 255);
             Resources["SystemControlBackgroundAccentBrush"] = Color.FromArgb(255, 96, 165, 255);
             SplashScreen splashScreen = e.SplashScreen;
-            var eSplash = new ExtendedSplashScreen(splashScreen);
+            ExtendedSplashScreen eSplash = null;
+            if (e.Arguments != "")
+            {
+                var sp = e.Arguments.Split(',');
+                eSplash = new ExtendedSplashScreen(splashScreen, new Uri($"https://google.com/maps/@?api=1&map_action=map&center={sp[0]},{sp[1]}&zoom=17", UriKind.RelativeOrAbsolute));
+            }
+            else
+            {
+                eSplash = new ExtendedSplashScreen(splashScreen);
+            }
             // Register an event handler to be executed when the splash screen has been dismissed.
             Window.Current.Content = eSplash;
             Window.Current.Activate();
@@ -128,6 +138,7 @@ namespace GoogleMapsUnofficial
             StartFluent();
             SplashScreen splashScreen = args.SplashScreen;
             ExtendedSplashScreen eSplash = null;
+            
             if (args.Kind == ActivationKind.VoiceCommand)
             {
                 var voiceArgs = (VoiceCommandActivatedEventArgs)args;

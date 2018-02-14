@@ -204,7 +204,7 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
                     poly.Add(p);
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 // logo it
             }

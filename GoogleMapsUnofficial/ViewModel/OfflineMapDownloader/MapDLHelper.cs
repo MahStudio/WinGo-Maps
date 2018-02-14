@@ -140,7 +140,7 @@ namespace GoogleMapsUnofficial.ViewModel.OfflineMapDownloader
                 outp.Dispose();
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
                 //ex.Message();
                 return false;

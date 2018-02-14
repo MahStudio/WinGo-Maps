@@ -30,13 +30,15 @@ namespace GoogleMapsUnofficial
             this.InitializeComponent();
             this.Loaded += ExtendedSplashScreen_Loaded;
             para = parameter;
-            DispatcherTime = new DispatcherTimer();
-            DispatcherTime.Interval = new TimeSpan(0, 0, 10);
+            DispatcherTime = new DispatcherTimer
+            {
+                Interval = new TimeSpan(0, 0, 10)
+            };
             DispatcherTime.Tick += DispatcherTime_Tick;
             DispatcherTime.Start();
         }
 
-        private void applyAcrylicAccent(Grid Grid1)
+        private void ApplyAcrylicAccent(Grid Grid1)
         {
             if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone) return;
             if (ApiInformation.IsTypePresent("Windows.UI.Xaml.Media.AcrylicBrush"))
@@ -98,7 +100,7 @@ namespace GoogleMapsUnofficial
         {
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
             {
-                applyAcrylicAccent(Grid1);
+                ApplyAcrylicAccent(Grid1);
                 await InstallVCD();
                 try
                 {
@@ -117,10 +119,12 @@ namespace GoogleMapsUnofficial
 
                 if (accessStatus == GeolocationAccessStatus.Allowed)
                 {
-                    geolocator = new Geolocator();
-                    geolocator.MovementThreshold = 1;
-                    geolocator.ReportInterval = 1000;
-                    geolocator.DesiredAccuracyInMeters = 1;
+                    geolocator = new Geolocator
+                    {
+                        MovementThreshold = 1,
+                        ReportInterval = 1000,
+                        DesiredAccuracyInMeters = 1
+                    };
                     Geoposition pos = await geolocator.GetGeopositionAsync();
                     MapViewVM.FastLoadGeoPosition = pos.Coordinate.Point;
                     MapViewVM.GeoLocate = geolocator;
