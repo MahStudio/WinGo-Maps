@@ -26,6 +26,8 @@ NuGet Library to work with Google Map APIs will be available soon too.
 
 -Save Favorite places (+Sync between devices)
 
+-Cortana Integration
+
 # Screenshots
 ![Screenshot](http://s9.picofile.com/file/8319001000/image_2018_02_09_23_23_27.png)
 
