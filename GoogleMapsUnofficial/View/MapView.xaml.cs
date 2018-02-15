@@ -217,13 +217,23 @@ namespace GoogleMapsUnofficial.View
                     string cp = "";
                     int zoomlevel = 0;
                     string Querry = "";
+                    string placename = "";
                     if (parameters.Where(x => x.Key == "cp").Any())
                         cp = parameters.Where(x => x.Key == "cp").FirstOrDefault().Value;
                     if (parameters.Where(x => x.Key == "lvl").Any())
                         zoomlevel = Convert.ToInt32(parameters.Where(x => x.Key == "lvl").FirstOrDefault().Value);
                     if (parameters.Where(x => x.Key == "q").Any())
                         Querry = parameters.Where(x => x.Key == "q").FirstOrDefault().Value;
-                    if(cp != "")
+                    if (parameters.Where(x => x.Key == "collection").Any())
+                    {
+                        var point = parameters.Where(x => x.Key == "collection").FirstOrDefault().Value;
+                        var pointargs = point.Split('_');
+                        var latitude = pointargs[0].Split('.')[1] + "." + pointargs[0].Split('.')[2];
+                        var longitude = pointargs[1];
+                        cp = $"{latitude}~{longitude}";
+                        await new MessageDialog(cp).ShowAsync();
+                    }
+                    if (cp != "")
                     {
                         await Task.Delay(500);
                         var bgp = new BasicGeoposition();
