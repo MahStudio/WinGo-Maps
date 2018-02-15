@@ -55,6 +55,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             {
                 await CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
                 {
+                    if (SearchResults == null) SearchResults = new ObservableCollection<PlaceAutoComplete.Prediction>();
                     SearchResults.Clear();
                     var s = await PlaceAutoComplete.GetAutoCompleteResults(searchExpression, location: MapView.MapControl.Center, radius: 50000);
                     if (s == null) return;
@@ -80,7 +81,8 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             set
             {
                 SetValue(SearchQuerryProperty, value);
-                (this.DataContext as ViewModel).SuggestForSearch(value);
+                SearchBox.Focus(FocusState.Keyboard);
+                SearchBox.Text = value;
             }
         }
         public static readonly DependencyProperty SearchQuerryProperty = DependencyProperty.Register(

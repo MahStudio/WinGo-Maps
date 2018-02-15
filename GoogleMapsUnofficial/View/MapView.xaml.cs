@@ -235,7 +235,7 @@ namespace GoogleMapsUnofficial.View
                     else Map.ZoomLevel = 16;
                     if(Querry != "")
                     {
-                        await Task.Delay(500);
+                        await Task.Delay(1500);
                         Searchbar.SearchQuerry = Querry;
                     }
                 }
