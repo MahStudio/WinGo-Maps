@@ -62,6 +62,7 @@ namespace WinGoService
             if (point != null)
             {
                 destinationTile.Title = await GeocodeHelper.GetAddress(point);
+                userMessage.SpokenMessage = "Seems you are here, " + destinationTile.Title;
                 try
                 {
                     var http = new HttpClient();
