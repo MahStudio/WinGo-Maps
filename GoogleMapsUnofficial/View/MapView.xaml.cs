@@ -231,7 +231,6 @@ namespace GoogleMapsUnofficial.View
                         var latitude = pointargs[0].Split('.')[1] + "." + pointargs[0].Split('.')[2];
                         var longitude = pointargs[1];
                         cp = $"{latitude}~{longitude}";
-                        await new MessageDialog(cp).ShowAsync();
                     }
                     if (cp != "")
                     {
