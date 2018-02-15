@@ -1,4 +1,5 @@
-﻿using GoogleMapsUnofficial.ViewModel.GeocodControls;
+﻿using GoogleMapsUnofficial.View.OnMapControls;
+using GoogleMapsUnofficial.ViewModel.GeocodControls;
 using GoogleMapsUnofficial.ViewModel.SettingsView;
 using System;
 using System.Collections.Generic;
@@ -88,120 +89,154 @@ namespace GoogleMapsUnofficial.View
             base.OnNavigatedTo(e);
             if (e.Parameter != null)
             {
-                //Search Uri association handler
-                if (((Uri)e.Parameter).Segments[2].ToLower() == "search/")
+                //Google Maps Override
+                if (e.Parameter.ToString().StartsWith("http"))
                 {
-                    //Searchgrid.PopUP = true;
-                    //Searchgrid.SearchText = ((Uri)e.Parameter).DecodeQueryParameters().Where(x => x.Key == "query").FirstOrDefault().Value;
+                    //Search Uri association handler
+                    if (((Uri)e.Parameter).Segments[2].ToLower() == "search/")
+                    {
+                        //Searchgrid.PopUP = true;
+                        //Searchgrid.SearchText = ((Uri)e.Parameter).DecodeQueryParameters().Where(x => x.Key == "query").FirstOrDefault().Value;
+                    }
+                    //Directions Uri association handler
+                    if (((Uri)e.Parameter).Segments[2].ToLower() == "dir/")
+                    {
+                        var parameters = ((Uri)e.Parameter).DecodeQueryParameters();
+                        var origin = parameters.Where(x => x.Key == "origin").FirstOrDefault();
+                        var destination = parameters.Where(x => x.Key == "destination").FirstOrDefault();
+                        var travelmode = parameters.Where(x => x.Key == "travelmode").FirstOrDefault();
+                        var waypoints = parameters.Where(x => x.Key == "waypoints").FirstOrDefault();
+                        ViewModel.DirectionsControls.DirectionsHelper.DirectionModes Mode = ViewModel.DirectionsControls.DirectionsHelper.DirectionModes.walking;
+                        Geopoint OriginPoint = null;
+                        Geopoint DestinationPoint = null;
+                        List<BasicGeoposition> lst = null;
+                        if (travelmode.Value != null)
+                        {
+                            if (travelmode.Value.ToString() == "driving") Mode = ViewModel.DirectionsControls.DirectionsHelper.DirectionModes.driving;
+                            else if (travelmode.Value.ToString() == "bicycling ") Mode = ViewModel.DirectionsControls.DirectionsHelper.DirectionModes.bicycling;
+                            else if (travelmode.Value.ToString() == "transit") Mode = ViewModel.DirectionsControls.DirectionsHelper.DirectionModes.transit;
+                        }
+                        if (origin.Value != null)
+                        {
+                            var latlng = origin.Value.Split(',');
+                            var Latitude = Convert.ToDouble(latlng[0]);
+                            var Longitude = Convert.ToDouble(latlng[1]);
+                            OriginPoint = new Geopoint(new BasicGeoposition()
+                            {
+                                Latitude = Latitude,
+                                Longitude = Longitude
+                            });
+                        }
+                        if (destination.Value != null)
+                        {
+                            var latlng = destination.Value.Split(',');
+                            var Latitude = Convert.ToDouble(latlng[0]);
+                            var Longitude = Convert.ToDouble(latlng[1]);
+                            DestinationPoint = new Geopoint(new BasicGeoposition()
+                            {
+                                Latitude = Latitude,
+                                Longitude = Longitude
+                            });
+                        }
+                        if (waypoints.Value != null)
+                        {
+                            lst = new List<BasicGeoposition>();
+                            var latlngs = destination.Value.Split('|');
+                            foreach (var item in latlngs)
+                            {
+                                var latlng = item.Split(',');
+                                BasicGeoposition point = new BasicGeoposition();
+                                point.Latitude = Convert.ToDouble(latlng[0]);
+                                point.Longitude = Convert.ToDouble(latlng[1]);
+                                lst.Add(point);
+                            }
+                        }
+                        if (OriginPoint != null && DestinationPoint != null)
+                        {
+                            ViewModel.DirectionsControls.DirectionsHelper.Rootobject Result = null;
+                            if (lst == null)
+                                Result = await ViewModel.DirectionsControls.DirectionsHelper.GetDirections(OriginPoint.Position, DestinationPoint.Position, Mode);
+                            else
+                                Result = await ViewModel.DirectionsControls.DirectionsHelper.GetDirections(OriginPoint.Position, DestinationPoint.Position, Mode, lst);
+                            if (Result != null)
+                            {
+                                Map.MapElements.Add(ViewModel.DirectionsControls.DirectionsHelper.GetDirectionAsRoute(Result, Colors.Purple));
+                            }
+                        }
+                    }
+                    //Display a map
+                    if (((Uri)e.Parameter).Segments[2].ToLower().StartsWith("@"))
+                    {
+                        await Task.Delay(1500);
+                        try
+                        {
+                            if (!e.Parameter.ToString().Contains("searchplace"))
+                            {
+                                var parameters = ((Uri)e.Parameter).DecodeQueryParameters();
+                                var mapaction = parameters.Where(x => x.Key == "map_action").FirstOrDefault();
+                                if (mapaction.Value != null && mapaction.Value == "pano")
+                                {
+                                    await new MessageDialog("StreetView Not Supported yet").ShowAsync();
+                                }
+                                var center = parameters.Where(x => x.Key == "center").FirstOrDefault();
+                                var zoom = parameters.Where(x => x.Key == "zoom").FirstOrDefault();
+                                var cp = center.Value.Split(',');
+                                BasicGeoposition pointer = new BasicGeoposition() { Latitude = Convert.ToDouble(cp[0]), Longitude = Convert.ToDouble(cp[1]) };
+                                Map.Center = new Geopoint(pointer);
+                                if (zoom.Value != null)
+                                    Map.ZoomLevel = Convert.ToDouble(zoom.Value);
+                                RunMapRightTapped(Map, new Geopoint(pointer));
+                            }
+                            else
+                            {
+                                var search = ((Uri)e.Parameter).ToString().Replace("https://google.com/maps/@searchplace=", "");
+                                //var search = parameters.Where(x => x.Key == "searchplace").FirstOrDefault();
+                                var res = await ViewModel.PlaceControls.SearchHelper.TextSearch(search, Location: Map.Center, Radius: 15000);
+                                if (res == null || res.results.Length == 0)
+                                {
+                                    await new MessageDialog("No search results found").ShowAsync();
+                                    return;
+                                }
+                                var ploc = res.results.FirstOrDefault().geometry.location;
+                                var geopoint = new Geopoint(new BasicGeoposition() { Latitude = ploc.lat, Longitude = ploc.lng });
+                                Map.Center = geopoint;
+                                Map.ZoomLevel = 16;
+                                SearchResultPoint = geopoint;
+                            }
+                        }
+                        catch
+                        {
+                        }
+                    }
                 }
-                //Directions Uri association handler
-                if (((Uri)e.Parameter).Segments[2].ToLower() == "dir/")
+
+                //Windows Maps Override
+                else
                 {
                     var parameters = ((Uri)e.Parameter).DecodeQueryParameters();
-                    var origin = parameters.Where(x => x.Key == "origin").FirstOrDefault();
-                    var destination = parameters.Where(x => x.Key == "destination").FirstOrDefault();
-                    var travelmode = parameters.Where(x => x.Key == "travelmode").FirstOrDefault();
-                    var waypoints = parameters.Where(x => x.Key == "waypoints").FirstOrDefault();
-                    ViewModel.DirectionsControls.DirectionsHelper.DirectionModes Mode = ViewModel.DirectionsControls.DirectionsHelper.DirectionModes.walking;
-                    Geopoint OriginPoint = null;
-                    Geopoint DestinationPoint = null;
-                    List<BasicGeoposition> lst = null;
-                    if (travelmode.Value != null)
+                    string cp = "";
+                    int zoomlevel = 0;
+                    string Querry = "";
+                    if (parameters.Where(x => x.Key == "cp").Any())
+                        cp = parameters.Where(x => x.Key == "cp").FirstOrDefault().Value;
+                    if (parameters.Where(x => x.Key == "lvl").Any())
+                        zoomlevel = Convert.ToInt32(parameters.Where(x => x.Key == "lvl").FirstOrDefault().Value);
+                    if (parameters.Where(x => x.Key == "q").Any())
+                        Querry = parameters.Where(x => x.Key == "q").FirstOrDefault().Value;
+                    if(cp != "")
                     {
-                        if (travelmode.Value.ToString() == "driving") Mode = ViewModel.DirectionsControls.DirectionsHelper.DirectionModes.driving;
-                        else if (travelmode.Value.ToString() == "bicycling ") Mode = ViewModel.DirectionsControls.DirectionsHelper.DirectionModes.bicycling;
-                        else if (travelmode.Value.ToString() == "transit") Mode = ViewModel.DirectionsControls.DirectionsHelper.DirectionModes.transit;
+                        await Task.Delay(500);
+                        var bgp = new BasicGeoposition();
+                        bgp.Latitude = Convert.ToDouble(cp.Split('~')[0]);
+                        bgp.Longitude = Convert.ToDouble(cp.Split('~')[1]);
+                        Map.Center = new Geopoint(bgp);
                     }
-                    if (origin.Value != null)
+                    if (zoomlevel != 0) Map.ZoomLevel = zoomlevel;
+                    else Map.ZoomLevel = 16;
+                    if(Querry != "")
                     {
-                        var latlng = origin.Value.Split(',');
-                        var Latitude = Convert.ToDouble(latlng[0]);
-                        var Longitude = Convert.ToDouble(latlng[1]);
-                        OriginPoint = new Geopoint(new BasicGeoposition()
-                        {
-                            Latitude = Latitude,
-                            Longitude = Longitude
-                        });
-                    }
-                    if (destination.Value != null)
-                    {
-                        var latlng = destination.Value.Split(',');
-                        var Latitude = Convert.ToDouble(latlng[0]);
-                        var Longitude = Convert.ToDouble(latlng[1]);
-                        DestinationPoint = new Geopoint(new BasicGeoposition()
-                        {
-                            Latitude = Latitude,
-                            Longitude = Longitude
-                        });
-                    }
-                    if (waypoints.Value != null)
-                    {
-                        lst = new List<BasicGeoposition>();
-                        var latlngs = destination.Value.Split('|');
-                        foreach (var item in latlngs)
-                        {
-                            var latlng = item.Split(',');
-                            BasicGeoposition point = new BasicGeoposition();
-                            point.Latitude = Convert.ToDouble(latlng[0]);
-                            point.Longitude = Convert.ToDouble(latlng[1]);
-                            lst.Add(point);
-                        }
-                    }
-                    if (OriginPoint != null && DestinationPoint != null)
-                    {
-                        ViewModel.DirectionsControls.DirectionsHelper.Rootobject Result = null;
-                        if (lst == null)
-                            Result = await ViewModel.DirectionsControls.DirectionsHelper.GetDirections(OriginPoint.Position, DestinationPoint.Position, Mode);
-                        else
-                            Result = await ViewModel.DirectionsControls.DirectionsHelper.GetDirections(OriginPoint.Position, DestinationPoint.Position, Mode, lst);
-                        if (Result != null)
-                        {
-                            Map.MapElements.Add(ViewModel.DirectionsControls.DirectionsHelper.GetDirectionAsRoute(Result, Colors.Purple));
-                        }
-                    }
-                }
-                //Display a map
-                if (((Uri)e.Parameter).Segments[2].ToLower().StartsWith("@"))
-                {
-                    await Task.Delay(1500);
-                    try
-                    {
-                        if (!e.Parameter.ToString().Contains("searchplace"))
-                        {
-                            var parameters = ((Uri)e.Parameter).DecodeQueryParameters();
-                            var mapaction = parameters.Where(x => x.Key == "map_action").FirstOrDefault();
-                            if (mapaction.Value != null && mapaction.Value == "pano")
-                            {
-                                await new MessageDialog("StreetView Not Supported yet").ShowAsync();
-                            }
-                            var center = parameters.Where(x => x.Key == "center").FirstOrDefault();
-                            var zoom = parameters.Where(x => x.Key == "zoom").FirstOrDefault();
-                            var cp = center.Value.Split(',');
-                            BasicGeoposition pointer = new BasicGeoposition() { Latitude = Convert.ToDouble(cp[0]), Longitude = Convert.ToDouble(cp[1]) };
-                            Map.Center = new Geopoint(pointer);
-                            if (zoom.Value != null)
-                                Map.ZoomLevel = Convert.ToDouble(zoom.Value);
-                            RunMapRightTapped(Map, new Geopoint(pointer));
-                        }
-                        else
-                        {
-                            var search = ((Uri)e.Parameter).ToString().Replace("https://google.com/maps/@searchplace=", "");
-                            //var search = parameters.Where(x => x.Key == "searchplace").FirstOrDefault();
-                            var res = await ViewModel.PlaceControls.SearchHelper.TextSearch(search, Location: Map.Center, Radius: 15000);
-                            if (res == null || res.results.Length == 0)
-                            {
-                                await new MessageDialog("No search results found").ShowAsync();
-                                return;
-                            }
-                            var ploc = res.results.FirstOrDefault().geometry.location;
-                            var geopoint = new Geopoint(new BasicGeoposition() { Latitude = ploc.lat, Longitude = ploc.lng });
-                            Map.Center = geopoint;
-                            Map.ZoomLevel = 16;
-                            SearchResultPoint = geopoint;
-                        }
-                    }
-                    catch
-                    {
+                        await Task.Delay(500);
+                        Searchbar.SearchQuerry = Querry;
                     }
                 }
             }
@@ -305,7 +340,9 @@ namespace GoogleMapsUnofficial.View
                     await new MessageDialog("We didn't find anything here. Maybe an internet connection issue.").ShowAsync();
                     InfoPane.IsPaneOpen = false;
                     return;
+#pragma warning disable CS0162 // Unreachable code detected
                     var r1 = (await GeocodeHelper.GetInfo(Location));
+#pragma warning restore CS0162 // Unreachable code detected
                     if (r1 != null)
                     {
                         var res = r1.results.FirstOrDefault();

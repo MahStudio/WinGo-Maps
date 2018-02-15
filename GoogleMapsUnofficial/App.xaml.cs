@@ -50,7 +50,7 @@ namespace GoogleMapsUnofficial
 
         private void StartFluent()
         {
-            if(ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone) return;
+            if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone) return;
             if (ApiInformation.IsMethodPresent("Windows.UI.Xaml.Hosting.ElementCompositionPreview", "SetElementChildVisual"))
             {
                 ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
@@ -67,7 +67,7 @@ namespace GoogleMapsUnofficial
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            if(e != null)
+            if (e != null)
             {
                 if (e.PreviousExecutionState == ApplicationExecutionState.Running)
                 {
@@ -78,7 +78,7 @@ namespace GoogleMapsUnofficial
                 {
                     //TODO: Load state from previously suspended application
                 }
-                if(e.Kind == ActivationKind.VoiceCommand)
+                if (e.Kind == ActivationKind.VoiceCommand)
                 {
 
                 }
@@ -136,23 +136,28 @@ namespace GoogleMapsUnofficial
             }
             catch { }
             StartFluent();
+            Resources["ToggleButtonBackgroundChecked"] = Color.FromArgb(255, 96, 165, 255);
+            Resources["SystemControlHighlightListAccentLowBrush"] = Color.FromArgb(255, 96, 165, 255);
+            Resources["ToggleSwitchFillOn"] = Color.FromArgb(255, 96, 165, 255);
+            Resources["HyperlinkButtonForeground"] = Color.FromArgb(255, 96, 165, 255);
+            Resources["SystemControlBackgroundAccentBrush"] = Color.FromArgb(255, 96, 165, 255);
             SplashScreen splashScreen = args.SplashScreen;
             ExtendedSplashScreen eSplash = null;
-            
+
             if (args.Kind == ActivationKind.VoiceCommand)
             {
                 var voiceArgs = (VoiceCommandActivatedEventArgs)args;
                 var Rule = voiceArgs.Result.RulePath.FirstOrDefault();
                 var input = voiceArgs.Result.SemanticInterpretation.Properties.Where(x => x.Key == "UserInput").FirstOrDefault().Value.FirstOrDefault();
-                if(Rule == "DirectionsCommand")
+                if (Rule == "DirectionsCommand")
                 {
                     eSplash = new ExtendedSplashScreen(splashScreen, new Uri("https://google.com/maps/@searchplace=" + input, UriKind.RelativeOrAbsolute));
                 }
-                if(Rule == "FindPlace")
+                if (Rule == "FindPlace")
                 {
                     eSplash = new ExtendedSplashScreen(splashScreen, new Uri("https://google.com/maps/@searchplace=" + input, UriKind.RelativeOrAbsolute));
                 }
-                if(Rule == "WhereAmI")
+                if (Rule == "WhereAmI")
                 {
                     eSplash = new ExtendedSplashScreen(splashScreen);
                 }
@@ -166,20 +171,27 @@ namespace GoogleMapsUnofficial
                 //Type deepLinkPageType = typeof(PageLogin);
                 if (rootFrame.Content == null)
                 {
-                    switch (protocolArgs.Uri.AbsolutePath.ToLower().Replace("/maps", string.Empty).Split('/')[1].ToString())
+                    try
                     {
-                        case "search":
-                            eSplash = new ExtendedSplashScreen(splashScreen, protocolArgs.Uri);
-                            break;
-                        case "dir":
-                            eSplash = new ExtendedSplashScreen(splashScreen, protocolArgs.Uri);
-                            break;
-                        case "@":
-                            eSplash = new ExtendedSplashScreen(splashScreen, protocolArgs.Uri);
-                            break;
-                        default:
-                            eSplash = new ExtendedSplashScreen(splashScreen);
-                            break;
+                        switch (protocolArgs.Uri.AbsolutePath.ToLower().Replace("/maps", string.Empty).Split('/')[1].ToString())
+                        {
+                            case "search":
+                                eSplash = new ExtendedSplashScreen(splashScreen, protocolArgs.Uri);
+                                break;
+                            case "dir":
+                                eSplash = new ExtendedSplashScreen(splashScreen, protocolArgs.Uri);
+                                break;
+                            case "@":
+                                eSplash = new ExtendedSplashScreen(splashScreen, protocolArgs.Uri);
+                                break;
+                            default:
+                                eSplash = new ExtendedSplashScreen(splashScreen);
+                                break;
+                        }
+                    }
+                    catch
+                    {
+                        eSplash = new ExtendedSplashScreen(splashScreen, protocolArgs.Uri);
                     }
                 }
             }

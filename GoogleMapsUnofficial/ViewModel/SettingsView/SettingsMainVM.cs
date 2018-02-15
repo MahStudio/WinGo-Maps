@@ -104,7 +104,11 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
             {
                 var req = await BackgroundExecutionManager.RequestAccessAsync();
                 if (req == BackgroundAccessStatus.AlwaysAllowed || req == BackgroundAccessStatus.AllowedSubjectToSystemPolicy ||
+#pragma warning disable CS0618 // 'BackgroundAccessStatus.AllowedMayUseActiveRealTimeConnectivity' is obsolete: 'Use AlwaysAllowed or AllowedSubjectToSystemPolicy instead of AllowedMayUseActiveRealTimeConnectivity. For more info, see MSDN.'
+#pragma warning disable CS0618 // 'BackgroundAccessStatus.AllowedWithAlwaysOnRealTimeConnectivity' is obsolete: 'Use AlwaysAllowed or AllowedSubjectToSystemPolicy instead of AllowedWithAlwaysOnRealTimeConnectivity. For more info, see MSDN.'
                          req == BackgroundAccessStatus.AllowedWithAlwaysOnRealTimeConnectivity || req == BackgroundAccessStatus.AllowedMayUseActiveRealTimeConnectivity)
+#pragma warning restore CS0618 // 'BackgroundAccessStatus.AllowedWithAlwaysOnRealTimeConnectivity' is obsolete: 'Use AlwaysAllowed or AllowedSubjectToSystemPolicy instead of AllowedWithAlwaysOnRealTimeConnectivity. For more info, see MSDN.'
+#pragma warning restore CS0618 // 'BackgroundAccessStatus.AllowedMayUseActiveRealTimeConnectivity' is obsolete: 'Use AlwaysAllowed or AllowedSubjectToSystemPolicy instead of AllowedMayUseActiveRealTimeConnectivity. For more info, see MSDN.'
                 {
                     var list = BackgroundTaskRegistration.AllTasks.Where(x => x.Value.Name == "WinGoMapsTile");
                     if (list.Count() != 0) LiveTileEnable = true;
@@ -238,7 +242,11 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
             {
                 var req = await BackgroundExecutionManager.RequestAccessAsync();
                 if (req == BackgroundAccessStatus.AlwaysAllowed || req == BackgroundAccessStatus.AllowedSubjectToSystemPolicy ||
+#pragma warning disable CS0618 // 'BackgroundAccessStatus.AllowedWithAlwaysOnRealTimeConnectivity' is obsolete: 'Use AlwaysAllowed or AllowedSubjectToSystemPolicy instead of AllowedWithAlwaysOnRealTimeConnectivity. For more info, see MSDN.'
+#pragma warning disable CS0618 // 'BackgroundAccessStatus.AllowedMayUseActiveRealTimeConnectivity' is obsolete: 'Use AlwaysAllowed or AllowedSubjectToSystemPolicy instead of AllowedMayUseActiveRealTimeConnectivity. For more info, see MSDN.'
                          req == BackgroundAccessStatus.AllowedWithAlwaysOnRealTimeConnectivity || req == BackgroundAccessStatus.AllowedMayUseActiveRealTimeConnectivity)
+#pragma warning restore CS0618 // 'BackgroundAccessStatus.AllowedMayUseActiveRealTimeConnectivity' is obsolete: 'Use AlwaysAllowed or AllowedSubjectToSystemPolicy instead of AllowedMayUseActiveRealTimeConnectivity. For more info, see MSDN.'
+#pragma warning restore CS0618 // 'BackgroundAccessStatus.AllowedWithAlwaysOnRealTimeConnectivity' is obsolete: 'Use AlwaysAllowed or AllowedSubjectToSystemPolicy instead of AllowedWithAlwaysOnRealTimeConnectivity. For more info, see MSDN.'
                 {
                     var list = BackgroundTaskRegistration.AllTasks.Where(x => x.Value.Name == "WinGoMapsTile");
                     foreach (var item in list)

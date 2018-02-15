@@ -104,6 +104,7 @@
     <Compile Include="ExtendedSplashScreen.xaml.cs">
       <DependentUpon>ExtendedSplashScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\CountryCodesHelper.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Helpers\InternalHelper.cs" />

@@ -48,7 +48,9 @@ namespace GoogleMapsUnofficial.ViewModel
     }
     class MapViewVM : INotifyPropertyChanged
     {
+#pragma warning disable CS0067 // The event 'MapViewVM.PropertyChanged' is never used
         public event PropertyChangedEventHandler PropertyChanged;
+#pragma warning restore CS0067 // The event 'MapViewVM.PropertyChanged' is never used
         private MapControl Map;
         private CoreWindow CoreWindow;
         public ViewModel UserLocation { get; set; }

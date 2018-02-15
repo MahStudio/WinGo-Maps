@@ -23,10 +23,12 @@ namespace GoogleMapsUnofficial.View.OnMapControls
     {
         private class ViewModel : INotifyPropertyChanged
         {
-            public ViewModel()
+            public string SearchQuerry
             {
-                SearchResults = new ObservableCollection<PlaceAutoComplete.Prediction>();
-                SearchResults.CollectionChanged += SuggestedApps_CollectionChanged;
+                set
+                {
+                    SuggestForSearch(value);
+                }
             }
 
             private void SuggestedApps_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -73,12 +75,27 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             public event PropertyChangedEventHandler PropertyChanged;
         }
 
+        public string SearchQuerry
+        {
+            set
+            {
+                SetValue(SearchQuerryProperty, value);
+                (this.DataContext as ViewModel).SuggestForSearch(value);
+            }
+        }
+        public static readonly DependencyProperty SearchQuerryProperty = DependencyProperty.Register(
+         "SearchQuerry",
+         typeof(string),
+         typeof(SearchUserControl),
+         new PropertyMetadata(null)
+        );
         public SearchUserControl()
         {
             this.InitializeComponent();
             this.DataContext = new ViewModel();
             SearchBox.LostFocus += SearchBox_LostFocus;
         }
+
         private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
         {
             //SearchBox.Visibility = Visibility.Collapsed;
@@ -129,7 +146,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
         {
             if (sender.Text.Length >= 3)
             {
-                if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+                if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput || args.Reason == AutoSuggestionBoxTextChangeReason.ProgrammaticChange)
                 {
                     if (SearchBox.Text != string.Empty)
                         (this.DataContext as ViewModel).SuggestForSearch((sender as AutoSuggestBox).Text);
