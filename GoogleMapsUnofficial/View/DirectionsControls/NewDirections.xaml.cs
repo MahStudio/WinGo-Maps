@@ -121,7 +121,8 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                         await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
                         MapView.MapControl.ZoomLevel = 18;
                         MapView.MapControl.Center = Origin;
-                        MapView.MapControl.DesiredPitch = 30;
+                        MapView.MapControl.DesiredPitch = 45;
+                        MapViewVM.ActiveNavigationMode = true;
                         if (MapViewVM.Compass != null)
                         {
                             var read = MapViewVM.Compass.GetCurrentReading();
@@ -179,7 +180,8 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                         await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
                         MapView.MapControl.ZoomLevel = 18;
                         MapView.MapControl.Center = Origin;
-                        MapView.MapControl.DesiredPitch = 30;
+                        MapView.MapControl.DesiredPitch = 45;
+                        MapViewVM.ActiveNavigationMode = true;
                         if (MapViewVM.Compass != null)
                         {
                             var read = MapViewVM.Compass.GetCurrentReading();
@@ -223,7 +225,8 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                         await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
                         MapView.MapControl.ZoomLevel = 18;
                         MapView.MapControl.Center = Origin;
-                        MapView.MapControl.DesiredPitch = 30;
+                        MapView.MapControl.DesiredPitch = 45;
+                        MapViewVM.ActiveNavigationMode = true;
                         if (MapViewVM.Compass != null)
                         {
                             var read = MapViewVM.Compass.GetCurrentReading();
