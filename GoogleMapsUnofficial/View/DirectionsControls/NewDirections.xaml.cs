@@ -1,4 +1,5 @@
-﻿using GoogleMapsUnofficial.ViewModel.DirectionsControls;
+﻿using GoogleMapsUnofficial.ViewModel;
+using GoogleMapsUnofficial.ViewModel.DirectionsControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -120,6 +121,14 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                         await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
                         MapView.MapControl.ZoomLevel = 18;
                         MapView.MapControl.Center = Origin;
+                        MapView.MapControl.DesiredPitch = 30;
+                        if (MapViewVM.Compass != null)
+                        {
+                            var read = MapViewVM.Compass.GetCurrentReading();
+                            if (read.HeadingTrueNorth.HasValue)
+                                MapView.MapControl.Heading = read.HeadingTrueNorth.Value;
+                            MapViewVM.Compass.ReadingChanged += Compass_ReadingChanged;
+                        }
                     }
                     else
                     {
@@ -170,6 +179,14 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                         await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
                         MapView.MapControl.ZoomLevel = 18;
                         MapView.MapControl.Center = Origin;
+                        MapView.MapControl.DesiredPitch = 30;
+                        if (MapViewVM.Compass != null)
+                        {
+                            var read = MapViewVM.Compass.GetCurrentReading();
+                            if (read.HeadingTrueNorth.HasValue)
+                                MapView.MapControl.Heading = read.HeadingTrueNorth.Value;
+                            MapViewVM.Compass.ReadingChanged += Compass_ReadingChanged;
+                        }
                     }
                     else
                     {
@@ -206,6 +223,14 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                         await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
                         MapView.MapControl.ZoomLevel = 18;
                         MapView.MapControl.Center = Origin;
+                        MapView.MapControl.DesiredPitch = 30;
+                        if (MapViewVM.Compass != null)
+                        {
+                            var read = MapViewVM.Compass.GetCurrentReading();
+                            if (read.HeadingTrueNorth.HasValue)
+                                MapView.MapControl.Heading = read.HeadingTrueNorth.Value;
+                            MapViewVM.Compass.ReadingChanged += Compass_ReadingChanged;
+                        }
                     }
                     else
                     {
@@ -215,5 +240,13 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
             }
         }
 
+        private async void Compass_ReadingChanged(Windows.Devices.Sensors.Compass sender, Windows.Devices.Sensors.CompassReadingChangedEventArgs args)
+        {
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, delegate
+            {
+                if (args.Reading.HeadingTrueNorth.HasValue)
+                    MapView.MapControl.Heading = args.Reading.HeadingTrueNorth.Value;
+            });
+        }
     }
 }

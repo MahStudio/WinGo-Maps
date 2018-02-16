@@ -217,7 +217,6 @@ namespace GoogleMapsUnofficial.View
                     string cp = "";
                     int zoomlevel = 0;
                     string Querry = "";
-                    string placename = "";
                     if (parameters.Where(x => x.Key == "cp").Any())
                         cp = parameters.Where(x => x.Key == "cp").FirstOrDefault().Value;
                     if (parameters.Where(x => x.Key == "lvl").Any())
@@ -349,9 +348,7 @@ namespace GoogleMapsUnofficial.View
                     await new MessageDialog("We didn't find anything here. Maybe an internet connection issue.").ShowAsync();
                     InfoPane.IsPaneOpen = false;
                     return;
-#pragma warning disable CS0162 // Unreachable code detected
                     var r1 = (await GeocodeHelper.GetInfo(Location));
-#pragma warning restore CS0162 // Unreachable code detected
                     if (r1 != null)
                     {
                         var res = r1.results.FirstOrDefault();

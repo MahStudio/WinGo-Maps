@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
+using Windows.Devices.Sensors;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -48,9 +49,9 @@ namespace GoogleMapsUnofficial.ViewModel
     }
     class MapViewVM : INotifyPropertyChanged
     {
-#pragma warning disable CS0067 // The event 'MapViewVM.PropertyChanged' is never used
+        public static Compass Compass { get; set; }
+        public static bool ActiveNavigationMode { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
-#pragma warning restore CS0067 // The event 'MapViewVM.PropertyChanged' is never used
         private MapControl Map;
         private CoreWindow CoreWindow;
         public ViewModel UserLocation { get; set; }
@@ -63,6 +64,8 @@ namespace GoogleMapsUnofficial.ViewModel
             LoadPage();
             UserLocation = new ViewModel() { AttractionName = "My Location" };
             geolocator = GeoLocate;
+            Compass = Compass.GetDefault();
+            ActiveNavigationMode = false;
         }
 
         ~MapViewVM()
@@ -154,6 +157,8 @@ namespace GoogleMapsUnofficial.ViewModel
                 {
                     if (Map == null || UserLocation == null) return;
                     UserLocation.Location = args.Position.Coordinate.Point;
+                    if(ActiveNavigationMode == true)
+                        Map.Center = args.Position.Coordinate.Point;
                 });
             }
             catch { }
