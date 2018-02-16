@@ -35,6 +35,8 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
         {
             try
             {
+                if (Place.PlaceName == "")
+                    throw new Exception("Please choose a name for this place");
                 var r = GetSavedPlaces();
                 if (r.Where(x => x.PlaceName.ToLower() == Place.PlaceName.ToLower()).Any())
                     throw new ArgumentOutOfRangeException("PlaceName is already exists");

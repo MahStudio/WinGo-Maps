@@ -20,7 +20,7 @@
     <PackageCertificateKeyFile>GoogleMapsUnofficial_StoreKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>arm</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <PackageCertificateThumbprint>EE569364D486ACB864FC47137C2F968B4A28DAC6</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -131,6 +131,9 @@
     <Compile Include="ViewModel\SettingsView\SettingsMainVM.cs" />
     <Compile Include="ViewModel\TilesAPIControls\TileApiHelper.cs" />
     <Compile Include="ViewModel\VoiceNavigation\VoiceHelper.cs" />
+    <Compile Include="View\BookmarkAdd.xaml.cs">
+      <DependentUpon>BookmarkAdd.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DirectionsControls\DirectionsMainUserControl.xaml.cs">
       <DependentUpon>DirectionsMainUserControl.xaml</DependentUpon>
     </Compile>
@@ -256,6 +259,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="View\BookmarkAdd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DirectionsControls\DirectionsMainUserControl.xaml">
       <SubType>Designer</SubType>

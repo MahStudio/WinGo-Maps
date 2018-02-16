@@ -57,8 +57,8 @@
                                             <ColumnDefinition Width="48"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="&#xE840;" Foreground="#808284" FontSize="18" FontFamily="Segoe MDL2 Assets"/>
-                                        <TextBlock Grid.Column="1" Text="Pin tile" Foreground="#808284"/>
+                                        <TextBlock Grid.Column="0" Text="&#xE1CB;" Foreground="#808284" FontSize="18" FontFamily="Segoe MDL2 Assets"/>
+                                        <TextBlock Grid.Column="1" Text="Add Bookmark" Foreground="#808284"/>
                                     </Grid>
                                 </ListViewItem>
                                 <ListViewItem Tapped="AddWaypoint_Click" Height="55" Background="Transparent" Grid.Row="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">

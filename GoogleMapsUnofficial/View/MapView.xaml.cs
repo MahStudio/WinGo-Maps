@@ -413,13 +413,10 @@ namespace GoogleMapsUnofficial.View
 
         private async void AddBookmark_Click(object sender, TappedRoutedEventArgs e)
         {
-            Uri square150x150Logo = new Uri("ms-appx:///Assets/StoreLogo.png");
-            SecondaryTile tile = new SecondaryTile(new Random(1).Next(10000).ToString(), "Home", $"{LastRightTap.Position.Latitude},{LastRightTap.Position.Longitude}", square150x150Logo, TileSize.Square150x150);
-            if (PlaceName.Text != "") tile.DisplayName = PlaceName.Text;
-            tile.VisualElements.ShowNameOnSquare150x150Logo = true;
-            tile.VisualElements.ShowNameOnWide310x150Logo = true;
-            tile.VisualElements.Wide310x150Logo = new Uri("ms-appx:///Assets/Wide310x150Logo.scale-200.png");
-            await tile.RequestCreateAsync();
+            var c = new BookmarkAddNeedsClass();
+            c.Location = LastRightTap;
+            c.PlaceName = PlaceName.Text;
+            await new BookmarkAdd(c).ShowAsync();
             InfoPane.IsPaneOpen = false;
         }
 
