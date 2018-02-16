@@ -244,8 +244,9 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
         {
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, delegate
             {
-                if (args.Reading.HeadingTrueNorth.HasValue)
-                    MapView.MapControl.Heading = args.Reading.HeadingTrueNorth.Value;
+                if (MapViewVM.ActiveNavigationMode)
+                    if (args.Reading.HeadingTrueNorth.HasValue)
+                        MapView.MapControl.Heading = args.Reading.HeadingTrueNorth.Value;
             });
         }
     }
