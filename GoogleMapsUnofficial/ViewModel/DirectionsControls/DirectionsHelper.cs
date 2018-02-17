@@ -90,7 +90,7 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
             {
                 StrokeThickness = 5,
                 StrokeDashed = true,
-                StrokeColor = (Color)App.Current.Resources["SystemControlBackgroundAccentBrush"],
+                StrokeColor = ResultColor,
                 Path = new Geopath(loclist)
             };
             var voice = new VoiceHelper(FuncResp.routes.FirstOrDefault());
