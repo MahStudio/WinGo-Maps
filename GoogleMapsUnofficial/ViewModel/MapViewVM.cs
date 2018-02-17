@@ -8,6 +8,7 @@ using Windows.Devices.Sensors;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Popups;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Maps;
 
 namespace GoogleMapsUnofficial.ViewModel
@@ -49,6 +50,8 @@ namespace GoogleMapsUnofficial.ViewModel
     }
     class MapViewVM : INotifyPropertyChanged
     {
+        private Visibility _locflagvisi;
+        public Visibility LocationFlagVisibility { get { return _locflagvisi; } set { _locflagvisi = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("LocationFlagVisibility")); } }
         public static Compass Compass { get; set; }
         public static bool ActiveNavigationMode { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
@@ -62,6 +65,7 @@ namespace GoogleMapsUnofficial.ViewModel
         {
             CoreWindow = CoreWindow.GetForCurrentThread();
             LoadPage();
+            LocationFlagVisibility = Visibility.Visible;
             UserLocation = new ViewModel() { AttractionName = "My Location" };
             geolocator = GeoLocate;
             Compass = Compass.GetDefault();
@@ -124,9 +128,14 @@ namespace GoogleMapsUnofficial.ViewModel
                             //    var rg2 = new RegionInfo(re.Address.Country);
                             //}
                         }
+                        else
+                        {
+                            LocationFlagVisibility = Visibility.Collapsed;
+                        }
                     }
                     else
                     {
+                        LocationFlagVisibility = Visibility.Collapsed ;
                         var msg = new MessageDialog("We weren't able to access your location. Please check if your device location is on and you have accepted location access to the app in privacy settings.\nHit ok button to navigate location settings and cancel to continue.");
                         msg.Commands.Add(new UICommand("OK", async delegate
                         {
@@ -157,7 +166,7 @@ namespace GoogleMapsUnofficial.ViewModel
                 {
                     if (Map == null || UserLocation == null) return;
                     UserLocation.Location = args.Position.Coordinate.Point;
-                    if(ActiveNavigationMode == true)
+                    if (ActiveNavigationMode == true)
                         Map.Center = args.Position.Coordinate.Point;
                 });
             }

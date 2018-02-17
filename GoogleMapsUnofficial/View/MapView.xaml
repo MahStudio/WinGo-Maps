@@ -191,7 +191,20 @@
             </SplitView.Pane>
             <Grid>
                 <maps:MapControl MapTapped="Map_MapTapped" x:Name="Map" RotateInteractionMode="GestureAndControl" TiltInteractionMode="GestureAndControl" ZoomInteractionMode="GestureAndControl" MapServiceToken="Qe4rzjfqSL7zZlp8xb8A~4o8bBFXIWVuiCUT9pX2cUg~Auk92xku8o5QuFTpMvN0_7Os9b6pREma6NBC8ojGjU0N3Eq3BBzkI9ehNfu065Wv" >
-                    <Grid HorizontalAlignment="Left" maps:MapControl.Location="{Binding UserLocation.Location,Mode=TwoWay, UpdateSourceTrigger=Explicit}" maps:MapControl.NormalizedAnchorPoint="0,1">
+                    <maps:MapItemsControl>
+                        <Grid Visibility="{Binding LocationFlagVisibility, Mode=OneWay}" HorizontalAlignment="Left" maps:MapControl.Location="{Binding UserLocation.Location,Mode=TwoWay, UpdateSourceTrigger=Explicit}" maps:MapControl.NormalizedAnchorPoint="0,1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Border Background="{ThemeResource SystemControlBackgroundAccentBrush}" Grid.Row="0">
+                                <TextBlock Text="{Binding UserLocation.AttractionName}" HorizontalAlignment="Left" />
+                            </Border>
+                            <Polygon Points="0,0 12.5,0 0,20" Fill="{ThemeResource SystemControlBackgroundAccentBrush}" StrokeThickness="0" Grid.Row="1" />
+                        </Grid>
+                    </maps:MapItemsControl>
+                    <!--<Grid HorizontalAlignment="Left" maps:MapControl.Location="{Binding UserLocation.Location,Mode=TwoWay, UpdateSourceTrigger=Explicit}" maps:MapControl.NormalizedAnchorPoint="0,1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
@@ -201,7 +214,7 @@
                             <TextBlock Text="{Binding UserLocation.AttractionName}" HorizontalAlignment="Left" />
                         </Border>
                         <Polygon Points="0,0 12.5,0 0,20" Fill="{ThemeResource SystemControlBackgroundAccentBrush}" StrokeThickness="0" Grid.Row="1" />
-                    </Grid>
+                    </Grid>-->
                 </maps:MapControl>
                 <Grid VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
@@ -212,10 +225,10 @@
                     <!--<OMC:MenuUserControl Grid.Column="0" Margin="32,15" />-->
                     <!--<OMC:SearchOptionsUserControl x:Name="Searchgrid" Grid.Column="1" Margin="0,15" HorizontalAlignment="Center"/>-->
                     <dir:NewDirections x:Name="DirectionsControl" Grid.Column="1" Height="80" MaxWidth="500" Margin="32,0"/>
-                    <OMC:MyLocationUserControl Grid.Column="2" Margin="32,32" />
+                    <OMC:MyLocationUserControl x:Name="MyLocationControl" Grid.Column="2" Margin="32,32" />
                 </Grid>
                 <OMC:SearchUserControl x:Name="Searchbar" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="32,40,32,0" />
-                <OMC:ChangeViewUserControl VerticalAlignment="Top" HorizontalAlignment="Right" Margin="32,95,32,0" />
+                <OMC:ChangeViewUserControl x:Name="ChangeViewControl" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="32,95,32,0" />
             </Grid>
         </SplitView>
     </Grid>

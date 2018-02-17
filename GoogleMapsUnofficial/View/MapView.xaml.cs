@@ -1,5 +1,4 @@
-﻿using GoogleMapsUnofficial.View.OnMapControls;
-using GoogleMapsUnofficial.ViewModel.GeocodControls;
+﻿using GoogleMapsUnofficial.ViewModel.GeocodControls;
 using GoogleMapsUnofficial.ViewModel.SettingsView;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,6 @@ using Windows.Foundation.Metadata;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Popups;
-using Windows.UI.StartScreen;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
@@ -82,6 +80,13 @@ namespace GoogleMapsUnofficial.View
             {
                 Map.TileSources.Add(new MapTileSource(new LocalMapTileDataSource("ms-appdata:///local/MahMaps/mah_x_{x}-y_{y}-z_{zoomlevel}.jpeg")) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
             }
+            //if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone)
+            //{
+            //    ChangeViewControl.Margin = new Thickness(28, 95, 28, 0);
+            //    Searchbar.Margin = new Thickness(28, 40, 28, 0);
+            //    DirectionsControl.Margin = new Thickness(28, 0, 28, 0);
+            //    MyLocationControl.Margin = new Thickness(28, 28, 28, 28);
+            //}
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -241,7 +246,7 @@ namespace GoogleMapsUnofficial.View
                     }
                     if (zoomlevel != 0) Map.ZoomLevel = zoomlevel;
                     else Map.ZoomLevel = 16;
-                    if(Querry != "")
+                    if (Querry != "")
                     {
                         await Task.Delay(1500);
                         Searchbar.SearchQuerry = Querry;
