@@ -165,7 +165,7 @@ namespace GoogleMapsUnofficial.View
                                 Result = await ViewModel.DirectionsControls.DirectionsHelper.GetDirections(OriginPoint.Position, DestinationPoint.Position, Mode, lst);
                             if (Result != null)
                             {
-                                Map.MapElements.Add(ViewModel.DirectionsControls.DirectionsHelper.GetDirectionAsRoute(Result, Colors.Purple));
+                                Map.MapElements.Add(ViewModel.DirectionsControls.DirectionsHelper.GetDirectionAsRoute(Result, (Color)Resources["SystemControlBackgroundAccentBrush"]));
                             }
                         }
                     }

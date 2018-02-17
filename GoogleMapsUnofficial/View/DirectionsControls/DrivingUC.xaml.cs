@@ -158,7 +158,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                         await new MessageDialog("No way to your destination!!!").ShowAsync();
                         return;
                     }
-                    var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), Colors.Purple);
+                    var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), (Color)Resources["SystemControlBackgroundAccentBrush"]);
                     try
                     {
                         foreach (var item in MapView.MapControl.MapElements)
