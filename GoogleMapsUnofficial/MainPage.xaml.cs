@@ -75,7 +75,7 @@ namespace GoogleMapsUnofficial
             applyAcrylicAccent(MainGrid);
             HMenuTopLst.Items.Add(new MenuClass { Text = "Map View", Icon = "", Tag = "Map View" });
             HMenuTopLst.Items.Add(new MenuClass { Text = "Offline Maps", Icon = "", Tag = "Offline Maps" });
-            HMenuBottomLst.Items.Add(new MenuClass { Text = "Send feedback", Icon = "", Tag = "Send feedback" });
+            HMenuBottomLst.Items.Add(new MenuClass { Text = "Send feedback", Icon = "", Tag = "Send feedback" });
             HMenuBottomLst.Items.Add(new MenuClass { Text = "Settings", Icon = "", Tag = "Settings" });
             return;
         }
