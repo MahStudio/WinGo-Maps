@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Calls;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Devices.Geolocation;
+using Windows.Foundation;
 using Windows.Foundation.Metadata;
 using Windows.System;
 using Windows.UI;
+using Windows.UI.Core;
+using Windows.UI.Input.Inking;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -88,10 +91,24 @@ namespace GoogleMapsUnofficial.View
             //    MyLocationControl.Margin = new Thickness(28, 28, 28, 28);
             //}
         }
+        Geopoint GeopointFromPoint(Point point)
+        {
+            Geopoint geoPoint = null;
 
+            this.Map.GetLocationFromOffset(point, out geoPoint);
+
+            return (geoPoint);
+        }
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            inkCanvas.InkPresenter.InputDeviceTypes = CoreInputDeviceTypes.Mouse | CoreInputDeviceTypes.Pen | CoreInputDeviceTypes.Touch;
+            var drawingAttr = this.inkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
+            drawingAttr.PenTip = PenTipShape.Rectangle;
+            drawingAttr.Size = new Size(4, 4);
+            drawingAttr.IgnorePressure = true;
+            drawingAttr.Color = (Color)Resources["SystemControlBackgroundAccentBrush"];
+            this.inkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(drawingAttr);
             if (e.Parameter != null)
             {
                 //Google Maps Override
@@ -281,8 +298,8 @@ namespace GoogleMapsUnofficial.View
                 {
                     var pic = t.results.Where(x => LastRightTap.DistanceTo(new Geopoint(new BasicGeoposition() { Latitude = x.geometry.location.lat, Longitude = x.geometry.location.lng })) < 1)
                         .OrderBy(x => LastRightTap.DistanceTo(new Geopoint(new BasicGeoposition() { Latitude = x.geometry.location.lat, Longitude = x.geometry.location.lng }))).FirstOrDefault();
-                    //var pic = t.results.Where(x => x.photos != null).LastOrDefault();
-                    if (pic != null)
+                //var pic = t.results.Where(x => x.photos != null).LastOrDefault();
+                if (pic != null)
                     {
                         if (pic.photos != null)
                         {
@@ -324,7 +341,6 @@ namespace GoogleMapsUnofficial.View
                             {
                                 PlaceReviewsItem.ItemsSource = det.result.reviews;
                                 PlaceReviewsItem.IsEnabled = true;
-                                //var des = det.result.reviews.First().relative_time_description;
                             }
                         }
                         else
@@ -333,21 +349,21 @@ namespace GoogleMapsUnofficial.View
                             PlaceAddress.Text = pic.vicinity;
                         }
                     }
-                    //else
-                    //{
-                    //    var res = (await GeocodeHelper.GetInfo(Location)).results.FirstOrDefault();
-                    //    if (res != null)
-                    //    {
-                    //        PlaceName.Text = res.address_components.FirstOrDefault().short_name;
-                    //        PlaceAddress.Text = res.formatted_address;
-                    //    }
-                    //    else
-                    //    {
-                    //        await new MessageDialog("We didn't find anything here. Maybe an internet connection issue.").ShowAsync();
-                    //        InfoPane.IsPaneOpen = false;
-                    //    }
-                    //}
-                }
+                //else
+                //{
+                //    var res = (await GeocodeHelper.GetInfo(Location)).results.FirstOrDefault();
+                //    if (res != null)
+                //    {
+                //        PlaceName.Text = res.address_components.FirstOrDefault().short_name;
+                //        PlaceAddress.Text = res.formatted_address;
+                //    }
+                //    else
+                //    {
+                //        await new MessageDialog("We didn't find anything here. Maybe an internet connection issue.").ShowAsync();
+                //        InfoPane.IsPaneOpen = false;
+                //    }
+                //}
+            }
                 else
                 {
                     await new MessageDialog("We didn't find anything here. Maybe an internet connection issue.").ShowAsync();
