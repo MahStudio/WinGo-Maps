@@ -26,10 +26,15 @@ namespace LiveTileTask
                         var http = new HttpClient();
                         http.DefaultRequestHeaders.UserAgent.ParseAdd("MahStudioWinGoMaps");
                         var res = await (await http.GetAsync(new Uri($"https://maps.googleapis.com/maps/api/staticmap?center={ul.Latitude},{ul.Longitude}&zoom=16&size=200x200", UriKind.RelativeOrAbsolute))).Content.ReadAsBufferAsync();
+                        var reswide = await (await http.GetAsync(new Uri($"https://maps.googleapis.com/maps/api/staticmap?center={ul.Latitude},{ul.Longitude}&zoom=16&size=310x150", UriKind.RelativeOrAbsolute))).Content.ReadAsBufferAsync();
                         var f = await ApplicationData.Current.LocalFolder.CreateFileAsync("LiveTile.png", CreationCollisionOption.OpenIfExists);
+                        var fWide = await ApplicationData.Current.LocalFolder.CreateFileAsync("LiveTileWide.png", CreationCollisionOption.OpenIfExists);
                         var str = await f.OpenAsync(FileAccessMode.ReadWrite);
+                        var strwide = await fWide.OpenAsync(FileAccessMode.ReadWrite);
                         await str.WriteAsync(res);
+                        await strwide.WriteAsync(reswide);
                         str.Dispose();
+                        strwide.Dispose();
                     }
                     else
                     {
@@ -47,9 +52,23 @@ namespace LiveTileTask
                         }
                     }
                     var update = TileUpdateManager.CreateTileUpdaterForApplication();
-                    XmlDocument tileXml = TileUpdateManager.GetTemplateContent(TileTemplateType.TileSquare150x150Image);
-                    tileXml.GetElementsByTagName("image")[0].Attributes[1].NodeValue = "ms-appdata:///local/LiveTile.png";
-                    update.Update(new TileNotification(tileXml));
+                    string xml = "<tile>\n";
+                    xml += "<visual version=\"4\">\n";
+                    xml += "  <binding template=\"TileSquare150x150Image\" fallback=\"TileSquareImage\">\n";
+                    xml += "      <image id=\"1\" src=\"ms-appdata:///local/LiveTile.png\"/>\n";
+                    xml += "  </binding>\n";
+                    xml += "  <binding template=\"TileWide310x150Image\" fallback=\"TileWideImage\">\n";
+                    xml += "      <image id=\"1\" src=\"ms-appdata:///local/LiveTileWide.png\"/>\n";
+                    xml += "  </binding>\n";
+                    xml += "</visual>\n";
+                    xml += "</tile>";
+
+                    XmlDocument txml = new XmlDocument();
+                    txml.LoadXml(xml);
+                    TileNotification tNotification = new TileNotification(txml);
+
+                    update.Clear();
+                    update.Update(tNotification);
                 }
                 def.Complete();
             }
