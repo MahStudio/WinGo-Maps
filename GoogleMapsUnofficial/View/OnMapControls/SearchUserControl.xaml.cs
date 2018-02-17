@@ -19,7 +19,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class SearchUserControl : Page
+    public sealed partial class SearchUserControl : UserControl
     {
         private class ViewModel : INotifyPropertyChanged
         {
@@ -103,7 +103,11 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             //SearchBox.Visibility = Visibility.Collapsed;
             //BTNExpand.Visibility = Visibility.Visible;
             SearchBox.Text = "";
-            (DataContext as ViewModel).SearchResults.Clear();
+            try
+            {
+                (DataContext as ViewModel).SearchResults.Clear();
+            }
+            catch { }
         }
         private void Control2_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
@@ -111,7 +115,11 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             //SearchBox.Visibility = Visibility.Collapsed;
             //BTNExpand.Visibility = Visibility.Visible;
             SearchBox.Text = "";
-            (DataContext as ViewModel).SearchResults.Clear();
+            try
+            {
+                (DataContext as ViewModel).SearchResults.Clear();
+            }
+            catch { }
         }
 
         private async void Control2_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
@@ -155,23 +163,6 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                 }
             }
         }
-
-        private async void BTNExpand_Click(object sender, RoutedEventArgs e)
-        {
-            BTNExpand.Visibility = Visibility.Collapsed;
-            SearchBox.Visibility = Visibility.Visible;
-            await Task.Delay(10);
-            try
-            {
-                SearchBox.Focus(FocusState.Programmatic);
-                InputPane.GetForCurrentView().TryShow();
-            }
-            catch
-            {
-
-            }
-            //SearchReq.Invoke(null, null);
-        }
-
+        
     }
 }

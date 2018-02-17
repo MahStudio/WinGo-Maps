@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoogleMapsUnofficial.ViewModel;
+using System;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.UI.Core;
@@ -25,7 +26,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                 {
                     Geolocator geolocator = new Geolocator() { DesiredAccuracy = PositionAccuracy.High };
 
-                    Geoposition pos = await geolocator.GetGeopositionAsync();
+                    Geoposition pos = await MapViewVM.GeoLocate.GetGeopositionAsync();
                     
                     BasicGeoposition snPosition = new BasicGeoposition { Latitude = pos.Coordinate.Point.Position.Latitude, Longitude = pos.Coordinate.Point.Position.Longitude };
                     Geopoint snPoint = new Geopoint(snPosition);

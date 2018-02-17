@@ -1,8 +1,8 @@
-﻿<Page
+﻿<UserControl
     x:Class="GoogleMapsUnofficial.View.OnMapControls.SearchUserControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:GoogleMapsUnofficial.View.OnMapControls"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -11,15 +11,7 @@
         <ResourceDictionary Source="/Resources/CustomControls/AutoSuggestionBox.xaml"/>
     </UserControl.Resources>
     <Grid Background="White">
-        <Button x:Name="BTNExpand" Width="45"
-                Opacity="0.75" Background="Transparent"
-                Visibility="Collapsed" 
-                HorizontalAlignment="Right" 
-                VerticalAlignment="Stretch" 
-                Click="BTNExpand_Click">
-            <SymbolIcon Symbol="Find"/>
-        </Button>
-        <AutoSuggestBox Style="{StaticResource MyAutoSuggestBox}" BorderBrush="White" FontFamily="B Koodak" PlaceholderText="Search..."
+        <AutoSuggestBox Style="{StaticResource MyAutoSuggestBox}" FontFamily="B Koodak" PlaceholderText="Search..."
             ItemsSource="{Binding SearchResults}"
             TextChanged="Control2_TextChanged" x:Name="SearchBox"
             QueryIcon="Find" Visibility="Visible"
@@ -35,4 +27,4 @@
 
         </AutoSuggestBox>
     </Grid>
-</Page>
+</UserControl>
