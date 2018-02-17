@@ -227,13 +227,10 @@
                     <dir:NewDirections x:Name="DirectionsControl" Grid.Column="1" Height="80" MaxWidth="500" Margin="32,0"/>
                     <OMC:MyLocationUserControl x:Name="MyLocationControl" Grid.Column="2" Margin="32,32" />
                 </Grid>
-                <InkCanvas
-        x:Name="inkCanvas" 
-        Visibility="Collapsed">
-                    
-                </InkCanvas>
                 <OMC:SearchUserControl x:Name="Searchbar" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="32,40,32,0" />
                 <OMC:ChangeViewUserControl x:Name="ChangeViewControl" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="32,95,32,0" />
+                <InkCanvas x:Name="inkCanvas"  Visibility="Collapsed"/>
+                <InkToolbar x:Name="inkToolbar" Visibility="{Binding ElementName=inkCanvas, Path=Visibility, Mode=OneWay}" VerticalAlignment="Bottom" TargetInkCanvas="{x:Bind inkCanvas}" />
             </Grid>
         </SplitView>
     </Grid>

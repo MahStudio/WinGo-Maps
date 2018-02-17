@@ -66,7 +66,7 @@ namespace WinGoService
                 try
                 {
                     var http = new HttpClient();
-                    var httpres = await http.GetAsync(new Uri($"https://maps.googleapis.com/maps/api/staticmap?center={point.Position.Latitude},{point.Position.Longitude}&zoom=16&size=280x140&markers=Red|label:G|{point.Position.Latitude},{point.Position.Longitude}", UriKind.RelativeOrAbsolute));
+                    var httpres = await http.GetAsync(new Uri($"https://maps.googleapis.com/maps/api/staticmap?center={point.Position.Latitude},{point.Position.Longitude}&zoom=16&size=560x280&markers=Red|label:G|{point.Position.Latitude},{point.Position.Longitude}", UriKind.RelativeOrAbsolute));
                     var buf = await httpres.Content.ReadAsBufferAsync();
                     var f = await ApplicationData.Current.LocalFolder.CreateFileAsync("CortanaResp.png", CreationCollisionOption.OpenIfExists);
                     var fread = await f.OpenAsync(FileAccessMode.ReadWrite);
