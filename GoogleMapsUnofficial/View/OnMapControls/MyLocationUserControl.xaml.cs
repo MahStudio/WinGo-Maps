@@ -35,7 +35,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                     Map = View.MapView.MapControl;
                     Map.Center = snPoint;
                     Map.ZoomLevel = 16;
-
+                    MapViewVM.UserLocation.Location = snPoint;
                 }
             });
         }

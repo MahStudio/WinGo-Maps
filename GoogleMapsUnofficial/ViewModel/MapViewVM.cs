@@ -57,7 +57,7 @@ namespace GoogleMapsUnofficial.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
         private MapControl Map;
         private CoreWindow CoreWindow;
-        public ViewModel UserLocation { get; set; }
+        public static ViewModel UserLocation { get; set; }
         Geolocator geolocator = new Geolocator();
         public static Geolocator GeoLocate { get; set; }
         public static Geopoint FastLoadGeoPosition { get; set; }

@@ -386,7 +386,7 @@ namespace GoogleMapsUnofficial.View
         {
             if (DirectionsControl.Origin == null)
             {
-                DirectionsControl.Origin = MapViewVM.UserLocation.Location;
+                DirectionsControl.Origin = ViewModel.MapViewVM.UserLocation.Location;
             }
             DirectionsControl.Destination = LastRightTap;
             DirectionsControl.DirectionFinder();
