@@ -58,7 +58,7 @@ namespace GoogleMapsUnofficial.View
             StaticMapView = this;
             Map.Style = MapStyle.None;
             Map.TileSources.Clear();
-            var AllowOverstretch = SettingsSetters.GetAllowOverstretch();
+             var AllowOverstretch = SettingsSetters.GetAllowOverstretch();
             var FadeAnimationEnabled = SettingsSetters.GetFadeAnimationEnabled();
             Map.RotateInteractionMode = SettingsSetters.GetRotationControlsVisible();
             var ZoomInteractionMode = SettingsSetters.GetZoomControlsVisible();

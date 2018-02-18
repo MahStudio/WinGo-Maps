@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.Devices.Geolocation;
+using Windows.System.Display;
 using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -130,6 +131,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                                 MapView.MapControl.Heading = read.HeadingTrueNorth.Value;
                             MapViewVM.Compass.ReadingChanged += Compass_ReadingChanged;
                         }
+                        new DisplayRequest().RequestActive();
                     }
                     else
                     {
@@ -189,6 +191,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                                 MapView.MapControl.Heading = read.HeadingTrueNorth.Value;
                             MapViewVM.Compass.ReadingChanged += Compass_ReadingChanged;
                         }
+                        new DisplayRequest().RequestActive();
                     }
                     else
                     {
@@ -234,6 +237,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                                 MapView.MapControl.Heading = read.HeadingTrueNorth.Value;
                             MapViewVM.Compass.ReadingChanged += Compass_ReadingChanged;
                         }
+                        new DisplayRequest().RequestActive();
                     }
                     else
                     {
