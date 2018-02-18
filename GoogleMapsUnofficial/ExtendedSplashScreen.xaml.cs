@@ -32,7 +32,7 @@ namespace GoogleMapsUnofficial
             para = parameter;
             DispatcherTime = new DispatcherTimer
             {
-                Interval = new TimeSpan(0, 0, 10)
+                Interval = new TimeSpan(0, 0, 20)
             };
             DispatcherTime.Tick += DispatcherTime_Tick;
             DispatcherTime.Start();
@@ -116,17 +116,11 @@ namespace GoogleMapsUnofficial
                 {
 
                 }
-                var geolocator = MapViewVM.GeoLocate;
                 var accessStatus = await Geolocator.RequestAccessAsync();
 
                 if (accessStatus == GeolocationAccessStatus.Allowed)
                 {
-                    geolocator = new Geolocator
-                    {
-                        MovementThreshold = 1,
-                        ReportInterval = 1000,
-                        DesiredAccuracyInMeters = 1
-                    };
+                    var geolocator = new Geolocator();
                     Geoposition pos = await geolocator.GetGeopositionAsync();
                     MapViewVM.FastLoadGeoPosition = pos.Coordinate.Point;
                     MapViewVM.GeoLocate = geolocator;

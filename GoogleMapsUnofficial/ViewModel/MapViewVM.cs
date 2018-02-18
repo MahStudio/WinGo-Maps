@@ -64,12 +64,18 @@ namespace GoogleMapsUnofficial.ViewModel
         public MapViewVM()
         {
             CoreWindow = CoreWindow.GetForCurrentThread();
-            LoadPage();
             LocationFlagVisibility = Visibility.Visible;
             UserLocation = new ViewModel() { AttractionName = "My Location" };
-            geolocator = GeoLocate;
-            Compass = Compass.GetDefault();
-            ActiveNavigationMode = false;
+            LoadPage();
+        }
+
+        private void Map_Loaded(object sender, RoutedEventArgs e)
+        {
+            if(FastLoadGeoPosition != null)
+            {
+                Geopoint pos = FastLoadGeoPosition;
+                UserLocation.Location = new Geopoint(pos.Position);
+            }
         }
 
         ~MapViewVM()
@@ -79,6 +85,9 @@ namespace GoogleMapsUnofficial.ViewModel
         }
         async void LoadPage()
         {
+            geolocator = GeoLocate;
+            Compass = Compass.GetDefault();
+            ActiveNavigationMode = false;
             await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
             {
                 try
@@ -100,6 +109,7 @@ namespace GoogleMapsUnofficial.ViewModel
                             UserLocation.Location = snPoint;
                             await Task.Delay(10);
                             Map = View.MapView.MapControl;
+                            Map.Loaded += Map_Loaded;
                             //Map.MapElements.Add(UserLoction);
                             Map.Center = snPoint;
                             Map.CenterChanged += Map_CenterChanged;
@@ -114,6 +124,7 @@ namespace GoogleMapsUnofficial.ViewModel
                                     Title = item.PlaceName
                                 });
                             }
+                            UserLocation.Location = snPoint;
                             //if (Map.Is3DSupported)
                             //{
                             //    Map.Style = MapStyle.Aerial3DWithRoads;

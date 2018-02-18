@@ -24,7 +24,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                 var accessStatus = await Geolocator.RequestAccessAsync();
                 if (accessStatus == GeolocationAccessStatus.Allowed)
                 {
-                    Geolocator geolocator = new Geolocator() { DesiredAccuracy = PositionAccuracy.High };
+                    Geolocator geolocator = new Geolocator();
 
                     Geoposition pos = await MapViewVM.GeoLocate.GetGeopositionAsync();
                     
