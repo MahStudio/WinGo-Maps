@@ -244,6 +244,7 @@
                 </Grid>
                 <OMC:SearchUserControl x:Name="Searchbar" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="32,40,32,0" />
                 <OMC:ChangeViewUserControl x:Name="ChangeViewControl" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="32,95,32,0" />
+                <OMC:ZoomUserControl x:Name="ZoomUserControl" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="32,149,32,0"/>
                 <InkCanvas x:Name="inkCanvas"  Visibility="Collapsed"/>
                 <InkToolbar x:Name="inkToolbar" Visibility="{Binding ElementName=inkCanvas, Path=Visibility, Mode=OneWay}" VerticalAlignment="Bottom" TargetInkCanvas="{x:Bind inkCanvas}" />
             </Grid>

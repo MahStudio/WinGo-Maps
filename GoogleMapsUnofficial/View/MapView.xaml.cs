@@ -60,8 +60,14 @@ namespace GoogleMapsUnofficial.View
             Map.TileSources.Clear();
             var AllowOverstretch = SettingsSetters.GetAllowOverstretch();
             var FadeAnimationEnabled = SettingsSetters.GetFadeAnimationEnabled();
-            Map.ZoomInteractionMode = SettingsSetters.GetZoomControlsVisible();
             Map.RotateInteractionMode = SettingsSetters.GetRotationControlsVisible();
+            var ZoomInteractionMode = SettingsSetters.GetZoomControlsVisible();
+            if (ZoomInteractionMode == MapInteractionMode.Auto || ZoomInteractionMode == MapInteractionMode.ControlOnly || ZoomInteractionMode == MapInteractionMode.GestureAndControl || ZoomInteractionMode == MapInteractionMode.PointerKeyboardAndControl)
+                ZoomUserControl.Visibility = Visibility.Visible;
+            else ZoomUserControl.Visibility = Visibility.Collapsed;
+            if (ZoomInteractionMode == MapInteractionMode.Auto || ZoomInteractionMode == MapInteractionMode.GestureAndControl || ZoomInteractionMode == MapInteractionMode.GestureOnly || ZoomInteractionMode == MapInteractionMode.PointerAndKeyboard || ZoomInteractionMode == MapInteractionMode.PointerKeyboardAndControl || ZoomInteractionMode == MapInteractionMode.PointerOnly)
+                Map.ZoomInteractionMode = MapInteractionMode.GestureOnly;
+            else Map.ZoomInteractionMode = MapInteractionMode.Disabled;
             if (InternalHelper.InternetConnection())
             {
                 //var hm = new HttpMapTileDataSource() { AllowCaching = true };

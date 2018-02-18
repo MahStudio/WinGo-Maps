@@ -177,6 +177,9 @@
     <Compile Include="View\OnMapControls\SearchUserControl.xaml.cs">
       <DependentUpon>SearchUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\OnMapControls\ZoomUserControl.xaml.cs">
+      <DependentUpon>ZoomUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SearchProviderControls\NearbySearchProviderUserControl.xaml.cs">
       <DependentUpon>NearbySearchProviderUserControl.xaml</DependentUpon>
     </Compile>
@@ -319,6 +322,10 @@
     <Page Include="View\OnMapControls\SearchUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\OnMapControls\ZoomUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\SearchProviderControls\NearbySearchProviderUserControl.xaml">
       <SubType>Designer</SubType>

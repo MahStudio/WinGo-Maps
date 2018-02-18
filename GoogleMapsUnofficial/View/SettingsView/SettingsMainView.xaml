@@ -38,7 +38,7 @@
                 <Button Grid.Row="1" Content="Language Settings" Click="LanguageSets_Click"/>
             </Grid>
             <Grid Grid.Row="10" Margin="0,15">
-                <TextBlock TextWrapping="Wrap">
+                <TextBlock TextWrapping="Wrap" FontFamily="Segoe UI">
                     <Run FontSize="22">About</Run>
                     <LineBreak/>
                     <Run>WinGoMaps</Run>
