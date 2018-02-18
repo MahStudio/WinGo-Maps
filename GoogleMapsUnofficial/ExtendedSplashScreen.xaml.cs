@@ -94,9 +94,7 @@ namespace GoogleMapsUnofficial
                 var vcdStorageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///VoiceCommands.xml", UriKind.RelativeOrAbsolute));
                 await Windows.ApplicationModel.VoiceCommands.VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(vcdStorageFile);
             }
-#pragma warning disable CS0168 // The variable 'ex' is declared but never used
             catch (Exception ex) { }
-#pragma warning restore CS0168 // The variable 'ex' is declared but never used
         }
         private async void ExtendedSplashScreen_Loaded(object sender, RoutedEventArgs e)
         {
@@ -116,11 +114,17 @@ namespace GoogleMapsUnofficial
                 {
 
                 }
+                var geolocator = MapViewVM.GeoLocate;
                 var accessStatus = await Geolocator.RequestAccessAsync();
 
                 if (accessStatus == GeolocationAccessStatus.Allowed)
                 {
-                    var geolocator = new Geolocator();
+                    geolocator = new Geolocator
+                    {
+                        MovementThreshold = 1,
+                        ReportInterval = 1,
+                        DesiredAccuracyInMeters = 1
+                    };
                     Geoposition pos = await geolocator.GetGeopositionAsync();
                     MapViewVM.FastLoadGeoPosition = pos.Coordinate.Point;
                     MapViewVM.GeoLocate = geolocator;

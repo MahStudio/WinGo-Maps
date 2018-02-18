@@ -68,16 +68,7 @@ namespace GoogleMapsUnofficial.ViewModel
             UserLocation = new ViewModel() { AttractionName = "My Location" };
             LoadPage();
         }
-
-        private void Map_Loaded(object sender, RoutedEventArgs e)
-        {
-            if(FastLoadGeoPosition != null)
-            {
-                Geopoint pos = FastLoadGeoPosition;
-                UserLocation.Location = new Geopoint(pos.Position);
-            }
-        }
-
+        
         ~MapViewVM()
         {
             geolocator.PositionChanged -= Geolocator_PositionChanged;
@@ -109,12 +100,10 @@ namespace GoogleMapsUnofficial.ViewModel
                             UserLocation.Location = snPoint;
                             await Task.Delay(10);
                             Map = View.MapView.MapControl;
-                            Map.Loaded += Map_Loaded;
                             //Map.MapElements.Add(UserLoction);
                             Map.Center = snPoint;
                             Map.CenterChanged += Map_CenterChanged;
                             Map.ZoomLevel = 16;
-                            GeoLocate = geolocator;
                             var savedplaces = SavedPlacesVM.GetSavedPlaces();
                             foreach (var item in savedplaces)
                             {
