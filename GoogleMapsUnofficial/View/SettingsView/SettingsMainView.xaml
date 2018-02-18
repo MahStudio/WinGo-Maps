@@ -56,6 +56,8 @@
                     <LineBreak/>
                     <Run FontSize="20">Special Thanks to</Run>
                     <LineBreak/>
+                    <Run>Joost van Schaik, Windows Development MVP for his helps in solving application's bug on Mobile</Run>
+                    <LineBreak/>
                     <Run>Ahmad Karaki for his calculations and formulas</Run>
                     <LineBreak/>
                     <Run>Ali Ghamari and Marco Antonari for his testings and reporting lots of issues</Run>
