@@ -30,9 +30,8 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                     
                     BasicGeoposition snPosition = new BasicGeoposition { Latitude = pos.Coordinate.Point.Position.Latitude, Longitude = pos.Coordinate.Point.Position.Longitude };
                     Geopoint snPoint = new Geopoint(snPosition);
-                    await Task.Delay(10);
                     var Map = MapView.MapControl;
-                    Map = View.MapView.MapControl;
+                    await Task.Delay(10);
                     Map.Center = snPoint;
                     Map.ZoomLevel = 16;
                     MapViewVM.UserLocation.Location = snPoint;
