@@ -21,21 +21,25 @@ namespace GoogleMapsUnofficial.View.OnMapControls
         {
             await CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
             {
-                var accessStatus = await Geolocator.RequestAccessAsync();
-                if (accessStatus == GeolocationAccessStatus.Allowed)
+                try
                 {
-                    Geolocator geolocator = new Geolocator();
+                    var accessStatus = await Geolocator.RequestAccessAsync();
+                    if (accessStatus == GeolocationAccessStatus.Allowed)
+                    {
+                        Geolocator geolocator = new Geolocator();
 
-                    Geoposition pos = await MapViewVM.GeoLocate.GetGeopositionAsync();
-                    
-                    BasicGeoposition snPosition = new BasicGeoposition { Latitude = pos.Coordinate.Point.Position.Latitude, Longitude = pos.Coordinate.Point.Position.Longitude };
-                    Geopoint snPoint = new Geopoint(snPosition);
-                    var Map = MapView.MapControl;
-                    await Task.Delay(10);
-                    Map.Center = snPoint;
-                    Map.ZoomLevel = 16;
-                    MapViewVM.UserLocation.Location = snPoint;
+                        Geoposition pos = await MapViewVM.GeoLocate.GetGeopositionAsync();
+
+                        BasicGeoposition snPosition = new BasicGeoposition { Latitude = pos.Coordinate.Point.Position.Latitude, Longitude = pos.Coordinate.Point.Position.Longitude };
+                        Geopoint snPoint = new Geopoint(snPosition);
+                        var Map = MapView.MapControl;
+                        await Task.Delay(10);
+                        Map.Center = snPoint;
+                        Map.ZoomLevel = 16;
+                        MapViewVM.UserLocation.Location = snPoint;
+                    }
                 }
+                catch { }
             });
         }
     }
