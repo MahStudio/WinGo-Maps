@@ -28,8 +28,8 @@
             <ToggleSwitch Grid.Row="2" Header="Enable Fade Animation on loading map tiles" IsOn="{Binding FadeAnimationEnabled, Mode=TwoWay}"/>
             <ToggleSwitch Grid.Row="3" Header="Enable live tile" IsOn="{Binding LiveTileEnable, Mode=TwoWay}"/>
             <ComboBox Grid.Row="4" Header="Show zoom controls on map" ItemsSource="{Binding MapInteractionModeOptions,Mode=OneWay}" SelectedIndex="{Binding ZoomControlsVisible, Mode=TwoWay}"/>
-            <ComboBox Grid.Row="5" Header="Show rotation controls on map" ItemsSource="{Binding MapInteractionModeOptions,Mode=OneWay}" SelectedIndex="{Binding RotationControlsVisible, Mode=TwoWay}"/>
-            <Grid Grid.Row="6">
+            <!--<ComboBox Grid.Row="5" Header="Show rotation controls on map" ItemsSource="{Binding MapInteractionModeOptions,Mode=OneWay}" SelectedIndex="{Binding RotationControlsVisible, Mode=TwoWay}"/>-->
+            <Grid Grid.Row="5">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>

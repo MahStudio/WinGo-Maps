@@ -60,7 +60,7 @@ namespace GoogleMapsUnofficial.View
             Map.TileSources.Clear();
              var AllowOverstretch = SettingsSetters.GetAllowOverstretch();
             var FadeAnimationEnabled = SettingsSetters.GetFadeAnimationEnabled();
-            Map.RotateInteractionMode = SettingsSetters.GetRotationControlsVisible();
+            //Map.RotateInteractionMode = SettingsSetters.GetRotationControlsVisible();
             var ZoomInteractionMode = SettingsSetters.GetZoomControlsVisible();
             if (ZoomInteractionMode == MapInteractionMode.Auto || ZoomInteractionMode == MapInteractionMode.ControlOnly || ZoomInteractionMode == MapInteractionMode.GestureAndControl || ZoomInteractionMode == MapInteractionMode.PointerKeyboardAndControl)
                 ZoomUserControl.Visibility = Visibility.Visible;
