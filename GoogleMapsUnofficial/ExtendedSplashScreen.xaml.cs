@@ -87,21 +87,25 @@ namespace GoogleMapsUnofficial
                 RemoveExtendedSplash();
             });
         }
-        public async Task InstallVCD()
+        public async void InstallVCD()
         {
             try
             {
+                var r = ApplicationData.Current.LocalSettings.Values["VCDV10"].ToString();
+            }
+            catch (Exception)
+            {
                 var vcdStorageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///VoiceCommands.xml", UriKind.RelativeOrAbsolute));
                 await Windows.ApplicationModel.VoiceCommands.VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(vcdStorageFile);
+                ApplicationData.Current.LocalSettings.Values["VCDV10"] = "";
             }
-            catch (Exception ex) { }
         }
         private async void ExtendedSplashScreen_Loaded(object sender, RoutedEventArgs e)
         {
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
             {
                 ApplyAcrylicAccent(Grid1);
-                await InstallVCD();
+                InstallVCD();
                 try
                 {
                     var crashrep = ApplicationData.Current.LocalSettings.Values["CrashDump"].ToString();
