@@ -58,7 +58,7 @@ namespace GoogleMapsUnofficial.View
             StaticMapView = this;
             Map.Style = MapStyle.None;
             Map.TileSources.Clear();
-             var AllowOverstretch = SettingsSetters.GetAllowOverstretch();
+            var AllowOverstretch = SettingsSetters.GetAllowOverstretch();
             var FadeAnimationEnabled = SettingsSetters.GetFadeAnimationEnabled();
             Map.RotateInteractionMode = MapInteractionMode.GestureOnly;
             //Map.RotateInteractionMode = SettingsSetters.GetRotationControlsVisible();
@@ -305,8 +305,8 @@ namespace GoogleMapsUnofficial.View
                 {
                     var pic = t.results.Where(x => LastRightTap.DistanceTo(new Geopoint(new BasicGeoposition() { Latitude = x.geometry.location.lat, Longitude = x.geometry.location.lng })) < 1)
                         .OrderBy(x => LastRightTap.DistanceTo(new Geopoint(new BasicGeoposition() { Latitude = x.geometry.location.lat, Longitude = x.geometry.location.lng }))).FirstOrDefault();
-                //var pic = t.results.Where(x => x.photos != null).LastOrDefault();
-                if (pic != null)
+                    //var pic = t.results.Where(x => x.photos != null).LastOrDefault();
+                    if (pic != null)
                     {
                         if (pic.photos != null)
                         {
@@ -356,21 +356,21 @@ namespace GoogleMapsUnofficial.View
                             PlaceAddress.Text = pic.vicinity;
                         }
                     }
-                //else
-                //{
-                //    var res = (await GeocodeHelper.GetInfo(Location)).results.FirstOrDefault();
-                //    if (res != null)
-                //    {
-                //        PlaceName.Text = res.address_components.FirstOrDefault().short_name;
-                //        PlaceAddress.Text = res.formatted_address;
-                //    }
-                //    else
-                //    {
-                //        await new MessageDialog("We didn't find anything here. Maybe an internet connection issue.").ShowAsync();
-                //        InfoPane.IsPaneOpen = false;
-                //    }
-                //}
-            }
+                    //else
+                    //{
+                    //    var res = (await GeocodeHelper.GetInfo(Location)).results.FirstOrDefault();
+                    //    if (res != null)
+                    //    {
+                    //        PlaceName.Text = res.address_components.FirstOrDefault().short_name;
+                    //        PlaceAddress.Text = res.formatted_address;
+                    //    }
+                    //    else
+                    //    {
+                    //        await new MessageDialog("We didn't find anything here. Maybe an internet connection issue.").ShowAsync();
+                    //        InfoPane.IsPaneOpen = false;
+                    //    }
+                    //}
+                }
                 else
                 {
                     await new MessageDialog("We didn't find anything here. Maybe an internet connection issue.").ShowAsync();
@@ -495,8 +495,8 @@ namespace GoogleMapsUnofficial.View
 
         private void InkingBTN_Click(object sender, RoutedEventArgs e)
         {
-            if(inkCanvas.Visibility == Visibility.Collapsed)
-            inkCanvas.Visibility = Visibility.Visible;
+            if (inkCanvas.Visibility == Visibility.Collapsed)
+                inkCanvas.Visibility = Visibility.Visible;
             else
                 inkCanvas.Visibility = Visibility.Collapsed;
         }

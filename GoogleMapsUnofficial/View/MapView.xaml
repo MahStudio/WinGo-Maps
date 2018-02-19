@@ -243,7 +243,7 @@
                     <!--<OMC:MenuUserControl Grid.Column="0" Margin="32,15" />-->
                     <!--<OMC:SearchOptionsUserControl x:Name="Searchgrid" Grid.Column="1" Margin="0,15" HorizontalAlignment="Center"/>-->
                     <Button x:Name="InkingBTN" Click="InkingBTN_Click" Style="{StaticResource dotbut}" Width="48" Height="48" Margin="32,32" Grid.Column="0" BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Foreground="White" Padding="0" FontSize="18" FontFamily="Segoe MDL2 Assets" Content="&#xE76D;"/>
-                    <dir:NewDirections x:Name="DirectionsControl" Grid.Column="1" Height="80" MaxWidth="500" Margin="32,0"/>
+                    <dir:NewDirections x:Name="DirectionsControl" Grid.Column="1" Height="80" MaxWidth="500" Margin="16,0"/>
                     <OMC:MyLocationUserControl x:Name="MyLocationControl" Grid.Column="2" Margin="32,32" />
                 </Grid>
                 <OMC:SearchUserControl x:Name="Searchbar" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="32,40,32,0" />
