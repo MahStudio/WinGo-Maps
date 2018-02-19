@@ -60,6 +60,7 @@ namespace GoogleMapsUnofficial.View
             Map.TileSources.Clear();
              var AllowOverstretch = SettingsSetters.GetAllowOverstretch();
             var FadeAnimationEnabled = SettingsSetters.GetFadeAnimationEnabled();
+            Map.RotateInteractionMode = MapInteractionMode.GestureOnly;
             //Map.RotateInteractionMode = SettingsSetters.GetRotationControlsVisible();
             var ZoomInteractionMode = SettingsSetters.GetZoomControlsVisible();
             if (ZoomInteractionMode == MapInteractionMode.Auto || ZoomInteractionMode == MapInteractionMode.ControlOnly || ZoomInteractionMode == MapInteractionMode.GestureAndControl || ZoomInteractionMode == MapInteractionMode.PointerKeyboardAndControl)
@@ -490,6 +491,11 @@ namespace GoogleMapsUnofficial.View
         private void Map_MapTapped(MapControl sender, MapInputEventArgs args)
         {
             RunMapRightTapped(Map, args.Location);
+        }
+
+        private void InkingBTN_Click(object sender, RoutedEventArgs e)
+        {
+            inkCanvas.Visibility = Visibility.Visible;
         }
     }
 }
