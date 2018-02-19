@@ -124,13 +124,6 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                         MapView.MapControl.Center = Origin;
                         MapView.MapControl.DesiredPitch = 45;
                         MapViewVM.ActiveNavigationMode = true;
-                        if (MapViewVM.Compass != null)
-                        {
-                            var read = MapViewVM.Compass.GetCurrentReading();
-                            if (read.HeadingTrueNorth.HasValue)
-                                MapView.MapControl.Heading = read.HeadingTrueNorth.Value;
-                            MapViewVM.Compass.ReadingChanged += Compass_ReadingChanged;
-                        }
                         new DisplayRequest().RequestActive();
                     }
                     else
@@ -184,13 +177,6 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                         MapView.MapControl.Center = Origin;
                         MapView.MapControl.DesiredPitch = 45;
                         MapViewVM.ActiveNavigationMode = true;
-                        if (MapViewVM.Compass != null)
-                        {
-                            var read = MapViewVM.Compass.GetCurrentReading();
-                            if (read.HeadingTrueNorth.HasValue)
-                                MapView.MapControl.Heading = read.HeadingTrueNorth.Value;
-                            MapViewVM.Compass.ReadingChanged += Compass_ReadingChanged;
-                        }
                         new DisplayRequest().RequestActive();
                     }
                     else
@@ -230,13 +216,6 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                         MapView.MapControl.Center = Origin;
                         MapView.MapControl.DesiredPitch = 45;
                         MapViewVM.ActiveNavigationMode = true;
-                        if (MapViewVM.Compass != null)
-                        {
-                            var read = MapViewVM.Compass.GetCurrentReading();
-                            if (read.HeadingTrueNorth.HasValue)
-                                MapView.MapControl.Heading = read.HeadingTrueNorth.Value;
-                            MapViewVM.Compass.ReadingChanged += Compass_ReadingChanged;
-                        }
                         new DisplayRequest().RequestActive();
                     }
                     else
@@ -246,15 +225,6 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                 });
             }
         }
-
-        private async void Compass_ReadingChanged(Windows.Devices.Sensors.Compass sender, Windows.Devices.Sensors.CompassReadingChangedEventArgs args)
-        {
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, delegate
-            {
-                if (MapViewVM.ActiveNavigationMode)
-                    if (args.Reading.HeadingTrueNorth.HasValue)
-                        MapView.MapControl.Heading = args.Reading.HeadingTrueNorth.Value;
-            });
-        }
+        
     }
 }

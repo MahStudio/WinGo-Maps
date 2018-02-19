@@ -53,6 +53,7 @@ namespace GoogleMapsUnofficial.ViewModel
         private Visibility _locflagvisi;
         public Visibility LocationFlagVisibility { get { return _locflagvisi; } set { _locflagvisi = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("LocationFlagVisibility")); } }
         public static Compass Compass { get; set; }
+        public static bool CompassEnabled { get; set; }
         public static bool ActiveNavigationMode { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
         private MapControl Map;
@@ -78,6 +79,8 @@ namespace GoogleMapsUnofficial.ViewModel
         {
             geolocator = GeoLocate;
             Compass = Compass.GetDefault();
+            if(Compass != null)
+                Compass.ReadingChanged += Compass_ReadingChanged;
             ActiveNavigationMode = false;
             await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
             {
@@ -146,6 +149,16 @@ namespace GoogleMapsUnofficial.ViewModel
                     }
                 }
                 catch { }
+            });
+        }
+
+        private async void Compass_ReadingChanged(Compass sender, CompassReadingChangedEventArgs args)
+        {
+            await CoreWindow.Dispatcher.TryRunAsync(CoreDispatcherPriority.Normal, delegate
+            {
+                if (CompassEnabled)
+                    if (args.Reading.HeadingTrueNorth.HasValue)
+                        Map.Heading = args.Reading.HeadingTrueNorth.Value;
             });
         }
 

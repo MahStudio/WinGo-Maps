@@ -12,6 +12,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
 {
     public sealed partial class MyLocationUserControl : UserControl
     {
+        int count = 0;
         public MyLocationUserControl()
         {
             this.InitializeComponent();
@@ -19,28 +20,43 @@ namespace GoogleMapsUnofficial.View.OnMapControls
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
+            count++;
+            await Task.Delay(500);
             await CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
             {
-                try
+                if (count == 1)
                 {
-                    var accessStatus = await Geolocator.RequestAccessAsync();
-                    if (accessStatus == GeolocationAccessStatus.Allowed)
+                    try
                     {
-                        Geolocator geolocator = new Geolocator();
+                        var accessStatus = await Geolocator.RequestAccessAsync();
+                        if (accessStatus == GeolocationAccessStatus.Allowed)
+                        {
+                            Geolocator geolocator = new Geolocator();
 
-                        Geoposition pos = await MapViewVM.GeoLocate.GetGeopositionAsync();
+                            Geoposition pos = await MapViewVM.GeoLocate.GetGeopositionAsync();
 
-                        BasicGeoposition snPosition = new BasicGeoposition { Latitude = pos.Coordinate.Point.Position.Latitude, Longitude = pos.Coordinate.Point.Position.Longitude };
-                        Geopoint snPoint = new Geopoint(snPosition);
-                        var Map = MapView.MapControl;
-                        await Task.Delay(10);
-                        Map.Center = snPoint;
-                        Map.ZoomLevel = 16;
-                        MapViewVM.UserLocation.Location = snPoint;
+                            BasicGeoposition snPosition = new BasicGeoposition { Latitude = pos.Coordinate.Point.Position.Latitude, Longitude = pos.Coordinate.Point.Position.Longitude };
+                            Geopoint snPoint = new Geopoint(snPosition);
+                            var Map = MapView.MapControl;
+                            await Task.Delay(10);
+                            Map.Center = snPoint;
+                            Map.ZoomLevel = 16;
+                            MapViewVM.UserLocation.Location = snPoint;
+                        }
                     }
+                    catch { }
                 }
-                catch { }
+                else
+                {
+                    MapViewVM.CompassEnabled = !MapViewVM.CompassEnabled;
+                }
+                count = 0;
             });
+        }
+
+        private async void thisbtn_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
+        {
+            await new Windows.UI.Popups.MessageDialog("Hold").ShowAsync();
         }
     }
 }
