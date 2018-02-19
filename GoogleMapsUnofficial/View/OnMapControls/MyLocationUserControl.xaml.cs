@@ -49,7 +49,13 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                 }
                 else
                 {
-                    MapViewVM.CompassEnabled = !MapViewVM.CompassEnabled;
+                    if(MapViewVM.Compass != null)
+                    {
+                        MapViewVM.CompassEnabled = !MapViewVM.CompassEnabled;
+                        if (MapViewVM.CompassEnabled)
+                            (sender as Button).Content = "";
+                        else (sender as Button).Content = "";
+                    }
                 }
                 count = 0;
             });
