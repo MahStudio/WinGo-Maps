@@ -242,11 +242,7 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
             {
                 var req = await BackgroundExecutionManager.RequestAccessAsync();
                 if (req == BackgroundAccessStatus.AlwaysAllowed || req == BackgroundAccessStatus.AllowedSubjectToSystemPolicy ||
-#pragma warning disable CS0618 // 'BackgroundAccessStatus.AllowedWithAlwaysOnRealTimeConnectivity' is obsolete: 'Use AlwaysAllowed or AllowedSubjectToSystemPolicy instead of AllowedWithAlwaysOnRealTimeConnectivity. For more info, see MSDN.'
-#pragma warning disable CS0618 // 'BackgroundAccessStatus.AllowedMayUseActiveRealTimeConnectivity' is obsolete: 'Use AlwaysAllowed or AllowedSubjectToSystemPolicy instead of AllowedMayUseActiveRealTimeConnectivity. For more info, see MSDN.'
                          req == BackgroundAccessStatus.AllowedWithAlwaysOnRealTimeConnectivity || req == BackgroundAccessStatus.AllowedMayUseActiveRealTimeConnectivity)
-#pragma warning restore CS0618 // 'BackgroundAccessStatus.AllowedMayUseActiveRealTimeConnectivity' is obsolete: 'Use AlwaysAllowed or AllowedSubjectToSystemPolicy instead of AllowedMayUseActiveRealTimeConnectivity. For more info, see MSDN.'
-#pragma warning restore CS0618 // 'BackgroundAccessStatus.AllowedWithAlwaysOnRealTimeConnectivity' is obsolete: 'Use AlwaysAllowed or AllowedSubjectToSystemPolicy instead of AllowedWithAlwaysOnRealTimeConnectivity. For more info, see MSDN.'
                 {
                     var list = BackgroundTaskRegistration.AllTasks.Where(x => x.Value.Name == "WinGoMapsTile");
                     foreach (var item in list)
@@ -270,14 +266,20 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
                             http.DefaultRequestHeaders.UserAgent.ParseAdd("MahStudioWinGoMaps");
                             var res = await (await http.GetAsync(new Uri($"https://maps.googleapis.com/maps/api/staticmap?center={ul.Latitude},{ul.Longitude}&zoom=16&size=200x200", UriKind.RelativeOrAbsolute))).Content.ReadAsBufferAsync();
                             var reswide = await (await http.GetAsync(new Uri($"https://maps.googleapis.com/maps/api/staticmap?center={ul.Latitude},{ul.Longitude}&zoom=16&size=310x150", UriKind.RelativeOrAbsolute))).Content.ReadAsBufferAsync();
+                            var resLarge = await (await http.GetAsync(new Uri($"https://maps.googleapis.com/maps/api/staticmap?center={ul.Latitude},{ul.Longitude}&zoom=16&size=310x310", UriKind.RelativeOrAbsolute))).Content.ReadAsBufferAsync();
                             var f = await ApplicationData.Current.LocalFolder.CreateFileAsync("LiveTile.png", CreationCollisionOption.OpenIfExists);
                             var fWide = await ApplicationData.Current.LocalFolder.CreateFileAsync("LiveTileWide.png", CreationCollisionOption.OpenIfExists);
+                            var fLarge = await ApplicationData.Current.LocalFolder.CreateFileAsync("LiveTileLarge.png", CreationCollisionOption.OpenIfExists);
                             var str = await f.OpenAsync(FileAccessMode.ReadWrite);
                             var strwide = await fWide.OpenAsync(FileAccessMode.ReadWrite);
+                            var strLarge = await fLarge.OpenAsync(FileAccessMode.ReadWrite);
                             await str.WriteAsync(res);
                             await strwide.WriteAsync(reswide);
+                            await strLarge.WriteAsync(resLarge);
                             str.Dispose();
                             strwide.Dispose();
+                            strLarge.Dispose();
+
                             var update = TileUpdateManager.CreateTileUpdaterForApplication();
                             string xml = "<tile>\n";
                             xml += "<visual version=\"4\">\n";
@@ -287,13 +289,16 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
                             xml += "  <binding template=\"TileWide310x150Image\" fallback=\"TileWideImage\">\n";
                             xml += "      <image id=\"1\" src=\"ms-appdata:///local/LiveTileWide.png\"/>\n";
                             xml += "  </binding>\n";
+                            xml += "  <binding template=\"TileSquare310x310Image\" fallback=\"TileSquareImageLarge\">\n";
+                            xml += "      <image id=\"1\" src=\"ms-appdata:///local/LiveTileLarge.png\"/>\n";
+                            xml += "  </binding>\n";
                             xml += "</visual>\n";
                             xml += "</tile>";
-
+                            await new Windows.UI.Popups.MessageDialog( TileUpdateManager.GetTemplateContent(TileTemplateType.TileSquare310x310Image).GetXml() ).ShowAsync();
                             XmlDocument txml = new XmlDocument();
                             txml.LoadXml(xml);
                             TileNotification tNotification = new TileNotification(txml);
-
+                            
                             update.Clear();
                             update.Update(tNotification);
                             //XmlDocument tileXmlwide = TileUpdateManager.GetTemplateContent(TileTemplateType.TileWide310x150Image);
