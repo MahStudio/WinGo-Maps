@@ -13,7 +13,7 @@
     xmlns:Media="using:Microsoft.Xaml.Interactions.Media"
     mc:Ignorable="d">
     
-    <Page.Resources>
+    <!--<Page.Resources>
         <Storyboard x:Name="Storyboard1" AutoReverse="True" RepeatBehavior="Forever">
             <DoubleAnimationUsingKeyFrames EnableDependentAnimation="True" Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="path">
                 <EasingDoubleKeyFrame KeyTime="0:0:2" Value="130"/>
@@ -22,7 +22,7 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:2" Value="130"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
-    </Page.Resources>
+    </Page.Resources>-->
 
     <Page.DataContext>
         <viewmodel:MapViewVM x:Name="MapViewVM"/>
@@ -208,12 +208,12 @@
                     <maps:MapItemsControl>
                         <Grid Visibility="{Binding LocationFlagVisibility, Mode=OneWay}" HorizontalAlignment="Center" maps:MapControl.Location="{Binding UserLocation.Location, Mode=TwoWay, UpdateSourceTrigger=Explicit}" maps:MapControl.NormalizedAnchorPoint="0.5,0.5" >
                             <Path Data="F1M473,280C473,283.867,476.134,287,480,287L480,287C483.866,287,487,283.867,487,280L487,280C487,276.134,483.866,273,480,273L480,273C476.134,273,473,276.134,473,280" Height="14" Stretch="Fill" Width="14" Fill="DodgerBlue" />
-                            <Path x:Name="path"  Data="F1M391,280C391,230.847,430.847,191,480,191C529.153,191,569,230.847,569,280C569,329.153,529.153,369,480,369C430.847,369,391,329.153,391,280" Height="0" Stretch="Uniform" Width="0" Opacity="0.3" Stroke="Blue" StrokeThickness="1" Fill="DodgerBlue">
-                                <Interactivity:Interaction.Behaviors>
+                            <Path x:Name="path" Data="F1M391,280C391,230.847,430.847,191,480,191C529.153,191,569,230.847,569,280C569,329.153,529.153,369,480,369C430.847,369,391,329.153,391,280" Height="95" Stretch="Uniform" Width="95" Opacity="0.3" Stroke="Blue" StrokeThickness="1" Fill="DodgerBlue">
+                                <!--<Interactivity:Interaction.Behaviors>
                                     <Core:EventTriggerBehavior EventName="Loaded">
                                         <Media:ControlStoryboardAction Storyboard="{StaticResource Storyboard1}"/>
                                     </Core:EventTriggerBehavior>
-                                </Interactivity:Interaction.Behaviors>
+                                </Interactivity:Interaction.Behaviors>-->
                             </Path>
 
                         </Grid>

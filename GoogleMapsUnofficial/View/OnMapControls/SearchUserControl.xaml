@@ -17,7 +17,7 @@
             QueryIcon="Find" Visibility="Visible"
             QuerySubmitted="Control2_QuerySubmitted"
             VerticalContentAlignment="Center"
-            VerticalAlignment="Center" MinWidth="250" Height="36"
+            VerticalAlignment="Center" MinWidth="300" Height="36"
             SuggestionChosen="Control2_SuggestionChosen">
             <AutoSuggestBox.ItemTemplate>
                 <DataTemplate>
