@@ -495,7 +495,10 @@ namespace GoogleMapsUnofficial.View
 
         private void InkingBTN_Click(object sender, RoutedEventArgs e)
         {
+            if(inkCanvas.Visibility == Visibility.Collapsed)
             inkCanvas.Visibility = Visibility.Visible;
+            else
+                inkCanvas.Visibility = Visibility.Collapsed;
         }
     }
 }
