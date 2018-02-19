@@ -24,6 +24,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             await Task.Delay(500);
             await CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
             {
+                if (count == 0) return;
                 if (count == 1)
                 {
                     try
