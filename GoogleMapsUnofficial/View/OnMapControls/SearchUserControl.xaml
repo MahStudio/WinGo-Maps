@@ -21,7 +21,7 @@
             SuggestionChosen="Control2_SuggestionChosen">
             <AutoSuggestBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding description}" TextAlignment="DetectFromContent" FontFamily="B Koodak"/>
+                    <TextBlock Text="{Binding description}" TextAlignment="DetectFromContent" FontFamily="B Koodak" TextWrapping="Wrap" MaxLines="3"/>
                 </DataTemplate>
             </AutoSuggestBox.ItemTemplate>
 
