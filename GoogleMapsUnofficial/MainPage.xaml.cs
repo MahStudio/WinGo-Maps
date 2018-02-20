@@ -98,6 +98,13 @@ namespace GoogleMapsUnofficial
         
         private void Fr_Navigated(object sender, NavigationEventArgs e)
         {
+            if(Split.DisplayMode == SplitViewDisplayMode.Overlay || Split.DisplayMode == SplitViewDisplayMode.CompactOverlay)
+            {
+                if(e.SourcePageType.Name == "MapView")
+                    HmenuBTN.Visibility = Visibility.Visible;
+                else
+                    HmenuBTN.Visibility = Visibility.Collapsed;
+            }
             if (Fr.CanGoBack)
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             else SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
