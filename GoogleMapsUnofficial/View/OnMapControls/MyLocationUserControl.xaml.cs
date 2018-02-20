@@ -36,9 +36,8 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                             if (MapViewVM.GeoLocate.LocationStatus == PositionStatus.Ready)
                             {
                                 Geoposition pos = await MapViewVM.GeoLocate.GetGeopositionAsync();
-
-                                BasicGeoposition snPosition = new BasicGeoposition { Latitude = pos.Coordinate.Point.Position.Latitude, Longitude = pos.Coordinate.Point.Position.Longitude };
-                                Geopoint snPoint = new Geopoint(snPosition);
+                                if (pos == null) return;
+                                Geopoint snPoint = pos.Coordinate.Point;
                                 var Map = MapView.MapControl;
                                 await Task.Delay(10);
                                 Map.Center = snPoint;
