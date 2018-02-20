@@ -32,17 +32,19 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                         var accessStatus = await Geolocator.RequestAccessAsync();
                         if (accessStatus == GeolocationAccessStatus.Allowed)
                         {
-                            Geolocator geolocator = new Geolocator();
+                            if (MapViewVM.GeoLocate == null) return;
+                            if (MapViewVM.GeoLocate.LocationStatus == PositionStatus.Ready)
+                            {
+                                Geoposition pos = await MapViewVM.GeoLocate.GetGeopositionAsync();
 
-                            Geoposition pos = await MapViewVM.GeoLocate.GetGeopositionAsync();
-
-                            BasicGeoposition snPosition = new BasicGeoposition { Latitude = pos.Coordinate.Point.Position.Latitude, Longitude = pos.Coordinate.Point.Position.Longitude };
-                            Geopoint snPoint = new Geopoint(snPosition);
-                            var Map = MapView.MapControl;
-                            await Task.Delay(10);
-                            Map.Center = snPoint;
-                            Map.ZoomLevel = 16;
-                            MapViewVM.UserLocation.Location = snPoint;
+                                BasicGeoposition snPosition = new BasicGeoposition { Latitude = pos.Coordinate.Point.Position.Latitude, Longitude = pos.Coordinate.Point.Position.Longitude };
+                                Geopoint snPoint = new Geopoint(snPosition);
+                                var Map = MapView.MapControl;
+                                await Task.Delay(10);
+                                Map.Center = snPoint;
+                                Map.ZoomLevel = 16;
+                                MapViewVM.UserLocation.Location = snPoint;
+                            }
                         }
                     }
                     catch { }
