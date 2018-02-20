@@ -21,7 +21,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             count++;
-            await Task.Delay(500);
+            await Task.Delay(350);
             await CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
             {
                 if (count == 0) return;
