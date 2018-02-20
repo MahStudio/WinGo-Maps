@@ -36,21 +36,21 @@
             <SplitView.Pane>
                 <Grid x:Name="InfoPaneGrid">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <Image Grid.Row="0" MaxHeight="350" x:Name="PlaceImage" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                    <ScrollViewer Grid.Row="1">
+                    <ScrollViewer Grid.Row="0">
                         <Grid Margin="12">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <TextBlock x:Name="PlaceName" FontWeight="SemiBold" Grid.Row="0" TextAlignment="DetectFromContent"/>
-                            <TextBlock x:Name="PlaceAddress" Grid.Row="1" TextAlignment="DetectFromContent"/>
-                            <Grid Grid.Row="2" Margin="0,12">
+                            <Image Grid.Row="0" MaxHeight="350" x:Name="PlaceImage" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="-12,-12,-12,12"/>
+                            <TextBlock x:Name="PlaceName" FontWeight="SemiBold" Grid.Row="1" TextAlignment="DetectFromContent"/>
+                            <TextBlock x:Name="PlaceAddress" Grid.Row="2" TextAlignment="DetectFromContent"/>
+                            <Grid Grid.Row="3" Margin="0,12">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
@@ -185,7 +185,7 @@
                             </Grid>
                         </Grid>
                     </ScrollViewer>
-                    <Grid Grid.Row="2">
+                    <Grid Grid.Row="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
