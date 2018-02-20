@@ -68,6 +68,7 @@ namespace GoogleMapsUnofficial.View.OfflineMapDownloader
 
         private void DownloadMap_Click(object sender, RoutedEventArgs e)
         {
+            DLButton.IsEnabled = false;
             MDH.DownloadProgress += new EventHandler<int>(DLProgress);
             MDH.DownloadCompleted += new EventHandler<bool>(DLComplete);
             MDH.DownloadMap(TopLeftPos.Latitude, TopLeftPos.Longitude,
@@ -77,7 +78,12 @@ namespace GoogleMapsUnofficial.View.OfflineMapDownloader
         private async void DLComplete(object sender, bool e)
         {
             MDH.DownloadCompleted -= DLComplete;
-            await new MessageDialog("Download Completed.").ShowAsync();
+            MDH.DownloadProgress -= DLProgress;
+            DLButton.IsEnabled = true;
+            if (MDH.FailedDownloads == 0)
+                await new MessageDialog("Download Completed.").ShowAsync();
+            else
+                await new MessageDialog("Download Completed with " + MDH.FailedDownloads + " Failures count. Please click on start download once again to re-download failed items again.").ShowAsync();
         }
 
         private void DLProgress(object sender, int e)

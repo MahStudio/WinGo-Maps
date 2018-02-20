@@ -34,6 +34,7 @@ namespace GoogleMapsUnofficial.ViewModel.OfflineMapDownloader
             get { return _alldls; }
             set { _alldls = value; }
         }
+        public Int64 FailedDownloads { get; set; }
         /// <summary>
         /// Downloaded files count
         /// </summary>
@@ -66,6 +67,7 @@ namespace GoogleMapsUnofficial.ViewModel.OfflineMapDownloader
         public MapDLHelper()
         {
             AsyncInitialize();
+            FailedDownloads = 0;
         }
         /// <summary>
         /// Initialize an instance of the class. you can use this method instead of var something = new MapDLHelper();
@@ -135,6 +137,7 @@ namespace GoogleMapsUnofficial.ViewModel.OfflineMapDownloader
                 http.DefaultRequestHeaders.UserAgent.ParseAdd($"{AppCore.HttpUserAgent}");
                 var res = await http.GetAsync(url);
                 var buffer = await res.Content.ReadAsBufferAsync();
+                if (buffer.Length == 0) throw new Exception();
                 await outp.WriteAsync(buffer);
                 buffer.AsStream().Dispose();
                 outp.Dispose();
@@ -142,6 +145,8 @@ namespace GoogleMapsUnofficial.ViewModel.OfflineMapDownloader
             }
             catch
             {
+                await file.DeleteAsync();
+                FailedDownloads++;
                 //ex.Message();
                 return false;
             }
@@ -158,6 +163,7 @@ namespace GoogleMapsUnofficial.ViewModel.OfflineMapDownloader
         {
             AllDownloads = 0;
             Downloaded = 0;
+            FailedDownloads = 0;
             //Calculate Total downloads number
             for (int z = (int)MapView.MapControl.MinZoomLevel; z <= MaxZoomLevel; z++)
             {
