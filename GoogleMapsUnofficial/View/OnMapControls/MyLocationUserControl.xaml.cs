@@ -29,22 +29,16 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                 {
                     try
                     {
-                        var accessStatus = await Geolocator.RequestAccessAsync();
-                        if (accessStatus == GeolocationAccessStatus.Allowed)
-                        {
-                            if (MapViewVM.GeoLocate == null) return;
-                            if (MapViewVM.GeoLocate.LocationStatus == PositionStatus.Ready)
-                            {
-                                Geoposition pos = await MapViewVM.GeoLocate.GetGeopositionAsync();
-                                if (pos == null) return;
-                                Geopoint snPoint = pos.Coordinate.Point;
-                                var Map = MapView.MapControl;
-                                await Task.Delay(10);
-                                Map.Center = snPoint;
-                                Map.ZoomLevel = 16;
-                                MapViewVM.UserLocation.Location = snPoint;
-                            }
-                        }
+                        Geolocator geolocator = new Geolocator() { DesiredAccuracy = PositionAccuracy.High };
+
+                        Geoposition pos = await geolocator.GetGeopositionAsync();
+
+                        BasicGeoposition snPosition = new BasicGeoposition { Latitude = pos.Coordinate.Point.Position.Latitude, Longitude = pos.Coordinate.Point.Position.Longitude };
+                        Geopoint snPoint = new Geopoint(snPosition);
+                        await Task.Delay(10);
+                        var Map = MapView.MapControl;
+                        Map.Center = snPoint;
+                        Map.ZoomLevel = 16;
                     }
                     catch { }
                 }
