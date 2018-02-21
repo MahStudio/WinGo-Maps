@@ -21,7 +21,9 @@
             SuggestionChosen="Control2_SuggestionChosen">
             <AutoSuggestBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding description}" TextWrapping="Wrap" MaxLines="3" TextAlignment="DetectFromContent" FontFamily="B Koodak"/>
+                    <Grid BorderThickness="0,0,0,1" BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}">
+                        <TextBlock Text="{Binding description}" TextWrapping="Wrap" MaxLines="3" TextAlignment="DetectFromContent" FontFamily="B Koodak"/>
+                    </Grid>
                 </DataTemplate>
             </AutoSuggestBox.ItemTemplate>
 
