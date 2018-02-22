@@ -462,7 +462,6 @@ namespace GoogleMapsUnofficial.View
 
         private void InfoPane_PaneClosed(SplitView sender, object args)
         {
-            LastRightTap = null;
             LastPlaceID = "";
             PlaceRate.Text = "0";
             PlaceRateItem.IsEnabled = false;
@@ -507,7 +506,6 @@ namespace GoogleMapsUnofficial.View
 
         private async void RatePlace_Click(object sender, TappedRoutedEventArgs e)
         {
-            //https://search.google.com/local/writereview?placeid=ChIJj61dQgK6j4AR4GeTYWZsKWw
             await Launcher.LaunchUriAsync(new Uri("https://search.google.com/local/writereview?placeid="+LastPlaceID));
         }
     }
