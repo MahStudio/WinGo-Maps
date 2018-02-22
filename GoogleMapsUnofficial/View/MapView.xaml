@@ -136,7 +136,7 @@
                                             <TextBlock x:Name="PlaceWebSite" Grid.Column="1" Foreground="#808284"/>
                                         </Grid>
                                     </ListViewItem>
-                                    <ListViewItem x:Name="PlaceRateItem" IsEnabled="False" Height="55" Background="Transparent" Grid.Row="3" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                    <ListViewItem x:Name="PlaceRateItem" Tapped="RatePlace_Click" IsEnabled="False" Height="55" Background="Transparent" Grid.Row="3" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="48"/>

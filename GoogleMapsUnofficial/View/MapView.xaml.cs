@@ -49,6 +49,7 @@ namespace GoogleMapsUnofficial.View
          new PropertyMetadata(null)
         );
         Geopoint LastRightTap { get; set; }
+        string LastPlaceID { get; set; }
         public static MapControl MapControl;
         public static MapView StaticMapView { get; set; }
         public MapView()
@@ -308,6 +309,7 @@ namespace GoogleMapsUnofficial.View
                     //var pic = t.results.Where(x => x.photos != null).LastOrDefault();
                     if (pic != null)
                     {
+                        LastPlaceID = pic.place_id;
                         if (pic.photos != null)
                         {
                             PlaceImage.Source = new BitmapImage()
@@ -460,6 +462,8 @@ namespace GoogleMapsUnofficial.View
 
         private void InfoPane_PaneClosed(SplitView sender, object args)
         {
+            LastRightTap = null;
+            LastPlaceID = "";
             PlaceRate.Text = "0";
             PlaceRateItem.IsEnabled = false;
             PlaceImage.Source = null;
@@ -499,6 +503,12 @@ namespace GoogleMapsUnofficial.View
                 inkCanvas.Visibility = Visibility.Visible;
             else
                 inkCanvas.Visibility = Visibility.Collapsed;
+        }
+
+        private async void RatePlace_Click(object sender, TappedRoutedEventArgs e)
+        {
+            //https://search.google.com/local/writereview?placeid=ChIJj61dQgK6j4AR4GeTYWZsKWw
+            await Launcher.LaunchUriAsync(new Uri("https://search.google.com/local/writereview?placeid="+LastPlaceID));
         }
     }
 }
