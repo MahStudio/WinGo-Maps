@@ -462,6 +462,8 @@ namespace GoogleMapsUnofficial.View
 
         private void InfoPane_PaneClosed(SplitView sender, object args)
         {
+            //Add missing
+            //https://www.google.com/maps/@36.2968808,59.5824495,18.73z/data=!10m1!1e2
             LastPlaceID = "";
             PlaceRate.Text = "0";
             PlaceRateItem.IsEnabled = false;

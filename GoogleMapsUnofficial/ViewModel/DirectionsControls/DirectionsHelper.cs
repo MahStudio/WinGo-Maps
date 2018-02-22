@@ -139,7 +139,9 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
             {
                 Distance += item.distance.value;
             }
-            return $"{Distance} meters";
+            if (Distance <= 2000)
+                return $"{Distance} meters";
+            else return $"{Distance / 1000f} KMs";
         }
 
         public static string GetTotalEstimatedTime(Route Route)
@@ -149,7 +151,9 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
             {
                 EstimatedTime += item.duration.value;
             }
-            return $"{Convert.ToInt32((EstimatedTime / 60))} minutes";
+            if (Convert.ToInt32((EstimatedTime / 60)) < 60)
+                return $"{Convert.ToInt32((EstimatedTime / 60))} minutes";
+            else return $"{Convert.ToInt32(((EstimatedTime / 60) / 60))} hours";
         }
 
         public static List<BasicGeoposition> DecodePolylinePoints(string encodedPoints)
