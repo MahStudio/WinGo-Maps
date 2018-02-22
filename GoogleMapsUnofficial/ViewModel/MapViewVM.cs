@@ -17,16 +17,6 @@ namespace GoogleMapsUnofficial.ViewModel
     {
         private string attractionname;
         private Geopoint location;
-        private Geopoint center;
-        public Geopoint Center
-        {
-            get { return center; }
-            set
-            {
-                center = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Center"));
-            }
-        }
         public Geopoint Location
         {
             get { return location; }
@@ -78,6 +68,7 @@ namespace GoogleMapsUnofficial.ViewModel
         async void LoadPage()
         {
             geolocator = GeoLocate;
+
             Compass = Compass.GetDefault();
             if(Compass != null)
                 Compass.ReadingChanged += Compass_ReadingChanged;
@@ -95,17 +86,14 @@ namespace GoogleMapsUnofficial.ViewModel
                             //geolocator.StatusChanged += Geolocator_StatusChanged;
                             geolocator.PositionChanged += Geolocator_PositionChanged;
                             // Carry out the operation.
-                            Geopoint pos = FastLoadGeoPosition;
-
-                            var MyLandmarks = new List<MapElement>();
+                            var pos1 = await geolocator.GetGeopositionAsync();
+                            var pos = pos1.Coordinate.Point;
 
                             Geopoint snPoint = new Geopoint(new BasicGeoposition { Latitude = pos.Position.Latitude, Longitude = pos.Position.Longitude });
-                            UserLocation.Location = snPoint;
                             await Task.Delay(10);
                             Map = View.MapView.MapControl;
                             //Map.MapElements.Add(UserLoction);
                             Map.Center = snPoint;
-                            Map.CenterChanged += Map_CenterChanged;
                             Map.ZoomLevel = 16;
                             var savedplaces = SavedPlacesVM.GetSavedPlaces();
                             foreach (var item in savedplaces)
@@ -116,7 +104,8 @@ namespace GoogleMapsUnofficial.ViewModel
                                     Title = item.PlaceName
                                 });
                             }
-                            UserLocation.Location = snPoint;
+                            await Task.Delay(150);
+                            UserLocation.Location = pos;
                             //if (Map.Is3DSupported)
                             //{
                             //    Map.Style = MapStyle.Aerial3DWithRoads;
@@ -161,16 +150,7 @@ namespace GoogleMapsUnofficial.ViewModel
                         Map.Heading = args.Reading.HeadingTrueNorth.Value;
             });
         }
-
-        private void Map_CenterChanged(MapControl sender, object args)
-        {
-            try
-            {
-                UserLocation.Center = Map.Center;
-            }
-            catch { }
-        }
-
+        
         private async void Geolocator_PositionChanged(Geolocator sender, PositionChangedEventArgs args)
         {
             try
