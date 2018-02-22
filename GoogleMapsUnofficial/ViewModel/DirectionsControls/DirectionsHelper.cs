@@ -139,9 +139,27 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
             {
                 Distance += item.distance.value;
             }
-            if (Distance <= 2000)
-                return $"{Distance} meters";
-            else return $"{Distance / 1000f} KMs";
+            if (SettingsView.SettingsSetters.GetLengthUnit() == 0)
+            {
+                //Metric
+                if (Distance <= 2000)
+                    return $"{Distance} meters";
+                else return $"{Distance / 1000f} Kilometers";
+            }
+            else if (SettingsView.SettingsSetters.GetLengthUnit() == 1)
+            {
+                //Imperial
+                if (Distance <= 2000)
+                    return $"{string.Format("{0:0.00}", Distance * 1.093613f)} Yards";
+                else return $"{string.Format("{0:0.00}", Distance * 0.000621371f)} Miles";
+            }
+            else
+            {
+                //US 
+                if (Distance <= 2000)
+                    return $"{string.Format("{0:0.00}", Distance * 3.28084f)} Feet";
+                else return $"{string.Format("{0:0.00}", Distance * 0.000621371f)} Miles";
+            }
         }
 
         public static string GetTotalEstimatedTime(Route Route)

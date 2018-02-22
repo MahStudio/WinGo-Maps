@@ -15,6 +15,7 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
 {
     class SettingsMainVM : INotifyPropertyChanged
     {
+        private int _lengthUnitindex = 0;
         private int _rotationcontrolsVisible = -1;
         private int _zoomcontrolsVisible = -1;
         private bool _fadeanimationEnabled;
@@ -77,9 +78,23 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("RotationControlsVisible"));
             }
         }
+        public int LengthUnit
+        {
+            get { return _lengthUnitindex; }
+            set
+            {
+                _lengthUnitindex = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("LengthUnit"));
+                SettingsSetters.SetLengthUnit(value);
+            }
+        }
         public List<string> MapInteractionModeOptions
         {
             get { return Enum.GetNames(typeof(MapInteractionMode)).ToList(); }
+        }
+        public List<string> LengthUnits
+        {
+            get { return new List<string>() { "Metric (Meters, Kilometers)", "Imperial (Yards, Miles)", "US (Feet, Miles)" }; }
         }
         public static List<string> MapInteractionModeOptionsstatic
         {
@@ -95,6 +110,7 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
             FadeAnimationEnabled = SettingsSetters.GetFadeAnimationEnabled();
             ZoomControlsVisible = EnumToIndexConverter(SettingsSetters.GetZoomControlsVisible());
             RotationControlsVisible = EnumToIndexConverter(SettingsSetters.GetRotationControlsVisible());
+            LengthUnit = SettingsSetters.GetLengthUnit();
             BackgroundHandler();
         }
 
@@ -294,7 +310,7 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
                             XmlDocument txml = new XmlDocument();
                             txml.LoadXml(xml);
                             TileNotification tNotification = new TileNotification(txml);
-                            
+
                             update.Clear();
                             update.Update(tNotification);
                             //XmlDocument tileXmlwide = TileUpdateManager.GetTemplateContent(TileTemplateType.TileWide310x150Image);
@@ -308,6 +324,24 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
                 }
             }
             catch { }
+        }
+
+        public static int GetLengthUnit()
+        {
+            try
+            {
+                return (int)ApplicationData.Current.LocalSettings.Values["LengthUnit"];
+            }
+            catch (Exception)
+            {
+                SetLengthUnit(0);
+                return 0;
+            }
+        }
+
+        public static void SetLengthUnit(int Index)
+        {
+            ApplicationData.Current.LocalSettings.Values["LengthUnit"] = Index;
         }
     }
 }
