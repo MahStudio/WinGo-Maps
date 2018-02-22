@@ -462,8 +462,6 @@ namespace GoogleMapsUnofficial.View
 
         private void InfoPane_PaneClosed(SplitView sender, object args)
         {
-            //Add missing
-            //https://www.google.com/maps/@36.2968808,59.5824495,18.73z/data=!10m1!1e2
             LastPlaceID = "";
             PlaceRate.Text = "0";
             PlaceRateItem.IsEnabled = false;
@@ -509,6 +507,15 @@ namespace GoogleMapsUnofficial.View
         private async void RatePlace_Click(object sender, TappedRoutedEventArgs e)
         {
             await Launcher.LaunchUriAsync(new Uri("https://search.google.com/local/writereview?placeid="+LastPlaceID));
+        }
+
+        private async void AddMissingPlace_Click(object sender, TappedRoutedEventArgs e)
+        {
+            //Add missing
+            //https://www.google.com/maps/@36.2968808,59.5824495,18.73z/data=!10m1!1e2
+            var redir = "https://www.google.com/maps/@" + LastRightTap.Position.Latitude + "," + LastRightTap.Position.Latitude + "," + Map.ZoomLevel.ToString("0.00") + "z/data=!10m1!1e2";
+            await Launcher.LaunchUriAsync(new Uri(redir));
+
         }
     }
 }

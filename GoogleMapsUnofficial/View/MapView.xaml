@@ -105,6 +105,7 @@
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
                                     <ListViewItem x:Name="PlacePhoneItem" IsEnabled="False" Tapped="PlacePhone_Click" Height="55" Background="Transparent" Grid.Row="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                                         <Grid>
@@ -146,7 +147,17 @@
                                             <TextBlock x:Name="PlaceRate" Grid.Column="1" Foreground="#808284"/>
                                         </Grid>
                                     </ListViewItem>
-                                    <ItemsControl x:Name="PlaceReviewsItem" IsEnabled="False" Background="Transparent" Grid.Row="4" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                    <ListViewItem Visibility="Collapsed" x:Name="AddMissingPlaceItem" Tapped="AddMissingPlace_Click" Height="55" Background="Transparent" Grid.Row="4" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="48"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="&#xE109;" Foreground="#808284" FontSize="18" FontFamily="Segoe MDL2 Assets"/>
+                                            <TextBlock Grid.Column="1" Text="Add missing place" Foreground="#808284"/>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ItemsControl x:Name="PlaceReviewsItem" IsEnabled="False" Background="Transparent" Grid.Row="5" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <ListViewItem Style="{StaticResource ListViewStrecher}">
