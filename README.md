@@ -5,7 +5,7 @@ Unofficial Google Map client for Universal Windows Platform
 
 [GMaps Class Library](https://github.com/NGame1/UWPGmaps.SDK)
 
-NuGet Library to work with Google Map APIs will be available soon too.
+[SDK NuGet package](https://www.nuget.org/packages/GMapsUWPSDK)
 
 # What is supported in project till now 
 -Show and Download Google Maps Tiles in UWP map control
