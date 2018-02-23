@@ -506,7 +506,7 @@ namespace GoogleMapsUnofficial.View
 
         private async void RatePlace_Click(object sender, TappedRoutedEventArgs e)
         {
-            await Launcher.LaunchUriAsync(new Uri("https://search.google.com/local/writereview?placeid="+LastPlaceID));
+            await Launcher.LaunchUriAsync(new Uri("https://search.google.com/local/writereview?placeid=" + LastPlaceID));
         }
 
         private async void AddMissingPlace_Click(object sender, TappedRoutedEventArgs e)
