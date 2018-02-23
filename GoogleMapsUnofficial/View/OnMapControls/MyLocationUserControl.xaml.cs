@@ -33,7 +33,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                         {
                             await Task.Delay(10);
                             Geoposition pos = await MapViewVM.GeoLocate.GetGeopositionAsync();
-                            if (pos == null) return;
+                            if (pos == null || pos.Coordinate == null || pos.Coordinate.Point == null) return;
                             BasicGeoposition snPosition = new BasicGeoposition { Latitude = pos.Coordinate.Point.Position.Latitude, Longitude = pos.Coordinate.Point.Position.Longitude };
                             Geopoint snPoint = new Geopoint(snPosition);
                             await Task.Delay(10);
