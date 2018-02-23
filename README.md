@@ -1,4 +1,4 @@
-# UWPGmaps 
+# WinGo Maps 
 Unofficial Google Map client for Universal Windows Platform 
 
 [Telegram Messenger Insiders Group](https://t.me/joinchat/DQwGRhG-DXgBJNDWjGEoZQ)
@@ -22,11 +22,13 @@ Unofficial Google Map client for Universal Windows Platform
 
 -Search (Nearby / Text / Place Auto Complete)
 
--Place Helper
+-Place details, Rate and Reviews, Images and etc.
 
 -Save Favorite places (+Sync between devices)
 
 -Cortana Integration
+
+-Live Tile
 
 # Screenshots
 ![Screenshot](http://s9.picofile.com/file/8319001000/image_2018_02_09_23_23_27.png)
