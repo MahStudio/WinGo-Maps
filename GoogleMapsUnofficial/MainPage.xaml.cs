@@ -121,13 +121,16 @@ namespace GoogleMapsUnofficial
             switch ((e.ClickedItem as MenuClass).Tag)
             {
                 case "Map View":
-                    MainPage.RootFrame.Navigate(typeof(MapView));
+                    if (Fr.Content.GetType() != typeof(MapView))
+                        MainPage.RootFrame.Navigate(typeof(MapView));
                     break;
                 case "Settings":
-                    MainPage.RootFrame.Navigate(typeof(SettingsMainView));
+                    if (Fr.Content.GetType() != typeof(SettingsMainView))
+                        MainPage.RootFrame.Navigate(typeof(SettingsMainView));
                     break;
                 case "Offline Maps":
-                    MainPage.RootFrame.Navigate(typeof(MapDownloaderView));
+                    if (Fr.Content.GetType() != typeof(MapDownloaderView))
+                        MainPage.RootFrame.Navigate(typeof(MapDownloaderView));
                     break;
                 case "Send feedback":
                     await Launcher.LaunchUriAsync(new Uri("mailto:ngame1390@live.com"));

@@ -125,7 +125,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                         }
                         catch { }
                         MapView.MapControl.MapElements.Add(route);
-                        var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
+                         var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
                         var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
                         await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
                         MapView.MapControl.ZoomLevel = 18;
