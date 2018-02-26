@@ -125,10 +125,11 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                             await new MessageDialog("No way to your destination!!!").ShowAsync();
                             return;
                         }
-                        MapView.MapControl.MapElements.Remove(CurrentDrawed);
+                        if (CurrentDrawed != null)
+                            MapView.MapControl.MapElements.Remove(CurrentDrawed);
                         var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), (Color)Resources["SystemControlBackgroundAccentBrush"]);
                         MapView.MapControl.MapElements.Add(route);
-                         var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
+                        var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
                         var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
                         await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
                         MapView.MapControl.ZoomLevel = 18;
@@ -170,7 +171,8 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                             await new MessageDialog("No way to your destination!!!").ShowAsync();
                             return;
                         }
-                        MapView.MapControl.MapElements.Remove(CurrentDrawed);
+                        if (CurrentDrawed != null)
+                            MapView.MapControl.MapElements.Remove(CurrentDrawed);
                         var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), (Color)Resources["SystemControlBackgroundAccentBrush"]);
                         MapView.MapControl.MapElements.Add(route);
                         var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
@@ -201,7 +203,8 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                             await new MessageDialog("No way to your destination!!!").ShowAsync();
                             return;
                         }
-                        MapView.MapControl.MapElements.Remove(CurrentDrawed);
+                        if (CurrentDrawed != null)
+                            MapView.MapControl.MapElements.Remove(CurrentDrawed);
                         var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), (Color)Resources["SystemControlBackgroundAccentBrush"]);
                         MapView.MapControl.MapElements.Add(route);
                         var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
@@ -260,7 +263,8 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                         {
                             await new MessageDialog("No way to your destination!!!").ShowAsync();
                         }
-                        MapView.MapControl.MapElements.Remove(CurrentDrawed);
+                        if (CurrentDrawed != null)
+                            MapView.MapControl.MapElements.Remove(CurrentDrawed);
                         var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), (Color)Resources["SystemControlBackgroundAccentBrush"]);
                         MapView.MapControl.MapElements.Add(route);
                         var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
@@ -305,7 +309,8 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                             await new MessageDialog("No way to your destination!!!").ShowAsync();
                             return;
                         }
-                        MapView.MapControl.MapElements.Remove(CurrentDrawed);
+                        if (CurrentDrawed != null)
+                            MapView.MapControl.MapElements.Remove(CurrentDrawed);
                         var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), (Color)Resources["SystemControlBackgroundAccentBrush"]);
                         MapView.MapControl.MapElements.Add(route);
                         var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
@@ -336,7 +341,8 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                             await new MessageDialog("No way to your destination!!!").ShowAsync();
                             return;
                         }
-                        MapView.MapControl.MapElements.Remove(CurrentDrawed);
+                        if (CurrentDrawed != null)
+                            MapView.MapControl.MapElements.Remove(CurrentDrawed);
                         var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), (Color)Resources["SystemControlBackgroundAccentBrush"]);
                         MapView.MapControl.MapElements.Add(route);
                         var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
