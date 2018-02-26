@@ -52,10 +52,12 @@ namespace GoogleMapsUnofficial.View
         string LastPlaceID { get; set; }
         public static MapControl MapControl;
         public static MapView StaticMapView { get; set; }
+        public static DirectionsControls.NewDirections StaticDirections = null;
         public MapView()
         {
             this.InitializeComponent();
             MapControl = Map;
+            StaticDirections = DirectionsControl;
             StaticMapView = this;
             Map.Style = MapStyle.None;
             Map.TileSources.Clear();
@@ -297,6 +299,7 @@ namespace GoogleMapsUnofficial.View
 
         private async void RunMapRightTapped(MapControl sender, Geopoint Location)
         {
+            await new MessageDialog(Location.DistanceTo(ViewModel.MapViewVM.UserLocation.Location).ToString()).ShowAsync();
             InfoPane.IsPaneOpen = true;
             LastRightTap = Location;
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate

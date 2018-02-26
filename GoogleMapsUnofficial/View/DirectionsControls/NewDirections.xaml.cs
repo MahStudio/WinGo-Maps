@@ -3,6 +3,7 @@ using GoogleMapsUnofficial.ViewModel.DirectionsControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.System.Display;
 using Windows.UI;
@@ -87,6 +88,16 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
 
         public async void DirectionFinder()
         {
+            MapPolyline CurrentDrawed = null;
+            try
+            {
+                foreach (var item in MapView.MapControl.MapElements)
+                {
+                    if (item.GetType() == typeof(MapPolyline))
+                        CurrentDrawed = (MapPolyline)item;
+                }
+            }
+            catch { }
             if (Mode == DirectionMode.walking)
             {
                 await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
@@ -114,16 +125,8 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                             await new MessageDialog("No way to your destination!!!").ShowAsync();
                             return;
                         }
+                        MapView.MapControl.MapElements.Remove(CurrentDrawed);
                         var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), (Color)Resources["SystemControlBackgroundAccentBrush"]);
-                        try
-                        {
-                            foreach (var item in MapView.MapControl.MapElements)
-                            {
-                                if (item.GetType() == typeof(MapPolyline))
-                                    MapView.MapControl.MapElements.Remove(item);
-                            }
-                        }
-                        catch { }
                         MapView.MapControl.MapElements.Add(route);
                          var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
                         var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
@@ -167,16 +170,8 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                             await new MessageDialog("No way to your destination!!!").ShowAsync();
                             return;
                         }
+                        MapView.MapControl.MapElements.Remove(CurrentDrawed);
                         var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), (Color)Resources["SystemControlBackgroundAccentBrush"]);
-                        try
-                        {
-                            foreach (var item in MapView.MapControl.MapElements)
-                            {
-                                if (item.GetType() == typeof(MapPolyline))
-                                    MapView.MapControl.MapElements.Remove(item);
-                            }
-                        }
-                        catch { }
                         MapView.MapControl.MapElements.Add(route);
                         var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
                         var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
@@ -206,16 +201,8 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                             await new MessageDialog("No way to your destination!!!").ShowAsync();
                             return;
                         }
+                        MapView.MapControl.MapElements.Remove(CurrentDrawed);
                         var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), (Color)Resources["SystemControlBackgroundAccentBrush"]);
-                        try
-                        {
-                            foreach (var item in MapView.MapControl.MapElements)
-                            {
-                                if (item.GetType() == typeof(MapPolyline))
-                                    MapView.MapControl.MapElements.Remove(item);
-                            }
-                        }
-                        catch { }
                         MapView.MapControl.MapElements.Add(route);
                         var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
                         var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
@@ -233,6 +220,140 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                 });
             }
         }
-        
+
+
+        public async Task DirectionFinderAsync()
+        {
+            MapPolyline CurrentDrawed = null;
+            try
+            {
+                foreach (var item in MapView.MapControl.MapElements)
+                {
+                    if (item.GetType() == typeof(MapPolyline))
+                        CurrentDrawed = (MapPolyline)item;
+                }
+            }
+            catch { }
+            if (Mode == DirectionMode.walking)
+            {
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
+                {
+                    if (Origin != null && Destination != null)
+                    {
+                        DirectionsHelper.Rootobject r = null;
+                        if (Waypoints == null)
+                            r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.walking);
+                        else
+                        {
+                            var lst = new List<BasicGeoposition>();
+                            foreach (var item in Waypoints)
+                            {
+                                if (item != null)
+                                    lst.Add(new BasicGeoposition() { Latitude = item.Position.Latitude, Longitude = item.Position.Longitude });
+                            }
+                            if (lst.Count > 0)
+                                r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.walking, lst);
+                            else
+                                r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.walking);
+                        }
+                        if (r == null || r.routes.Count() == 0)
+                        {
+                            await new MessageDialog("No way to your destination!!!").ShowAsync();
+                        }
+                        MapView.MapControl.MapElements.Remove(CurrentDrawed);
+                        var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), (Color)Resources["SystemControlBackgroundAccentBrush"]);
+                        MapView.MapControl.MapElements.Add(route);
+                        var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
+                        var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
+                        await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
+                        MapView.MapControl.ZoomLevel = 18;
+                        MapView.MapControl.Center = Origin;
+                        MapView.MapControl.DesiredPitch = 45;
+                        MapViewVM.ActiveNavigationMode = true;
+                        new DisplayRequest().RequestActive();
+                    }
+                    else
+                    {
+                        await new MessageDialog("You didn't select both origin and destination points").ShowAsync();
+                    }
+                });
+            }
+            else if (Mode == DirectionMode.driving)
+            {
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
+                {
+                    if (Origin != null && Destination != null)
+                    {
+                        DirectionsHelper.Rootobject r = null;
+                        if (Waypoints == null)
+                            r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.driving);
+                        else
+                        {
+                            var lst = new List<BasicGeoposition>();
+                            foreach (var item in Waypoints)
+                            {
+                                if (item != null)
+                                    lst.Add(new BasicGeoposition() { Latitude = item.Position.Latitude, Longitude = item.Position.Longitude });
+                            }
+                            if (lst.Count > 0)
+                                r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.driving, lst);
+                            else
+                                r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.driving);
+                        }
+                        if (r == null || r.routes.Count() == 0)
+                        {
+                            await new MessageDialog("No way to your destination!!!").ShowAsync();
+                            return;
+                        }
+                        MapView.MapControl.MapElements.Remove(CurrentDrawed);
+                        var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), (Color)Resources["SystemControlBackgroundAccentBrush"]);
+                        MapView.MapControl.MapElements.Add(route);
+                        var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
+                        var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
+                        await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
+                        MapView.MapControl.ZoomLevel = 18;
+                        MapView.MapControl.Center = Origin;
+                        MapView.MapControl.DesiredPitch = 45;
+                        MapViewVM.ActiveNavigationMode = true;
+                        new DisplayRequest().RequestActive();
+                    }
+                    else
+                    {
+                        await new MessageDialog("You didn't select both origin and destination points").ShowAsync();
+                    }
+                });
+            }
+            else
+            {
+                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
+                {
+                    if (Origin != null && Destination != null)
+                    {
+                        DirectionsHelper.Rootobject r = null;
+                        r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.transit);
+                        if (r == null || r.routes.Count() == 0)
+                        {
+                            await new MessageDialog("No way to your destination!!!").ShowAsync();
+                            return;
+                        }
+                        MapView.MapControl.MapElements.Remove(CurrentDrawed);
+                        var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), (Color)Resources["SystemControlBackgroundAccentBrush"]);
+                        MapView.MapControl.MapElements.Add(route);
+                        var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
+                        var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
+                        await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
+                        MapView.MapControl.ZoomLevel = 18;
+                        MapView.MapControl.Center = Origin;
+                        MapView.MapControl.DesiredPitch = 45;
+                        MapViewVM.ActiveNavigationMode = true;
+                        new DisplayRequest().RequestActive();
+                    }
+                    else
+                    {
+                        await new MessageDialog("You didn't select both origin and destination points").ShowAsync();
+                    }
+                });
+            }
+        }
     }
 }

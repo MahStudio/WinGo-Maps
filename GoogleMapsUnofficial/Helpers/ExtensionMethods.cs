@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Windows.Devices.Geolocation;
+using static GoogleMapsUnofficial.ViewModel.DirectionsControls.DirectionsHelper;
 
 public static class ExtensionMethods
 {
@@ -53,6 +54,24 @@ public static class ExtensionMethods
                 return dist;
         }
         return dist;
+    }
+
+    public static double DistanceFromRoute(this Geopoint UserLocation, Step CurrentStep)
+    {
+        //Y2,Y1 , X2,X1 points of the line, X0, Y0 user one
+        //Latitude = Y, Longitude = X
+        var Y0 = UserLocation.Position.Latitude;
+        var X0 = UserLocation.Position.Longitude;
+        var Y1 = CurrentStep.start_location.lat;
+        var Y2 = CurrentStep.end_location.lat;
+        var X1 = CurrentStep.start_location.lng;
+        var X2 = CurrentStep.end_location.lng;
+        var a = ((Y2 - Y1) * X0) - ((X2 - X1) * Y0) + (X2 * Y1) - (Y2 * X1);
+        if (a < 0) a = -1 * a;
+        var b = Math.Sqrt((Math.Pow((Y2 - Y1), 2) + Math.Pow((X2 - X1), 2)));
+        var dist = ((a / b));
+        dist = dist * 60 * 1.1515;
+        return dist * 1.609344; // Return kilometer
     }
 }
 

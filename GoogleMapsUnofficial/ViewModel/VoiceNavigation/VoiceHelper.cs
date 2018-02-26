@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoogleMapsUnofficial.View;
+using System;
 using System.Linq;
 using Windows.Devices.Geolocation;
 using Windows.Media.Core;
@@ -10,6 +11,7 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
 {
     public class VoiceHelper : IDisposable
     {
+        bool IsRecalculating { get; set; }
         static VoiceHelper AvailableInstance { get; set; }
         DateTime LastWarn { get; set; }
         static double DistanceTo(double lat1, double lon1, double lat2, double lon2, char unit = 'K')
@@ -35,10 +37,11 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
             }
             return dist;
         }
-        Route Route; Step LastStep = null;
+        Route Route; Step LastStep = null;Step CurrentStep = null;
         public VoiceHelper(Route route)
         {
             Route = route;
+            IsRecalculating = false;
             MapViewVM.GeoLocate.PositionChanged += GeoLocate_PositionChanged;
             if(AvailableInstance != null)
             {
@@ -49,6 +52,7 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
         
         ~VoiceHelper()
         {
+            IsRecalculating = false;
             MapViewVM.GeoLocate.PositionChanged -= GeoLocate_PositionChanged;
             Route = null;
             LastStep = null;
@@ -56,6 +60,7 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
 
         private async void GeoLocate_PositionChanged(Geolocator sender, PositionChangedEventArgs args)
         {
+            if (IsRecalculating) return;
             var cp = args.Position.Coordinate;
             if (DateTime.Now.Subtract(LastWarn).TotalSeconds < 6) return;
             LastWarn = DateTime.Now;
@@ -63,6 +68,27 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
             {
                 foreach (var item in items.steps)
                 {
+                    var ds = DistanceTo(cp.Point.Position.Latitude, cp.Point.Position.Longitude, item.start_location.lat, item.start_location.lng);
+                    if(CurrentStep == null)
+                    {
+                        CurrentStep = item;
+                    }
+                    else
+                    {
+                        if (ds <= 0.005)
+                        {
+                            CurrentStep = item;
+                        }
+                    }
+                    var SD = cp.Point.DistanceFromRoute(CurrentStep);
+                    if(SD >= 0.06)
+                    {
+                        IsRecalculating = true;
+                        MapView.StaticDirections.Origin = cp.Point;
+                        await MapView.StaticDirections.DirectionFinderAsync();
+                        IsRecalculating = false;
+                        return;
+                    }
                     var d = DistanceTo(cp.Point.Position.Latitude, cp.Point.Position.Longitude, item.end_location.lat, item.end_location.lng);
                     if (d <= 0.4)
                     {
