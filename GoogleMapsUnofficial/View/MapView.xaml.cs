@@ -299,7 +299,6 @@ namespace GoogleMapsUnofficial.View
 
         private async void RunMapRightTapped(MapControl sender, Geopoint Location)
         {
-            await new MessageDialog(Location.DistanceTo(ViewModel.MapViewVM.UserLocation.Location).ToString()).ShowAsync();
             InfoPane.IsPaneOpen = true;
             LastRightTap = Location;
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
