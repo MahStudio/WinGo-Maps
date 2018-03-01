@@ -71,7 +71,7 @@ namespace GoogleMapsUnofficial
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            Fr.Navigate(typeof(MapView));
+            Fr.Navigate(typeof(MapView), para);
             applyAcrylicAccent(MainGrid);
             HMenuTopLst.Items.Add(new MenuClass { Text = "Map View", Icon = "", Tag = "Map View" });
             HMenuTopLst.Items.Add(new MenuClass { Text = "Offline Maps", Icon = "", Tag = "Offline Maps" });
