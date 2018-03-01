@@ -5,6 +5,7 @@ using GoogleMapsUnofficial.View.SettingsView;
 using System;
 using System.Numerics;
 using Windows.Foundation.Metadata;
+using Windows.Graphics.Display;
 using Windows.System;
 using Windows.UI.Composition;
 using Windows.UI.Core;
@@ -78,7 +79,7 @@ namespace GoogleMapsUnofficial
             HMenuBottomLst.Items.Add(new MenuClass { Text = "Send feedback", Icon = "", Tag = "Send feedback" });
             HMenuBottomLst.Items.Add(new MenuClass { Text = "Settings", Icon = "", Tag = "Settings" });
             if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone)
-                Windows.Graphics.Display.DisplayInformation.AutoRotationPreferences = Windows.Graphics.Display.DisplayOrientations.Portrait;
+                DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
             return;
         }
 
