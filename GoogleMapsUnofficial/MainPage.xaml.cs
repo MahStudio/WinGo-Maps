@@ -77,6 +77,8 @@ namespace GoogleMapsUnofficial
             HMenuTopLst.Items.Add(new MenuClass { Text = "Offline Maps", Icon = "", Tag = "Offline Maps" });
             HMenuBottomLst.Items.Add(new MenuClass { Text = "Send feedback", Icon = "", Tag = "Send feedback" });
             HMenuBottomLst.Items.Add(new MenuClass { Text = "Settings", Icon = "", Tag = "Settings" });
+            if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone)
+                Windows.Graphics.Display.DisplayInformation.AutoRotationPreferences = Windows.Graphics.Display.DisplayOrientations.Portrait;
             return;
         }
 
@@ -95,12 +97,12 @@ namespace GoogleMapsUnofficial
                 await msg.ShowAsync();
             }
         }
-        
+
         private void Fr_Navigated(object sender, NavigationEventArgs e)
         {
-            if(Split.DisplayMode == SplitViewDisplayMode.Overlay || Split.DisplayMode == SplitViewDisplayMode.CompactOverlay)
+            if (Split.DisplayMode == SplitViewDisplayMode.Overlay || Split.DisplayMode == SplitViewDisplayMode.CompactOverlay)
             {
-                if(e.SourcePageType.Name == "MapView")
+                if (e.SourcePageType.Name == "MapView")
                     HmenuBTN.Visibility = Visibility.Visible;
                 else
                     HmenuBTN.Visibility = Visibility.Collapsed;
@@ -110,7 +112,7 @@ namespace GoogleMapsUnofficial
             else SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
 
         }
-        
+
         private void HmenuBTN_Click(object sender, RoutedEventArgs e)
         {
             Split.IsPaneOpen = !Split.IsPaneOpen;
