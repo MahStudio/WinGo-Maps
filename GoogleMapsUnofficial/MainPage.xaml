@@ -29,11 +29,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Ellipse VerticalAlignment="Center" Height="35" Width="35" Grid.Column="0" Margin="39,0,39,0">
-                                    <Ellipse.Fill>
-                                        <ImageBrush Stretch="Fill" ImageSource="/Assets/StoreLogo.png"/>
-                                    </Ellipse.Fill>
-                                </Ellipse>
+                                <Image VerticalAlignment="Center" Height="35" Width="35" Grid.Column="0" Margin="39,0,39,0" Source="/Assets/BlackLogo.png"/>
                                 <StackPanel Grid.Column="1">
                                     <TextBlock FontWeight="SemiBold" Text="WinGo Maps"/>
                                     <TextBlock Text="MahStudio"/>

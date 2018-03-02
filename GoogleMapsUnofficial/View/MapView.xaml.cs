@@ -1,4 +1,5 @@
 ﻿using GoogleMapsUnofficial.ViewModel.GeocodControls;
+using GoogleMapsUnofficial.ViewModel.PlaceControls;
 using GoogleMapsUnofficial.ViewModel.SettingsView;
 using System;
 using System.Collections.Generic;
@@ -249,6 +250,10 @@ namespace GoogleMapsUnofficial.View
                     string cp = "";
                     int zoomlevel = 0;
                     string Querry = "";
+                    string Where = "";
+                    //{bingmaps:?where=Tabarsi Square%2C north side of the Shrine%2C Mashhad%2C 2399%2C Īrān}
+                    if (parameters.Where(x => x.Key == "where").Any())
+                        Where = Uri.UnescapeDataString(parameters.Where(x => x.Key == "where").FirstOrDefault().Value.NoHTMLString());
                     if (parameters.Where(x => x.Key == "cp").Any())
                         cp = parameters.Where(x => x.Key == "cp").FirstOrDefault().Value;
                     if (parameters.Where(x => x.Key == "lvl").Any())
@@ -262,6 +267,30 @@ namespace GoogleMapsUnofficial.View
                         var latitude = pointargs[0].Split('.')[1] + "." + pointargs[0].Split('.')[2];
                         var longitude = pointargs[1];
                         cp = $"{latitude}~{longitude}";
+                    }
+                    if (Where != "")
+                    {
+                        await Task.Delay(500);
+                        var res = await SearchHelper.TextSearch(Where);
+                        if (res != null)
+                        {
+                            if (res.results != null && res.results.Any())
+                            {
+                                var loc = res.results.FirstOrDefault().geometry.location;
+                                //var rgc = await ReverseGeoCode.GetLocation(Where);
+                                Map.Center = new Geopoint(new BasicGeoposition() {Latitude = loc.lat, Longitude = loc.lng });
+                            }
+                            else
+                            {
+                                var rgc = await ReverseGeoCode.GetLocation(Where);
+                                Map.Center = rgc;
+                            }
+                        }
+                        else
+                        {
+                            var rgc = await ReverseGeoCode.GetLocation(Where);
+                            Map.Center = rgc;
+                        }
                     }
                     if (cp != "")
                     {
