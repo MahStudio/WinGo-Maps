@@ -59,6 +59,7 @@ namespace GoogleMapsUnofficial.ViewModel
         {
             CoreWindow = CoreWindow.GetForCurrentThread();
             LocationFlagVisibility = Visibility.Visible;
+            StepsTitleProviderVisibility = Visibility.Collapsed;
             UserLocation = new ViewModel() { AttractionName = "My Location" };
             LoadPage();
             StaticVM = this;
