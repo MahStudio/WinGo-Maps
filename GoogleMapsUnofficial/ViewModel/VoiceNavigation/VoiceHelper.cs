@@ -37,19 +37,22 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
             }
             return dist;
         }
-        Route Route; Step LastStep = null;Step CurrentStep = null;
+        public static Route Route; Step LastStep = null; public static Step CurrentStep = null;
         public VoiceHelper(Route route)
         {
-            Route = route;
-            IsRecalculating = false;
-            MapViewVM.GeoLocate.PositionChanged += GeoLocate_PositionChanged;
-            if(AvailableInstance != null)
+            if (AvailableInstance != null)
             {
                 AvailableInstance.Dispose();
             }
+            Route = route;
+            IsRecalculating = false;
+            MapViewVM.GeoLocate.PositionChanged += GeoLocate_PositionChanged;
             AvailableInstance = this;
+            MapViewVM.StaticVM.StepsTitleProviderVisibility = Windows.UI.Xaml.Visibility.Visible;
+            CurrentStep = route.legs.FirstOrDefault().steps.FirstOrDefault();
+            View.DirectionsControls.StepsTitleProvider.Provider.CurrentStep = CurrentStep;
         }
-        
+
         ~VoiceHelper()
         {
             IsRecalculating = false;
@@ -69,19 +72,21 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
                 foreach (var item in items.steps)
                 {
                     var ds = DistanceTo(cp.Point.Position.Latitude, cp.Point.Position.Longitude, item.start_location.lat, item.start_location.lng);
-                    if(CurrentStep == null)
+                    if (CurrentStep == null)
                     {
                         CurrentStep = item;
+                        View.DirectionsControls.StepsTitleProvider.Provider.CurrentStep = item;
                     }
                     else
                     {
                         if (ds <= 0.005)
                         {
                             CurrentStep = item;
+                            View.DirectionsControls.StepsTitleProvider.Provider.CurrentStep = item;
                         }
                     }
                     var SD = cp.Point.DistanceFromRoute(CurrentStep);
-                    if(SD >= 0.06)
+                    if (SD >= 0.06)
                     {
                         IsRecalculating = true;
                         MapView.StaticDirections.Origin = cp.Point;

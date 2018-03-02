@@ -40,6 +40,9 @@ namespace GoogleMapsUnofficial.ViewModel
     }
     class MapViewVM : INotifyPropertyChanged
     {
+        public static MapViewVM StaticVM { get; set; }
+        private Visibility _stepsTitleProvidervisi;
+        public Visibility StepsTitleProviderVisibility { get { return _stepsTitleProvidervisi; } set { _stepsTitleProvidervisi = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("StepsTitleProviderVisibility")); } }
         private Visibility _locflagvisi;
         public Visibility LocationFlagVisibility { get { return _locflagvisi; } set { _locflagvisi = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("LocationFlagVisibility")); } }
         public static Compass Compass { get; set; }
@@ -58,6 +61,7 @@ namespace GoogleMapsUnofficial.ViewModel
             LocationFlagVisibility = Visibility.Visible;
             UserLocation = new ViewModel() { AttractionName = "My Location" };
             LoadPage();
+            StaticVM = this;
         }
         
         ~MapViewVM()
