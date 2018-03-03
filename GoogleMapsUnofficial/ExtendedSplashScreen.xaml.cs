@@ -13,6 +13,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -76,14 +77,14 @@ namespace GoogleMapsUnofficial
         {
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, delegate
             {
-                try
-                {
-                    if (Geolocator.DefaultGeoposition.HasValue && Geolocator.IsDefaultGeopositionRecommended)
-                    {
-                        MapViewVM.FastLoadGeoPosition = new Geopoint(Geolocator.DefaultGeoposition.Value);
-                    }
-                }
-                catch { }
+                //try
+                //{
+                //    if (Geolocator.DefaultGeoposition.HasValue && Geolocator.IsDefaultGeopositionRecommended)
+                //    {
+                //        MapViewVM.FastLoadGeoPosition = new Geopoint(Geolocator.DefaultGeoposition.Value);
+                //    }
+                //}
+                //catch { }
                 RemoveExtendedSplash();
             });
         }
@@ -129,12 +130,23 @@ namespace GoogleMapsUnofficial
                         ReportInterval = 1,
                         DesiredAccuracyInMeters = 1
                     };
-                    Geoposition pos = await geolocator.GetGeopositionAsync();
-                    MapViewVM.FastLoadGeoPosition = pos.Coordinate.Point;
                     MapViewVM.GeoLocate = geolocator;
+                    GeoLocatorHelper.GetUserLocation();
+                    GeoLocatorHelper.LocationFetched += GeoLocatorHelper_LocationFetched;
                 }
                 RemoveExtendedSplash();
             });
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            GeoLocatorHelper.LocationFetched -= GeoLocatorHelper_LocationFetched;
+        }
+
+        private void GeoLocatorHelper_LocationFetched(object sender, Geoposition e)
+        {
+            MapViewVM.FastLoadGeoPosition = e.Coordinate.Point;
         }
 
         async void RemoveExtendedSplash()

@@ -3,6 +3,7 @@ using System;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -16,6 +17,26 @@ namespace GoogleMapsUnofficial.View.OnMapControls
         public MyLocationUserControl()
         {
             this.InitializeComponent();
+            GeoLocatorHelper.LocationFetched += GeoLocatorHelper_LocationFetched;
+        }
+        ~MyLocationUserControl()
+        {
+            GeoLocatorHelper.LocationFetched -= GeoLocatorHelper_LocationFetched;
+        }
+        private async void GeoLocatorHelper_LocationFetched(object sender, Geoposition e)
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
+            {
+                var pos = e;
+                if (pos == null || pos.Coordinate == null || pos.Coordinate.Point == null) return;
+                BasicGeoposition snPosition = new BasicGeoposition { Latitude = pos.Coordinate.Point.Position.Latitude, Longitude = pos.Coordinate.Point.Position.Longitude };
+                Geopoint snPoint = new Geopoint(snPosition);
+                await Task.Delay(10);
+                var Map = MapView.MapControl;
+                Map.Center = snPoint;
+                Map.ZoomLevel = 16;
+                MapViewVM.UserLocation.Location = snPoint;
+            });
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -29,30 +50,26 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                 {
                     try
                     {
-                        if(MapViewVM.GeoLocate.LocationStatus == PositionStatus.Ready)
-                        {
-                            await Task.Delay(10);
-                            Geoposition pos = await MapViewVM.GeoLocate.GetGeopositionAsync();
-                            if (pos == null || pos.Coordinate == null || pos.Coordinate.Point == null) return;
-                            BasicGeoposition snPosition = new BasicGeoposition { Latitude = pos.Coordinate.Point.Position.Latitude, Longitude = pos.Coordinate.Point.Position.Longitude };
-                            Geopoint snPoint = new Geopoint(snPosition);
-                            await Task.Delay(10);
-                            var Map = MapView.MapControl;
-                            Map.Center = snPoint;
-                            Map.ZoomLevel = 16;
-                            MapViewVM.UserLocation.Location = snPoint;
-                        }
+                        await Task.Delay(10);
+                        GeoLocatorHelper.GetUserLocation();
                     }
                     catch { }
                 }
                 else
                 {
-                    if(MapViewVM.Compass != null)
+                    try
                     {
-                        MapViewVM.CompassEnabled = !MapViewVM.CompassEnabled;
-                        if (MapViewVM.CompassEnabled)
-                            (sender as Button).Content = "";
-                        else (sender as Button).Content = "";
+                        if (MapViewVM.Compass != null)
+                        {
+                            MapViewVM.CompassEnabled = !MapViewVM.CompassEnabled;
+                            if (MapViewVM.CompassEnabled)
+                                (sender as Button).Content = "";
+                            else (sender as Button).Content = "";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        await new MessageDialog(ex.Message).ShowAsync();
                     }
                 }
                 count = 0;
