@@ -150,9 +150,13 @@ namespace GoogleMapsUnofficial.ViewModel
         {
             await CoreWindow.Dispatcher.TryRunAsync(CoreDispatcherPriority.Normal, delegate
             {
-                if (CompassEnabled)
-                    if (args.Reading.HeadingTrueNorth.HasValue)
-                        Map.Heading = args.Reading.HeadingTrueNorth.Value;
+                try
+                {
+                    if (CompassEnabled)
+                        if (args.Reading.HeadingTrueNorth.HasValue)
+                            Map.Heading = args.Reading.HeadingTrueNorth.Value;
+                }
+                catch { }
             });
         }
         

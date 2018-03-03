@@ -1,7 +1,7 @@
 ﻿using System;
 using Windows.Devices.Geolocation;
 
-class TileCoordinate
+public class TileCoordinate
 {
     public TileCoordinate(double lat, double lon, int zoom)
     {

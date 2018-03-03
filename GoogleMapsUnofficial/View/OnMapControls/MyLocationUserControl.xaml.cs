@@ -59,12 +59,15 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                 {
                     try
                     {
-                        if (MapViewVM.Compass != null)
+                        if (!GeoLocatorHelper.IsLocationBusy)
                         {
-                            MapViewVM.CompassEnabled = !MapViewVM.CompassEnabled;
-                            if (MapViewVM.CompassEnabled)
-                                (sender as Button).Content = "";
-                            else (sender as Button).Content = "";
+                            if (MapViewVM.Compass != null)
+                            {
+                                MapViewVM.CompassEnabled = !MapViewVM.CompassEnabled;
+                                if (MapViewVM.CompassEnabled)
+                                    (sender as Button).Content = "";
+                                else (sender as Button).Content = "";
+                            }
                         }
                     }
                     catch (Exception ex)
@@ -75,10 +78,6 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                 count = 0;
             });
         }
-
-        private async void thisbtn_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
-        {
-            await new Windows.UI.Popups.MessageDialog("Hold").ShowAsync();
-        }
+        
     }
 }
