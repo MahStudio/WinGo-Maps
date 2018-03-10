@@ -262,6 +262,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                         if (r == null || r.routes.Count() == 0)
                         {
                             await new MessageDialog("No way to your destination!!!").ShowAsync();
+                            return;
                         }
                         if (CurrentDrawed != null)
                             MapView.MapControl.MapElements.Remove(CurrentDrawed);
