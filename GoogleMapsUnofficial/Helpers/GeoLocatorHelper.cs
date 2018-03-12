@@ -16,8 +16,15 @@ class GeoLocatorHelper
     {
         if (IsLocationBusy) return;
         var res = MapViewVM.GeoLocate.GetGeopositionAsync();
+        MapViewVM.GeoLocate.StatusChanged += GeoLocate_StatusChanged;
         IsLocationBusy = true;
         res.Completed += new AsyncOperationCompletedHandler<Geoposition>(LocationGetComplete);
+    }
+
+    private static void GeoLocate_StatusChanged(Geolocator sender, StatusChangedEventArgs args)
+    {
+        if (args.Status == PositionStatus.Disabled || args.Status == PositionStatus.NoData || args.Status == PositionStatus.NotAvailable)
+            GetUserLocation();
     }
 
     private static void LocationGetComplete(IAsyncOperation<Geoposition> asyncInfo, AsyncStatus asyncStatus)
