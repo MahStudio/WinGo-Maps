@@ -12,7 +12,7 @@
     </Page.DataContext>
     
     <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid Margin="12,8">
+        <Grid Margin="17,8">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -23,14 +23,14 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="Settings" FontSize="22" Margin="0,0,0,15"/>
-            <ToggleSwitch Grid.Row="1" Header="Allow over strech on map" IsOn="{Binding AllowOverstretch, Mode=TwoWay}"/>
-            <ToggleSwitch Grid.Row="2" Header="Enable Fade Animation on loading map tiles" IsOn="{Binding FadeAnimationEnabled, Mode=TwoWay}"/>
-            <ToggleSwitch Grid.Row="3" Header="Enable live tile" IsOn="{Binding LiveTileEnable, Mode=TwoWay}"/>
-            <ComboBox Grid.Row="4" Header="Show zoom controls on map" ItemsSource="{Binding MapInteractionModeOptions,Mode=OneWay}" SelectedIndex="{Binding ZoomControlsVisible, Mode=TwoWay}"/>
+            <TextBlock Grid.Row="0" Text="Settings" FontWeight="SemiBold" FontSize="22" Margin="0,0,0,15"/>
+            <ToggleSwitch Margin="0,10,0,0" Grid.Row="1" Header="Allow over strech on map" IsOn="{Binding AllowOverstretch, Mode=TwoWay}"/>
+            <ToggleSwitch Margin="0,10,0,0" Grid.Row="2" Header="Enable Fade Animation on loading map tiles" IsOn="{Binding FadeAnimationEnabled, Mode=TwoWay}"/>
+            <ToggleSwitch Margin="0,10,0,0" Grid.Row="3" Header="Enable live tile" IsOn="{Binding LiveTileEnable, Mode=TwoWay}"/>
+            <ComboBox Margin="0,20,0,0" Grid.Row="4" Header="Show zoom controls on map" ItemsSource="{Binding MapInteractionModeOptions,Mode=OneWay}" SelectedIndex="{Binding ZoomControlsVisible, Mode=TwoWay}"/>
             <!--<ComboBox Grid.Row="5" Header="Show rotation controls on map" ItemsSource="{Binding MapInteractionModeOptions,Mode=OneWay}" SelectedIndex="{Binding RotationControlsVisible, Mode=TwoWay}"/>-->
-            <ComboBox Grid.Row="5" Header="Show distance in" ItemsSource="{Binding LengthUnits, Mode=OneWay}" SelectedIndex="{Binding LengthUnit, Mode=TwoWay}"/>
-            <Grid Grid.Row="6">
+            <ComboBox Margin="0,20,0,0" Grid.Row="5" Header="Show distance in" ItemsSource="{Binding LengthUnits, Mode=OneWay}" SelectedIndex="{Binding LengthUnit, Mode=TwoWay}"/>
+            <Grid Margin="0,10,0,0" Grid.Row="6">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -39,9 +39,10 @@
                 <Button Grid.Row="1" Content="Language Settings" Click="LanguageSets_Click"/>
             </Grid>
             <Grid Grid.Row="10" Margin="0,15">
-                <TextBlock TextWrapping="Wrap" FontFamily="Segoe UI">
+                <TextBlock LineHeight="30" TextWrapping="Wrap" FontFamily="Segoe UI">
                     <Run FontSize="22">About</Run>
                     <LineBreak/>
+                    
                     <Run>WinGoMaps</Run>
                     <Run Text="{Binding ApplicationVersion,Mode=OneWay}"/>
                     <LineBreak/>
@@ -49,13 +50,13 @@
                     <LineBreak/>
                     <Run FontSize="20">Developers Team</Run>
                     <LineBreak/>
-                    <Run>Maryam Garaeli Shekh, Ali Noshahi, Shivanand Anchalkar, Mohsen Seifi, Poura Riyahi, Mehdi Ardakani</Run>
+                    <Run>Ali Noshahi, Mohsen Seifi, Poura Riyahi, Mehdi Ardakani, Maryam Garaeli Shekh, Shivanand Anchalkar</Run>
                     <LineBreak/>
-                    <Run FontSize="20">Graphic Designing Team</Run>
+                    <Run FontSize="20">Design Team</Run>
                     <LineBreak/>
                     <Run>Mohammad Alidoost, Amir Estefad</Run>
                     <LineBreak/>
-                    <Run FontSize="20">Special Thanks to</Run>
+                    <Run FontSize="20">Special thanks to</Run>
                     <LineBreak/>
                     <Run>Joost van Schaik, Windows Development MVP for his helps in solving application's bug on Mobile</Run>
                     <LineBreak/>

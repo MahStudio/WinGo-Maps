@@ -55,6 +55,8 @@ namespace GoogleMapsUnofficial
             {
                 ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
                 formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
+                formattableTitleBar.ButtonForegroundColor = Colors.Black;
+                formattableTitleBar.InactiveForegroundColor = Colors.Black;
                 CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
                 coreTitleBar.ExtendViewIntoTitleBar = true;
             }
