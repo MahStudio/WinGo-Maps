@@ -75,15 +75,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
             }
             #endregion
 
-            foreach (var item in MapView.MapControl.MapElements)
-            {
-                if (item.GetType() == typeof(MapPolyline))
-                {
-                    MapView.MapControl.MapElements.Remove(item);
-                    DirectionFinder();
-                    return;
-                }
-            }
+            DirectionFinder();
         }
 
         public async void DirectionFinder()
