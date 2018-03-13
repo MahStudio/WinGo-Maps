@@ -1,6 +1,7 @@
 ﻿using GoogleMapsUnofficial.View;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.Media.Core;
 using Windows.Media.Playback;
@@ -89,6 +90,7 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
                     if (SD >= 0.06)
                     {
                         IsRecalculating = true;
+                        await ReadText("Recalculating route");
                         MapView.StaticDirections.Origin = cp.Point;
                         await MapView.StaticDirections.DirectionFinderAsync();
                         IsRecalculating = false;
@@ -136,6 +138,17 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
             MapViewVM.GeoLocate.PositionChanged -= GeoLocate_PositionChanged;
             Route = null;
             LastStep = null;
+        }
+        public static async Task ReadText(string Text)
+        {
+            using (var speech = new SpeechSynthesizer())
+            {
+                var mediaplayer = new MediaPlayer() { AudioCategory = MediaPlayerAudioCategory.Other };
+                speech.Voice = SpeechSynthesizer.AllVoices.First(gender => gender.Gender == VoiceGender.Female);
+                var stream = await speech.SynthesizeTextToStreamAsync(Text);
+                mediaplayer.Source = MediaSource.CreateFromStream(stream, stream.ContentType);
+                mediaplayer.Play();
+            }
         }
     }
 }

@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="45104MAHStudio.WinGoMaps" Publisher="CN=44988219-A722-4FA5-9335-1E47D73A1418" Version="1.0.549.0" />
-  <mp:PhoneIdentity PhoneProductId="f78cafa9-7d58-4c7b-8106-ec9a9fea62c3" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="7482MahStudios.WinGoMaps" Publisher="CN=983BF5D2-5CC3-402A-B46D-46C1F70449F9" Version="1.0.550.0" />
+  <mp:PhoneIdentity PhoneProductId="6c5e1d37-5879-407c-83f4-ec9655592328" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>WinGoMaps</DisplayName>
-    <PublisherDisplayName>MAH Studio</PublisherDisplayName>
+    <DisplayName>WinGo Maps</DisplayName>
+    <PublisherDisplayName>Mah Studios</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="GoogleMapsUnofficial.App">
-      <uap:VisualElements DisplayName="WinGoMaps" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="WinGoMaps ALPHA an Unofficial powerful Google Maps client." BackgroundColor="transparent">
+      <uap:VisualElements DisplayName="WinGo Maps" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="WinGoMaps ALPHA an Unofficial powerful Google Maps client." BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
@@ -26,25 +26,25 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#60a5ff" />
       </uap:VisualElements>
       <Extensions>
-        <uap:Extension Category="windows.protocol">
-          <uap:Protocol Name="ms-walk-to" />
-        </uap:Extension>
-        <uap:Extension Category="windows.protocol">
-          <uap:Protocol Name="ms-drive-to" />
-        </uap:Extension>
-        <uap:Extension Category="windows.protocol">
-          <uap:Protocol Name="bingmaps" />
-        </uap:Extension>
-        <uap:Extension Category="windows.personalAssistantLaunch" />
-        <uap:Extension Category="windows.appService" EntryPoint="WinGoService.Cortana">
-          <uap:AppService Name="Cortana" />
-        </uap:Extension>
         <Extension Category="windows.backgroundTasks" EntryPoint="LiveTileTask.Update">
           <BackgroundTasks>
             <Task Type="general" />
             <Task Type="timer" />
           </BackgroundTasks>
         </Extension>
+        <uap:Extension Category="windows.appService" EntryPoint="WinGoService.Cortana">
+          <uap:AppService Name="Cortana" />
+        </uap:Extension>
+        <uap:Extension Category="windows.personalAssistantLaunch" />
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="bingmaps" />
+        </uap:Extension>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="ms-drive-to" />
+        </uap:Extension>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="ms-walk-to" />
+        </uap:Extension>
         <!--<Extension xmlns="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" Category="windows.appUriHandler">
           <AppUriHandler>
             <Host Name="google.com" />
