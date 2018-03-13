@@ -42,10 +42,11 @@ Win Go Maps is an UNOFFICIAL Google Map client for Universal Windows Platform.
 
 ### Build and running the code
 
-1- Clone the repository
-2- Open the solution file in Visual Studio
-3- Right click on the solution file in Visual Studio solution explorer and add a new Class called `AppCore.cs`
+1. Clone the repository.
+2. Open the solution in Visual Studio.
+3. Right click on the solution file in Visual Studio solution explorer and add a new Class called `AppCore.cs`
 Then write this code in this class based on your *Google API information*: 
+
 ```
 public class AppCore
 {
@@ -63,11 +64,11 @@ public class AppCore
 }
 ```
 
-4- Now hit **F5** and run the project :)
+4. Now hit **F5** and run the project :)
 
 ## Contributing
 
-We are always welcome to your help. You can join our [Telegram Insiders Group](https://t.me/joinchat/DQwGRhG-DXgBJNDWjGEoZQ) to help us developing and testing this app. Also you can [Post issues and feature requests](https://github.com/MahStudio/WinGo-Maps/issues) and help us in development via sending pull requests. 
+We are always welcome to your help. You can join our [Telegram Insiders Group](https://t.me/joinchat/DQwGRhG-DXgBJNDWjGEoZQ) to help us developing and testing this app. Also you can [post issues and feature requests](https://github.com/MahStudio/WinGo-Maps/issues) and help us in development via sending pull requests. 
 
 ### Authors
 
