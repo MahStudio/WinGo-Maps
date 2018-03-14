@@ -47,7 +47,7 @@ Win Go Maps is an UNOFFICIAL Google Map client for Universal Windows Platform.
 3. Right click on the solution file in Visual Studio solution explorer and add a new Class called `AppCore.cs`
 Then write this code in this class based on your *Google API information*: 
 
-```
+```csharp
 public class AppCore
 {
     public static string OnMapLanguage { get; set; }
