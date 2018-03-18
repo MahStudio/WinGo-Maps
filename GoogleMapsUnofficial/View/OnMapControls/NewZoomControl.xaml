@@ -1,0 +1,107 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GoogleMapsUnofficial.View.OnMapControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity" xmlns:Core="using:Microsoft.Xaml.Interactions.Core" xmlns:Media="using:Microsoft.Xaml.Interactions.Media"
+    x:Class="GoogleMapsUnofficial.View.OnMapControls.NewZoomControl"
+    mc:Ignorable="d"
+    d:DesignHeight="400"
+    d:DesignWidth="200">
+    <UserControl.Resources>
+        <Storyboard x:Name="ZoomOutControl">
+            <DoubleAnimation Duration="0:0:0.5" To="180" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="ZoomControl" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <SineEase EasingMode="EaseInOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="ZoomControl">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.5">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Thickness>0,0,-52,0</Thickness>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>-->
+        </Storyboard>
+        <Storyboard x:Name="ZoomInControl">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="ZoomControl">
+                <EasingDoubleKeyFrame KeyTime="0" Value="180"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:5" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <!--<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="ZoomControl">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Thickness>0,0,-52,0</Thickness>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>-->
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Grid x:Name="ZoomControl" Height="400" Width="200" RenderTransformOrigin="0.5,0.5" Margin="0,0,-48,0" PointerEntered="ZoomControl_PointerEntered" PointerExited="ZoomControl_PointerExited" Tapped="ZoomControl_Tapped">
+        <Grid.RenderTransform>
+            <CompositeTransform/>
+        </Grid.RenderTransform>
+        <Interactivity:Interaction.Behaviors>
+            <!--<Core:EventTriggerBehavior EventName="PointerExited">
+                <Media:ControlStoryboardAction Storyboard="{StaticResource ZoomOutControl}"/>
+            </Core:EventTriggerBehavior>-->
+            <Core:EventTriggerBehavior EventName="Loaded">
+                <Media:ControlStoryboardAction Storyboard="{StaticResource ZoomInControl}"/>
+            </Core:EventTriggerBehavior>
+            <!--<Core:EventTriggerBehavior EventName="Hover">
+                <Media:ControlStoryboardAction Storyboard="{StaticResource ZoomInControl}"/>
+            </Core:EventTriggerBehavior>
+            <Core:EventTriggerBehavior EventName="Click">
+                <Media:ControlStoryboardAction Storyboard="{StaticResource ZoomInControl}"/>
+            </Core:EventTriggerBehavior>-->
+        </Interactivity:Interaction.Behaviors>
+        <Grid Height="96" Width="100">
+            <Button VerticalAlignment="Center" HorizontalAlignment="Right" x:Name="ChangeView" Background="Transparent" Height="48" Width="48" Padding="0" BorderThickness="0" Visibility="Collapsed">
+                <Grid Height="48" Width="48">
+                    <Path VerticalAlignment="Center" HorizontalAlignment="Right" Width="22" Height="46" Stretch="Uniform" Fill="White" Data="F1 M 316.398,154.859C 316.398,166.915 326.416,176.688 338.472,176.688C 338.556,176.688 338.97,176.683 338.97,176.682L 338.97,133.035C 338.97,133.035 338.57,133.03 338.484,133.03C 326.428,133.03 316.398,142.803 316.398,154.859 Z "/>
+                    <TextBlock Text="&#xE81E;" FontSize="18" Foreground="Gray" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                </Grid>
+            </Button>
+            <Button x:Name="ZoomIn" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Transparent" Height="48" Width="48" Padding="0" BorderThickness="0" Click="ZoomIn_Click" Holding="ZoomIn_Holding">
+                <Grid>
+                    <Path VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Height="48" Stretch="Uniform" Fill="White" Data="F1 M 784,455.807C 784,455.805 783.872,455.796 783.728,455.796C 757.907,455.796 737.051,476.255 737.051,502.077C 737.051,502.26 737.141,502.145 737.143,502.145L 762.064,502.145L 762.057,502.041C 762.057,489.985 771.672,480.165 783.728,480.165C 783.873,480.165 784,480.235 784,480.237L 784,455.807 Z ">
+                        <Path.Stroke>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="DodgerBlue" Offset="1"/>
+                                <GradientStop Color="#FF29FF07"/>
+                                <GradientStop Color="#FFBB5AFF" Offset="0.76"/>
+                                <GradientStop Color="Red" Offset="0.52"/>
+                                <GradientStop Color="#FFFFF40C" Offset="0.27"/>
+                            </LinearGradientBrush>
+                        </Path.Stroke>
+                    </Path>
+                    <TextBlock Text="&#xE948;" FontSize="18" Foreground="Gray" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+            </Button>
+            <Button x:Name="ZoomOut" VerticalAlignment="Bottom" HorizontalAlignment="Left" Background="Transparent" Height="48" Width="48" Padding="0" BorderThickness="0" Click="ZoomOut_Click" Holding="ZoomOut_Holding">
+                <Grid>
+                    <Path VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Height="48" Stretch="Uniform" Fill="White" Data="F1 M 784,455.807C 784,455.805 783.872,455.796 783.728,455.796C 757.907,455.796 737.051,476.255 737.051,502.077C 737.051,502.26 737.141,502.145 737.143,502.145L 762.064,502.145L 762.057,502.041C 762.057,489.985 771.672,480.165 783.728,480.165C 783.873,480.165 784,480.235 784,480.237L 784,455.807 Z " RenderTransformOrigin="0.5,0.5">
+                        <Path.Stroke>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="DodgerBlue" Offset="0"/>
+                                <GradientStop Color="#FF29FF07" Offset="1"/>
+                                <GradientStop Color="#FFBB5AFF" Offset="0.267"/>
+                                <GradientStop Color="Red" Offset="0.48"/>
+                                <GradientStop Color="#FFFFF40C" Offset="0.717"/>
+                            </LinearGradientBrush>
+                        </Path.Stroke>
+                        <Path.RenderTransform>
+                            <CompositeTransform Rotation="-90"/>
+                        </Path.RenderTransform>
+                    </Path>
+
+                    <!--<Path VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="48" Height="48" Stretch="Uniform" Fill="White" Data="F1 M 737.458,518.145C 737.457,518.289 737.448,518.432 737.448,518.576C 737.448,544.397 758.008,565.333 783.83,565.333L 784,565.32L 784,540.399C 784,540.4 783.878,540.405 783.794,540.405C 771.738,540.405 761.868,530.632 761.868,518.576C 761.868,518.431 761.886,518.289 761.889,518.145L 737.458,518.145 Z "/>-->
+                    <TextBlock Text="&#xE949;" FontSize="18" Foreground="Gray" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+            </Button>
+
+        </Grid>
+    </Grid>
+</UserControl>

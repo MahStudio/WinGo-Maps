@@ -46,10 +46,10 @@ namespace GoogleMapsUnofficial
             {
                 var ac = new AcrylicBrush();
                 var brush = Resources["SystemControlAccentAcrylicWindowAccentMediumHighBrush"] as AcrylicBrush;
-                brush.TintColor = (Color)Resources["SystemControlBackgroundAccentBrush"];
+                //brush.TintColor = (Color)Resources["SystemControlBackgroundAccentBrush"];
                 ac = brush;
-                ac.TintOpacity = 0.7;
-                ac.BackgroundSource = AcrylicBackgroundSource.HostBackdrop;
+                //ac.TintOpacity = 0.7;
+                //ac.BackgroundSource = AcrylicBackgroundSource.HostBackdrop;
                 Grid1.Background = ac;
                 return;
             }

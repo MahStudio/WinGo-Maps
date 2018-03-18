@@ -1,4 +1,5 @@
-﻿using GoogleMapsUnofficial.ViewModel.GeocodControls;
+﻿using GoogleMapsUnofficial.View.DirectionsControls;
+using GoogleMapsUnofficial.ViewModel.GeocodControls;
 using GoogleMapsUnofficial.ViewModel.PlaceControls;
 using GoogleMapsUnofficial.ViewModel.SettingsView;
 using System;
@@ -53,6 +54,8 @@ namespace GoogleMapsUnofficial.View
         string LastPlaceID { get; set; }
         public static MapControl MapControl;
         public static MapView StaticMapView { get; set; }
+        public static NewDirections dc { get; set; }
+        DispatcherTimer DispatcherTime;
         public static DirectionsControls.NewDirections StaticDirections = null;
         public MapView()
         {
@@ -66,10 +69,21 @@ namespace GoogleMapsUnofficial.View
             var FadeAnimationEnabled = SettingsSetters.GetFadeAnimationEnabled();
             Map.RotateInteractionMode = MapInteractionMode.GestureOnly;
             //Map.RotateInteractionMode = SettingsSetters.GetRotationControlsVisible();
+            //if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone)
+            //{
+            //    Searchbar.Margin =new Thickness(85,0,0,0);
+            //    Searchbar.VerticalAlignment = VerticalAlignment.Top;
+            //    return;
+            //}
+            //else
+            //{
+            //    MobileTopBar.Visibility = Visibility.Collapsed;
+            //    return;
+            //}
             var ZoomInteractionMode = SettingsSetters.GetZoomControlsVisible();
             if (ZoomInteractionMode == MapInteractionMode.Auto || ZoomInteractionMode == MapInteractionMode.ControlOnly || ZoomInteractionMode == MapInteractionMode.GestureAndControl || ZoomInteractionMode == MapInteractionMode.PointerKeyboardAndControl)
-                ZoomUserControl.Visibility = Visibility.Visible;
-            else ZoomUserControl.Visibility = Visibility.Collapsed;
+                ZoomControlGrid.Visibility = Visibility.Visible;
+            else ZoomControlGrid.Visibility = Visibility.Collapsed;
             if (ZoomInteractionMode == MapInteractionMode.Auto || ZoomInteractionMode == MapInteractionMode.GestureAndControl || ZoomInteractionMode == MapInteractionMode.GestureOnly || ZoomInteractionMode == MapInteractionMode.PointerAndKeyboard || ZoomInteractionMode == MapInteractionMode.PointerKeyboardAndControl || ZoomInteractionMode == MapInteractionMode.PointerOnly)
                 Map.ZoomInteractionMode = MapInteractionMode.GestureOnly;
             else Map.ZoomInteractionMode = MapInteractionMode.Disabled;
@@ -547,6 +561,70 @@ namespace GoogleMapsUnofficial.View
             var redir = "https://www.google.com/maps/@" + LastRightTap.Position.Latitude + "," + LastRightTap.Position.Latitude + "," + Map.ZoomLevel.ToString("0.00") + "z/data=!10m1!1e2";
             await Launcher.LaunchUriAsync(new Uri(redir));
 
+        }
+
+        private void TapHideRegion_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            DispatcherTime = new DispatcherTimer
+            {
+                Interval = new TimeSpan(0, 0, 10)
+            };
+            var dc = DirectionsControl;
+            if (dc.Visibility == Visibility.Collapsed)
+            {
+                try
+                {
+                    DispatcherTime.Tick += DispatcherTime_Tick;
+                    DispatcherTime.Start();
+                    dc.Visibility = Visibility.Visible;
+                }
+                catch { }
+            }
+        }
+
+        private async void DispatcherTime_Tick(object sender, object e)
+        {
+            var dc = DirectionsControl;
+            if (dc.Visibility == Visibility.Visible)
+            {
+                try
+                {
+                    DispatcherTime.Stop();
+                    DispatcherTime.Tick -= DispatcherTime_Tick;
+                    DispatcherTime = null;
+                    await Task.Delay(500);
+                    dc.Visibility = Visibility.Collapsed;
+                }
+                catch { }
+            }
+        }
+
+        private void TapHideRegion_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            DispatcherTime = new DispatcherTimer
+            {
+                Interval = new TimeSpan(0, 0, 10)
+            };
+            var dc = DirectionsControl;
+
+            try
+            {
+                dc.Visibility = Visibility.Visible;
+                DispatcherTime.Tick += DispatcherTime_Tick;
+                DispatcherTime.Start();
+
+            }
+            catch { }
+        }
+
+        private async void ZoomIn_Click(object sender, RoutedEventArgs e)
+        {
+            await MapControl.TryZoomInAsync();
+        }
+
+        private async void ZoomOut_Click(object sender, RoutedEventArgs e)
+        {
+            await MapControl.TryZoomOutAsync();
         }
     }
 }

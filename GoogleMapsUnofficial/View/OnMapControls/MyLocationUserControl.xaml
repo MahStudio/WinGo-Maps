@@ -10,6 +10,6 @@
         <ResourceDictionary Source="/Resources/CustomControls/DotButton.xaml"/>
     </UserControl.Resources>
     <Grid>
-        <Button x:Name="thisbtn" Width="48" Height="48" BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Foreground="White" Click="Button_Click" Style="{StaticResource dotbut}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Content="&#xE1D2;" FontFamily="Segoe MDL2 Assets" FontSize="18"/>
+        <Button x:Name="thisbtn" Width="48" Height="48" BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Foreground="White" Click="Button_Click" Style="{StaticResource dotbut}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Content="&#xEBE6;" FontFamily="Segoe MDL2 Assets" FontSize="22"/>
     </Grid>
 </UserControl>

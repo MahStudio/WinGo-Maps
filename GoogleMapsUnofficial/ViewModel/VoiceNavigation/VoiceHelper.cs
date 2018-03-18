@@ -92,7 +92,7 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
                         IsRecalculating = true;
                         await ReadText("Recalculating route");
                         MapView.StaticDirections.Origin = cp.Point;
-                        await MapView.StaticDirections.DirectionFinderAsync();
+                         MapView.StaticDirections.DirectionFinder();
                         IsRecalculating = false;
                         return;
                     }

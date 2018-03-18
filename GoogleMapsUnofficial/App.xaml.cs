@@ -87,9 +87,19 @@ namespace GoogleMapsUnofficial
             }
             try
             {
-                StatusBar.GetForCurrentView().ForegroundColor = Colors.Black;
+                StatusBar.GetForCurrentView().ForegroundColor = Colors.Transparent;
             }
             catch { }
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                var statusBar = StatusBar.GetForCurrentView();
+                if (statusBar != null)
+                {
+                    statusBar.BackgroundOpacity = 1;
+                    statusBar.BackgroundColor = Colors.DodgerBlue;
+                    statusBar.ForegroundColor = Colors.White;
+                }
+            }
             StartFluent();
             Resources["ToggleButtonBackgroundChecked"] = Color.FromArgb(255, 96, 165, 255);
             Resources["SystemControlHighlightListAccentLowBrush"] = Color.FromArgb(255, 96, 165, 255);
