@@ -28,6 +28,7 @@ namespace GoogleMapsUnofficial
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             this.UnhandledException += App_UnhandledException;
+            Microsoft.HockeyApp.HockeyClient.Current.Configure("836884b121284cbcbd6f1f0dbc787c6b");
         }
 
         private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)

@@ -31,7 +31,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Image VerticalAlignment="Center" Height="35" Width="35" Grid.Column="0" Margin="39,0,39,0" Source="/Assets/BlackLogo.png"/>
                                 <StackPanel Grid.Column="1">
-                                    <TextBlock FontWeight="SemiBold" Text="WinGo Maps"/>
+                                    <TextBlock FontWeight="SemiBold" Text="WinGo Maps BETA"/>
                                     <TextBlock Text="MahStudio"/>
                                 </StackPanel>
                             </Grid>

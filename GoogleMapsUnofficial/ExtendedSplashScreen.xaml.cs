@@ -107,18 +107,18 @@ namespace GoogleMapsUnofficial
             {
                 ApplyAcrylicAccent(Grid1);
                 InstallVCD();
-                try
-                {
-                    var crashrep = ApplicationData.Current.LocalSettings.Values["CrashDump"].ToString();
-                    var file = await KnownFolders.PicturesLibrary.CreateFileAsync("WinGoMapsCrash.txt", CreationCollisionOption.GenerateUniqueName);
-                    await FileIO.WriteTextAsync(file, crashrep);
-                    ApplicationData.Current.LocalSettings.Values["CrashDump"] = null;
-                    await new MessageDialog("We detected a crash on your last session. It has been saved in" + file.Path).ShowAsync();
-                }
-                catch
-                {
+                //try
+                //{
+                //    var crashrep = ApplicationData.Current.LocalSettings.Values["CrashDump"].ToString();
+                //    var file = await KnownFolders.PicturesLibrary.CreateFileAsync("WinGoMapsCrash.txt", CreationCollisionOption.GenerateUniqueName);
+                //    await FileIO.WriteTextAsync(file, crashrep);
+                //    ApplicationData.Current.LocalSettings.Values["CrashDump"] = null;
+                //    await new MessageDialog("We detected a crash on your last session. It has been saved in" + file.Path).ShowAsync();
+                //}
+                //catch
+                //{
 
-                }
+                //}
                 var geolocator = MapViewVM.GeoLocate;
                 var accessStatus = await Geolocator.RequestAccessAsync();
 
