@@ -81,6 +81,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
 
         public async void DirectionFinder()
         {
+            if (Destination == null) return;
             await VoiceHelper.ReadText("calculating route");
             MapPolyline CurrentDrawed = null;
             try
