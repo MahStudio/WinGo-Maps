@@ -9,21 +9,21 @@
     xmlns:directionscontrols="using:GoogleMapsUnofficial.View.DirectionsControls"
     mc:Ignorable="d">
 
-    <Grid>
+    <Grid Background="{ThemeResource HomePageBackgroundBrush}">
         <RelativePanel Grid.Column="0" Grid.ColumnSpan="2" MinWidth="40" x:Name="MainGrid" SizeChanged="Page_SizeChanged"/>
-        <RelativePanel x:Name="MyGrid" Grid.Column="0" Width="{Binding ElementName=MainGrid,Path=Width}" Background="#28000000"/>
+        <RelativePanel x:Name="MyGrid" Grid.Column="0" Width="{Binding ElementName=MainGrid,Path=Width}" Background="Transparent"/>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <SplitView x:Name="Split" Grid.Row="0" PaneBackground="Transparent" IsPaneOpen="True" DisplayMode="Inline">
+            <SplitView x:Name="Split" Grid.Row="0" IsPaneOpen="True" DisplayMode="Inline">
                 <SplitView.Pane>
                     <Grid>
                         <Grid x:Name="BackdropLayerGrid">
-                            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Opacity="0.4">
+                            <Grid Background="{ThemeResource HomePageBackgroundBrush}" Opacity="0.3">
                                 <fluent:TiledBackground
-                               BackgroundImage="Assets/NoiseTexture/gold-glitter-texture-Stock-Photo.png"
-                               Width="{Binding ActualWidth, ElementName=rootGrid}" Height="{Binding ActualHeight, ElementName=rootGrid}" Opacity="0.07"/>
+                               BackgroundImage="Assets/NoiseTexture/NoiseAsset_256X256_PNG.png"
+                               Width="{Binding ActualWidth, ElementName=rootGrid}" Height="{Binding ActualHeight, ElementName=rootGrid}" Opacity="0.05"/>
                             </Grid>
                             <!--<Grid x:Name="rootGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Opacity="0.05">
                                 
@@ -85,9 +85,9 @@
                     </Grid>
                 </SplitView.Pane>
                 <SplitView.Content>
-                    <Grid x:Name="Gr">
+                    
                         <Frame x:Name="Fr" Navigated="Fr_Navigated"/>
-                    </Grid>
+                   
                 </SplitView.Content>
             </SplitView>
             <Button x:Name="HmenuBTN" Content="&#xE700;" Background="Transparent" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="35" FontSize="18" Click="HmenuBTN_Click" Height="48" Width="48"/>
@@ -101,7 +101,7 @@
                     <VisualState.Setters>
                         <Setter Target="Split.IsPaneOpen" Value="True"/>
                         <Setter Target="Split.DisplayMode" Value="Inline"/>
-                        <Setter Target="BackdropLayerGrid.Visibility" Value="Collapsed"/>
+                        <!--<Setter Target="BackdropLayerGrid.Visibility" Value="Collapsed"/>-->
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="WideState">

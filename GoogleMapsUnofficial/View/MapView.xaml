@@ -224,7 +224,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <maps:MapControl MapRightTapped="Map_MapRightTapped" x:Name="Map" MapServiceToken="Qe4rzjfqSL7zZlp8xb8A~4o8bBFXIWVuiCUT9pX2cUg~Auk92xku8o5QuFTpMvN0_7Os9b6pREma6NBC8ojGjU0N3Eq3BBzkI9ehNfu065Wv" >
+                    <maps:MapControl MapRightTapped="Map_MapRightTapped" x:Name="Maps" MapServiceToken="Qe4rzjfqSL7zZlp8xb8A~4o8bBFXIWVuiCUT9pX2cUg~Auk92xku8o5QuFTpMvN0_7Os9b6pREma6NBC8ojGjU0N3Eq3BBzkI9ehNfu065Wv" >
                         <maps:MapItemsControl>
                             <Grid Visibility="{Binding LocationFlagVisibility, Mode=OneWay}" HorizontalAlignment="Center" maps:MapControl.Location="{Binding UserLocation.Location, Mode=TwoWay, UpdateSourceTrigger=Explicit}" maps:MapControl.NormalizedAnchorPoint="0.5,0.5" >
                                 <!--<Path Data="F1M473,280C473,283.867,476.134,287,480,287L480,287C483.866,287,487,283.867,487,280L487,280C487,276.134,483.866,273,480,273L480,273C476.134,273,473,276.134,473,280" Height="14" Stretch="Fill" Width="14" Fill="DodgerBlue" />
@@ -252,7 +252,7 @@
                         </Grid>-->
                         </maps:MapItemsControl>
                     </maps:MapControl>
-                    
+
                     <Grid x:Name="TapHideRegion" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Tapped="TapHideRegion_Tapped" PointerEntered="TapHideRegion_PointerEntered" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -269,64 +269,59 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        --><!--<OMC:MenuUserControl Grid.Column="0" Margin="32,15" />-->
-                        <!--<OMC:SearchOptionsUserControl x:Name="Searchgrid" Grid.Column="1" Margin="0,15" HorizontalAlignment="Center"/>--><!--
+                        -->
+                    <!--<OMC:MenuUserControl Grid.Column="0" Margin="32,15" />-->
+                    <!--<OMC:SearchOptionsUserControl x:Name="Searchgrid" Grid.Column="1" Margin="0,15" HorizontalAlignment="Center"/>-->
+                    <!--
                         <dir:NewDirections x:Name="DirectionsControl" Grid.Column="1" Height="80" HorizontalAlignment="Stretch" MaxWidth="500" Margin="16,0"/>
                         <Button x:Name="InkingBTN" Click="InkingBTN_Click" Style="{StaticResource dotbut}" Width="48" Height="48" Margin="32,0,32,112" Grid.Column="2" BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Foreground="White" Padding="0" FontSize="18" FontFamily="Segoe MDL2 Assets" Content="&#xE76D;"/>
                         <OMC:MyLocationUserControl x:Name="MyLocationControl" Grid.Column="2" Margin="32,32" />
                     </Grid>-->
                     <OMC:SearchUserControl x:Name="Searchbar" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="32,40,32,0" />
                     <OMC:ChangeViewUserControl x:Name="ChangeViewControl" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="32,95,32,0" />
-                    <Grid x:Name="ZoomControlGrid" Height="96" Width="100" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,-52,0">
-                        <Button VerticalAlignment="Center" HorizontalAlignment="Right" x:Name="ChangeView" Background="Transparent" Height="48" Width="48" Padding="0" BorderThickness="0" Visibility="Collapsed">
-                            <Grid Height="48" Width="48">
-                                <Path VerticalAlignment="Center" HorizontalAlignment="Right" Width="22" Height="46" Stretch="Uniform" Fill="White" Data="F1 M 316.398,154.859C 316.398,166.915 326.416,176.688 338.472,176.688C 338.556,176.688 338.97,176.683 338.97,176.682L 338.97,133.035C 338.97,133.035 338.57,133.03 338.484,133.03C 326.428,133.03 316.398,142.803 316.398,154.859 Z "/>
-                                <TextBlock Text="&#xE81E;" FontSize="18" Foreground="Gray" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    <Grid x:Name="ZoomControlGrid" Height="100" Width="100" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,-50,0" CornerRadius="100">
+                        <Button VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="ChangeView" Background="Transparent" Height="50" Width="50" Padding="0" BorderThickness="0" Visibility="Collapsed">
+                            <Grid Height="50" Width="50">
+                                <Path VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="25" Height="50" Stretch="Uniform" Fill="DodgerBlue" Data="F1 M 316.398,154.859C 316.398,166.915 326.416,176.688 338.472,176.688C 338.556,176.688 338.97,176.683 338.97,176.682L 338.97,133.035C 338.97,133.035 338.57,133.03 338.484,133.03C 326.428,133.03 316.398,142.803 316.398,154.859 Z "/>
+                                <TextBlock Text="&#xE81E;" FontSize="18" Foreground="White" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                            </Grid>
+                            <Button.Flyout>
+                                <Flyout x:Name="FL" Opened="Flyout_Opened" Placement="Left" LightDismissOverlayMode="On">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,3">
+                                            <ToggleButton Checked="DefaultMapView_Checked" Click="DefaultMapView_Click" x:Name="DefaultMapView" Content="Default" Margin="3,0"/>
+                                            <ToggleButton Checked="SatelliteMapView_Checked" Click="SatelliteMapView_Click" x:Name="SatelliteMapView" Content="Satellite" Margin="3,0"/>
+                                            <ToggleButton Checked="HybridMapView_Checked" Click="HybridMapView_Click" x:Name="HybridMapView" Content="Hybrid" Margin="3,0"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,3">
+                                            <ToggleSwitch Toggled="ShowTraffic_Toggled" x:Name="ShowTraffic" Header="Traffic" Margin="3,0"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                        <Button x:Name="ZoomIn" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Transparent" Height="50" Width="50" Padding="0" BorderThickness="0" Click="ZoomIn_Click">
+                            <Grid>
+                                <Path VerticalAlignment="Top" Fill="White" HorizontalAlignment="Left" Width="50" Height="50" Stretch="Uniform" Data="F1 M 784,455.807C 784,455.805 783.872,455.796 783.728,455.796C 757.907,455.796 737.051,476.255 737.051,502.077C 737.051,502.26 737.141,502.145 737.143,502.145L 762.064,502.145L 762.057,502.041C 762.057,489.985 771.672,480.165 783.728,480.165C 783.873,480.165 784,480.235 784,480.237L 784,455.807 Z "/>
+                                <TextBlock Text="&#xE948;" FontSize="18" Foreground="DodgerBlue" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Grid>
                         </Button>
-                        <Button x:Name="ZoomIn" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Transparent" Height="48" Width="48" Padding="0" BorderThickness="0" Click="ZoomIn_Click">
+                        <Button x:Name="ZoomOut" VerticalAlignment="Bottom" HorizontalAlignment="Left" Background="Transparent" Height="50" Width="50" Padding="0" BorderThickness="0" Click="ZoomOut_Click">
                             <Grid>
-                                <Path VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Height="48" Stretch="Uniform" Data="F1 M 784,455.807C 784,455.805 783.872,455.796 783.728,455.796C 757.907,455.796 737.051,476.255 737.051,502.077C 737.051,502.26 737.141,502.145 737.143,502.145L 762.064,502.145L 762.057,502.041C 762.057,489.985 771.672,480.165 783.728,480.165C 783.873,480.165 784,480.235 784,480.237L 784,455.807 Z ">
-                                    <Path.Fill>
-                                        <fluent:BackdropBlurBrush BlurAmount="40" FallbackColor="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
-                                    </Path.Fill>
-                                    <Path.Stroke>
-                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                            <GradientStop Color="DodgerBlue" Offset="1"/>
-                                            <GradientStop Color="#FF29FF07"/>
-                                            <GradientStop Color="#FFBB5AFF" Offset="0.76"/>
-                                            <GradientStop Color="Red" Offset="0.52"/>
-                                            <GradientStop Color="#FFFFF40C" Offset="0.27"/>
-                                        </LinearGradientBrush>
-                                    </Path.Stroke>
-                                </Path>
-                                <TextBlock Text="&#xE948;" FontSize="18" Foreground="Gray" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Grid>
-                        </Button>
-                        <Button x:Name="ZoomOut" VerticalAlignment="Bottom" HorizontalAlignment="Left" Background="Transparent" Height="48" Width="48" Padding="0" BorderThickness="0" Click="ZoomOut_Click">
-                            <Grid>
-                                <Path VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Height="48" Stretch="Uniform" Data="F1 M 784,455.807C 784,455.805 783.872,455.796 783.728,455.796C 757.907,455.796 737.051,476.255 737.051,502.077C 737.051,502.26 737.141,502.145 737.143,502.145L 762.064,502.145L 762.057,502.041C 762.057,489.985 771.672,480.165 783.728,480.165C 783.873,480.165 784,480.235 784,480.237L 784,455.807 Z " RenderTransformOrigin="0.5,0.5">
-                                    <Path.Fill>
-                                        <fluent:BackdropBlurBrush BlurAmount="40" FallbackColor="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
-                                    </Path.Fill>
-                                    <Path.Stroke>
-                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                            <GradientStop Color="DodgerBlue" Offset="0"/>
-                                            <GradientStop Color="#FF29FF07" Offset="1"/>
-                                            <GradientStop Color="#FFBB5AFF" Offset="0.267"/>
-                                            <GradientStop Color="Red" Offset="0.48"/>
-                                            <GradientStop Color="#FFFFF40C" Offset="0.717"/>
-                                        </LinearGradientBrush>
-                                    </Path.Stroke>
+                                <Path VerticalAlignment="Top" Fill="White" HorizontalAlignment="Left" Width="50" Height="50" Stretch="Uniform" Data="F1 M 784,455.807C 784,455.805 783.872,455.796 783.728,455.796C 757.907,455.796 737.051,476.255 737.051,502.077C 737.051,502.26 737.141,502.145 737.143,502.145L 762.064,502.145L 762.057,502.041C 762.057,489.985 771.672,480.165 783.728,480.165C 783.873,480.165 784,480.235 784,480.237L 784,455.807 Z " RenderTransformOrigin="0.5,0.5">
                                     <Path.RenderTransform>
                                         <CompositeTransform Rotation="-90"/>
                                     </Path.RenderTransform>
                                 </Path>
 
                                 <!--<Path VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="48" Height="48" Stretch="Uniform" Fill="White" Data="F1 M 737.458,518.145C 737.457,518.289 737.448,518.432 737.448,518.576C 737.448,544.397 758.008,565.333 783.83,565.333L 784,565.32L 784,540.399C 784,540.4 783.878,540.405 783.794,540.405C 771.738,540.405 761.868,530.632 761.868,518.576C 761.868,518.431 761.886,518.289 761.889,518.145L 737.458,518.145 Z "/>-->
-                                <TextBlock Text="&#xE949;" FontSize="18" Foreground="Gray" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Text="&#xE949;" FontSize="18" Foreground="DodgerBlue" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Grid>
-                        </Button>
+                        </Button>                        
                     </Grid>
                     <!--<OMC:ZoomUserControl x:Name="ZoomUserControl" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="32,149,32,0"/>-->
                     <InkCanvas x:Name="inkCanvas"  Visibility="Collapsed"/>

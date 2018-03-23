@@ -11,6 +11,13 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using GoogleMapsUnofficial.ViewModel.SettingsView;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Reflection;
+using GoogleMapsUnofficial.Data;
+using GoogleMapsUnofficial.Common;
+using GoogleMapsUnofficial.View.SettingsView;
 
 namespace GoogleMapsUnofficial
 {
@@ -19,17 +26,40 @@ namespace GoogleMapsUnofficial
     /// </summary>
     sealed partial class App : Application
     {
+
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
+        public string SelectedTheme
+        {
+            get { return SettingsSetters.SelectedAppThemeKey; }
+            set
+            {
+                //_selectedTheme = value;
+                //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SelectedTheme"));
+                //SettingsSetters.SetSelectedTheme();
+                string savedTheme = ApplicationData.Current.LocalSettings.Values[SettingsSetters.SelectedAppThemeKey]?.ToString();
+
+                if (savedTheme != null)
+                {
+                    SettingsSetters.RootTheme = SettingsSetters.GetEnum<ElementTheme>(savedTheme);
+                }
+
+            }
+        }
         public App()
         {
+            SelectedTheme = SettingsSetters.SelectedAppThemeKey;
+            
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             this.UnhandledException += App_UnhandledException;
+
         }
 
+        
         private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var d = DateTime.Now;
@@ -56,7 +86,12 @@ namespace GoogleMapsUnofficial
                 ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
                 formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
                 formattableTitleBar.ButtonForegroundColor = Colors.Black;
-                formattableTitleBar.InactiveForegroundColor = Colors.Black;
+                formattableTitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+                formattableTitleBar.ButtonInactiveForegroundColor = Colors.Black;
+                //formattableTitleBar.ButtonHoverForegroundColor = Colors.Transparent;
+
+                //formattableTitleBar.InactiveForegroundColor = Colors.Black;
+                //formattableTitleBar.InactiveBackgroundColor = Colors.Transparent;
                 CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
                 coreTitleBar.ExtendViewIntoTitleBar = true;
             }
@@ -67,8 +102,29 @@ namespace GoogleMapsUnofficial
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
+            //if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+            //{
+            //    try
+            //    {
+            //        await SuspensionManager.RestoreAsync();
+            //    }
+            //    catch (SuspensionManagerException)
+            //    {
+            //        //Something went wrong restoring state.
+            //        //Assume there is no state and continue
+            //    }
+            //}
+            
+
+            
+            string savedTheme = ApplicationData.Current.LocalSettings.Values[SettingsSetters.SelectedAppThemeKey]?.ToString();
+
+            if (savedTheme != null)
+            {
+                SettingsSetters.RootTheme = SettingsSetters.GetEnum<ElementTheme>(savedTheme);
+            }
             if (e != null)
             {
                 if (e.PreviousExecutionState == ApplicationExecutionState.Running)
@@ -78,7 +134,15 @@ namespace GoogleMapsUnofficial
                 }
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
-                    //TODO: Load state from previously suspended application
+                    try
+                    {
+                        await SuspensionManager.RestoreAsync();
+                    }
+                    catch (SuspensionManagerException)
+                    {
+                        //Something went wrong restoring state.
+                        //Assume there is no state and continue
+                    }
                 }
                 if (e.Kind == ActivationKind.VoiceCommand)
                 {
@@ -122,9 +186,16 @@ namespace GoogleMapsUnofficial
             Window.Current.Activate();
         }
 
-        protected override void OnActivated(IActivatedEventArgs args)
+        protected override void OnActivated(IActivatedEventArgs e)
         {
-            base.OnActivated(args);
+
+            string savedTheme = ApplicationData.Current.LocalSettings.Values[SettingsSetters.SelectedAppThemeKey]?.ToString();
+
+            if (savedTheme != null)
+            {
+                SettingsSetters.RootTheme = SettingsSetters.GetEnum<ElementTheme>(savedTheme);
+            }
+            base.OnActivated(e);
             #region Start app
 
             Frame rootFrame = Window.Current.Content as Frame;
@@ -153,12 +224,12 @@ namespace GoogleMapsUnofficial
             Resources["ToggleSwitchFillOn"] = Color.FromArgb(255, 96, 165, 255);
             Resources["HyperlinkButtonForeground"] = Color.FromArgb(255, 96, 165, 255);
             Resources["SystemControlBackgroundAccentBrush"] = Color.FromArgb(255, 96, 165, 255);
-            SplashScreen splashScreen = args.SplashScreen;
+            SplashScreen splashScreen = e.SplashScreen;
             ExtendedSplashScreen eSplash = null;
 
-            if (args.Kind == ActivationKind.VoiceCommand)
+            if (e.Kind == ActivationKind.VoiceCommand)
             {
-                var voiceArgs = (VoiceCommandActivatedEventArgs)args;
+                var voiceArgs = (VoiceCommandActivatedEventArgs)e;
                 var Rule = voiceArgs.Result.RulePath.FirstOrDefault();
                 var input = voiceArgs.Result.SemanticInterpretation.Properties.Where(x => x.Key == "UserInput").FirstOrDefault().Value.FirstOrDefault();
                 if (Rule == "DirectionsCommand")
@@ -174,9 +245,9 @@ namespace GoogleMapsUnofficial
                     eSplash = new ExtendedSplashScreen(splashScreen);
                 }
             }
-            if (args.Kind == ActivationKind.Protocol)
+            if (e.Kind == ActivationKind.Protocol)
             {
-                var protocolArgs = (ProtocolActivatedEventArgs)args;
+                var protocolArgs = (ProtocolActivatedEventArgs)e;
                 var x = protocolArgs.Uri.ToString();
 
                 // Register an event handler to be executed when the splash screen has been dismissed.
@@ -211,6 +282,7 @@ namespace GoogleMapsUnofficial
             Window.Current.Activate();
         }
 
+        
         /// <summary>
         /// Invoked when Navigation to a certain page fails
         /// </summary>
@@ -228,10 +300,11 @@ namespace GoogleMapsUnofficial
         /// </summary>
         /// <param name="sender">The source of the suspend request.</param>
         /// <param name="e">Details about the suspend request.</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
+        private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
+            await SuspensionManager.SaveAsync();
             deferral.Complete();
         }
     }

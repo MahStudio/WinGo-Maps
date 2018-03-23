@@ -102,10 +102,13 @@
     </Compile>
     <Compile Include="AppCommand.cs" />
     <Compile Include="AppCore.cs" />
+    <Compile Include="Common\ColorStringConverter.cs" />
+    <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="CustomBrush\BackDropBlurBrush.cs" />
     <Compile Include="CustomBrush\BackDropLayer.xaml.cs">
       <DependentUpon>BackDropLayer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\ControlInfoDataSource.cs" />
     <Compile Include="ExtendedSplashScreen.xaml.cs">
       <DependentUpon>ExtendedSplashScreen.xaml</DependentUpon>
     </Compile>
@@ -209,6 +212,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <None Include="DataModel\ControlInfoData.json" />
     <None Include="GoogleMapsUnofficial_StoreKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -493,6 +497,7 @@
       <Name>WinGoService</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

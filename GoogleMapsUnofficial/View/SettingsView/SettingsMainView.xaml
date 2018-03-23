@@ -5,7 +5,7 @@
     xmlns:local="using:GoogleMapsUnofficial.ViewModel.SettingsView"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d" >
 
     <Page.DataContext>
         <local:SettingsMainVM/>
@@ -22,6 +22,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="Settings" FontWeight="SemiBold" FontSize="22" Margin="0,0,0,15"/>
             <ToggleSwitch Margin="0,10,0,0" Grid.Row="1" Header="Allow over strech on map" IsOn="{Binding AllowOverstretch, Mode=TwoWay}"/>
@@ -30,7 +31,21 @@
             <ComboBox Margin="0,20,0,0" Grid.Row="4" Header="Show zoom controls on map" ItemsSource="{Binding MapInteractionModeOptions,Mode=OneWay}" SelectedIndex="{Binding ZoomControlsVisible, Mode=TwoWay}"/>
             <!--<ComboBox Grid.Row="5" Header="Show rotation controls on map" ItemsSource="{Binding MapInteractionModeOptions,Mode=OneWay}" SelectedIndex="{Binding RotationControlsVisible, Mode=TwoWay}"/>-->
             <ComboBox Margin="0,20,0,0" Grid.Row="5" Header="Show distance in" ItemsSource="{Binding LengthUnits, Mode=OneWay}" SelectedIndex="{Binding LengthUnit, Mode=TwoWay}"/>
-            <Grid Margin="0,10,0,0" Grid.Row="6">
+            <!--<ComboBox Margin="0,20,0,0" Grid.Row="6" Header="Theme" ItemsSource="{Binding ThemeModes, Mode=OneWay}" SelectedIndex="{Binding SelectedTheme, Mode=TwoWay}"/>-->
+
+            <StackPanel Grid.Row="6" HorizontalAlignment="Left">
+                <TextBlock
+                    Style="{StaticResource TitleTextBlockStyle}"
+                    Margin="0,4,0,0"
+                    FontWeight="Normal"
+                    Text="Theme Mode" />
+                <StackPanel x:Name="ThemePanel" Margin="0,10,0,0">
+                    <RadioButton Tag="Light" Checked="OnThemeRadioButtonChecked" Content="Light" />
+                    <RadioButton Tag="Dark" Checked="OnThemeRadioButtonChecked" Content="Dark" />
+                    <RadioButton Tag="Default" Checked="OnThemeRadioButtonChecked" Content="Use system setting" />
+                </StackPanel>
+            </StackPanel>
+                <Grid Margin="0,10,0,0" Grid.Row="7">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>

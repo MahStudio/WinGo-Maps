@@ -25,6 +25,7 @@ namespace GoogleMapsUnofficial
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public static MainPage Current;
         object para = null;
         public static Frame RootFrame { get; set; }
         public static Grid Grid { get; set; }
@@ -34,18 +35,20 @@ namespace GoogleMapsUnofficial
             SystemNavigationManager.GetForCurrentView().BackRequested += MainPage_BackRequested;
             this.Loaded += MainPage_Loaded;
             RootFrame = Fr;
-            Grid = Gr;
+            //Grid = Gr;
             para = parameter;
         }
+        
         private void applyAcrylicAccent(Panel panel)
         {
             if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone) return;
             if (ApiInformation.IsTypePresent("Windows.UI.Xaml.Media.AcrylicBrush"))
             {
+                BackdropLayerGrid.Visibility = Visibility.Collapsed;
                 var ac = new AcrylicBrush();
-                var brush = Resources["SystemControlChromeMediumLowAcrylicElementMediumBrush"] as AcrylicBrush;
+                var brush = Resources["SystemControlAcrylicWindowBrush"] as AcrylicBrush;
                 ac = brush;
-                ac.TintOpacity = 0.7;
+                ac.TintOpacity = 0.5;
                 ac.BackgroundSource = AcrylicBackgroundSource.HostBackdrop;
                 Split.PaneBackground = ac;
                 return;
@@ -79,8 +82,11 @@ namespace GoogleMapsUnofficial
             HMenuBottomLst.Items.Add(new MenuClass { Text = "Send feedback", Icon = "", Tag = "Send feedback" });
             HMenuBottomLst.Items.Add(new MenuClass { Text = "Settings", Icon = "", Tag = "Settings" });
             if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone)
+            {
                 DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
-            return;
+                return;
+            }                
+            
         }
 
         private async void MainPage_BackRequested(object sender, BackRequestedEventArgs e)

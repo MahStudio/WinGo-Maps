@@ -15,22 +15,9 @@
             <fluent:TiledBackground
                                BackgroundImage="ms-appx:///Assets/InAppIcons/NoiseAsset_256X256_PNG.png"
                                Width="{Binding ActualWidth, ElementName=rootGrid}" Height="{Binding ActualHeight, ElementName=rootGrid}" Opacity="0.1"/>
-            <Ellipse Width="100" Height="100" Fill="DodgerBlue" StrokeThickness="10">
-            <Ellipse.Stroke>
-                <media:RadialGradientBrush 
-                AlphaMode="Premultiplied"
-                Center="0.5,0.5"
-                ColorInterpolationMode="SRgbLinearInterpolation"
-                GradientOrigin="0.5,0.5"
-                Opacity="1"
-                RadiusX="0.5"
-                RadiusY="0.5"
-                SpreadMethod="Pad">
-                    <GradientStop Color="Gray" Offset="0" />
-                    <GradientStop Color="Transparent" Offset="0.25" />                    
-                </media:RadialGradientBrush>
-            </Ellipse.Stroke>
-        </Ellipse>
+        <Grid Width="100" Height="100" Background="DodgerBlue" CornerRadius="100">
+            
+        </Grid>
 
     </Grid>
     

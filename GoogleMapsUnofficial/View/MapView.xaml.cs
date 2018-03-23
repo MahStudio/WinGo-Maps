@@ -32,6 +32,7 @@ namespace GoogleMapsUnofficial.View
     /// </summary>
     public sealed partial class MapView : Page
     {
+
         public Geopoint SearchResultPoint
         {
             get
@@ -41,7 +42,7 @@ namespace GoogleMapsUnofficial.View
             set
             {
                 SetValue(SearchResultPointProperty, value);
-                RunMapRightTapped(Map, value);
+                RunMapRightTapped(Maps, value);
             }
         }
         public static readonly DependencyProperty SearchResultPointProperty = DependencyProperty.Register(
@@ -57,17 +58,21 @@ namespace GoogleMapsUnofficial.View
         public static NewDirections dc { get; set; }
         DispatcherTimer DispatcherTime;
         public static DirectionsControls.NewDirections StaticDirections = null;
+
+        private MapControl Map;
+        bool AllowOverstretch;
+        bool FadeAnimationEnabled;
         public MapView()
         {
             this.InitializeComponent();
-            MapControl = Map;
+            MapControl = Maps;
             StaticDirections = DirectionsControl;
             StaticMapView = this;
-            Map.Style = MapStyle.None;
-            Map.TileSources.Clear();
+            Maps.Style = MapStyle.None;
+            Maps.TileSources.Clear();
             var AllowOverstretch = SettingsSetters.GetAllowOverstretch();
             var FadeAnimationEnabled = SettingsSetters.GetFadeAnimationEnabled();
-            Map.RotateInteractionMode = MapInteractionMode.GestureOnly;
+            Maps.RotateInteractionMode = MapInteractionMode.GestureOnly;
             //Map.RotateInteractionMode = SettingsSetters.GetRotationControlsVisible();
             //if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone)
             //{
@@ -85,8 +90,8 @@ namespace GoogleMapsUnofficial.View
                 ZoomControlGrid.Visibility = Visibility.Visible;
             else ZoomControlGrid.Visibility = Visibility.Collapsed;
             if (ZoomInteractionMode == MapInteractionMode.Auto || ZoomInteractionMode == MapInteractionMode.GestureAndControl || ZoomInteractionMode == MapInteractionMode.GestureOnly || ZoomInteractionMode == MapInteractionMode.PointerAndKeyboard || ZoomInteractionMode == MapInteractionMode.PointerKeyboardAndControl || ZoomInteractionMode == MapInteractionMode.PointerOnly)
-                Map.ZoomInteractionMode = MapInteractionMode.GestureOnly;
-            else Map.ZoomInteractionMode = MapInteractionMode.Disabled;
+                Maps.ZoomInteractionMode = MapInteractionMode.GestureOnly;
+            else Maps.ZoomInteractionMode = MapInteractionMode.Disabled;
             if (InternalHelper.InternetConnection())
             {
                 //var hm = new HttpMapTileDataSource() { AllowCaching = true };
@@ -100,13 +105,13 @@ namespace GoogleMapsUnofficial.View
                 //OLD
                 //lyrs parameter h = dark, y = hybrid
                 string mapuri = "http://mt1.google.com/vt/lyrs=r&hl=" + AppCore.OnMapLanguage + "&z={zoomlevel}&x={x}&y={y}";
-                Map.TileSources.Add(new MapTileSource(new HttpMapTileDataSource(mapuri)
+                Maps.TileSources.Add(new MapTileSource(new HttpMapTileDataSource(mapuri)
                 { AllowCaching = true })
                 { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled, ZoomLevelRange = new MapZoomLevelRange() { Max = 22, Min = 0 } });
             }
             else
             {
-                Map.TileSources.Add(new MapTileSource(new LocalMapTileDataSource("ms-appdata:///local/MahMaps/mah_x_{x}-y_{y}-z_{zoomlevel}.jpeg")) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
+                Maps.TileSources.Add(new MapTileSource(new LocalMapTileDataSource("ms-appdata:///local/MahMaps/mah_x_{x}-y_{y}-z_{zoomlevel}.jpeg")) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
             }
             //if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone)
             //{
@@ -120,7 +125,7 @@ namespace GoogleMapsUnofficial.View
         {
             Geopoint geoPoint = null;
 
-            this.Map.GetLocationFromOffset(point, out geoPoint);
+            this.Maps.GetLocationFromOffset(point, out geoPoint);
 
             return (geoPoint);
         }
@@ -207,7 +212,7 @@ namespace GoogleMapsUnofficial.View
                                 Result = await ViewModel.DirectionsControls.DirectionsHelper.GetDirections(OriginPoint.Position, DestinationPoint.Position, Mode, lst);
                             if (Result != null)
                             {
-                                Map.MapElements.Add(ViewModel.DirectionsControls.DirectionsHelper.GetDirectionAsRoute(Result, (Color)Resources["SystemControlBackgroundAccentBrush"]));
+                                Maps.MapElements.Add(ViewModel.DirectionsControls.DirectionsHelper.GetDirectionAsRoute(Result, (Color)Resources["SystemControlBackgroundAccentBrush"]));
                             }
                         }
                     }
@@ -229,16 +234,16 @@ namespace GoogleMapsUnofficial.View
                                 var zoom = parameters.Where(x => x.Key == "zoom").FirstOrDefault();
                                 var cp = center.Value.Split(',');
                                 BasicGeoposition pointer = new BasicGeoposition() { Latitude = Convert.ToDouble(cp[0]), Longitude = Convert.ToDouble(cp[1]) };
-                                Map.Center = new Geopoint(pointer);
+                                Maps.Center = new Geopoint(pointer);
                                 if (zoom.Value != null)
-                                    Map.ZoomLevel = Convert.ToDouble(zoom.Value);
-                                RunMapRightTapped(Map, new Geopoint(pointer));
+                                    Maps.ZoomLevel = Convert.ToDouble(zoom.Value);
+                                RunMapRightTapped(Maps, new Geopoint(pointer));
                             }
                             else
                             {
                                 var search = ((Uri)e.Parameter).ToString().Replace("https://google.com/maps/@searchplace=", "");
                                 //var search = parameters.Where(x => x.Key == "searchplace").FirstOrDefault();
-                                var res = await ViewModel.PlaceControls.SearchHelper.TextSearch(search, Location: Map.Center, Radius: 15000);
+                                var res = await ViewModel.PlaceControls.SearchHelper.TextSearch(search, Location: Maps.Center, Radius: 15000);
                                 if (res == null || res.results.Length == 0)
                                 {
                                     await new MessageDialog("No search results found").ShowAsync();
@@ -246,8 +251,8 @@ namespace GoogleMapsUnofficial.View
                                 }
                                 var ploc = res.results.FirstOrDefault().geometry.location;
                                 var geopoint = new Geopoint(new BasicGeoposition() { Latitude = ploc.lat, Longitude = ploc.lng });
-                                Map.Center = geopoint;
-                                Map.ZoomLevel = 16;
+                                Maps.Center = geopoint;
+                                Maps.ZoomLevel = 16;
                                 SearchResultPoint = geopoint;
                             }
                         }
@@ -292,18 +297,18 @@ namespace GoogleMapsUnofficial.View
                             {
                                 var loc = res.results.FirstOrDefault().geometry.location;
                                 //var rgc = await ReverseGeoCode.GetLocation(Where);
-                                Map.Center = new Geopoint(new BasicGeoposition() {Latitude = loc.lat, Longitude = loc.lng });
+                                Maps.Center = new Geopoint(new BasicGeoposition() {Latitude = loc.lat, Longitude = loc.lng });
                             }
                             else
                             {
                                 var rgc = await ReverseGeoCode.GetLocation(Where);
-                                Map.Center = rgc;
+                                Maps.Center = rgc;
                             }
                         }
                         else
                         {
                             var rgc = await ReverseGeoCode.GetLocation(Where);
-                            Map.Center = rgc;
+                            Maps.Center = rgc;
                         }
                     }
                     if (cp != "")
@@ -312,10 +317,10 @@ namespace GoogleMapsUnofficial.View
                         var bgp = new BasicGeoposition();
                         bgp.Latitude = Convert.ToDouble(cp.Split('~')[0]);
                         bgp.Longitude = Convert.ToDouble(cp.Split('~')[1]);
-                        Map.Center = new Geopoint(bgp);
+                        Maps.Center = new Geopoint(bgp);
                     }
-                    if (zoomlevel != 0) Map.ZoomLevel = zoomlevel;
-                    else Map.ZoomLevel = 16;
+                    if (zoomlevel != 0) Maps.ZoomLevel = zoomlevel;
+                    else Maps.ZoomLevel = 16;
                     if (Querry != "")
                     {
                         await Task.Delay(1500);
@@ -449,7 +454,7 @@ namespace GoogleMapsUnofficial.View
 
         private void Map_MapRightTapped(MapControl sender, MapRightTappedEventArgs args)
         {
-            RunMapRightTapped(Map, args.Location);
+            RunMapRightTapped(Maps, args.Location);
         }
 
         private void GetDirections_Click(object sender, RoutedEventArgs e)
@@ -480,7 +485,7 @@ namespace GoogleMapsUnofficial.View
         private void DataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
         {
             DataRequest request = args.Request;
-            request.Data.SetWebLink(new Uri($"https://www.google.com/maps/@?api=1&map_action=map&center={LastRightTap.Position.Latitude},{LastRightTap.Position.Longitude}&zoom={Convert.ToInt16(Map.ZoomLevel)}",
+            request.Data.SetWebLink(new Uri($"https://www.google.com/maps/@?api=1&map_action=map&center={LastRightTap.Position.Latitude},{LastRightTap.Position.Longitude}&zoom={Convert.ToInt16(Maps.ZoomLevel)}",
                 UriKind.RelativeOrAbsolute));
             request.Data.Properties.Title = $"{PlaceName.Text} on Google maps";
             request.Data.Properties.Description = $"See {PlaceName.Text} on Google Maps. Shared using WinGo Maps for Windows 10.";
@@ -538,7 +543,7 @@ namespace GoogleMapsUnofficial.View
 
         private void Map_MapTapped(MapControl sender, MapInputEventArgs args)
         {
-            RunMapRightTapped(Map, args.Location);
+            RunMapRightTapped(Maps, args.Location);
         }
 
         private void InkingBTN_Click(object sender, RoutedEventArgs e)
@@ -558,7 +563,7 @@ namespace GoogleMapsUnofficial.View
         {
             //Add missing
             //https://www.google.com/maps/@36.2968808,59.5824495,18.73z/data=!10m1!1e2
-            var redir = "https://www.google.com/maps/@" + LastRightTap.Position.Latitude + "," + LastRightTap.Position.Latitude + "," + Map.ZoomLevel.ToString("0.00") + "z/data=!10m1!1e2";
+            var redir = "https://www.google.com/maps/@" + LastRightTap.Position.Latitude + "," + LastRightTap.Position.Latitude + "," + Maps.ZoomLevel.ToString("0.00") + "z/data=!10m1!1e2";
             await Launcher.LaunchUriAsync(new Uri(redir));
 
         }
@@ -625,6 +630,146 @@ namespace GoogleMapsUnofficial.View
         private async void ZoomOut_Click(object sender, RoutedEventArgs e)
         {
             await MapControl.TryZoomOutAsync();
+        }
+
+        private void Flyout_Opened(object sender, object e)
+        {
+            if (Map == null)
+            {
+                Map = MapView.MapControl;
+                DefaultMapView.IsChecked = true;
+                ShowTraffic.IsOn = false;
+            }
+        }
+
+        private void DefaultMapView_Click(object sender, RoutedEventArgs e)
+        {
+            DefaultMapView.IsChecked = true;
+            SatelliteMapView.IsChecked = false;
+            HybridMapView.IsChecked = false;
+        }
+
+        private void SatelliteMapView_Click(object sender, RoutedEventArgs e)
+        {
+            DefaultMapView.IsChecked = false;
+            SatelliteMapView.IsChecked = true;
+            HybridMapView.IsChecked = false;
+        }
+
+        private void HybridMapView_Click(object sender, RoutedEventArgs e)
+        {
+            DefaultMapView.IsChecked = false;
+            SatelliteMapView.IsChecked = false;
+            HybridMapView.IsChecked = true;
+        }
+
+        private void DefaultMapView_Checked(object sender, RoutedEventArgs e)
+        {
+            if (ShowTraffic.IsOn)
+            {
+                Map.TileSources.Clear();
+                var mapuri = "http://mt1.google.com/vt/lyrs=r@221097413,traffic&hl=" + AppCore.OnMapLanguage + "&z={zoomlevel}&x={x}&y={y}";
+                var dataSource = new HttpMapTileDataSource(mapuri) { AllowCaching = true };
+                Map.TileSources.Add(new MapTileSource(dataSource) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
+            }
+            else
+            {
+                Map.TileSources.Clear();
+                var mapuri = "http://mt1.google.com/vt/lyrs=r&hl=" + AppCore.OnMapLanguage + "&z={zoomlevel}&x={x}&y={y}";
+                var dataSource = new HttpMapTileDataSource(mapuri) { AllowCaching = true };
+                Map.TileSources.Add(new MapTileSource(dataSource) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
+            }
+        }
+
+        private void SatelliteMapView_Checked(object sender, RoutedEventArgs e)
+        {
+            if (ShowTraffic.IsOn)
+            {
+                Map.TileSources.Clear();
+                var mapuri = "http://mt1.google.com/vt/lyrs=s@221097413,traffic&hl=" + AppCore.OnMapLanguage + "&z={zoomlevel}&x={x}&y={y}";
+                var dataSource = new HttpMapTileDataSource(mapuri) { AllowCaching = true };
+                Map.TileSources.Add(new MapTileSource(dataSource) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
+            }
+            else
+            {
+                Map.TileSources.Clear();
+                var mapuri = "http://mt1.google.com/vt/lyrs=s&hl=" + AppCore.OnMapLanguage + "&z={zoomlevel}&x={x}&y={y}";
+                var dataSource = new HttpMapTileDataSource(mapuri) { AllowCaching = true };
+                Map.TileSources.Add(new MapTileSource(dataSource) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
+            }
+        }
+
+        private void ShowTraffic_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (DefaultMapView.IsChecked.Value)
+            {
+                if (ShowTraffic.IsOn)
+                {
+                    Map.TileSources.Clear();
+                    var mapuri = "http://mt1.google.com/vt/lyrs=r@221097413,traffic&hl=" + AppCore.OnMapLanguage + "&z={zoomlevel}&x={x}&y={y}";
+                    var dataSource = new HttpMapTileDataSource(mapuri) { AllowCaching = true };
+                    Map.TileSources.Add(new MapTileSource(dataSource) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
+                }
+                else
+                {
+                    Map.TileSources.Clear();
+                    var mapuri = "http://mt1.google.com/vt/lyrs=r&hl=" + AppCore.OnMapLanguage + "&z={zoomlevel}&x={x}&y={y}";
+                    var dataSource = new HttpMapTileDataSource(mapuri) { AllowCaching = true };
+                    Map.TileSources.Add(new MapTileSource(dataSource) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
+                }
+            }
+            else if (SatelliteMapView.IsChecked.Value)
+            {
+                if (ShowTraffic.IsOn)
+                {
+                    Map.TileSources.Clear();
+                    var mapuri = "http://mt1.google.com/vt/lyrs=s@221097413,traffic&hl=" + AppCore.OnMapLanguage + "&z={zoomlevel}&x={x}&y={y}";
+                    var dataSource = new HttpMapTileDataSource(mapuri) { AllowCaching = true };
+                    Map.TileSources.Add(new MapTileSource(dataSource) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
+                }
+                else
+                {
+                    Map.TileSources.Clear();
+                    var mapuri = "http://mt1.google.com/vt/lyrs=s&hl=" + AppCore.OnMapLanguage + "&z={zoomlevel}&x={x}&y={y}";
+                    var dataSource = new HttpMapTileDataSource(mapuri) { AllowCaching = true };
+                    Map.TileSources.Add(new MapTileSource(dataSource) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
+                }
+            }
+            else if (HybridMapView.IsChecked.Value)
+            {
+                if (ShowTraffic.IsOn)
+                {
+                    Map.TileSources.Clear();
+                    var mapuri = "http://mt1.google.com/vt/lyrs=y@221097413,traffic&hl=" + AppCore.OnMapLanguage + "&z={zoomlevel}&x={x}&y={y}";
+                    var dataSource = new HttpMapTileDataSource(mapuri) { AllowCaching = true };
+                    Map.TileSources.Add(new MapTileSource(dataSource) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
+                }
+                else
+                {
+                    Map.TileSources.Clear();
+                    var mapuri = "http://mt1.google.com/vt/lyrs=y&hl=" + AppCore.OnMapLanguage + "&z={zoomlevel}&x={x}&y={y}";
+                    var dataSource = new HttpMapTileDataSource(mapuri) { AllowCaching = true };
+                    Map.TileSources.Add(new MapTileSource(dataSource) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
+                }
+            }
+        }
+
+        private void HybridMapView_Checked(object sender, RoutedEventArgs e)
+        {
+            if (ShowTraffic.IsOn)
+            {
+                Map.TileSources.Clear();
+                var mapuri = "http://mt1.google.com/vt/lyrs=y@221097413,traffic&hl=" + AppCore.OnMapLanguage + "&z={zoomlevel}&x={x}&y={y}";
+                var dataSource = new HttpMapTileDataSource(mapuri) { AllowCaching = true };
+                Map.TileSources.Add(new MapTileSource(dataSource) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
+            }
+            else
+            {
+                Map.TileSources.Clear();
+                var mapuri = "http://mt1.google.com/vt/lyrs=y&hl=" + AppCore.OnMapLanguage + "&z={zoomlevel}&x={x}&y={y}";
+                var dataSource = new HttpMapTileDataSource(mapuri) { AllowCaching = true };
+                Map.TileSources.Add(new MapTileSource(dataSource) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
+            }
         }
     }
 }
