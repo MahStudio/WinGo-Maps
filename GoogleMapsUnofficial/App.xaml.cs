@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoogleMapsUnofficial.ViewModel;
+using System;
 using System.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -30,7 +31,7 @@ namespace GoogleMapsUnofficial
             this.UnhandledException += App_UnhandledException;
             Microsoft.HockeyApp.HockeyClient.Current.Configure("836884b121284cbcbd6f1f0dbc787c6b");
         }
-
+        
         private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var d = DateTime.Now;
@@ -111,6 +112,22 @@ namespace GoogleMapsUnofficial
             // Register an event handler to be executed when the splash screen has been dismissed.
             Window.Current.Content = eSplash;
             Window.Current.Activate();
+            App.Current.Suspending += Current_Suspending;
+            CoreApplication.Exiting += CoreApplication_Exiting;
+        }
+
+        private void CoreApplication_Exiting(object sender, object e)
+        {
+            var userloc = MapViewVM.UserLocation.Location.Position;
+            ApplicationData.Current.LocalSettings.Values["LastUserLocation"] = userloc.Latitude + "," + userloc.Longitude;
+        }
+
+        private void Current_Suspending(object sender, SuspendingEventArgs e)
+        {
+            var def = e.SuspendingOperation.GetDeferral();
+            var userloc = MapViewVM.UserLocation.Location.Position;
+            ApplicationData.Current.LocalSettings.Values["LastUserLocation"] = userloc.Latitude + "," + userloc.Longitude;
+            def.Complete();
         }
 
         protected override void OnActivated(IActivatedEventArgs args)
@@ -201,7 +218,7 @@ namespace GoogleMapsUnofficial
             Window.Current.Content = eSplash;
             Window.Current.Activate();
         }
-
+        
         /// <summary>
         /// Invoked when Navigation to a certain page fails
         /// </summary>

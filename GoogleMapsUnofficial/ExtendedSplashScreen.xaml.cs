@@ -115,6 +115,18 @@ namespace GoogleMapsUnofficial
             {
                 ApplyAcrylicAccent(Grid1);
                 InstallVCD();
+                try
+                {
+                    var res = ApplicationData.Current.LocalSettings.Values["LastUserLocation"].ToString();
+                    var latitude = res.Split(',')[0];
+                    var longitude = res.Split(',')[1];
+                    if (MapViewVM.UserLocation == null) MapViewVM.UserLocation = new ViewModel.ViewModel() { AttractionName = "My Location" };
+                    MapViewVM.UserLocation.Location = new Geopoint(new BasicGeoposition() { Latitude = Convert.ToDouble(latitude), Longitude = Convert.ToDouble(longitude) });
+                    MapViewVM.FastLoadGeoPosition = MapViewVM.UserLocation.Location;
+                    RemoveExtendedSplash();
+                    return;
+                }
+                catch { }
                 //try
                 //{
                 //    var crashrep = ApplicationData.Current.LocalSettings.Values["CrashDump"].ToString();

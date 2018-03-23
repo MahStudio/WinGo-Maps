@@ -309,6 +309,7 @@ namespace GoogleMapsUnofficial.View
                     }
                 }
             }
+
             if (ApiInformation.IsTypePresent("Windows.UI.Xaml.Media.AcrylicBrush"))
             {
                 var ac = new Windows.UI.Xaml.Media.AcrylicBrush();
@@ -318,6 +319,8 @@ namespace GoogleMapsUnofficial.View
                 ac.BackgroundSource = Windows.UI.Xaml.Media.AcrylicBackgroundSource.HostBackdrop;
                 InfoPane.PaneBackground = ac;
             }
+
+            MapViewVM.LoadPage();
         }
 
         private void Hm_UriRequested(HttpMapTileDataSource sender, MapTileUriRequestedEventArgs args)
