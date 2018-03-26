@@ -124,10 +124,14 @@ namespace GoogleMapsUnofficial
 
         private void Current_Suspending(object sender, SuspendingEventArgs e)
         {
-            var def = e.SuspendingOperation.GetDeferral();
-            var userloc = MapViewVM.UserLocation.Location.Position;
-            ApplicationData.Current.LocalSettings.Values["LastUserLocation"] = userloc.Latitude + "," + userloc.Longitude;
-            def.Complete();
+            try
+            {
+                var def = e.SuspendingOperation.GetDeferral();
+                var userloc = MapViewVM.UserLocation.Location.Position;
+                ApplicationData.Current.LocalSettings.Values["LastUserLocation"] = userloc.Latitude + "," + userloc.Longitude;
+                def.Complete();
+            }
+            catch { }
         }
 
         protected override void OnActivated(IActivatedEventArgs args)
