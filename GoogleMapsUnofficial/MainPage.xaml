@@ -18,7 +18,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <SplitView x:Name="Split" PaneBackground="{StaticResource SystemControlAcrylicElementMediumHighBrush}" Grid.Row="0" IsPaneOpen="True" DisplayMode="Inline">
+            <SplitView x:Name="Split" PaneBackground="{StaticResource SystemControlChromeHighAcrylicElementMediumBrush }" Grid.Row="0" IsPaneOpen="True" DisplayMode="Inline">
                 <SplitView.Pane>
                     <Grid>
                         <Grid x:Name="BackdropLayerGrid" Background="{StaticResource ApplicationPageBackgroundThemeBrush}" Visibility="Collapsed">
