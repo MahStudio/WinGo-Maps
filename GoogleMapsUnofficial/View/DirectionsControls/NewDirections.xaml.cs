@@ -1,8 +1,10 @@
 ﻿using GoogleMapsUnofficial.ViewModel;
 using GoogleMapsUnofficial.ViewModel.DirectionsControls;
+using GoogleMapsUnofficial.ViewModel.VoiceNavigation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.System.Display;
 using Windows.UI;
@@ -89,6 +91,10 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                     if (item.GetType() == typeof(MapPolyline))
                         CurrentDrawed = (MapPolyline)item;
                 }
+            }
+            catch (Exception ex)
+            {
+
             }
         }
 
