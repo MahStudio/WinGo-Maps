@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="7482MahStudios.WinGoMaps" Publisher="CN=983BF5D2-5CC3-402A-B46D-46C1F70449F9" Version="1.0.563.0" />
+  <Identity Name="7482MahStudios.WinGoMaps" Publisher="CN=983BF5D2-5CC3-402A-B46D-46C1F70449F9" Version="1.0.565.0" />
   <mp:PhoneIdentity PhoneProductId="6c5e1d37-5879-407c-83f4-ec9655592328" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>WinGo Maps</DisplayName>
@@ -26,25 +26,25 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#60a5ff" />
       </uap:VisualElements>
       <Extensions>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="ms-walk-to" />
+        </uap:Extension>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="ms-drive-to" />
+        </uap:Extension>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="bingmaps" />
+        </uap:Extension>
+        <uap:Extension Category="windows.personalAssistantLaunch" />
+        <uap:Extension Category="windows.appService" EntryPoint="WinGoService.Cortana">
+          <uap:AppService Name="Cortana" />
+        </uap:Extension>
         <Extension Category="windows.backgroundTasks" EntryPoint="LiveTileTask.Update">
           <BackgroundTasks>
             <Task Type="general" />
             <Task Type="timer" />
           </BackgroundTasks>
         </Extension>
-        <uap:Extension Category="windows.appService" EntryPoint="WinGoService.Cortana">
-          <uap:AppService Name="Cortana" />
-        </uap:Extension>
-        <uap:Extension Category="windows.personalAssistantLaunch" />
-        <uap:Extension Category="windows.protocol">
-          <uap:Protocol Name="bingmaps" />
-        </uap:Extension>
-        <uap:Extension Category="windows.protocol">
-          <uap:Protocol Name="ms-drive-to" />
-        </uap:Extension>
-        <uap:Extension Category="windows.protocol">
-          <uap:Protocol Name="ms-walk-to" />
-        </uap:Extension>
         <!--<Extension xmlns="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" Category="windows.appUriHandler">
           <AppUriHandler>
             <Host Name="google.com" />

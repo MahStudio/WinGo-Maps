@@ -26,7 +26,7 @@ namespace GoogleMapsUnofficial.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Location"));
             }
         }
-        public static Geopoint UserLocation { get; set; }
+        //public static Geopoint UserLocation { get; set; }
         public string AttractionName
         {
             get { return attractionname; }
@@ -71,6 +71,80 @@ namespace GoogleMapsUnofficial.ViewModel
             geolocator.PositionChanged -= Geolocator_PositionChanged;
             geolocator = null;
         }
+        async void LocateUser()
+        {
+            try
+            {
+                var accessStatus = await Geolocator.RequestAccessAsync();
+                if (accessStatus == GeolocationAccessStatus.Allowed)
+                {
+                    if (FastLoadGeoPosition != null)
+                    {
+                        if (geolocator == null)
+                        {
+                            geolocator = new Geolocator()
+                            {
+                                MovementThreshold = 1,
+                                ReportInterval = 1,
+                                DesiredAccuracyInMeters = 1
+                            };
+                            GeoLocate = geolocator;
+                        }
+                        else
+                        {
+                            Map.Center = UserLocation.Location;
+                            Map.ZoomLevel = 16;
+                        }
+                        // Subscribe to the StatusChanged event to get updates of location status changes.
+                        //geolocator.StatusChanged += Geolocator_StatusChanged;
+                        // Carry out the operation.
+                        GeoLocatorHelper.GetUserLocation();
+                        GeoLocatorHelper.LocationFetched += GeoLocatorHelper_LocationFetched;
+                        geolocator.PositionChanged += Geolocator_PositionChanged;
+
+                        var savedplaces = SavedPlacesVM.GetSavedPlaces();
+                        foreach (var item in savedplaces)
+                        {
+                            Map.MapElements.Add(new MapIcon()
+                            {
+                                Location = new Geopoint(new BasicGeoposition() { Latitude = item.Latitude, Longitude = item.Longitude }),
+                                Title = item.PlaceName
+                            });
+                        }
+                        await Task.Delay(150);
+                        //if (Map.Is3DSupported)
+                        //{
+                        //    Map.Style = MapStyle.Aerial3DWithRoads;
+                        //    MapScene mapScene = MapScene.CreateFromLocationAndRadius(snPoint, 500, 150, 70);
+                        //    await Map.TrySetSceneAsync(mapScene);
+                        //}
+                        //var r = await MapLocationFinder.FindLocationsAtAsync(snPoint);
+                        //if(r.Locations != null)
+                        //{
+                        //    var re = r.Locations.FirstOrDefault();
+                        //    var rg = RegionInfo.CurrentRegion;
+                        //    var rg2 = new RegionInfo(re.Address.Country);
+                        //}
+                    }
+                    else
+                    {
+                        LocationFlagVisibility = Visibility.Collapsed;
+                    }
+                }
+                else
+                {
+                    LocationFlagVisibility = Visibility.Collapsed;
+                    var msg = new MessageDialog("We weren't able to access your location. Please check if your device location is on and you have accepted location access to the app in privacy settings.\nHit ok button to navigate location settings and cancel to continue.");
+                    msg.Commands.Add(new UICommand("OK", async delegate
+                    {
+                        await Launcher.LaunchUriAsync(new Uri("ms-settings:privacy-location", UriKind.RelativeOrAbsolute));
+                    }));
+                    msg.Commands.Add(new UICommand("Cancel", delegate { }));
+                    await msg.ShowAsync();
+                }
+            }
+            catch { }
+        }
         public async void LoadPage()
         {
             Compass = Compass.GetDefault();
@@ -79,80 +153,7 @@ namespace GoogleMapsUnofficial.ViewModel
             ActiveNavigationMode = false;
             geolocator = GeoLocate;
             Map = View.MapView.MapControl;
-            await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
-            {
-                try
-                {
-                    var accessStatus = await Geolocator.RequestAccessAsync();
-                    if (accessStatus == GeolocationAccessStatus.Allowed)
-                    {
-                        if (FastLoadGeoPosition != null)
-                        {
-                            if (geolocator == null)
-                            {
-                                geolocator = new Geolocator()
-                                {
-                                    MovementThreshold = 1,
-                                    ReportInterval = 1,
-                                    DesiredAccuracyInMeters = 1
-                                };
-                                GeoLocate = geolocator;
-                            }
-                            else
-                            {
-                                Map.Center = UserLocation.Location;
-                                Map.ZoomLevel = 16;
-                            }
-                            // Subscribe to the StatusChanged event to get updates of location status changes.
-                            //geolocator.StatusChanged += Geolocator_StatusChanged;
-                            // Carry out the operation.
-                            GeoLocatorHelper.GetUserLocation();
-                            GeoLocatorHelper.LocationFetched += GeoLocatorHelper_LocationFetched;
-                            geolocator.PositionChanged += Geolocator_PositionChanged;
-
-                            var savedplaces = SavedPlacesVM.GetSavedPlaces();
-                            foreach (var item in savedplaces)
-                            {
-                                Map.MapElements.Add(new MapIcon()
-                                {
-                                    Location = new Geopoint(new BasicGeoposition() { Latitude = item.Latitude, Longitude = item.Longitude }),
-                                    Title = item.PlaceName
-                                });
-                            }
-                            await Task.Delay(150);
-                            //if (Map.Is3DSupported)
-                            //{
-                            //    Map.Style = MapStyle.Aerial3DWithRoads;
-                            //    MapScene mapScene = MapScene.CreateFromLocationAndRadius(snPoint, 500, 150, 70);
-                            //    await Map.TrySetSceneAsync(mapScene);
-                            //}
-                            //var r = await MapLocationFinder.FindLocationsAtAsync(snPoint);
-                            //if(r.Locations != null)
-                            //{
-                            //    var re = r.Locations.FirstOrDefault();
-                            //    var rg = RegionInfo.CurrentRegion;
-                            //    var rg2 = new RegionInfo(re.Address.Country);
-                            //}
-                        }
-                        else
-                        {
-                            LocationFlagVisibility = Visibility.Collapsed;
-                        }
-                    }
-                    else
-                    {
-                        LocationFlagVisibility = Visibility.Collapsed;
-                        var msg = new MessageDialog("We weren't able to access your location. Please check if your device location is on and you have accepted location access to the app in privacy settings.\nHit ok button to navigate location settings and cancel to continue.");
-                        msg.Commands.Add(new UICommand("OK", async delegate
-                        {
-                            await Launcher.LaunchUriAsync(new Uri("ms-settings:privacy-location", UriKind.RelativeOrAbsolute));
-                        }));
-                        msg.Commands.Add(new UICommand("Cancel", delegate { }));
-                        await msg.ShowAsync();
-                    }
-                }
-                catch { }
-            });
+            await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, LocateUser);
         }
 
         private async void GeoLocatorHelper_LocationFetched(object sender, Geoposition e)

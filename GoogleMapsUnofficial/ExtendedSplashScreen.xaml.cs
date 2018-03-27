@@ -75,18 +75,7 @@ namespace GoogleMapsUnofficial
 
         private async void DispatcherTime_Tick(object sender, object e)
         {
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, delegate
-            {
-                //try
-                //{
-                //    if (Geolocator.DefaultGeoposition.HasValue && Geolocator.IsDefaultGeopositionRecommended)
-                //    {
-                //        MapViewVM.FastLoadGeoPosition = new Geopoint(Geolocator.DefaultGeoposition.Value);
-                //    }
-                //}
-                //catch { }
-                RemoveExtendedSplash();
-            });
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, RemoveExtendedSplash);
         }
         public async void InstallVCD()
         {
@@ -109,53 +98,42 @@ namespace GoogleMapsUnofficial
                 }
             }
         }
+        async void LoadExtendedSplashScreen()
+        {
+            ApplyAcrylicAccent(Grid1);
+            InstallVCD();
+            try
+            {
+                var res = ApplicationData.Current.LocalSettings.Values["LastUserLocation"].ToString();
+                var latitude = res.Split(',')[0];
+                var longitude = res.Split(',')[1];
+                if (MapViewVM.UserLocation == null) MapViewVM.UserLocation = new ViewModel.ViewModel() { AttractionName = "My Location" };
+                MapViewVM.UserLocation.Location = new Geopoint(new BasicGeoposition() { Latitude = Convert.ToDouble(latitude), Longitude = Convert.ToDouble(longitude) });
+                MapViewVM.FastLoadGeoPosition = MapViewVM.UserLocation.Location;
+                RemoveExtendedSplash();
+                return;
+            }
+            catch { }
+            var geolocator = MapViewVM.GeoLocate;
+            var accessStatus = await Geolocator.RequestAccessAsync();
+
+            if (accessStatus == GeolocationAccessStatus.Allowed)
+            {
+                geolocator = new Geolocator
+                {
+                    MovementThreshold = 1,
+                    ReportInterval = 1,
+                    DesiredAccuracyInMeters = 1
+                };
+                MapViewVM.GeoLocate = geolocator;
+                GeoLocatorHelper.GetUserLocation();
+                GeoLocatorHelper.LocationFetched += GeoLocatorHelper_LocationFetched;
+            }
+            RemoveExtendedSplash();
+        }
         private async void ExtendedSplashScreen_Loaded(object sender, RoutedEventArgs e)
         {
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
-            {
-                ApplyAcrylicAccent(Grid1);
-                InstallVCD();
-                try
-                {
-                    var res = ApplicationData.Current.LocalSettings.Values["LastUserLocation"].ToString();
-                    var latitude = res.Split(',')[0];
-                    var longitude = res.Split(',')[1];
-                    if (MapViewVM.UserLocation == null) MapViewVM.UserLocation = new ViewModel.ViewModel() { AttractionName = "My Location" };
-                    MapViewVM.UserLocation.Location = new Geopoint(new BasicGeoposition() { Latitude = Convert.ToDouble(latitude), Longitude = Convert.ToDouble(longitude) });
-                    MapViewVM.FastLoadGeoPosition = MapViewVM.UserLocation.Location;
-                    RemoveExtendedSplash();
-                    return;
-                }
-                catch { }
-                //try
-                //{
-                //    var crashrep = ApplicationData.Current.LocalSettings.Values["CrashDump"].ToString();
-                //    var file = await KnownFolders.PicturesLibrary.CreateFileAsync("WinGoMapsCrash.txt", CreationCollisionOption.GenerateUniqueName);
-                //    await FileIO.WriteTextAsync(file, crashrep);
-                //    ApplicationData.Current.LocalSettings.Values["CrashDump"] = null;
-                //    await new MessageDialog("We detected a crash on your last session. It has been saved in" + file.Path).ShowAsync();
-                //}
-                //catch
-                //{
-
-                //}
-                var geolocator = MapViewVM.GeoLocate;
-                var accessStatus = await Geolocator.RequestAccessAsync();
-
-                if (accessStatus == GeolocationAccessStatus.Allowed)
-                {
-                    geolocator = new Geolocator
-                    {
-                        MovementThreshold = 1,
-                        ReportInterval = 1,
-                        DesiredAccuracyInMeters = 1
-                    };
-                    MapViewVM.GeoLocate = geolocator;
-                    GeoLocatorHelper.GetUserLocation();
-                    GeoLocatorHelper.LocationFetched += GeoLocatorHelper_LocationFetched;
-                }
-                RemoveExtendedSplash();
-            });
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, LoadExtendedSplashScreen);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

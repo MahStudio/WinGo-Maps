@@ -44,19 +44,19 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                     MainPage.RootFrame.Navigate(typeof(MapDownloaderView));
                     break;
                 case "Saved Locations":
-                    var FavPlaces = Gr.FindName("FavPlaces") as SavedPlacesUserControl;
-                    if (FavPlaces == null)
-                    {
-                        if (MapView.MapControl.FindName("OrDesSelector") as DraggablePin == null)
-                        {
-                            Gr.Children.Add(new SavedPlacesUserControl() { Name = "FavPlaces", Width = 180, VerticalAlignment = VerticalAlignment.Stretch, HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(0,0,0,80) });
-                        }
-                    }
-                    else
-                    {
-                        Gr.Children.Remove(FavPlaces);
-                    }
-                    break;
+                    //var FavPlaces = Gr.FindName("FavPlaces") as SavedPlacesUserControl;
+                    //if (FavPlaces == null)
+                    //{
+                    //    if (MapView.MapControl.FindName("OrDesSelector") as DraggablePin == null)
+                    //    {
+                    //        Gr.Children.Add(new SavedPlacesUserControl() { Name = "FavPlaces", Width = 180, VerticalAlignment = VerticalAlignment.Stretch, HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(0,0,0,80) });
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    Gr.Children.Remove(FavPlaces);
+                    //}
+                    //break;
                 case "Directions":
                     var dir = Gr.FindName("DirectionUC") as View.DirectionsControls.DirectionsMainUserControl;
                     if (dir == null)

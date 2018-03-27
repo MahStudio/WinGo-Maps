@@ -4,6 +4,7 @@ using GoogleMapsUnofficial.View.OnMapControls;
 using GoogleMapsUnofficial.View.SettingsView;
 using System;
 using System.Numerics;
+using Windows.ApplicationModel.Store;
 using Windows.Foundation.Metadata;
 using Windows.Graphics.Display;
 using Windows.System;
@@ -76,6 +77,8 @@ namespace GoogleMapsUnofficial
             applyAcrylicAccent(MainGrid);
             HMenuTopLst.Items.Add(new MenuClass { Text = "Map View", Icon = "", Tag = "Map View" });
             HMenuTopLst.Items.Add(new MenuClass { Text = "Offline Maps", Icon = "", Tag = "Offline Maps" });
+            if(CurrentAppSimulator.LicenseInformation.IsTrial)
+                HMenuBottomLst.Items.Add(new MenuClass { Text = "Buy from Iran", Icon = "", Tag = "Buy from Iran" });
             HMenuBottomLst.Items.Add(new MenuClass { Text = "Send feedback", Icon = "", Tag = "Send feedback" });
             HMenuBottomLst.Items.Add(new MenuClass { Text = "Settings", Icon = "", Tag = "Settings" });
             if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone)
@@ -123,6 +126,9 @@ namespace GoogleMapsUnofficial
         {
             switch ((e.ClickedItem as MenuClass).Tag)
             {
+                case "Buy from Iran":
+                    await Launcher.LaunchUriAsync(new Uri("http://winmap.winuser.ir/2018/03/20/%D8%B1%D9%88%D8%B4-%D8%AE%D8%B1%DB%8C%D8%AF-%D8%A8%D8%B1%D9%86%D8%A7%D9%85%D9%87-%D8%A8%D8%B1%D8%A7%DB%8C-%DA%A9%D8%A7%D8%B1%D8%A8%D8%B1%D8%A7%D9%86-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86%DB%8C/", UriKind.RelativeOrAbsolute));
+                    break;
                 case "Map View":
                     if (Fr.Content.GetType() != typeof(MapView))
                         MainPage.RootFrame.Navigate(typeof(MapView));

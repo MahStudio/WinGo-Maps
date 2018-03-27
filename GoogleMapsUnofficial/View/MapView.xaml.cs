@@ -7,9 +7,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Calls;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.ApplicationModel.Store;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
+using Windows.Services.Store;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
@@ -101,6 +103,37 @@ namespace GoogleMapsUnofficial.View
             //    DirectionsControl.Margin = new Thickness(28, 0, 28, 0);
             //    MyLocationControl.Margin = new Thickness(28, 28, 28, 28);
             //}
+        }
+        private async void ShowStreetsideView()
+        {
+            // Check if Streetside is supported.
+            if (Map.IsStreetsideSupported)
+            {
+                // Find a panorama near Avenue Gustave Eiffel.
+                BasicGeoposition cityPosition = new BasicGeoposition() { Latitude = 48.858, Longitude = 2.295 };
+                Geopoint cityCenter = new Geopoint(cityPosition);
+                StreetsidePanorama panoramaNearCity = await StreetsidePanorama.FindNearbyAsync(cityCenter);
+
+                // Set the Streetside view if a panorama exists.
+                if (panoramaNearCity != null)
+                {
+                    // Create the Streetside view.
+                    StreetsideExperience ssView = new StreetsideExperience(panoramaNearCity);
+                    ssView.OverviewMapVisible = true;
+                    Map.CustomExperience = ssView;
+                }
+            }
+            else
+            {
+                // If Streetside is not supported
+                ContentDialog viewNotSupportedDialog = new ContentDialog()
+                {
+                    Title = "Streetside is not supported",
+                    Content = "\nStreetside views are not supported on this device.",
+                    PrimaryButtonText = "OK"
+                };
+                await viewNotSupportedDialog.ShowAsync();
+            }
         }
         Geopoint GeopointFromPoint(Point point)
         {
@@ -278,7 +311,7 @@ namespace GoogleMapsUnofficial.View
                             {
                                 var loc = res.results.FirstOrDefault().geometry.location;
                                 //var rgc = await ReverseGeoCode.GetLocation(Where);
-                                Map.Center = new Geopoint(new BasicGeoposition() {Latitude = loc.lat, Longitude = loc.lng });
+                                Map.Center = new Geopoint(new BasicGeoposition() { Latitude = loc.lat, Longitude = loc.lng });
                             }
                             else
                             {
@@ -328,104 +361,93 @@ namespace GoogleMapsUnofficial.View
             var res = TileCoordinate.ReverseGeoPoint(args.X, args.Y, args.ZoomLevel);
             args.Request.Uri = new Uri($"https://maps.googleapis.com/maps/api/staticmap?center={res.Latitude},{res.Longitude}&zoom={args.ZoomLevel}&maptype=traffic&size=256x256&key={AppCore.GoogleMapAPIKey}", UriKind.RelativeOrAbsolute);
         }
-
-        private async void RunMapRightTapped(MapControl sender, Geopoint Location)
+        async void RightTapFunction()
         {
-            InfoPane.IsPaneOpen = true;
-            LastRightTap = Location;
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
+            var t = (await SearchHelper.NearbySearch(LastRightTap.Position, 5));
+            if (t != null)
             {
-                var t = (await SearchHelper.NearbySearch(Location.Position, 5));
-                if (t != null)
+                var pic = t.results.Where(x => LastRightTap.DistanceTo(new Geopoint(new BasicGeoposition() { Latitude = x.geometry.location.lat, Longitude = x.geometry.location.lng })) < 1)
+                    .OrderBy(x => LastRightTap.DistanceTo(new Geopoint(new BasicGeoposition() { Latitude = x.geometry.location.lat, Longitude = x.geometry.location.lng }))).FirstOrDefault();
+                //var pic = t.results.Where(x => x.photos != null).LastOrDefault();
+                if (pic != null)
                 {
-                    var pic = t.results.Where(x => LastRightTap.DistanceTo(new Geopoint(new BasicGeoposition() { Latitude = x.geometry.location.lat, Longitude = x.geometry.location.lng })) < 1)
-                        .OrderBy(x => LastRightTap.DistanceTo(new Geopoint(new BasicGeoposition() { Latitude = x.geometry.location.lat, Longitude = x.geometry.location.lng }))).FirstOrDefault();
-                    //var pic = t.results.Where(x => x.photos != null).LastOrDefault();
-                    if (pic != null)
+                    LastPlaceID = pic.place_id;
+                    if (pic.photos != null)
                     {
-                        LastPlaceID = pic.place_id;
-                        if (pic.photos != null)
+                        PlaceImage.Source = new BitmapImage()
                         {
-                            PlaceImage.Source = new BitmapImage()
-                            {
-                                UriSource = ViewModel.PhotoControls.PhotosHelper.GetPhotoUri(pic.photos.FirstOrDefault().photo_reference, 350, 350)
-                            };
+                            UriSource = ViewModel.PhotoControls.PhotosHelper.GetPhotoUri(pic.photos.FirstOrDefault().photo_reference, 350, 350)
+                        };
+                    }
+                    var det = await PlaceDetailsHelper.GetPlaceDetails(pic.place_id);
+                    if (det != null)
+                    {
+                        PlaceAddress.Text = det.result.formatted_address;
+                        PlaceName.Text = det.result.name;
+                        if (det.result.formatted_phone_number != null)
+                        {
+                            PlacePhone.Text = det.result.formatted_phone_number;
+                            PlacePhoneItem.IsEnabled = true;
                         }
-                        var det = await PlaceDetailsHelper.GetPlaceDetails(pic.place_id);
-                        if (det != null)
+                        if (det.result.website != null)
                         {
-                            PlaceAddress.Text = det.result.formatted_address;
-                            PlaceName.Text = det.result.name;
-                            if (det.result.formatted_phone_number != null)
-                            {
-                                PlacePhone.Text = det.result.formatted_phone_number;
-                                PlacePhoneItem.IsEnabled = true;
-                            }
-                            if (det.result.website != null)
-                            {
-                                PlaceWebSite.Text = det.result.website;
-                                PlaceWebSiteItem.IsEnabled = true;
-                            }
-                            if (det.result.opening_hours != null)
-                            {
-                                var hours = det.result.opening_hours.weekday_text;
-                                string MyStr = "Is open : " + det.result.opening_hours.open_now;
-                                if (hours != null)
-                                    foreach (var item in hours)
-                                    {
-                                        MyStr += Environment.NewLine + item;
-                                    }
-                                PlaceOpenNow.Text = MyStr;
-                                PlaceOpenNowItem.IsEnabled = true;
-                            }
-                            PlaceRate.Text = det.result.rating.ToString();
-                            PlaceRateItem.IsEnabled = true;
-                            if (det.result.reviews != null)
-                            {
-                                PlaceReviewsItem.ItemsSource = det.result.reviews;
-                                PlaceReviewsItem.IsEnabled = true;
-                            }
+                            PlaceWebSite.Text = det.result.website;
+                            PlaceWebSiteItem.IsEnabled = true;
                         }
-                        else
+                        if (det.result.opening_hours != null)
                         {
-                            PlaceName.Text = pic.name;
-                            PlaceAddress.Text = pic.vicinity;
+                            var hours = det.result.opening_hours.weekday_text;
+                            string MyStr = "Is open : " + det.result.opening_hours.open_now;
+                            if (hours != null)
+                                foreach (var item in hours)
+                                {
+                                    MyStr += Environment.NewLine + item;
+                                }
+                            PlaceOpenNow.Text = MyStr;
+                            PlaceOpenNowItem.IsEnabled = true;
+                        }
+                        PlaceRate.Text = det.result.rating.ToString();
+                        PlaceRateItem.IsEnabled = true;
+                        if (det.result.reviews != null)
+                        {
+                            PlaceReviewsItem.ItemsSource = det.result.reviews;
+                            PlaceReviewsItem.IsEnabled = true;
                         }
                     }
-                    //else
-                    //{
-                    //    var res = (await GeocodeHelper.GetInfo(Location)).results.FirstOrDefault();
-                    //    if (res != null)
-                    //    {
-                    //        PlaceName.Text = res.address_components.FirstOrDefault().short_name;
-                    //        PlaceAddress.Text = res.formatted_address;
-                    //    }
-                    //    else
-                    //    {
-                    //        await new MessageDialog("We didn't find anything here. Maybe an internet connection issue.").ShowAsync();
-                    //        InfoPane.IsPaneOpen = false;
-                    //    }
-                    //}
-                }
-                else
-                {
-                    await new MessageDialog("We didn't find anything here. Maybe an internet connection issue.").ShowAsync();
-                    InfoPane.IsPaneOpen = false;
-                    return;
-                    var r1 = (await GeocodeHelper.GetInfo(Location));
-                    if (r1 != null)
+                    else
                     {
-                        var res = r1.results.FirstOrDefault();
-                        if (res != null)
-                        {
-                            PlaceName.Text = res.address_components.FirstOrDefault().short_name;
-                            PlaceAddress.Text = res.formatted_address;
-                        }
-                        else
-                        {
-                            await new MessageDialog("We didn't find anything here. Maybe an internet connection issue.").ShowAsync();
-                            InfoPane.IsPaneOpen = false;
-                        }
+                        PlaceName.Text = pic.name;
+                        PlaceAddress.Text = pic.vicinity;
+                    }
+                }
+                //else
+                //{
+                //    var res = (await GeocodeHelper.GetInfo(Location)).results.FirstOrDefault();
+                //    if (res != null)
+                //    {
+                //        PlaceName.Text = res.address_components.FirstOrDefault().short_name;
+                //        PlaceAddress.Text = res.formatted_address;
+                //    }
+                //    else
+                //    {
+                //        await new MessageDialog("We didn't find anything here. Maybe an internet connection issue.").ShowAsync();
+                //        InfoPane.IsPaneOpen = false;
+                //    }
+                //}
+            }
+            else
+            {
+                await new MessageDialog("We didn't find anything here. Maybe an internet connection issue.").ShowAsync();
+                InfoPane.IsPaneOpen = false;
+                return;
+                var r1 = (await GeocodeHelper.GetInfo(LastRightTap));
+                if (r1 != null)
+                {
+                    var res = r1.results.FirstOrDefault();
+                    if (res != null)
+                    {
+                        PlaceName.Text = res.address_components.FirstOrDefault().short_name;
+                        PlaceAddress.Text = res.formatted_address;
                     }
                     else
                     {
@@ -433,7 +455,18 @@ namespace GoogleMapsUnofficial.View
                         InfoPane.IsPaneOpen = false;
                     }
                 }
-            });
+                else
+                {
+                    await new MessageDialog("We didn't find anything here. Maybe an internet connection issue.").ShowAsync();
+                    InfoPane.IsPaneOpen = false;
+                }
+            }
+        }
+        private async void RunMapRightTapped(MapControl sender, Geopoint Location)
+        {
+            InfoPane.IsPaneOpen = true;
+            LastRightTap = Location;
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, RightTapFunction);
         }
 
         private void Map_MapRightTapped(MapControl sender, MapRightTappedEventArgs args)

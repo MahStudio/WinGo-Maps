@@ -135,23 +135,11 @@
     <Compile Include="View\BookmarkAdd.xaml.cs">
       <DependentUpon>BookmarkAdd.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\DirectionsControls\DirectionsMainUserControl.xaml.cs">
-      <DependentUpon>DirectionsMainUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\DirectionsControls\DrivingUC.xaml.cs">
-      <DependentUpon>DrivingUC.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\DirectionsControls\NewDirections.xaml.cs">
       <DependentUpon>NewDirections.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\DirectionsControls\StepsTitleProvider.xaml.cs">
       <DependentUpon>StepsTitleProvider.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\DirectionsControls\TransitUC.xaml.cs">
-      <DependentUpon>TransitUC.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\DirectionsControls\WalkingUC.xaml.cs">
-      <DependentUpon>WalkingUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\GeocodControls\GeocodeHelper.cs" />
     <Compile Include="View\MapView.xaml.cs">
@@ -163,17 +151,8 @@
     <Compile Include="View\OnMapControls\ChangeViewUserControl.xaml.cs">
       <DependentUpon>ChangeViewUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\OnMapControls\DraggablePin.xaml.cs">
-      <DependentUpon>DraggablePin.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\OnMapControls\MenuUserControl.xaml.cs">
-      <DependentUpon>MenuUserControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\OnMapControls\MyLocationUserControl.xaml.cs">
       <DependentUpon>MyLocationUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\OnMapControls\SavedPlacesUserControl.xaml.cs">
-      <DependentUpon>SavedPlacesUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\OnMapControls\SearchOptionsUserControl.xaml.cs">
       <DependentUpon>SearchOptionsUserControl.xaml</DependentUpon>
@@ -360,27 +339,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\DirectionsControls\DirectionsMainUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\DirectionsControls\DrivingUC.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\DirectionsControls\NewDirections.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DirectionsControls\StepsTitleProvider.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\DirectionsControls\TransitUC.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\DirectionsControls\WalkingUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -396,19 +359,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\OnMapControls\DraggablePin.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\OnMapControls\MenuUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\OnMapControls\MyLocationUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\OnMapControls\SavedPlacesUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
