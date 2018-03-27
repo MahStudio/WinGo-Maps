@@ -96,17 +96,9 @@ namespace GoogleMapsUnofficial
             }
             catch (Exception)
             {
-                try
-                {
-                    var vcdStorageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///VoiceCommands.xml", UriKind.RelativeOrAbsolute));
-                    await Windows.ApplicationModel.VoiceCommands.VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(vcdStorageFile);
-                    ApplicationData.Current.LocalSettings.Values["VCDV10"] = "";
-                }
-                catch (Exception ex)
-                {
-                    ApplicationData.Current.LocalSettings.Values["VCDV10"] = null;
-                    //await new MessageDialog("Error in installing Cortana VCD file!" + ex.Message).ShowAsync();
-                }
+                var vcdStorageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///VoiceCommands.xml", UriKind.RelativeOrAbsolute));
+                await Windows.ApplicationModel.VoiceCommands.VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(vcdStorageFile);
+                ApplicationData.Current.LocalSettings.Values["VCDV10"] = "";
             }
         }
         private async void ExtendedSplashScreen_Loaded(object sender, RoutedEventArgs e)
