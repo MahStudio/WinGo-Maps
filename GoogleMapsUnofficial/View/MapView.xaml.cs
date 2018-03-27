@@ -328,6 +328,7 @@ namespace GoogleMapsUnofficial.View
                     }
                 }
             }
+
             if (ApiInformation.IsTypePresent("Windows.UI.Xaml.Media.AcrylicBrush"))
             {
                 var ac = new Windows.UI.Xaml.Media.AcrylicBrush();
@@ -337,6 +338,8 @@ namespace GoogleMapsUnofficial.View
                 ac.BackgroundSource = Windows.UI.Xaml.Media.AcrylicBackgroundSource.HostBackdrop;
                 InfoPane.PaneBackground = ac;
             }
+
+            MapViewVM.LoadPage();
         }
 
         private void Hm_UriRequested(HttpMapTileDataSource sender, MapTileUriRequestedEventArgs args)
@@ -349,9 +352,9 @@ namespace GoogleMapsUnofficial.View
         {
             InfoPane.IsPaneOpen = true;
             LastRightTap = Location;
-            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
             {
-                var t = (await ViewModel.PlaceControls.SearchHelper.NearbySearch(Location.Position, 5));
+                var t = (await SearchHelper.NearbySearch(Location.Position, 5));
                 if (t != null)
                 {
                     var pic = t.results.Where(x => LastRightTap.DistanceTo(new Geopoint(new BasicGeoposition() { Latitude = x.geometry.location.lat, Longitude = x.geometry.location.lng })) < 1)
@@ -367,7 +370,7 @@ namespace GoogleMapsUnofficial.View
                                 UriSource = ViewModel.PhotoControls.PhotosHelper.GetPhotoUri(pic.photos.FirstOrDefault().photo_reference, 350, 350)
                             };
                         }
-                        var det = await ViewModel.PlaceControls.PlaceDetailsHelper.GetPlaceDetails(pic.place_id);
+                        var det = await PlaceDetailsHelper.GetPlaceDetails(pic.place_id);
                         if (det != null)
                         {
                             PlaceAddress.Text = det.result.formatted_address;

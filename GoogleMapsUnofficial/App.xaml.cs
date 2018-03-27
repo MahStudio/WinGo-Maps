@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoogleMapsUnofficial.ViewModel;
+using System;
 using System.Linq;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -192,6 +193,22 @@ namespace GoogleMapsUnofficial
             // Register an event handler to be executed when the splash screen has been dismissed.
             Window.Current.Content = eSplash;
             Window.Current.Activate();
+            App.Current.Suspending += Current_Suspending;
+            CoreApplication.Exiting += CoreApplication_Exiting;
+        }
+
+        private void CoreApplication_Exiting(object sender, object e)
+        {
+            var userloc = MapViewVM.UserLocation.Location.Position;
+            ApplicationData.Current.LocalSettings.Values["LastUserLocation"] = userloc.Latitude + "," + userloc.Longitude;
+        }
+
+        private void Current_Suspending(object sender, SuspendingEventArgs e)
+        {
+            var def = e.SuspendingOperation.GetDeferral();
+            var userloc = MapViewVM.UserLocation.Location.Position;
+            ApplicationData.Current.LocalSettings.Values["LastUserLocation"] = userloc.Latitude + "," + userloc.Longitude;
+            def.Complete();
         }
 
         protected override void OnActivated(IActivatedEventArgs e)
@@ -282,9 +299,6 @@ namespace GoogleMapsUnofficial
             Window.Current.Content = eSplash;
             Window.Current.Activate();
         }
-
-       
-
         
         /// <summary>
         /// Invoked when Navigation to a certain page fails

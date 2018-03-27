@@ -86,16 +86,16 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
                             View.DirectionsControls.StepsTitleProvider.Provider.CurrentStep = item;
                         }
                     }
-                    var SD = cp.Point.DistanceFromRoute(CurrentStep);
-                    if (SD >= 0.06)
-                    {
-                        IsRecalculating = true;
-                        await ReadText("Recalculating route");
-                        MapView.StaticDirections.Origin = cp.Point;
-                         MapView.StaticDirections.DirectionFinder();
-                        IsRecalculating = false;
-                        return;
-                    }
+                    //var SD = cp.Point.DistanceFromRoute(CurrentStep);
+                    //if (SD >= 0.25)
+                    //{
+                    //    IsRecalculating = true;
+                    //    await ReadText("Recalculating route");
+                    //    MapView.StaticDirections.Origin = cp.Point;
+                    //    await MapView.StaticDirections.DirectionFinderAsync();
+                    //    IsRecalculating = false;
+                    //    return;
+                    //}
                     var d = DistanceTo(cp.Point.Position.Latitude, cp.Point.Position.Longitude, item.end_location.lat, item.end_location.lng);
                     if (d <= 0.4)
                     {

@@ -55,9 +55,15 @@ class GeoLocatorHelper
 
     private static void LocationGetComplete(IAsyncOperation<Geoposition> asyncInfo, AsyncStatus asyncStatus)
     {
-        var res = asyncInfo.GetResults();
-        IsLocationBusy = false;
-        LocationFetched(null, res);
+        try
+        {
+            var res = asyncInfo.GetResults();
+            IsLocationBusy = false;
+            LocationFetched(null, res);
+        }
+        catch
+        {
+        }
     }
 
 }

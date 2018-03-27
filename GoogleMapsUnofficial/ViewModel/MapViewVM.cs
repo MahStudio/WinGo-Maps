@@ -60,24 +60,25 @@ namespace GoogleMapsUnofficial.ViewModel
             CoreWindow = CoreWindow.GetForCurrentThread();
             LocationFlagVisibility = Visibility.Visible;
             StepsTitleProviderVisibility = Visibility.Collapsed;
-            UserLocation = new ViewModel() { AttractionName = "My Location" };
-            LoadPage();
+            if (UserLocation == null)
+                UserLocation = new ViewModel() { AttractionName = "My Location" };
             StaticVM = this;
+            //LoadPage();
         }
-        
+
         ~MapViewVM()
         {
             geolocator.PositionChanged -= Geolocator_PositionChanged;
             geolocator = null;
         }
-        async void LoadPage()
+        public async void LoadPage()
         {
-            geolocator = GeoLocate;
-
             Compass = Compass.GetDefault();
-            if(Compass != null)
+            if (Compass != null)
                 Compass.ReadingChanged += Compass_ReadingChanged;
             ActiveNavigationMode = false;
+            geolocator = GeoLocate;
+            Map = View.MapView.MapControl;
             await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
             {
                 try
@@ -87,19 +88,28 @@ namespace GoogleMapsUnofficial.ViewModel
                     {
                         if (FastLoadGeoPosition != null)
                         {
+                            if (geolocator == null)
+                            {
+                                geolocator = new Geolocator()
+                                {
+                                    MovementThreshold = 1,
+                                    ReportInterval = 1,
+                                    DesiredAccuracyInMeters = 1
+                                };
+                                GeoLocate = geolocator;
+                            }
+                            else
+                            {
+                                Map.Center = UserLocation.Location;
+                                Map.ZoomLevel = 16;
+                            }
                             // Subscribe to the StatusChanged event to get updates of location status changes.
                             //geolocator.StatusChanged += Geolocator_StatusChanged;
-                            geolocator.PositionChanged += Geolocator_PositionChanged;
                             // Carry out the operation.
-                            var pos1 = await geolocator.GetGeopositionAsync();
-                            var pos = pos1.Coordinate.Point;
+                            GeoLocatorHelper.GetUserLocation();
+                            GeoLocatorHelper.LocationFetched += GeoLocatorHelper_LocationFetched;
+                            geolocator.PositionChanged += Geolocator_PositionChanged;
 
-                            Geopoint snPoint = new Geopoint(new BasicGeoposition { Latitude = pos.Position.Latitude, Longitude = pos.Position.Longitude });
-                            await Task.Delay(10);
-                            Map = View.MapView.MapControl;
-                            //Map.MapElements.Add(UserLoction);
-                            Map.Center = snPoint;
-                            Map.ZoomLevel = 16;
                             var savedplaces = SavedPlacesVM.GetSavedPlaces();
                             foreach (var item in savedplaces)
                             {
@@ -110,7 +120,6 @@ namespace GoogleMapsUnofficial.ViewModel
                                 });
                             }
                             await Task.Delay(150);
-                            UserLocation.Location = pos;
                             //if (Map.Is3DSupported)
                             //{
                             //    Map.Style = MapStyle.Aerial3DWithRoads;
@@ -132,7 +141,7 @@ namespace GoogleMapsUnofficial.ViewModel
                     }
                     else
                     {
-                        LocationFlagVisibility = Visibility.Collapsed ;
+                        LocationFlagVisibility = Visibility.Collapsed;
                         var msg = new MessageDialog("We weren't able to access your location. Please check if your device location is on and you have accepted location access to the app in privacy settings.\nHit ok button to navigate location settings and cancel to continue.");
                         msg.Commands.Add(new UICommand("OK", async delegate
                         {
@@ -143,6 +152,20 @@ namespace GoogleMapsUnofficial.ViewModel
                     }
                 }
                 catch { }
+            });
+        }
+
+        private async void GeoLocatorHelper_LocationFetched(object sender, Geoposition e)
+        {
+            await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
+            {
+                var pos = e.Coordinate.Point;
+                Geopoint snPoint = new Geopoint(new BasicGeoposition { Latitude = pos.Position.Latitude, Longitude = pos.Position.Longitude });
+                await Task.Delay(10);
+                //Map.MapElements.Add(UserLoction);
+                Map.Center = snPoint;
+                Map.ZoomLevel = 16;
+                UserLocation.Location = pos;
             });
         }
 
@@ -159,7 +182,7 @@ namespace GoogleMapsUnofficial.ViewModel
                 catch { }
             });
         }
-        
+
         private async void Geolocator_PositionChanged(Geolocator sender, PositionChangedEventArgs args)
         {
             try

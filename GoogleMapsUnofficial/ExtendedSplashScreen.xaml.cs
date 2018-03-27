@@ -96,9 +96,17 @@ namespace GoogleMapsUnofficial
             }
             catch (Exception)
             {
-                var vcdStorageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///VoiceCommands.xml", UriKind.RelativeOrAbsolute));
-                await Windows.ApplicationModel.VoiceCommands.VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(vcdStorageFile);
-                ApplicationData.Current.LocalSettings.Values["VCDV10"] = "";
+                try
+                {
+                    var vcdStorageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///VoiceCommands.xml", UriKind.RelativeOrAbsolute));
+                    await Windows.ApplicationModel.VoiceCommands.VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(vcdStorageFile);
+                    ApplicationData.Current.LocalSettings.Values["VCDV10"] = "";
+                }
+                catch (Exception ex)
+                {
+                    ApplicationData.Current.LocalSettings.Values["VCDV10"] = null;
+                    //await new MessageDialog("Error in installing Cortana VCD file!" + ex.Message).ShowAsync();
+                }
             }
         }
         private async void ExtendedSplashScreen_Loaded(object sender, RoutedEventArgs e)
@@ -109,16 +117,28 @@ namespace GoogleMapsUnofficial
                 InstallVCD();
                 try
                 {
-                    var crashrep = ApplicationData.Current.LocalSettings.Values["CrashDump"].ToString();
-                    var file = await KnownFolders.PicturesLibrary.CreateFileAsync("WinGoMapsCrash.txt", CreationCollisionOption.GenerateUniqueName);
-                    await FileIO.WriteTextAsync(file, crashrep);
-                    ApplicationData.Current.LocalSettings.Values["CrashDump"] = null;
-                    await new MessageDialog("We detected a crash on your last session. It has been saved in" + file.Path).ShowAsync();
+                    var res = ApplicationData.Current.LocalSettings.Values["LastUserLocation"].ToString();
+                    var latitude = res.Split(',')[0];
+                    var longitude = res.Split(',')[1];
+                    if (MapViewVM.UserLocation == null) MapViewVM.UserLocation = new ViewModel.ViewModel() { AttractionName = "My Location" };
+                    MapViewVM.UserLocation.Location = new Geopoint(new BasicGeoposition() { Latitude = Convert.ToDouble(latitude), Longitude = Convert.ToDouble(longitude) });
+                    MapViewVM.FastLoadGeoPosition = MapViewVM.UserLocation.Location;
+                    RemoveExtendedSplash();
+                    return;
                 }
-                catch
-                {
+                catch { }
+                //try
+                //{
+                //    var crashrep = ApplicationData.Current.LocalSettings.Values["CrashDump"].ToString();
+                //    var file = await KnownFolders.PicturesLibrary.CreateFileAsync("WinGoMapsCrash.txt", CreationCollisionOption.GenerateUniqueName);
+                //    await FileIO.WriteTextAsync(file, crashrep);
+                //    ApplicationData.Current.LocalSettings.Values["CrashDump"] = null;
+                //    await new MessageDialog("We detected a crash on your last session. It has been saved in" + file.Path).ShowAsync();
+                //}
+                //catch
+                //{
 
-                }
+                //}
                 var geolocator = MapViewVM.GeoLocate;
                 var accessStatus = await Geolocator.RequestAccessAsync();
 
