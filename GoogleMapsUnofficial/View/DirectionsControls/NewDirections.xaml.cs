@@ -79,23 +79,23 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
             DirectionFinder();
         }
 
-        public async void DirectionFinder()
-        {
-            await VoiceHelper.ReadText("calculating route");
-            MapPolyline CurrentDrawed = null;
-            try
-            {
-                foreach (var item in MapView.MapControl.MapElements)
-                {
-                    if (item.GetType() == typeof(MapPolyline))
-                        CurrentDrawed = (MapPolyline)item;
-                }
-            }
-            catch (Exception ex)
-            {
+        //public async void DirectionFinder()
+        //{
+        //    await VoiceHelper.ReadText("calculating route");
+        //    MapPolyline CurrentDrawed = null;
+        //    try
+        //    {
+        //        foreach (var item in MapView.MapControl.MapElements)
+        //        {
+        //            if (item.GetType() == typeof(MapPolyline))
+        //                CurrentDrawed = (MapPolyline)item;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-            }
-        }
+        //    }
+        //}
 
         public async void DirectionFinder()
         {
