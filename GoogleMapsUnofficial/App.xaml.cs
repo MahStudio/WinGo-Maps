@@ -18,6 +18,7 @@ using System.Reflection;
 using GoogleMapsUnofficial.Data;
 using GoogleMapsUnofficial.Common;
 using GoogleMapsUnofficial.View.SettingsView;
+using GoogleMapsUnofficial.View;
 
 namespace GoogleMapsUnofficial
 {
@@ -26,40 +27,68 @@ namespace GoogleMapsUnofficial
     /// </summary>
     sealed partial class App : Application
     {
-
-
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
-        public string SelectedTheme
+        public static ElementTheme ActualTheme
         {
-            get { return SettingsSetters.SelectedAppThemeKey; }
-            set
+            get
             {
-                //_selectedTheme = value;
-                //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SelectedTheme"));
-                //SettingsSetters.SetSelectedTheme();
-                string savedTheme = ApplicationData.Current.LocalSettings.Values[SettingsSetters.SelectedAppThemeKey]?.ToString();
-
-                if (savedTheme != null)
+                if (Window.Current.Content is FrameworkElement rootElement)
                 {
-                    SettingsSetters.RootTheme = SettingsSetters.GetEnum<ElementTheme>(savedTheme);
+                    if (rootElement.RequestedTheme != ElementTheme.Default)
+                    {
+                        return rootElement.RequestedTheme;
+                    }
                 }
 
+                return GetEnum<ElementTheme>(Current.RequestedTheme.ToString());
             }
         }
+
+        /// <summary>
+        /// Gets or sets (with LocalSettings persistence) the RequestedTheme of the root element.
+        /// </summary>
+       
         public App()
         {
-            SelectedTheme = SettingsSetters.SelectedAppThemeKey;
-            
+
+            //this.RequestedTheme = ApplicationTheme.Dark;
+            InitializeTheme();
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             this.UnhandledException += App_UnhandledException;
 
         }
 
-        
+        //private void SaveTheme()
+        //{
+        //    var value = SettingsSetters.GetLocalSetting<string>("SelectedTheme", null);
+        //    if (value != null)
+        //    {
+        //        SettingsSetters.SaveLocalSetting("SelectedTheme", value);                
+        //    }
+        //}
+        private void InitializeTheme()
+        {
+            var value = SettingsSetters.GetLocalSetting<string>("SelectedTheme", null);
+            if (value != null)
+            {
+                var theme = Enum.Parse(typeof(ApplicationTheme), value);
+                RequestedTheme =(ApplicationTheme) theme;
+            }
+        }
+
+        public static TEnum GetEnum<TEnum>(string text) where TEnum : struct
+        {
+            if (!typeof(TEnum).GetTypeInfo().IsEnum)
+            {
+                throw new InvalidOperationException("Generic parameter 'TEnum' must be an enum.");
+            }
+            return (TEnum)Enum.Parse(typeof(TEnum), text);
+        }
+
         private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var d = DateTime.Now;
@@ -102,29 +131,8 @@ namespace GoogleMapsUnofficial
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override async void OnLaunched(LaunchActivatedEventArgs e)
+        protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            //if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-            //{
-            //    try
-            //    {
-            //        await SuspensionManager.RestoreAsync();
-            //    }
-            //    catch (SuspensionManagerException)
-            //    {
-            //        //Something went wrong restoring state.
-            //        //Assume there is no state and continue
-            //    }
-            //}
-            
-
-            
-            string savedTheme = ApplicationData.Current.LocalSettings.Values[SettingsSetters.SelectedAppThemeKey]?.ToString();
-
-            if (savedTheme != null)
-            {
-                SettingsSetters.RootTheme = SettingsSetters.GetEnum<ElementTheme>(savedTheme);
-            }
             if (e != null)
             {
                 if (e.PreviousExecutionState == ApplicationExecutionState.Running)
@@ -136,7 +144,7 @@ namespace GoogleMapsUnofficial
                 {
                     try
                     {
-                        await SuspensionManager.RestoreAsync();
+                        //await SuspensionManager.RestoreAsync();
                     }
                     catch (SuspensionManagerException)
                     {
@@ -188,13 +196,6 @@ namespace GoogleMapsUnofficial
 
         protected override void OnActivated(IActivatedEventArgs e)
         {
-
-            string savedTheme = ApplicationData.Current.LocalSettings.Values[SettingsSetters.SelectedAppThemeKey]?.ToString();
-
-            if (savedTheme != null)
-            {
-                SettingsSetters.RootTheme = SettingsSetters.GetEnum<ElementTheme>(savedTheme);
-            }
             base.OnActivated(e);
             #region Start app
 
@@ -282,6 +283,8 @@ namespace GoogleMapsUnofficial
             Window.Current.Activate();
         }
 
+       
+
         
         /// <summary>
         /// Invoked when Navigation to a certain page fails
@@ -303,6 +306,7 @@ namespace GoogleMapsUnofficial
         private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
+            //SaveTheme();
             //TODO: Save application state and stop any background activity
             await SuspensionManager.SaveAsync();
             deferral.Complete();

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -16,6 +17,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.Web.Http;
 
+
 namespace GoogleMapsUnofficial.ViewModel.SettingsView
 {
     class SettingsMainVM : INotifyPropertyChanged
@@ -26,7 +28,7 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
         private bool _fadeanimationEnabled;
         private bool _allowOverstretch;
         private bool _livetileenable;
-        private string _selectedTheme = "Default";
+        private bool _IsThemeDark;
         public event PropertyChangedEventHandler PropertyChanged;
         
               
@@ -40,7 +42,73 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("LiveTileEnable"));
             }
         }
-        
+        protected bool Set<T>(ref T oldValue, T newValue, [CallerMemberName] String propertyName = null)
+        {
+            return Set(propertyName, ref oldValue, newValue);
+        }
+
+        /// <summary>Updates the property and raises the changed event, but only if the new value does not equal the old value. </summary>
+        /// <param name="propertyName">The property name as lambda. </param>
+        /// <param name="oldValue">A reference to the backing field of the property. </param>
+        /// <param name="newValue">The new value. </param>
+        /// <returns>True if the property has changed. </returns>
+        protected virtual bool Set<T>(String propertyName, ref T oldValue, T newValue)
+        {
+            if (Equals(oldValue, newValue))
+            {
+                return false;
+            }
+
+            oldValue = newValue;
+            RaisePropertyChanged(new PropertyChangedEventArgs(propertyName));
+            return true;
+        }
+
+        /// <summary>Raises the property changed event. </summary>
+        /// <param name="propertyName">The property name. </param>
+        protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            RaisePropertyChanged(new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>Raises the property changed event. </summary>
+        /// <param name="args">The arguments. </param>
+        protected async virtual void RaisePropertyChanged(PropertyChangedEventArgs args)
+        {
+            if (InitializeSwitch.Dispatcher != null)
+            {
+                await InitializeSwitch.Dispatcher?.RunAsync(() => { PropertyChanged?.Invoke(this, args); });
+            }
+            else
+            {
+                PropertyChanged?.Invoke(this, args);
+            }
+        }
+
+        /// <summary>Raises the property changed event for all properties (string.Empty). </summary>
+        protected void RaiseAllPropertiesChanged()
+        {
+            RaisePropertyChanged(new PropertyChangedEventArgs(string.Empty));
+        }
+
+        public bool IsThemeDark
+        {
+
+            get => _IsThemeDark;
+            set
+            {
+                Set(ref _IsThemeDark, value);
+                SettingsSetters.SaveLocalSetting("SelectedTheme", _IsThemeDark ? "Light" : "Dark");
+                // SharedLogic.InitializeTheme();
+            }
+            //get { return _IsThemeDark; }
+            //set
+            //{
+            //    _IsThemeDark = value;
+            //    SettingsSetters.SetTheme(value);
+            //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsThemeDark"));
+            //}
+        }
         public bool AllowOverstretch
         {
             get { return _allowOverstretch; }
@@ -87,24 +155,8 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("RotationControlsVisible"));
             }
         }
-
-        public string SelectedTheme
-        {
-            get { return SettingsSetters.SelectedAppThemeKey; }
-            set
-            {
-                //_selectedTheme = value;
-                //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SelectedTheme"));
-                //SettingsSetters.SetSelectedTheme();
-                string savedTheme = ApplicationData.Current.LocalSettings.Values[SettingsSetters.SelectedAppThemeKey]?.ToString();
-
-                if (savedTheme != null)
-                {
-                    SettingsSetters.RootTheme = SettingsSetters.GetEnum<ElementTheme>(savedTheme);
-                }
-                
-            }
-        }
+        
+        
         public int LengthUnit
         {
             get { return _lengthUnitindex; }
@@ -115,7 +167,6 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
                 SettingsSetters.SetLengthUnit(value);
             }
         }
-
 
         public List<string> MapInteractionModeOptions
         {
@@ -136,12 +187,13 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
         }
         public SettingsMainVM()
         {
+            _IsThemeDark = SettingsSetters.GetLocalSetting<string>("SelectedTheme", null) == "Light" ? true : false;
+            //IsThemeDark = SettingsSetters.GetTheme();
             AllowOverstretch = SettingsSetters.GetAllowOverstretch();
             FadeAnimationEnabled = SettingsSetters.GetFadeAnimationEnabled();
             ZoomControlsVisible = EnumToIndexConverter(SettingsSetters.GetZoomControlsVisible());
             RotationControlsVisible = EnumToIndexConverter(SettingsSetters.GetRotationControlsVisible());
             LengthUnit = SettingsSetters.GetLengthUnit();
-            SelectedTheme = SettingsSetters.SelectedAppThemeKey;
             BackgroundHandler();
         }
 
@@ -192,35 +244,8 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
             //}
         }
     }
-
     class SettingsSetters
     {
-
-        public const string SelectedAppThemeKey = "SelectedAppTheme";
-
-        public static TEnum GetEnum<TEnum>(string text) where TEnum : struct
-        {
-            if (!typeof(TEnum).GetTypeInfo().IsEnum)
-            {
-                throw new InvalidOperationException("Generic parameter 'TEnum' must be an enum.");
-            }
-            return (TEnum)Enum.Parse(typeof(TEnum), text);
-        }
-        public static ElementTheme ActualTheme
-        {
-            get
-            {
-                if (Window.Current.Content is FrameworkElement rootElement)
-                {
-                    if (rootElement.RequestedTheme != ElementTheme.Default)
-                    {
-                        return rootElement.RequestedTheme;
-                    }
-                }
-
-                return GetEnum<ElementTheme>(App.Current.RequestedTheme.ToString());
-            }
-        }
         public static bool GetFadeAnimationEnabled()
         {
             try
@@ -251,12 +276,35 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
                 return true;
             }
         }
-
         public static void SetAllowOverstretch(bool Value)
         {
             ApplicationData.Current.LocalSettings.Values["AllowOverstretch"] = Value;
         }
 
+        
+        public static void SetTheme(string key, object value)
+        {
+            
+            ApplicationData.Current.LocalSettings.Values[key] = value;
+        }
+        public static bool GetTheme()
+        {
+            try
+            {
+                return (bool)ApplicationData.Current.LocalSettings.Values["IsThemeDark"];
+            }
+            catch
+            {
+                SetIsThemeDark(true);
+                return true;
+            }
+        }
+
+        public static void SetIsThemeDark(bool Value)
+        {
+            ApplicationData.Current.LocalSettings.Values["IsThemeDark"] = Value;
+            
+        }
         public static MapInteractionMode GetZoomControlsVisible()
         {
             try
@@ -395,79 +443,20 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
                 return 0;
             }
         }
+        public static void SaveLocalSetting(string key, object value)
+        {
+            ApplicationData.Current.LocalSettings.Values[key] = value;
+        }
 
-        //public static string getSelectedTheme()
-        //{
-        //    try
-        //    {
-        //        return (string)ApplicationData.Current.LocalSettings.Values["SelectedTheme"];
-        //    }
-        //    catch (Exception)
-        //    {
-        //        SetSelectedTheme("Default");
-        //        return "Default";
-        //    }
-        //}
-
+        public static T GetLocalSetting<T>(string key, object def)
+        {
+            object setting = ApplicationData.Current.LocalSettings.Values[key] ?? def;
+            return (T)setting;
+        }
+        
         public static void SetLengthUnit(int Index)
         {
             ApplicationData.Current.LocalSettings.Values["LengthUnit"] = Index;
-        }
-
-        public static void SetSelectedTheme()
-        {
-
-        }
-
-        public static ElementTheme RootTheme
-        {
-            get
-            {
-                if (Window.Current.Content is FrameworkElement rootElement)
-                {
-                    return rootElement.RequestedTheme;
-                }
-
-                return ElementTheme.Default;
-            }
-            set
-            {
-                if (Window.Current.Content is FrameworkElement rootElement)
-                {
-                    rootElement.RequestedTheme = value;
-                }
-
-                ApplicationData.Current.LocalSettings.Values[SelectedAppThemeKey] = value.ToString();
-            }
-        }
-        private async Task EnsureWindow(IActivatedEventArgs e)
-        {
-
-            string savedTheme = ApplicationData.Current.LocalSettings.Values[SelectedAppThemeKey]?.ToString();
-
-            if (savedTheme != null)
-            {
-                RootTheme = GetEnum<ElementTheme>(savedTheme);
-            }
-            
-            if (e.Kind == ActivationKind.Launch)
-            {
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    try
-                    {
-                        await SuspensionManager.RestoreAsync();
-                    }
-                    catch (SuspensionManagerException)
-                    {
-                        //Something went wrong restoring state.
-                        //Assume there is no state and continue
-                    }
-                }
-
-                
-            }
-            
         }
     }
 }

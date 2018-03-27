@@ -34,23 +34,44 @@ namespace GoogleMapsUnofficial
             this.InitializeComponent();
             SystemNavigationManager.GetForCurrentView().BackRequested += MainPage_BackRequested;
             this.Loaded += MainPage_Loaded;
-            RootFrame = Fr;
+            RootFrame = rootFrame;
             //Grid = Gr;
             para = parameter;
         }
         
         private void applyAcrylicAccent(Panel panel)
         {
-            if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone) return;
+            //if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone)
+            //{
+            //    BackdropLayerGrid.Visibility = Visibility.Visible;
+                //var tpbrush = new SolidColorBrush();
+                //var tbrush = Resources["Transparent"] as SolidColorBrush;
+                //tpbrush = tbrush;
+                //Split.PaneBackground = tpbrush;
+            //    return;
+            //}
             if (ApiInformation.IsTypePresent("Windows.UI.Xaml.Media.AcrylicBrush"))
             {
                 BackdropLayerGrid.Visibility = Visibility.Collapsed;
                 var ac = new AcrylicBrush();
-                var brush = Resources["SystemControlAcrylicWindowBrush"] as AcrylicBrush;
+                var brush = Resources["SystemControlAcrylicElementMediumHighBrush"] as AcrylicBrush;
                 ac = brush;
-                ac.TintOpacity = 0.5;
-                ac.BackgroundSource = AcrylicBackgroundSource.HostBackdrop;
+                if(Split.DisplayMode==SplitViewDisplayMode.Overlay)
+                    ac.BackgroundSource = AcrylicBackgroundSource.Backdrop;
+                //ac.TintOpacity = 0.5;
+                else
+                    ac.BackgroundSource = AcrylicBackgroundSource.HostBackdrop;
+                
                 Split.PaneBackground = ac;
+                return;
+            }
+            else
+            {
+                var tpbrush = new SolidColorBrush();
+                var tbrush = Resources["Transparent"] as SolidColorBrush;
+                tpbrush = tbrush;
+                Split.PaneBackground = tpbrush;
+                BackdropLayerGrid.Visibility = Visibility.Visible;
                 return;
             }
             if (ApiInformation.IsMethodPresent("Windows.UI.Xaml.Hosting.ElementCompositionPreview", "SetElementChildVisual"))
@@ -71,12 +92,13 @@ namespace GoogleMapsUnofficial
         {
             if (_hostSprite != null)
                 _hostSprite.Size = e.NewSize.ToVector2();
+            applyAcrylicAccent(MainGrid);
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            Fr.Navigate(typeof(MapView), para);
-            applyAcrylicAccent(MainGrid);
+            rootFrame.Navigate(typeof(MapView), para);
+            
             HMenuTopLst.Items.Add(new MenuClass { Text = "Map View", Icon = "", Tag = "Map View" });
             HMenuTopLst.Items.Add(new MenuClass { Text = "Offline Maps", Icon = "", Tag = "Offline Maps" });
             HMenuBottomLst.Items.Add(new MenuClass { Text = "Send feedback", Icon = "", Tag = "Send feedback" });
@@ -84,15 +106,22 @@ namespace GoogleMapsUnofficial
             if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone)
             {
                 DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
+                var tpbrush = new SolidColorBrush();
+                var tbrush = Resources["Transparent"] as SolidColorBrush;
+                tpbrush = tbrush;
+                Split.PaneBackground = tpbrush;
+                BackdropLayerGrid.Visibility = Visibility.Visible;
                 return;
-            }                
+            }
             
+            applyAcrylicAccent(MainGrid);
+
         }
 
         private async void MainPage_BackRequested(object sender, BackRequestedEventArgs e)
         {
             e.Handled = true;
-            if (Fr.CanGoBack) Fr.GoBack();
+            if (rootFrame.CanGoBack) rootFrame.GoBack();
             else
             {
                 var msg = new MessageDialog("Are you sure you want to exit?");
@@ -114,7 +143,7 @@ namespace GoogleMapsUnofficial
                 else
                     HmenuBTN.Visibility = Visibility.Collapsed;
             }
-            if (Fr.CanGoBack)
+            if (rootFrame.CanGoBack)
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             else SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
 
@@ -122,7 +151,11 @@ namespace GoogleMapsUnofficial
 
         private void HmenuBTN_Click(object sender, RoutedEventArgs e)
         {
+            
             Split.IsPaneOpen = !Split.IsPaneOpen;
+            applyAcrylicAccent(MainGrid);
+
+
         }
 
         private async void MenuItem_Click(object sender, ItemClickEventArgs e)
@@ -130,15 +163,15 @@ namespace GoogleMapsUnofficial
             switch ((e.ClickedItem as MenuClass).Tag)
             {
                 case "Map View":
-                    if (Fr.Content.GetType() != typeof(MapView))
+                    if (rootFrame.Content.GetType() != typeof(MapView))
                         MainPage.RootFrame.Navigate(typeof(MapView));
                     break;
                 case "Settings":
-                    if (Fr.Content.GetType() != typeof(SettingsMainView))
+                    if (rootFrame.Content.GetType() != typeof(SettingsMainView))
                         MainPage.RootFrame.Navigate(typeof(SettingsMainView));
                     break;
                 case "Offline Maps":
-                    if (Fr.Content.GetType() != typeof(MapDownloaderView))
+                    if (rootFrame.Content.GetType() != typeof(MapDownloaderView))
                         MainPage.RootFrame.Navigate(typeof(MapDownloaderView));
                     break;
                 case "Send feedback":

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GoogleMapsUnofficial.View.SettingsView;
+using GoogleMapsUnofficial.ViewModel.SettingsView;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;

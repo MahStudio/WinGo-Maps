@@ -102,16 +102,24 @@
     </Compile>
     <Compile Include="AppCommand.cs" />
     <Compile Include="AppCore.cs" />
+    <Compile Include="Common\BLogger.cs" />
     <Compile Include="Common\ColorStringConverter.cs" />
+    <Compile Include="Common\InitializeSwitch.cs" />
+    <Compile Include="Common\ObservableObject.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
+    <Compile Include="Converters\BrushToThemeConverter.cs" />
+    <Compile Include="Core\SharedLogic.cs" />
     <Compile Include="CustomBrush\BackDropBlurBrush.cs" />
     <Compile Include="CustomBrush\BackDropLayer.xaml.cs">
       <DependentUpon>BackDropLayer.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataModel\ControlInfoDataSource.cs" />
+    <Compile Include="Dispatcher\BreadDispatcher.cs" />
+    <Compile Include="Events\ThemeChangedEventArgs.cs" />
     <Compile Include="ExtendedSplashScreen.xaml.cs">
       <DependentUpon>ExtendedSplashScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\CountryCodesHelper.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
@@ -119,10 +127,15 @@
     <Compile Include="Helpers\InternalHelper.cs" />
     <Compile Include="Helpers\TileCoordinateHelper.cs" />
     <Compile Include="Helpers\ClassInfo.cs" />
+    <Compile Include="Interfaces\IDispatcher.cs" />
+    <Compile Include="Interfaces\ILogReportSender.cs" />
+    <Compile Include="Interfaces\INotificationManager.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\GenericService.cs" />
+    <Compile Include="Themes\ThemeManager.cs" />
     <Compile Include="ViewModel\DirectionsControls\DirectionsHelper.cs" />
     <Compile Include="ViewModel\GeocodControls\ReverseGeoCode.cs" />
     <Compile Include="ViewModel\MapViewVM.cs" />
@@ -136,8 +149,10 @@
     <Compile Include="ViewModel\PlaceControls\SearchHelper.cs" />
     <Compile Include="ViewModel\SearchProviderControls\NearbySearchProviderVM.cs" />
     <Compile Include="ViewModel\SearchProviderControls\TextSearchProviderVM.cs" />
+    <Compile Include="ViewModel\SettingsView\PersonalizationViewModel.cs" />
     <Compile Include="ViewModel\SettingsView\SettingsLanguageVM.cs" />
     <Compile Include="ViewModel\SettingsView\SettingsMainVM.cs" />
+    <Compile Include="ViewModel\SettingsView\SettingsViewModel.cs" />
     <Compile Include="ViewModel\TilesAPIControls\TileApiHelper.cs" />
     <Compile Include="ViewModel\VoiceNavigation\VoiceHelper.cs" />
     <Compile Include="View\BookmarkAdd.xaml.cs">
@@ -214,6 +229,7 @@
     </AppxManifest>
     <None Include="DataModel\ControlInfoData.json" />
     <None Include="GoogleMapsUnofficial_StoreKey.pfx" />
+    <PRIResource Include="Strings\en\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\BlackLogo.png">
@@ -480,6 +496,9 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>11.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Serilog">
+      <Version>2.7.1-dev-00972</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
