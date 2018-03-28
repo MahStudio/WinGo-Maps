@@ -26,25 +26,25 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#60a5ff" />
       </uap:VisualElements>
       <Extensions>
-        <uap:Extension Category="windows.protocol">
-          <uap:Protocol Name="ms-walk-to" />
-        </uap:Extension>
-        <uap:Extension Category="windows.protocol">
-          <uap:Protocol Name="ms-drive-to" />
-        </uap:Extension>
-        <uap:Extension Category="windows.protocol">
-          <uap:Protocol Name="bingmaps" />
-        </uap:Extension>
-        <uap:Extension Category="windows.personalAssistantLaunch" />
-        <uap:Extension Category="windows.appService" EntryPoint="WinGoService.Cortana">
-          <uap:AppService Name="Cortana" />
-        </uap:Extension>
         <Extension Category="windows.backgroundTasks" EntryPoint="LiveTileTask.Update">
           <BackgroundTasks>
             <Task Type="general" />
             <Task Type="timer" />
           </BackgroundTasks>
         </Extension>
+        <uap:Extension Category="windows.appService" EntryPoint="WinGoService.Cortana">
+          <uap:AppService Name="Cortana" />
+        </uap:Extension>
+        <uap:Extension Category="windows.personalAssistantLaunch" />
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="bingmaps" />
+        </uap:Extension>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="ms-drive-to" />
+        </uap:Extension>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="ms-walk-to" />
+        </uap:Extension>
         <!--<Extension xmlns="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" Category="windows.appUriHandler">
           <AppUriHandler>
             <Host Name="google.com" />

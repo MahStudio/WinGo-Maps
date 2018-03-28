@@ -20,7 +20,7 @@
     <PackageCertificateKeyFile>GoogleMapsUnofficial_StoreKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>arm</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <PackageCertificateThumbprint>25C1453C3924D0B13017E8C779A4D131918D2D6A</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -182,6 +182,9 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="GoogleMapsUnofficial_StoreKey.pfx" />
+    <PRIResource Include="Strings\ES\Resources.resw" />
+    <PRIResource Include="Strings\DE-DE\Resources.resw" />
+    <PRIResource Include="Strings\ar\Resources.resw" />
     <PRIResource Include="Strings\Fa-Ir\Resources.resw" />
     <PRIResource Include="Strings\En-Us\Resources.resw" />
   </ItemGroup>
