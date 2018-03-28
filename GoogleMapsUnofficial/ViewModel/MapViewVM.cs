@@ -134,12 +134,12 @@ namespace GoogleMapsUnofficial.ViewModel
                 else
                 {
                     LocationFlagVisibility = Visibility.Collapsed;
-                    var msg = new MessageDialog("We weren't able to access your location. Please check if your device location is on and you have accepted location access to the app in privacy settings.\nHit ok button to navigate location settings and cancel to continue.");
-                    msg.Commands.Add(new UICommand("OK", async delegate
+                    var msg = new MessageDialog(MultilingualHelpToolkit.GetString("StringLocationPrivacy","Text"));
+                    msg.Commands.Add(new UICommand(MultilingualHelpToolkit.GetString("StringOK", "Text"), async delegate
                     {
                         await Launcher.LaunchUriAsync(new Uri("ms-settings:privacy-location", UriKind.RelativeOrAbsolute));
                     }));
-                    msg.Commands.Add(new UICommand("Cancel", delegate { }));
+                    msg.Commands.Add(new UICommand(MultilingualHelpToolkit.GetString("StringCancel","Text"), delegate { }));
                     await msg.ShowAsync();
                 }
             }

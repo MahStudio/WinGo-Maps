@@ -75,12 +75,12 @@ namespace GoogleMapsUnofficial
         {
             Fr.Navigate(typeof(MapView), para);
             applyAcrylicAccent(MainGrid);
-            HMenuTopLst.Items.Add(new MenuClass { Text = "Map View", Icon = "", Tag = "Map View" });
-            HMenuTopLst.Items.Add(new MenuClass { Text = "Offline Maps", Icon = "", Tag = "Offline Maps" });
-            if(CurrentAppSimulator.LicenseInformation.IsTrial)
-                HMenuBottomLst.Items.Add(new MenuClass { Text = "Buy from Iran", Icon = "", Tag = "Buy from Iran" });
-            HMenuBottomLst.Items.Add(new MenuClass { Text = "Send feedback", Icon = "", Tag = "Send feedback" });
-            HMenuBottomLst.Items.Add(new MenuClass { Text = "Settings", Icon = "", Tag = "Settings" });
+            HMenuTopLst.Items.Add(new MenuClass { Text = MultilingualHelpToolkit.GetString("StringMapView", "Text"), Icon = "", Tag = "Map View" });
+            HMenuTopLst.Items.Add(new MenuClass { Text = MultilingualHelpToolkit.GetString("StringOfflineMaps", "Text"), Icon = "", Tag = "Offline Maps" });
+            if (CurrentAppSimulator.LicenseInformation.IsTrial)
+                HMenuBottomLst.Items.Add(new MenuClass { Text = MultilingualHelpToolkit.GetString("StringBuyFromIran", "Text"), Icon = "", Tag = "Buy from Iran" });
+            HMenuBottomLst.Items.Add(new MenuClass { Text = MultilingualHelpToolkit.GetString("StringSendFeedback", "Text"), Icon = "", Tag = "Send feedback" });
+            HMenuBottomLst.Items.Add(new MenuClass { Text = MultilingualHelpToolkit.GetString("StringSettings", "Text"), Icon = "", Tag = "Settings" });
             if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone)
                 DisplayInformation.AutoRotationPreferences = DisplayOrientations.Portrait;
             return;
@@ -92,12 +92,12 @@ namespace GoogleMapsUnofficial
             if (Fr.CanGoBack) Fr.GoBack();
             else
             {
-                var msg = new MessageDialog("Are you sure you want to exit?");
-                msg.Commands.Add(new UICommand("Yes", delegate
+                var msg = new MessageDialog(MultilingualHelpToolkit.GetString("stringExit","Text"));
+                msg.Commands.Add(new UICommand(MultilingualHelpToolkit.GetString("StringYes","Text"), delegate
                 {
                     App.Current.Exit();
                 }));
-                msg.Commands.Add(new UICommand("No", delegate { }));
+                msg.Commands.Add(new UICommand(MultilingualHelpToolkit.GetString("StringNo", "Text"), delegate { }));
                 await msg.ShowAsync();
             }
         }

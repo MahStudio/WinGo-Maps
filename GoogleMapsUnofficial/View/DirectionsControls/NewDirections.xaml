@@ -32,7 +32,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <TextBlock Text="&#xE805;" HorizontalAlignment="Center" Grid.Row="0" FontFamily="Segoe MDL2 Assets" FontSize="28"/>
-                        <TextBlock Text="Walking" Grid.Row="1"/>
+                        <TextBlock x:Uid="NewDirectionsWalkingMode" Text="Walking" Grid.Row="1"/>
                     </Grid>
                 </Button>
                 <Button x:Name="DriveBTN" Style="{StaticResource DirectionButtonStyle}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1" Click="NavMode_Click">
@@ -42,7 +42,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <TextBlock Text="&#xE804;" HorizontalAlignment="Center" Grid.Row="0" FontFamily="Segoe MDL2 Assets" FontSize="28"/>
-                        <TextBlock Text="Driving" Grid.Row="1"/>
+                        <TextBlock x:Uid="NewDirectionsDrivingMode" Text="Driving" Grid.Row="1"/>
                     </Grid>
                 </Button>
                 <Button x:Name="TransitBTN" Style="{StaticResource DirectionButtonStyle}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="2" Click="NavMode_Click">

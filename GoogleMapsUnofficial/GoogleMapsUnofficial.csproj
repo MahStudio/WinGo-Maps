@@ -109,6 +109,7 @@
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Helpers\GeoLocatorHelper.cs" />
     <Compile Include="Helpers\InternalHelper.cs" />
+    <Compile Include="Helpers\MultilingualHelpToolkit.cs" />
     <Compile Include="Helpers\TileCoordinateHelper.cs" />
     <Compile Include="Helpers\ClassInfo.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -181,6 +182,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="GoogleMapsUnofficial_StoreKey.pfx" />
+    <PRIResource Include="Strings\En-Us\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\BlackLogo.png">
@@ -426,6 +428,9 @@
       <Project>{df428a8c-75d3-4551-9636-0ae8cb1a0fad}</Project>
       <Name>WinGoService</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Strings\Fa-Ir\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

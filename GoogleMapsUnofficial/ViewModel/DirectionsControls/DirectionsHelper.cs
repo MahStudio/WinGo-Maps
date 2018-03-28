@@ -35,7 +35,7 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
             {
                 if (Mode == DirectionModes.transit && WayPoints != null)
                 {
-                    throw new ArgumentOutOfRangeException("Waypoints are not available in transit mode.");
+                    throw new ArgumentOutOfRangeException(MultilingualHelpToolkit.GetString("StringWayPointsNotAvailableInTransit", "Text"));
                 }
                 var m = Mode.ToString();
                 var requestUrl = String.Format("http://maps.google.com/maps/api/directions/json?origin=" + Origin.Latitude + "," + Origin.Longitude + "&destination=" + Destination.Latitude + "," + Destination.Longitude + "&units=metric&mode=" + Mode + "&lang=" + AppCore.GoogleMapRequestsLanguage);
@@ -145,22 +145,22 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
             {
                 //Metric
                 if (Distance <= 2000)
-                    return $"{Distance} meters";
-                else return $"{Distance / 1000f} Kilometers";
+                    return $"{Distance} {MultilingualHelpToolkit.GetString("StringMeters", "Text")}";
+                else return $"{Distance / 1000f} {MultilingualHelpToolkit.GetString("StringKiloMeters", "Text")}";
             }
             else if (SettingsView.SettingsSetters.GetLengthUnit() == 1)
             {
                 //Imperial
                 if (Distance <= 2000)
-                    return $"{string.Format("{0:0.00}", Distance * 1.093613f)} Yards";
-                else return $"{string.Format("{0:0.00}", Distance * 0.000621371f)} Miles";
+                    return $"{string.Format("{0:0.00}", Distance * 1.093613f)} {MultilingualHelpToolkit.GetString("StringYards", "Text")}";
+                else return $"{string.Format("{0:0.00}", Distance * 0.000621371f)} {MultilingualHelpToolkit.GetString("StringMiles", "Text")}";
             }
             else
             {
                 //US 
                 if (Distance <= 2000)
-                    return $"{string.Format("{0:0.00}", Distance * 3.28084f)} Feet";
-                else return $"{string.Format("{0:0.00}", Distance * 0.000621371f)} Miles";
+                    return $"{string.Format("{0:0.00}", Distance * 3.28084f)} {MultilingualHelpToolkit.GetString("StringFeet", "Text")}";
+                else return $"{string.Format("{0:0.00}", Distance * 0.000621371f)} {MultilingualHelpToolkit.GetString("StringMiles", "Text")}";
             }
         }
 
@@ -172,8 +172,8 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
                 EstimatedTime += item.duration.value;
             }
             if (Convert.ToInt32((EstimatedTime / 60)) < 60)
-                return $"{Convert.ToInt32((EstimatedTime / 60))} minutes";
-            else return $"{Convert.ToInt32(((EstimatedTime / 60) / 60))} hours";
+                return $"{Convert.ToInt32((EstimatedTime / 60))} {MultilingualHelpToolkit.GetString("StringMinutes", "Text")}";
+            else return $"{Convert.ToInt32(((EstimatedTime / 60) / 60))} {MultilingualHelpToolkit.GetString("StringHours", "Text")}";
         }
 
         public static List<BasicGeoposition> DecodePolylinePoints(string encodedPoints)

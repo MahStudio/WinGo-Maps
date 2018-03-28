@@ -119,7 +119,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                             }
                             if (r == null || r.routes.Count() == 0)
                             {
-                                await new MessageDialog("No way to your destination!!!").ShowAsync();
+                                await new MessageDialog(MultilingualHelpToolkit.GetString("StringNoWayToDestination", "Text")).ShowAsync();
                                 return;
                             }
                             if (CurrentDrawed != null)
@@ -128,7 +128,8 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                             MapView.MapControl.MapElements.Add(route);
                             var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
                             var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
-                            await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
+                            await new MessageDialog($"{MultilingualHelpToolkit.GetString("StringDirectionCalculated", "Text")}".Replace("{di}", di).Replace("{es}", es)).ShowAsync();
+                            //await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
                             MapView.MapControl.ZoomLevel = 18;
                             MapView.MapControl.Center = Origin;
                             MapView.MapControl.DesiredPitch = 45;
@@ -137,7 +138,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                         }
                         else
                         {
-                            await new MessageDialog("You didn't select both origin and destination points").ShowAsync();
+                            await new MessageDialog(MultilingualHelpToolkit.GetString("StringSelectBothOriginAndDestination", "Text")).ShowAsync();
                         }
                     }
                     catch (Exception ex)
@@ -172,7 +173,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                             }
                             if (r == null || r.routes.Count() == 0)
                             {
-                                await new MessageDialog("No way to your destination!!!").ShowAsync();
+                                await new MessageDialog(MultilingualHelpToolkit.GetString("StringNoWayToDestination", "Text")).ShowAsync();
                                 return;
                             }
                             if (CurrentDrawed != null)
@@ -181,7 +182,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                             MapView.MapControl.MapElements.Add(route);
                             var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
                             var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
-                            await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
+                            await new MessageDialog($"{MultilingualHelpToolkit.GetString("StringDirectionCalculated", "Text")}".Replace("{di}", di).Replace("{es}", es)).ShowAsync();
                             MapView.MapControl.ZoomLevel = 18;
                             MapView.MapControl.Center = Origin;
                             MapView.MapControl.DesiredPitch = 45;
@@ -190,7 +191,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                         }
                         else
                         {
-                            await new MessageDialog("You didn't select both origin and destination points").ShowAsync();
+                            await new MessageDialog(MultilingualHelpToolkit.GetString("StringSelectBothOriginAndDestination", "Text")).ShowAsync();
                         }
                     }
                     catch (Exception ex)
@@ -211,7 +212,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                             r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.transit);
                             if (r == null || r.routes.Count() == 0)
                             {
-                                await new MessageDialog("No way to your destination!!!").ShowAsync();
+                                await new MessageDialog(MultilingualHelpToolkit.GetString("StringNoWayToDestination", "Text")).ShowAsync();
                                 return;
                             }
                             if (CurrentDrawed != null)
@@ -220,7 +221,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                             MapView.MapControl.MapElements.Add(route);
                             var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
                             var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
-                            await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
+                            await new MessageDialog($"{MultilingualHelpToolkit.GetString("StringDirectionCalculated", "Text")}".Replace("{di}", di).Replace("{es}", es)).ShowAsync();
                             MapView.MapControl.ZoomLevel = 18;
                             MapView.MapControl.Center = Origin;
                             MapView.MapControl.DesiredPitch = 45;
@@ -229,7 +230,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                         }
                         else
                         {
-                            await new MessageDialog("You didn't select both origin and destination points").ShowAsync();
+                            await new MessageDialog(MultilingualHelpToolkit.GetString("StringSelectBothOriginAndDestination", "Text")).ShowAsync();
                         }
                     }
                     catch (Exception ex)
@@ -295,7 +296,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                     }
                     else
                     {
-                        await new MessageDialog("You didn't select both origin and destination points").ShowAsync();
+                        await new MessageDialog(MultilingualHelpToolkit.GetString("StringSelectBothOriginAndDestination", "Text")).ShowAsync();
                     }
                 });
             }
@@ -341,7 +342,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                     }
                     else
                     {
-                        await new MessageDialog("You didn't select both origin and destination points").ShowAsync();
+                        await new MessageDialog(MultilingualHelpToolkit.GetString("StringSelectBothOriginAndDestination", "Text")).ShowAsync();
                     }
                 });
             }
@@ -373,7 +374,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                     }
                     else
                     {
-                        await new MessageDialog("You didn't select both origin and destination points").ShowAsync();
+                        await new MessageDialog(MultilingualHelpToolkit.GetString("StringSelectBothOriginAndDestination", "Text")).ShowAsync();
                     }
                 });
             }

@@ -47,7 +47,8 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
             }
             Route = route;
             IsRecalculating = false;
-            MapViewVM.GeoLocate.PositionChanged += GeoLocate_PositionChanged;
+            if (MapViewVM.GeoLocate != null)
+                MapViewVM.GeoLocate.PositionChanged += GeoLocate_PositionChanged;
             AvailableInstance = this;
             MapViewVM.StaticVM.StepsTitleProviderVisibility = Windows.UI.Xaml.Visibility.Visible;
             CurrentStep = route.legs.FirstOrDefault().steps.FirstOrDefault();
@@ -56,10 +57,14 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
 
         ~VoiceHelper()
         {
-            IsRecalculating = false;
-            MapViewVM.GeoLocate.PositionChanged -= GeoLocate_PositionChanged;
-            Route = null;
-            LastStep = null;
+            try
+            {
+                IsRecalculating = false;
+                MapViewVM.GeoLocate.PositionChanged -= GeoLocate_PositionChanged;
+                Route = null;
+                LastStep = null;
+            }
+            catch { }
         }
 
         private async void GeoLocate_PositionChanged(Geolocator sender, PositionChangedEventArgs args)

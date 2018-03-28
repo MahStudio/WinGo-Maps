@@ -94,7 +94,7 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
         }
         public List<string> LengthUnits
         {
-            get { return new List<string>() { "Metric (Meters, Kilometers)", "Imperial (Yards, Miles)", "US (Feet, Miles)" }; }
+            get { return new List<string>() { $"{MultilingualHelpToolkit.GetString("StringMetricLengthUnit", "Text")}", $"{MultilingualHelpToolkit.GetString("StringImperialLengthUnit", "Text")}", $"{MultilingualHelpToolkit.GetString("StringUSLengthUnit", "Text")}" }; }
         }
         public static List<string> MapInteractionModeOptionsstatic
         {
