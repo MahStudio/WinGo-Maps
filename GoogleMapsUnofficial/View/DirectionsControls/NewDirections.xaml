@@ -52,7 +52,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <TextBlock Text="&#xE806;" HorizontalAlignment="Center" Grid.Row="0" FontFamily="Segoe MDL2 Assets" FontSize="28"/>
-                        <TextBlock Text="Transit" Grid.Row="1"/>
+                        <TextBlock x:Uid="NewDirectionsTransitMode" Text="Transit" Grid.Row="1"/>
                     </Grid>
                 </Button>
             </Grid>

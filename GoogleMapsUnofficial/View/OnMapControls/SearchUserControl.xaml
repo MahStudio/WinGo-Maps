@@ -11,7 +11,7 @@
         <ResourceDictionary Source="/Resources/CustomControls/AutoSuggestionBox.xaml"/>
     </UserControl.Resources>
     <Grid Background="White">
-        <AutoSuggestBox Style="{StaticResource MyAutoSuggestBox}" FontFamily="B Koodak" PlaceholderText="Search..."
+        <AutoSuggestBox x:Uid="SearchUCSearchBox" Style="{StaticResource MyAutoSuggestBox}" FontFamily="B Koodak" PlaceholderText="Search..."
             ItemsSource="{Binding SearchResults}"
             TextChanged="Control2_TextChanged" x:Name="SearchBox"
             QueryIcon="Find" Visibility="Visible"

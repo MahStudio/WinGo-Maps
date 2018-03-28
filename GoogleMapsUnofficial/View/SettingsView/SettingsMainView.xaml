@@ -23,24 +23,24 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="Settings" FontWeight="SemiBold" FontSize="22" Margin="0,0,0,15"/>
-            <ToggleSwitch Margin="0,10,0,0" Grid.Row="1" Header="Allow over strech on map" IsOn="{Binding AllowOverstretch, Mode=TwoWay}"/>
-            <ToggleSwitch Margin="0,10,0,0" Grid.Row="2" Header="Enable Fade Animation on loading map tiles" IsOn="{Binding FadeAnimationEnabled, Mode=TwoWay}"/>
-            <ToggleSwitch Margin="0,10,0,0" Grid.Row="3" Header="Enable live tile" IsOn="{Binding LiveTileEnable, Mode=TwoWay}"/>
-            <ComboBox Margin="0,20,0,0" Grid.Row="4" Header="Show zoom controls on map" ItemsSource="{Binding MapInteractionModeOptions,Mode=OneWay}" SelectedIndex="{Binding ZoomControlsVisible, Mode=TwoWay}"/>
+            <TextBlock x:Uid="StringSettings" Grid.Row="0" Text="Settings" FontWeight="SemiBold" FontSize="22" Margin="0,0,0,15"/>
+            <ToggleSwitch x:Uid="SettingsViewOverStrechToggle" Margin="0,10,0,0" Grid.Row="1" Header="Allow over strech map tiles" IsOn="{Binding AllowOverstretch, Mode=TwoWay}"/>
+            <ToggleSwitch x:Uid="SettingsViewFadeAnimationToggle" Margin="0,10,0,0" Grid.Row="2" Header="Enable Fade Animation on loading map tiles" IsOn="{Binding FadeAnimationEnabled, Mode=TwoWay}"/>
+            <ToggleSwitch x:Uid="SettingsViewLiveTileToggle" Margin="0,10,0,0" Grid.Row="3" Header="Enable live tile" IsOn="{Binding LiveTileEnable, Mode=TwoWay}"/>
+            <ComboBox x:Uid="SettingsViewZoomControlsVisibilityCombo" Margin="0,20,0,0" Grid.Row="4" Header="Show zoom controls on map" ItemsSource="{Binding MapInteractionModeOptions,Mode=OneWay}" SelectedIndex="{Binding ZoomControlsVisible, Mode=TwoWay}"/>
             <!--<ComboBox Grid.Row="5" Header="Show rotation controls on map" ItemsSource="{Binding MapInteractionModeOptions,Mode=OneWay}" SelectedIndex="{Binding RotationControlsVisible, Mode=TwoWay}"/>-->
-            <ComboBox Margin="0,20,0,0" Grid.Row="5" Header="Show distance in" ItemsSource="{Binding LengthUnits, Mode=OneWay}" SelectedIndex="{Binding LengthUnit, Mode=TwoWay}"/>
+            <ComboBox x:Uid="SettingsViewLengthUnitCombo" Margin="0,20,0,0" Grid.Row="5" Header="Show distance in" ItemsSource="{Binding LengthUnits, Mode=OneWay}" SelectedIndex="{Binding LengthUnit, Mode=TwoWay}"/>
             <Grid Margin="0,10,0,0" Grid.Row="6">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="Laguage Settings" FontSize="22" Margin="0,15"/>
-                <Button Grid.Row="1" Content="Language Settings" Click="LanguageSets_Click"/>
+                <TextBlock x:Uid="StringLaguageSettings" Grid.Row="0" Text="Laguage Settings" FontSize="22" Margin="0,15"/>
+                <Button x:Uid="ButtonLanguageSettings" Grid.Row="1" Content="Language Settings" Click="LanguageSets_Click"/>
             </Grid>
             <Grid Grid.Row="10" Margin="0,15">
                 <TextBlock LineHeight="30" TextWrapping="Wrap" FontFamily="Segoe UI">
-                    <Run FontSize="22">About</Run>
+                    <Run FontSize="22" x:Uid="StringAbout">About</Run>
                     <LineBreak/>
                     
                     <Run>WinGoMaps</Run>

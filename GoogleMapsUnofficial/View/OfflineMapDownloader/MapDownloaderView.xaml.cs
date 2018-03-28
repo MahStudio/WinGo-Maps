@@ -60,7 +60,7 @@ namespace GoogleMapsUnofficial.View.OfflineMapDownloader
                     }
                     else
                     {
-                        await new MessageDialog("You selected 2 points.").ShowAsync();
+                        await new MessageDialog(MultilingualHelpToolkit.GetString("MapDownloaderViewStringTwoPointsSelected", "Text")).ShowAsync();
                     }
                 }
             });
@@ -81,9 +81,10 @@ namespace GoogleMapsUnofficial.View.OfflineMapDownloader
             MDH.DownloadProgress -= DLProgress;
             DLButton.IsEnabled = true;
             if (MDH.FailedDownloads == 0)
-                await new MessageDialog("Download Completed.").ShowAsync();
+                await new MessageDialog(MultilingualHelpToolkit.GetString("MapDownloaderViewStringDLComplete", "Text")).ShowAsync();
             else
-                await new MessageDialog("Download Completed with " + MDH.FailedDownloads + " Failures count. Please click on start download once again to re-download failed items again.").ShowAsync();
+                await new MessageDialog(MultilingualHelpToolkit.GetString("MapDownloaderViewStringDLCompleteWithErrors", "Text").Replace("{count}", $"{MDH.FailedDownloads}")).ShowAsync();
+                //await new MessageDialog("Download Completed with " + MDH.FailedDownloads + " Failures count. Please click on start download once again to re-download failed items again.").ShowAsync();
         }
 
         private void DLProgress(object sender, int e)

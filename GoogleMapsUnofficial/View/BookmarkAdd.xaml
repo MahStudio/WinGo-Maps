@@ -1,4 +1,4 @@
-﻿<ContentDialog
+﻿<ContentDialog x:Uid="BookmarkAddUC"
     x:Class="GoogleMapsUnofficial.View.BookmarkAdd"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -14,7 +14,7 @@
 
     <StackPanel>
         <RadioButton x:Name="DefaultName" IsChecked="True" Content="{Binding PlaceName}" GroupName="Group" Checked="RadioButtons_Checked"/>
-        <RadioButton x:Name="CustomName" IsChecked="False" Content="CustomName" GroupName="Group" Checked="RadioButtons_Checked"/>
+        <RadioButton x:Uid="BookmarkAddUCCustomName" x:Name="CustomName" IsChecked="False" Content="Custom Name" GroupName="Group" Checked="RadioButtons_Checked"/>
         <TextBox x:Name="PlaceNameText" Text="{Binding PlaceName}" IsEnabled="False" Header="Bookmark name"/>
         <CheckBox x:Name="PinLiveTile" IsChecked="True" Content="Pin as live tile"/>
     </StackPanel>

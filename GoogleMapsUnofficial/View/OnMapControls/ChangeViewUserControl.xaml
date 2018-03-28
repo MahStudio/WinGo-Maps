@@ -22,12 +22,12 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,3">
-                            <ToggleButton Checked="DefaultMapView_Checked" Click="DefaultMapView_Click" x:Name="DefaultMapView" Content="Default" Margin="3,0"/>
-                            <ToggleButton Checked="SatelliteMapView_Checked" Click="SatelliteMapView_Click" x:Name="SatelliteMapView" Content="Satellite" Margin="3,0"/>
-                            <ToggleButton Checked="HybridMapView_Checked" Click="HybridMapView_Click" x:Name="HybridMapView" Content="Hybrid" Margin="3,0"/>
+                            <ToggleButton x:Uid="ChangeViewUCDefaultMapView" Checked="DefaultMapView_Checked" Click="DefaultMapView_Click" x:Name="DefaultMapView" Content="Default" Margin="3,0"/>
+                            <ToggleButton x:Uid="ChangeViewUCSatelliteMapView" Checked="SatelliteMapView_Checked" Click="SatelliteMapView_Click" x:Name="SatelliteMapView" Content="Satellite" Margin="3,0"/>
+                            <ToggleButton x:Uid="ChangeViewUCHybridMapView" Checked="HybridMapView_Checked" Click="HybridMapView_Click" x:Name="HybridMapView" Content="Hybrid" Margin="3,0"/>
                         </StackPanel>
                         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,3">
-                            <ToggleSwitch Toggled="ShowTraffic_Toggled" x:Name="ShowTraffic" Header="Traffic" Margin="3,0"/>
+                            <ToggleSwitch x:Uid="ChangeViewUCShowTraffic" Toggled="ShowTraffic_Toggled" x:Name="ShowTraffic" Header="Traffic" Margin="3,0"/>
                         </StackPanel>
                     </Grid>
                 </Flyout>

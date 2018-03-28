@@ -118,201 +118,201 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ButtonLanguageSettings.Content" xml:space="preserve">
-    <value>Laguage Settings</value>
+    <value>تنظیمات زبان</value>
   </data>
   <data name="ChangeViewUCDefaultMapView.Content" xml:space="preserve">
-    <value>Default</value>
+    <value>پیشفرض</value>
   </data>
   <data name="ChangeViewUCHybridMapView.Content" xml:space="preserve">
-    <value>Hybrid</value>
+    <value>ترکیبی</value>
   </data>
   <data name="ChangeViewUCSatelliteMapView.Content" xml:space="preserve">
-    <value>Satellite</value>
+    <value>ماهواره</value>
   </data>
   <data name="ChangeViewUCShowTraffic.Header" xml:space="preserve">
-    <value>Show Traffic</value>
+    <value>نمایش ترافیک</value>
   </data>
   <data name="MapDownloaderViewBackupBTN.Content" xml:space="preserve">
-    <value>Backup</value>
+    <value>پشتیبان گیری</value>
   </data>
   <data name="MapDownloaderViewDLButton.Content" xml:space="preserve">
-    <value>Download</value>
+    <value>دانلود</value>
   </data>
   <data name="MapDownloaderViewMaximumZoomLevel.Text" xml:space="preserve">
-    <value>Maximum zoom level to download (Default 17)</value>
+    <value>حداکثر سطح زوم جهت دانلود (پیشفرض: 17)</value>
   </data>
   <data name="MapDownloaderViewRestoreBtn.Content" xml:space="preserve">
-    <value>Restore</value>
+    <value>بازگردانی پشتیبان</value>
   </data>
   <data name="MapDownloaderViewStringDLComplete.Text" xml:space="preserve">
-    <value>Offline maps download completed.</value>
+    <value>دانلود نقشه آفلاین به پایان رسید.</value>
   </data>
   <data name="MapDownloaderViewStringDLCompleteWithErrors.Text" xml:space="preserve">
-    <value>Download Completed with {count} failures count. Please click on start download once again to re-download failed items again.</value>
+    <value>خطا پایان یافت.لطفاً مجدداً کلید دانلود را بزنید تا موارد دریافت نشده مجدداً دانلود شوند.</value>
   </data>
   <data name="MapDownloaderViewStringTwoPointsSelected.Text" xml:space="preserve">
-    <value>You selected 2 points.</value>
+    <value>شما دو نقطه را انتخاب نموده اید.</value>
   </data>
   <data name="MapDownloaderViewTextLine1.Text" xml:space="preserve">
-    <value>This tool will let you to download offline map for a selected range of world map. Please select a region and hit start download.</value>
+    <value>این ابزار به شما اجازه میدهد تا نقشه آفلاین برای محدوده ای مشخص دانلود نمائید. لطفاً یک محدوده را روی نقشه مشخص و سپس کلید دانلود را بزنید.</value>
   </data>
   <data name="MapDownloaderViewTextLine2.Text" xml:space="preserve">
-    <value>Touch 2 points on map to select region. First point Top Left, Second point Bottom Right. If you want to change pointers position click on the flag and try to set it in any position you want</value>
+    <value>دو نقطه روی نقشه را جهت مشخص شدن محدوده انتخاب کنید. نقطه اول در بالا سمت چپ محدوده مورد مورد و نقطه دوم پایین سمت راست محدوده. اگر که میخواهید مکان نقطه ها را تغییر دهید کافیست روی پرچم نقطه مورد نظر بزنید تا حذف شود و سپس نقطه ای دیگر را انتخاب نمائید.</value>
   </data>
   <data name="NewDirectionsDrivingMode.Text" xml:space="preserve">
-    <value>Driving</value>
+    <value>رانندگی</value>
   </data>
   <data name="NewDirectionsTransitMode.Text" xml:space="preserve">
-    <value>Transit</value>
+    <value>نقلیه عمومی</value>
   </data>
   <data name="NewDirectionsWalkingMode.Text" xml:space="preserve">
-    <value>Walking</value>
+    <value>پیاده روی</value>
   </data>
   <data name="SearchUCSearchBox.PlaceholderText" xml:space="preserve">
-    <value>Search...</value>
+    <value>جستجو...</value>
   </data>
   <data name="SettingsLanguageAPILang.Header" xml:space="preserve">
-    <value>API Language</value>
+    <value>زبان API</value>
   </data>
   <data name="SettingsLanguageApplicationLang.Header" xml:space="preserve">
-    <value>Application Language</value>
+    <value>زبان برنامه</value>
   </data>
   <data name="SettingsLanguageMapLang.Header" xml:space="preserve">
-    <value>Map Language</value>
+    <value>زبان نقشه</value>
   </data>
   <data name="SettingsViewFadeAnimationToggle.Header" xml:space="preserve">
-    <value>Enable Fade Animation on loading map tiles</value>
+    <value>فعالسازی انیمیشن هنگام لود شدن کاشی های نقشه</value>
   </data>
   <data name="SettingsViewLengthUnitCombo.Header" xml:space="preserve">
-    <value>Show distance in</value>
+    <value>نمایش فواصل در واحد</value>
   </data>
   <data name="SettingsViewLiveTileToggle.Header" xml:space="preserve">
-    <value>Enable live tile</value>
+    <value>فعالسازی کاشی زنده</value>
   </data>
   <data name="SettingsViewOverStrechToggle.Header" xml:space="preserve">
-    <value>Allow over strech map tiles</value>
+    <value>اجازه زوم بیش از حد روی کاشی های نقشه</value>
   </data>
   <data name="SettingsViewZoomControlsVisibilityCombo.Header" xml:space="preserve">
-    <value>Show zoom controls on map</value>
+    <value>نمایش کنترل های بزرگنمایی در نقشه</value>
   </data>
   <data name="StringAbout.Text" xml:space="preserve">
-    <value>About</value>
+    <value>درباره</value>
   </data>
   <data name="StringBuyFromIran.Text" xml:space="preserve">
-    <value>Buy from Iran</value>
+    <value>خرید از ایران</value>
   </data>
   <data name="StringCancel.Text" xml:space="preserve">
-    <value>Cancel</value>
+    <value>لغو</value>
   </data>
   <data name="StringDirectionCalculated.Text" xml:space="preserve">
-    <value>we calculate that the route is about {di} and takes about {es}</value>
+    <value>محاسبات ما نشان میدهد مسیر شما حدود {di} و مدت زمان تقریبی رسیدن به مقصد {es} میباشد.</value>
   </data>
   <data name="StringExit.Text" xml:space="preserve">
-    <value>Are you sure you want to exit?</value>
+    <value>آیا مایل به خروج از برنامه هستید؟</value>
   </data>
   <data name="StringFeet.Text" xml:space="preserve">
-    <value>Feet</value>
+    <value>فوت</value>
   </data>
   <data name="StringHours.Text" xml:space="preserve">
-    <value>hours</value>
+    <value>ساعت</value>
   </data>
   <data name="StringImperialLengthUnit.Text" xml:space="preserve">
-    <value>Imperial (Yards, Miles)</value>
+    <value>امپریال (یارد، مایل)</value>
   </data>
   <data name="StringKiloMeters.Text" xml:space="preserve">
-    <value>Kilometers</value>
+    <value>کیلومتر</value>
   </data>
   <data name="StringLaguageSettings.Text" xml:space="preserve">
-    <value>Laguage Settings</value>
+    <value>تنظیمات زبان</value>
   </data>
   <data name="StringLocationPrivacy.Text" xml:space="preserve">
-    <value>We weren't able to access your location. Please check if your device location is on and you have accepted location access to the app in privacy settings.\nHit ok button to navigate location settings and cancel to continue.</value>
+    <value>ما قادر به دسترسی به موقعیت مکانی شما نیستیم. لطفاً بررسی نمائید که سرویس موقعیت یاب دستگاه شما فعال باشد و همچنین در تنظیمات حریم خصوصی اجازه استفاده برنامه از موقعیت مکانی را فعال نموده باشید.\nکلید تائید را جهت باز شدن تنظیمات موقعیت مکانی یا کلید لغو را جهت ادامه بزنید.</value>
   </data>
   <data name="StringMapView.Text" xml:space="preserve">
-    <value>Map View</value>
+    <value>نمای نقشه</value>
   </data>
   <data name="StringMeters.Text" xml:space="preserve">
-    <value>meters</value>
+    <value>متر</value>
   </data>
   <data name="StringMetricLengthUnit.Text" xml:space="preserve">
-    <value>Metric (Meters, Kilometers)</value>
+    <value>متریک (متر، کیلومتر)</value>
   </data>
   <data name="StringMiles.Text" xml:space="preserve">
-    <value>Miles</value>
+    <value>مایل</value>
   </data>
   <data name="StringMinutes.Text" xml:space="preserve">
-    <value>minutes</value>
+    <value>دقیقه</value>
   </data>
   <data name="StringNo.Text" xml:space="preserve">
-    <value>No</value>
+    <value>خیر</value>
   </data>
   <data name="StringNoWayToDestination.Text" xml:space="preserve">
-    <value>No way to your destination!!!</value>
+    <value>مسیری به مقصد تعیین شده یافت نشد!!!</value>
   </data>
   <data name="StringOfflineMaps.Text" xml:space="preserve">
-    <value>Offline Maps</value>
+    <value>نقشه آفلاین</value>
   </data>
   <data name="StringOK.Text" xml:space="preserve">
-    <value>OK</value>
+    <value>تائید</value>
   </data>
   <data name="StringSelectBothOriginAndDestination.Text" xml:space="preserve">
-    <value>You didn't select both origin and destination points</value>
+    <value>شما هر دو نقطه مبدا و مقصد را انتخاب نکرده اید.</value>
   </data>
   <data name="StringSendFeedback.Text" xml:space="preserve">
-    <value>Send Feedback</value>
+    <value>ارسال پیشنهادات</value>
   </data>
   <data name="StringSettings.Text" xml:space="preserve">
-    <value>Settings</value>
+    <value>تنظیمات</value>
   </data>
   <data name="StringUSLengthUnit.Text" xml:space="preserve">
-    <value>US (Feet, Miles)</value>
+    <value>ایالات متحده (فوت، مایل)</value>
   </data>
   <data name="StringWayPointsNotAvailableInTransit.Text" xml:space="preserve">
-    <value>Waypoints are not supported in transit mode.</value>
+    <value>نقاط بین مسیر در حالت وسایل نقلیه عمومی پشتیبانی نمیشود.</value>
   </data>
   <data name="StringYards.Text" xml:space="preserve">
-    <value>Yards</value>
+    <value>یارد</value>
   </data>
   <data name="StringYes.Text" xml:space="preserve">
-    <value>Yes</value>
+    <value>بله</value>
   </data>
   <data name="BookMarkAddUC.PrimaryButtonText" xml:space="preserve">
-    <value>Add Bookmark</value>
+    <value>افزودن نشانه</value>
   </data>
   <data name="BookMarkAddUC.SecondaryButtonText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>لغو</value>
   </data>
   <data name="BookmarkAddUC.Title" xml:space="preserve">
-    <value>Add Bookmark</value>
+    <value>افزودن نشانه</value>
   </data>
   <data name="BookmarkAddUCCustomName.Content" xml:space="preserve">
-    <value>Custom name</value>
+    <value>نام دلخواه</value>
   </data>
   <data name="BookmarkAddUCPinLiveTile.Content" xml:space="preserve">
-    <value>Pin as live tile</value>
+    <value>ایجاد کاشی زنده</value>
   </data>
   <data name="MapViewAddBookmark.Text" xml:space="preserve">
-    <value>Add Bookmark</value>
+    <value>افزودن نشانه</value>
   </data>
   <data name="MapViewAddPlace.Text" xml:space="preserve">
-    <value>Add missing place</value>
+    <value>افزودن مکان ناموجود</value>
   </data>
   <data name="MapViewAddWaypoint.Text" xml:space="preserve">
-    <value>Add waypoint</value>
+    <value>افزودن نقطه بین راه</value>
   </data>
   <data name="MapViewFindDirections.Text" xml:space="preserve">
-    <value>Directions</value>
+    <value>مسیر یابی</value>
   </data>
   <data name="MapViewMoreInfo.Text" xml:space="preserve">
-    <value>More Information</value>
+    <value>اطلاعات بیشتر</value>
   </data>
   <data name="MapViewSetAsOrigin.Text" xml:space="preserve">
-    <value>Set as origin</value>
+    <value>انتخاب به عنوان مبدا</value>
   </data>
   <data name="MapViewShare.Text" xml:space="preserve">
-    <value>Share</value>
+    <value>اشتراک</value>
   </data>
   <data name="MainPage.FlowDirection" xml:space="preserve">
-    <value>LeftToRight</value>
+    <value>RightToLeft</value>
   </data>
 </root>
