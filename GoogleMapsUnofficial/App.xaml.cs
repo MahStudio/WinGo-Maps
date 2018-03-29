@@ -30,6 +30,14 @@ namespace GoogleMapsUnofficial
             this.Suspending += OnSuspending;
             this.UnhandledException += App_UnhandledException;
             Microsoft.HockeyApp.HockeyClient.Current.Configure("836884b121284cbcbd6f1f0dbc787c6b");
+            try
+            {
+                var English = new System.Globalization.CultureInfo("en-us");
+                System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator = English.NumberFormat.NumberDecimalSeparator;
+                System.Globalization.CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator = English.NumberFormat.CurrencyDecimalSeparator;
+                System.Globalization.CultureInfo.CurrentCulture.NumberFormat.PercentDecimalSeparator = English.NumberFormat.PercentDecimalSeparator;
+            }
+            catch { }
         }
         
         private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)

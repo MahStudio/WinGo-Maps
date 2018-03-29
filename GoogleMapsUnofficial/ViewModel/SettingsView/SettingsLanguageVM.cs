@@ -141,6 +141,10 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
         {
             ApplicationData.Current.LocalSettings.Values["ApplicationLanguage"] = LanguageCode.ToLower();
             ApplicationLanguages.PrimaryLanguageOverride = LanguageCode;
+            var English = new System.Globalization.CultureInfo("en-us");
+            System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator = English.NumberFormat.NumberDecimalSeparator;
+            System.Globalization.CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator = English.NumberFormat.CurrencyDecimalSeparator;
+            System.Globalization.CultureInfo.CurrentCulture.NumberFormat.PercentDecimalSeparator = English.NumberFormat.PercentDecimalSeparator;
         }
 
         public static string GetApplicationLanguage()
