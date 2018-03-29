@@ -55,12 +55,10 @@ namespace GoogleMapsUnofficial.View
         string LastPlaceID { get; set; }
         public static MapControl MapControl;
         public static MapView StaticMapView { get; set; }
-        public static DirectionsControls.NewDirections StaticDirections = null;
         public MapView()
         {
             this.InitializeComponent();
             MapControl = Map;
-            StaticDirections = DirectionsControl;
             StaticMapView = this;
             Map.Style = MapStyle.None;
             Map.TileSources.Clear();
@@ -353,7 +351,7 @@ namespace GoogleMapsUnofficial.View
                 InfoPane.PaneBackground = ac;
             }
 
-            MapViewVM.LoadPage();
+            //MapViewVM.LoadPage();
         }
 
         private void Hm_UriRequested(HttpMapTileDataSource sender, MapTileUriRequestedEventArgs args)

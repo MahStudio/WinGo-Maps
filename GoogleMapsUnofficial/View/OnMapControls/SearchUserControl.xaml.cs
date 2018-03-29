@@ -164,6 +164,6 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                 }
             }
         }
-        
+
     }
 }

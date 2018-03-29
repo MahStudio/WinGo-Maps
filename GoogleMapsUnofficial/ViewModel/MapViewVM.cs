@@ -63,7 +63,7 @@ namespace GoogleMapsUnofficial.ViewModel
             if (UserLocation == null)
                 UserLocation = new ViewModel() { AttractionName = "My Location" };
             StaticVM = this;
-            //LoadPage();
+            LoadPage();
         }
 
         ~MapViewVM()
@@ -164,9 +164,14 @@ namespace GoogleMapsUnofficial.ViewModel
                 Geopoint snPoint = new Geopoint(new BasicGeoposition { Latitude = pos.Position.Latitude, Longitude = pos.Position.Longitude });
                 await Task.Delay(10);
                 //Map.MapElements.Add(UserLoction);
-                Map.Center = snPoint;
-                Map.ZoomLevel = 16;
-                UserLocation.Location = pos;
+                if(Map == null)
+                    Map = View.MapView.MapControl;
+                if(Map != null)
+                {
+                    Map.Center = snPoint;
+                    Map.ZoomLevel = 16;
+                    UserLocation.Location = pos;
+                }
             });
         }
 
