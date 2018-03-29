@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BookMarkAddUC.PrimaryButtonText" xml:space="preserve">
+    <value>Aggiungi segnaposto</value>
+  </data>
+  <data name="BookMarkAddUC.SecondaryButtonText" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  <data name="BookmarkAddUC.Title" xml:space="preserve">
+    <value>Aggiungi segnaposto</value>
+  </data>
+  <data name="BookmarkAddUCCustomName.Content" xml:space="preserve">
+    <value>Nome personalizzato</value>
+  </data>
+  <data name="BookmarkAddUCPinLiveTile.Content" xml:space="preserve">
+    <value>Seleziona come live tile</value>
+  </data>
+  <data name="ButtonLanguageSettings.Content" xml:space="preserve">
+    <value>Impostazioni lingua</value>
+  </data>
+  <data name="ChangeViewUCDefaultMapView.Content" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="ChangeViewUCHybridMapView.Content" xml:space="preserve">
+    <value>Ibrido</value>
+  </data>
+  <data name="ChangeViewUCSatelliteMapView.Content" xml:space="preserve">
+    <value>Satellite</value>
+  </data>
+  <data name="ChangeViewUCShowTraffic.Header" xml:space="preserve">
+    <value>Mostra traffico</value>
+  </data>
+  <data name="MainPage.FlowDirection" xml:space="preserve">
+    <value>LeftToRight</value>
+  </data>
+  <data name="MapDownloaderViewBackupBTN.Content" xml:space="preserve">
+    <value>Salva</value>
+  </data>
+  <data name="MapDownloaderViewDLButton.Content" xml:space="preserve">
+    <value>Scarica</value>
+  </data>
+  <data name="MapDownloaderViewMaximumZoomLevel.Text" xml:space="preserve">
+    <value>Livello massimo di zoom per scaricare (default 17)</value>
+  </data>
+  <data name="MapDownloaderViewRestoreBtn.Content" xml:space="preserve">
+    <value>Ripristina</value>
+  </data>
+  <data name="MapDownloaderViewStringDLComplete.Text" xml:space="preserve">
+    <value>Download delle mappe offline completato</value>
+  </data>
+  <data name="MapDownloaderViewStringDLCompleteWithErrors.Text" xml:space="preserve">
+    <value>Download terminato con{count} errori. Per favore, clicca su inizia download un'altra volta per riscaricare gli elementi con errore</value>
+  </data>
+  <data name="MapDownloaderViewStringTwoPointsSelected.Text" xml:space="preserve">
+    <value>Hai selezionato due punti.</value>
+  </data>
+  <data name="MapDownloaderViewTextLine1.Text" xml:space="preserve">
+    <value>Questa funzione ti lascerà scaricare le mappe offline per una certa porzione della mappa. Per favore aggiungi una regione e seleziona inizia download</value>
+  </data>
+  <data name="MapDownloaderViewTextLine2.Text" xml:space="preserve">
+    <value>Tocca due punti nella mappa per selezionare la regione. Il primo in alto a destra, il secondo in basso a destra. Se vuoi cambiare I flag della posizione cliccaci per metterli in qualsiasi posizione vuoi</value>
+  </data>
+  <data name="MapViewAddBookmark.Text" xml:space="preserve">
+    <value>Aggiungi segnaposto</value>
+  </data>
+  <data name="MapViewAddPlace.Text" xml:space="preserve">
+    <value>Aggiungi posto mancante</value>
+  </data>
+  <data name="MapViewAddWaypoint.Text" xml:space="preserve">
+    <value>Aggiungi tappa intermedia</value>
+  </data>
+  <data name="MapViewFindDirections.Text" xml:space="preserve">
+    <value>Indicazioni</value>
+  </data>
+  <data name="MapViewMoreInfo.Text" xml:space="preserve">
+    <value>Più info</value>
+  </data>
+  <data name="MapViewSetAsOrigin.Text" xml:space="preserve">
+    <value>Imposta come punto di partenza</value>
+  </data>
+  <data name="MapViewShare.Text" xml:space="preserve">
+    <value>Condividi</value>
+  </data>
+  <data name="NewDirectionsDrivingMode.Text" xml:space="preserve">
+    <value>Guida</value>
+  </data>
+  <data name="NewDirectionsTransitMode.Text" xml:space="preserve">
+    <value>Trasporto pubblico</value>
+  </data>
+  <data name="NewDirectionsWalkingMode.Text" xml:space="preserve">
+    <value>A piedi</value>
+  </data>
+  <data name="SearchUCSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Cerca…</value>
+  </data>
+  <data name="SettingsLanguageAPILang.Header" xml:space="preserve">
+    <value>Linguaggio API</value>
+  </data>
+  <data name="SettingsLanguageApplicationLang.Header" xml:space="preserve">
+    <value>Lingua applicazione</value>
+  </data>
+  <data name="SettingsLanguageMapLang.Header" xml:space="preserve">
+    <value>Lingua mappa</value>
+  </data>
+  <data name="SettingsViewFadeAnimationToggle.Header" xml:space="preserve">
+    <value>Abilita la dissolvenza nel caricamento del live tile</value>
+  </data>
+  <data name="SettingsViewLengthUnitCombo.Header" xml:space="preserve">
+    <value>Mostra la distanza in</value>
+  </data>
+  <data name="SettingsViewLiveTileToggle.Header" xml:space="preserve">
+    <value>Abilita live tile</value>
+  </data>
+  <data name="SettingsViewOverStrechToggle.Header" xml:space="preserve">
+    <value>Consenti lo zoom sulla mappa</value>
+  </data>
+  <data name="SettingsViewZoomControlsVisibilityCombo.Header" xml:space="preserve">
+    <value>Show zoom controls on map</value>
+  </data>
+  <data name="StringAbout.Text" xml:space="preserve">
+    <value>Info sull'app</value>
+  </data>
+  <data name="StringBuyFromIran.Text" xml:space="preserve">
+    <value>Compra dall'Iran</value>
+  </data>
+  <data name="StringCancel.Text" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  <data name="StringDirectionCalculated.Text" xml:space="preserve">
+    <value>Calcoliamo che la strada sia lunga {di} e richiederà {es}</value>
+  </data>
+  <data name="StringExit.Text" xml:space="preserve">
+    <value>Sei sicuro di voler uscire?</value>
+  </data>
+  <data name="StringFeet.Text" xml:space="preserve">
+    <value>Piedi</value>
+  </data>
+  <data name="StringHours.Text" xml:space="preserve">
+    <value>ore</value>
+  </data>
+  <data name="StringImperialLengthUnit.Text" xml:space="preserve">
+    <value>Imperiale (piedi, miglia)</value>
+  </data>
+  <data name="StringKiloMeters.Text" xml:space="preserve">
+    <value>Chilometri</value>
+  </data>
+  <data name="StringLaguageSettings.Text" xml:space="preserve">
+    <value>Impostazioni sulla lingua</value>
+  </data>
+  <data name="StringLocationPrivacy.Text" xml:space="preserve">
+    <value>Non siamo stati in grado di accedere alla tua posizione. Per favore controlla se la localizzazione del tuo dispositivo sia attiva e hai consentito all'app di accedere alla tua posizione nelle impostazioni della privacy.\n Seleziona il pulsante ok per controllare le impostazioni della posizione e annulla per continuare</value>
+  </data>
+  <data name="StringMapView.Text" xml:space="preserve">
+    <value>Visualizzazione mappa</value>
+  </data>
+  <data name="StringMeters.Text" xml:space="preserve">
+    <value>metri   </value>
+  </data>
+  <data name="StringMetricLengthUnit.Text" xml:space="preserve">
+    <value>Metrico (Metri, Chilometri)</value>
+  </data>
+  <data name="StringMiles.Text" xml:space="preserve">
+    <value>miglia</value>
+  </data>
+  <data name="StringMinutes.Text" xml:space="preserve">
+    <value>minuti</value>
+  </data>
+  <data name="StringNo.Text" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="StringNoWayToDestination.Text" xml:space="preserve">
+    <value>Nessun percorso per la tua destinazione!!!</value>
+  </data>
+  <data name="StringOfflineMaps.Text" xml:space="preserve">
+    <value>Mappe offline</value>
+  </data>
+  <data name="StringOK.Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="StringSelectBothOriginAndDestination.Text" xml:space="preserve">
+    <value>Non hai selezionato il punto di partenza</value>
+  </data>
+  <data name="StringSendFeedback.Text" xml:space="preserve">
+    <value>Invia un feedback</value>
+  </data>
+  <data name="StringSettings.Text" xml:space="preserve">
+    <value>Impostazioni    </value>
+  </data>
+  <data name="StringUSLengthUnit.Text" xml:space="preserve">
+    <value>US (Piedi, Miglia)</value>
+  </data>
+  <data name="StringWayPointsNotAvailableInTransit.Text" xml:space="preserve">
+    <value>Le tappe intermedie non sono supportate in modalità trasporto pubblico</value>
+  </data>
+  <data name="StringYards.Text" xml:space="preserve">
+    <value>Iarda</value>
+  </data>
+  <data name="StringYes.Text" xml:space="preserve">
+    <value>Sì</value>
+  </data>
+</root>

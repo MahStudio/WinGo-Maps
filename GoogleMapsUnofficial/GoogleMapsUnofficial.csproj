@@ -182,6 +182,8 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="GoogleMapsUnofficial_StoreKey.pfx" />
+    <PRIResource Include="Strings\Pt-Br\Resources.resw" />
+    <PRIResource Include="Strings\it\Resources.resw" />
     <PRIResource Include="Strings\Be-By\Resources.resw" />
     <PRIResource Include="Strings\ES\Resources.resw" />
     <PRIResource Include="Strings\DE-DE\Resources.resw" />

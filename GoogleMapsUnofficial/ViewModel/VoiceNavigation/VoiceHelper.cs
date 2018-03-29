@@ -73,6 +73,7 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
             var cp = args.Position.Coordinate;
             if (DateTime.Now.Subtract(LastWarn).TotalSeconds < 6) return;
             LastWarn = DateTime.Now;
+            if (Route == null || Route.legs == null) return;
             foreach (var items in Route.legs)
             {
                 foreach (var item in items.steps)
