@@ -54,19 +54,7 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
             CurrentStep = route.legs.FirstOrDefault().steps.FirstOrDefault();
             View.DirectionsControls.StepsTitleProvider.Provider.CurrentStep = CurrentStep;
         }
-
-        ~VoiceHelper()
-        {
-            try
-            {
-                IsRecalculating = false;
-                MapViewVM.GeoLocate.PositionChanged -= GeoLocate_PositionChanged;
-                Route = null;
-                LastStep = null;
-            }
-            catch { }
-        }
-
+        
         private async void GeoLocate_PositionChanged(Geolocator sender, PositionChangedEventArgs args)
         {
             if (IsRecalculating) return;
@@ -141,9 +129,14 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
 
         public void Dispose()
         {
-            MapViewVM.GeoLocate.PositionChanged -= GeoLocate_PositionChanged;
-            Route = null;
-            LastStep = null;
+            try
+            {
+                IsRecalculating = false;
+                MapViewVM.GeoLocate.PositionChanged -= GeoLocate_PositionChanged;
+                Route = null;
+                LastStep = null;
+            }
+            catch { }
         }
         public static async Task ReadText(string Text)
         {
