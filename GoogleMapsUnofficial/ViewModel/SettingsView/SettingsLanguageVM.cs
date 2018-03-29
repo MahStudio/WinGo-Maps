@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Windows.Globalization;
 using Windows.Storage;
 
 namespace GoogleMapsUnofficial.ViewModel.SettingsView
@@ -9,11 +10,12 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
     class SettingsLanguageVM : INotifyPropertyChanged
     {
         private CountryCodesHelper CCHelper = new CountryCodesHelper();
-
+        
         private string _onMapLanguage;
         private string _apiLanguage;
         private int _onmaplangindex;
         private int _apilangindex;
+        private int _applicationlangindex;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -35,6 +37,16 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
                 _onmaplangindex = value;
                 LanguageSettingsSetters.SetOnMapLanguage(SupportedMapLanguage[value].Value);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("OnMapLanguageIndex"));
+            }
+        }
+        public int ApplicationLanguageIndex
+        {
+            get { return _applicationlangindex; }
+            set
+            {
+                _applicationlangindex = value;
+                LanguageSettingsSetters.SetApplicationLanguage(ApplicationLanguages[value].Value);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ApplicationLanguageIndex"));
             }
         }
         public string OnMapLanguage
@@ -62,11 +74,28 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
                 return lst;
             }
         }
-
+        public List<KeyValuePair<string, string>> ApplicationLanguages
+        {
+            get
+            {
+                return new List<KeyValuePair<string, string>>()
+                {
+                    new KeyValuePair<string, string>("Arabic","Ar"),
+                    new KeyValuePair<string, string>("Belarusian","Be-By"),
+                    new KeyValuePair<string, string>("English","En-Us"),
+                    new KeyValuePair<string, string>("German","DE-DE"),
+                    new KeyValuePair<string, string>("Italian","it"),
+                    new KeyValuePair<string, string>("Persian","Fa-Ir"),
+                    new KeyValuePair<string, string>("Portuguese (Brazil)","Pt-Br"),
+                    new KeyValuePair<string, string>("Spanish","ES")
+                };
+            }
+        }
         public SettingsLanguageVM()
         {
             OnMapLanguageIndex = SupportedMapLanguage.FindIndex(x => x.Value.ToLower() == LanguageSettingsSetters.GetOnMapLanguage());
-            APILanguageIndex = SupportedLanguages.FindIndex(x=>x.Value.ToLower() == LanguageSettingsSetters.GetAPILanguage());
+            APILanguageIndex = SupportedLanguages.FindIndex(x => x.Value.ToLower() == LanguageSettingsSetters.GetAPILanguage());
+            ApplicationLanguageIndex = ApplicationLanguages.FindIndex(x => x.Value.ToLower() == LanguageSettingsSetters.GetApplicationLanguage());
         }
 
     }
@@ -106,6 +135,24 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
             {
                 SetOnMapLanguage("x-local");
                 return "x-local";
+            }
+        }
+        public static void SetApplicationLanguage(string LanguageCode)
+        {
+            ApplicationData.Current.LocalSettings.Values["ApplicationLanguage"] = LanguageCode.ToLower();
+            ApplicationLanguages.PrimaryLanguageOverride = LanguageCode;
+        }
+
+        public static string GetApplicationLanguage()
+        {
+            try
+            {
+                return ApplicationData.Current.LocalSettings.Values["ApplicationLanguage"].ToString();
+            }
+            catch
+            {
+                SetApplicationLanguage("En-Us");
+                return "En-Us";
             }
         }
     }

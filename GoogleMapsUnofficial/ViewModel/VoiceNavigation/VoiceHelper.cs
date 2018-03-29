@@ -97,19 +97,13 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
                         {
                             using (var speech = new SpeechSynthesizer())
                             {
-                                var mediaplayer = new MediaPlayer() { AudioCategory = MediaPlayerAudioCategory.Other };
-                                speech.Voice = SpeechSynthesizer.AllVoices.First(gender => gender.Gender == VoiceGender.Female);
                                 if (item.maneuver == null)
                                 {
-                                    SpeechSynthesisStream stream = await speech.SynthesizeTextToStreamAsync(item.html_instructions.NoHTMLString());
-                                    mediaplayer.Source = MediaSource.CreateFromStream(stream, stream.ContentType);
-                                    mediaplayer.Play();
+                                    await ReadText(item.html_instructions.NoHTMLString());
                                 }
                                 else
                                 {
-                                    SpeechSynthesisStream stream = await speech.SynthesizeTextToStreamAsync(item.maneuver + "\n" + item.html_instructions.NoHTMLString());
-                                    mediaplayer.Source = MediaSource.CreateFromStream(stream, stream.ContentType);
-                                    mediaplayer.Play();
+                                    await ReadText(item.maneuver + "\n" + item.html_instructions.NoHTMLString());
                                 }
                             }
                             LastStep = item;

@@ -14,15 +14,25 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ComboBox Grid.Row="0" Header="API Language" ItemsSource="{Binding SupportedLanguages}" SelectedIndex="{Binding APILanguageIndex, Mode=TwoWay}">
+        <TextBlock x:Uid="StringLaguageSettings" Grid.Row="0" Text="Settings" FontWeight="SemiBold" FontSize="22" Margin="0,0,0,15"/>
+        <ComboBox Grid.Row="1" Header="Application Language" ItemsSource="{Binding ApplicationLanguages}" SelectedIndex="{Binding ApplicationLanguageIndex, Mode=TwoWay}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Key}"/>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <ComboBox Grid.Row="1" Header="Map Language"  ItemsSource="{Binding SupportedMapLanguage}" SelectedIndex="{Binding OnMapLanguageIndex, Mode=TwoWay}" Margin="0,15">
+        <ComboBox Grid.Row="2" Header="API Language" ItemsSource="{Binding SupportedLanguages}" SelectedIndex="{Binding APILanguageIndex, Mode=TwoWay}" Margin="0,15">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Key}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <ComboBox Grid.Row="3" Header="Map Language"  ItemsSource="{Binding SupportedMapLanguage}" SelectedIndex="{Binding OnMapLanguageIndex, Mode=TwoWay}" Margin="0,15">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Key}"/>

@@ -49,8 +49,8 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            List<Step> Steps = new List<Step>();
             if (VoiceHelper.Route == null) return;
+            List<Step> Steps = new List<Step>();
             foreach (var RouteLeg in VoiceHelper.Route.legs)
             {
                 foreach (var LegStep in RouteLeg.steps)
@@ -69,8 +69,8 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            List<Step> Steps = new List<Step>();
             if (VoiceHelper.Route == null) return;
+            List<Step> Steps = new List<Step>();
             foreach (var RouteLeg in VoiceHelper.Route.legs)
             {
                 foreach (var LegStep in RouteLeg.steps)
