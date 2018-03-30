@@ -144,6 +144,8 @@ namespace GoogleMapsUnofficial
 
         private void GeoLocatorHelper_LocationFetched(object sender, Geoposition e)
         {
+            if (MapViewVM.UserLocation == null) MapViewVM.UserLocation = new ViewModel.ViewModel() { AttractionName = "My Location" };
+            MapViewVM.UserLocation.Location = e.Coordinate.Point;
             MapViewVM.FastLoadGeoPosition = e.Coordinate.Point;
         }
 

@@ -20,7 +20,7 @@
     <PackageCertificateKeyFile>GoogleMapsUnofficial_StoreKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
+    <AppxBundlePlatforms>arm</AppxBundlePlatforms>
     <PackageCertificateThumbprint>25C1453C3924D0B13017E8C779A4D131918D2D6A</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
@@ -357,6 +357,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MapView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MapView.DeviceFamily-Mobile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

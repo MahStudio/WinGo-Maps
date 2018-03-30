@@ -65,12 +65,7 @@ namespace GoogleMapsUnofficial.ViewModel
             StaticVM = this;
             LoadPage();
         }
-
-        ~MapViewVM()
-        {
-            geolocator.PositionChanged -= Geolocator_PositionChanged;
-            geolocator = null;
-        }
+        
         async void LocateUser()
         {
             try
