@@ -7,11 +7,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Calls;
 using Windows.ApplicationModel.DataTransfer;
-using Windows.ApplicationModel.Store;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
-using Windows.Services.Store;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
@@ -361,6 +359,8 @@ namespace GoogleMapsUnofficial.View
         }
         async void RightTapFunction()
         {
+            //try
+            //{
             var t = (await SearchHelper.NearbySearch(LastRightTap.Position, 5));
             if (t != null)
             {
@@ -438,32 +438,18 @@ namespace GoogleMapsUnofficial.View
                 await new MessageDialog("We didn't find anything here. Maybe an internet connection issue.").ShowAsync();
                 InfoPane.IsPaneOpen = false;
                 return;
-                var r1 = (await GeocodeHelper.GetInfo(LastRightTap));
-                if (r1 != null)
-                {
-                    var res = r1.results.FirstOrDefault();
-                    if (res != null)
-                    {
-                        PlaceName.Text = res.address_components.FirstOrDefault().short_name;
-                        PlaceAddress.Text = res.formatted_address;
-                    }
-                    else
-                    {
-                        await new MessageDialog("We didn't find anything here. Maybe an internet connection issue.").ShowAsync();
-                        InfoPane.IsPaneOpen = false;
-                    }
-                }
-                else
-                {
-                    await new MessageDialog("We didn't find anything here. Maybe an internet connection issue.").ShowAsync();
-                    InfoPane.IsPaneOpen = false;
-                }
             }
+            //}
+            //catch (Exception ex)
+            //{
+            //    await new MessageDialog("Error in RightTapFunction" + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace).ShowAsync();
+            //}
         }
         private async void RunMapRightTapped(MapControl sender, Geopoint Location)
         {
             InfoPane.IsPaneOpen = true;
             LastRightTap = Location;
+            await Task.Delay(10);
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, RightTapFunction);
         }
 
