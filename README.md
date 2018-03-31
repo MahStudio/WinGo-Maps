@@ -21,6 +21,7 @@ Win Go Maps is an UNOFFICIAL Google Map client for Universal Windows Platform.
 - Save Favorite places (+Sync between devices)
 - Cortana Integration
 - Live Tile
+- Multilingual support (Arabic, Belarusian, English, German, Itlian, Persian, Portuguese (Brazil) and more)
 - Fluent design
 
 ### Screenshots
