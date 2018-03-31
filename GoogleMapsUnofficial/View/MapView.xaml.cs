@@ -10,6 +10,7 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Metadata;
+using Windows.Networking.Connectivity;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
@@ -56,6 +57,7 @@ namespace GoogleMapsUnofficial.View
         public MapView()
         {
             this.InitializeComponent();
+            NetworkInformation.NetworkStatusChanged += NetworkInformation_NetworkStatusChanged;
             MapControl = Map;
             StaticMapView = this;
             Map.Style = MapStyle.None;
@@ -90,7 +92,7 @@ namespace GoogleMapsUnofficial.View
             }
             else
             {
-                Map.TileSources.Add(new MapTileSource(new LocalMapTileDataSource("ms-appdata:///local/MahMaps/mah_x_{x}-y_{y}-z_{zoomlevel}.jpeg")) { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled });
+                Map.TileSources.Add(new MapTileSource(new LocalMapTileDataSource("ms-appdata:///local/MahMaps/mah_x_{x}-y_{y}-z_{zoomlevel}.jpeg")) { AllowOverstretch = false, IsFadingEnabled = FadeAnimationEnabled });
             }
             //if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone)
             //{
@@ -100,6 +102,20 @@ namespace GoogleMapsUnofficial.View
             //    MyLocationControl.Margin = new Thickness(28, 28, 28, 28);
             //}
         }
+
+        private async void NetworkInformation_NetworkStatusChanged(object sender)
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, delegate
+            {
+                if (!InternalHelper.InternetConnection())
+                {
+                    Map.TileSources.Clear();
+                    Map.TileSources.Add(new MapTileSource(new LocalMapTileDataSource("ms-appdata:///local/MahMaps/mah_x_{x}-y_{y}-z_{zoomlevel}.jpeg")) { AllowOverstretch = false, IsFadingEnabled = SettingsSetters.GetFadeAnimationEnabled() });
+                }
+                else { ChangeViewControl.UseGoogleMaps(ChangeViewControl.CurrentMapMode, ChangeViewControl.ShowTrafficIsOn, true, ChangeViewControl.AllowOverstretch, ChangeViewControl.FadeAnimationEnabled); }
+            });
+        }
+
         private async void ShowStreetsideView()
         {
             // Check if Streetside is supported.
