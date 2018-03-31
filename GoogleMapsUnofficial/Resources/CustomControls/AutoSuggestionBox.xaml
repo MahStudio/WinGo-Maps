@@ -579,7 +579,7 @@
                             ContentTemplate="{TemplateBinding HeaderTemplate}"
                             FontWeight="Normal"
                             TextWrapping="Wrap" />
-                        <ScrollViewer x:Name="ContentElement"
+                        <ScrollViewer x:Name="ContentElement" FontWeight="Bold"
                             Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
                             HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}"
                             HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
@@ -595,6 +595,7 @@
                             ZoomMode="Disabled" />
                         <ContentControl x:Name="PlaceholderTextContentPresenter"
                             Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                                        FontWeight="Bold"
                             Foreground="{ThemeResource TextControlPlaceholderForeground}"
                             Margin="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}"

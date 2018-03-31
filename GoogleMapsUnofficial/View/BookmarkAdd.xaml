@@ -16,6 +16,6 @@
         <RadioButton x:Name="DefaultName" IsChecked="True" Content="{Binding PlaceName}" GroupName="Group" Checked="RadioButtons_Checked"/>
         <RadioButton x:Uid="BookmarkAddUCCustomName" x:Name="CustomName" IsChecked="False" Content="Custom Name" GroupName="Group" Checked="RadioButtons_Checked"/>
         <TextBox x:Name="PlaceNameText" Text="{Binding PlaceName}" IsEnabled="False" Header="Bookmark name"/>
-        <CheckBox x:Name="PinLiveTile" IsChecked="True" Content="Pin as live tile"/>
+        <CheckBox x:Uid="BookmarkAddUCPinLiveTile" x:Name="PinLiveTile" IsChecked="True" Content="Pin as live tile"/>
     </StackPanel>
 </ContentDialog>
