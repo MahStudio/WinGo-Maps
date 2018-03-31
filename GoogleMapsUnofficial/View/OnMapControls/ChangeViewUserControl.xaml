@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="90"
-    d:DesignWidth="245">
+    d:DesignWidth="265">
 
     <UserControl.Resources>
         <ResourceDictionary Source="/Resources/CustomControls/DotButton.xaml"/>
@@ -15,7 +15,7 @@
     <Grid>
         <Button x:Name="CVBTN" Width="35" Height="35" Style="{StaticResource dotbut}" VerticalAlignment="Top" HorizontalAlignment="Right" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" FontSize="18" Content="&#xE81E;" FontFamily="Segoe MDL2 Assets">
             <Button.Flyout>
-                <Flyout x:Name="FL" Opened="Flyout_Opened" Placement="Left" LightDismissOverlayMode="On">
+                <Flyout x:Name="FL" Opened="Flyout_Opened" Placement="Bottom" LightDismissOverlayMode="On">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -25,6 +25,7 @@
                             <ToggleButton x:Uid="ChangeViewUCDefaultMapView" Checked="DefaultMapView_Checked" Click="DefaultMapView_Click" x:Name="DefaultMapView" Content="Default" Margin="3,0"/>
                             <ToggleButton x:Uid="ChangeViewUCSatelliteMapView" Checked="SatelliteMapView_Checked" Click="SatelliteMapView_Click" x:Name="SatelliteMapView" Content="Satellite" Margin="3,0"/>
                             <ToggleButton x:Uid="ChangeViewUCHybridMapView" Checked="HybridMapView_Checked" Click="HybridMapView_Click" x:Name="HybridMapView" Content="Hybrid" Margin="3,0"/>
+                            <ToggleButton x:Uid="ChangeViewUCRoadsOnlyView" Checked="RoadsOnlyView_Checked" Click="RoadsOnlyView_Click" x:Name="RoadsOnlyView" Content="Roads Only" Margin="3,0"/>
                         </StackPanel>
                         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,3">
                             <ToggleSwitch x:Uid="ChangeViewUCShowTraffic" Toggled="ShowTraffic_Toggled" x:Name="ShowTraffic" Header="Traffic" Margin="3,0"/>
@@ -33,5 +34,33 @@
                 </Flyout>
             </Button.Flyout>
         </Button>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="WindowStates">
+                <VisualState x:Name="UltraWideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="900" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="FL.Placement" Value="Left"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="FL.Placement" Value="Left"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="FL.Placement" Value="Bottom"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </UserControl>

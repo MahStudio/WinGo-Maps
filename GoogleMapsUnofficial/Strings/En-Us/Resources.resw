@@ -315,4 +315,7 @@
   <data name="MainPage.FlowDirection" xml:space="preserve">
     <value>LeftToRight</value>
   </data>
+  <data name="ChangeViewUCRoadsOnlyView.Content" xml:space="preserve">
+    <value>Roads only</value>
+  </data>
 </root>
