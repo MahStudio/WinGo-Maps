@@ -95,6 +95,8 @@ namespace GoogleMapsUnofficial.View.OnMapControls
         public SearchUserControl()
         {
             this.InitializeComponent();
+            if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone)
+                this.Height = 48;
             this.DataContext = new ViewModel();
             SearchBox.LostFocus += SearchBox_LostFocus;
         }
