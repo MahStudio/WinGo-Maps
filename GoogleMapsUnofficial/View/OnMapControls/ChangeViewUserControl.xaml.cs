@@ -28,8 +28,6 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             AllowOverstretch = SettingsSetters.GetAllowOverstretch();
             FadeAnimationEnabled = SettingsSetters.GetFadeAnimationEnabled();
             this.InitializeComponent();
-            if (!InternalHelper.InternetConnection())
-                CVBTN.IsEnabled = false;
             Map = MapView.MapControl;
         }
         public void UseGoogleMaps(MapMode MapMode = MapMode.Standard, bool ShowTraffic = false, bool AllowCaching = true, bool AllowOverstretch = false, bool IsFadingEnabled = true)
@@ -37,9 +35,10 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             if (Map == null && MapView.MapControl != null) Map = MapView.MapControl;
             if (Map == null) return;
             Map.Style = MapStyle.None;
-            Map.TileSources.Clear();
             CurrentMapMode = MapMode;
             ShowTrafficIsOn = ShowTraffic;
+            if (!InternalHelper.InternetConnection()) return;
+            Map.TileSources.Clear();
             string mapuri = "";
             switch (MapMode)
             {
