@@ -312,6 +312,10 @@ namespace GoogleMapsUnofficial.View
                         var latitude = pointargs[0].Split('.')[1] + "." + pointargs[0].Split('.')[2];
                         var longitude = pointargs[1];
                         cp = $"{latitude}~{longitude}";
+                        if (parameters.Count >= 3)
+                            Map.MapElements.Add(new MapIcon() { Location = new Geopoint(new BasicGeoposition() { Latitude = Convert.ToDouble(latitude), Longitude = Convert.ToDouble(longitude) }), Title = pointargs[2].Replace("+", " ") });
+                        else
+                            Map.MapElements.Add(new MapIcon() { Location = new Geopoint(new BasicGeoposition() { Latitude = Convert.ToDouble(latitude), Longitude = Convert.ToDouble(longitude) }), Title = "Point" });
                     }
                     if (Where != "")
                     {
@@ -344,6 +348,7 @@ namespace GoogleMapsUnofficial.View
                         bgp.Latitude = Convert.ToDouble(cp.Split('~')[0]);
                         bgp.Longitude = Convert.ToDouble(cp.Split('~')[1]);
                         Map.Center = new Geopoint(bgp);
+                        Map.MapElements.Add(new MapIcon() { Location = new Geopoint(bgp), Title = "Point" });
                     }
                     if (zoomlevel != 0) Map.ZoomLevel = zoomlevel;
                     else Map.ZoomLevel = 16;
