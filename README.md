@@ -12,6 +12,7 @@ Win Go Maps is an UNOFFICIAL Google Map client for Universal Windows Platform.
 
 - Show and Download Google Maps Tiles in UWP map control
 - Offline map download (+Backup/Restore)
+- Switch between online and offline maps dynamically 
 - Find directions and navigation
 - Voice Navigation
 - GeoCoding (Converting latitude and longitude to address)
