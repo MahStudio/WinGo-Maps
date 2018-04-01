@@ -566,9 +566,15 @@ namespace GoogleMapsUnofficial.View
         private void InkingBTN_Click(object sender, RoutedEventArgs e)
         {
             if (inkCanvas.Visibility == Visibility.Collapsed)
+            {
                 inkCanvas.Visibility = Visibility.Visible;
+                DirectionsControl.Visibility = Visibility.Collapsed;
+            }
             else
+            {
                 inkCanvas.Visibility = Visibility.Collapsed;
+                DirectionsControl.Visibility = Visibility.Visible;
+            }
         }
 
         private async void RatePlace_Click(object sender, TappedRoutedEventArgs e)
