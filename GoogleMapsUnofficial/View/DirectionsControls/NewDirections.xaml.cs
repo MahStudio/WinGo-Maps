@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
+using Windows.Storage.Streams;
 using Windows.System.Display;
 using Windows.UI;
 using Windows.UI.Popups;
@@ -221,6 +222,18 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                             MapView.MapControl.MapElements.Add(route);
                             var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
                             var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
+                            foreach (var item in r.routes.FirstOrDefault().legs)
+                            {
+                                foreach (var item2 in item.steps)
+                                {
+                                    if( item2.transit_details != null)
+                                    {
+                                        var ico = RandomAccessStreamReference.CreateFromUri(new Uri("http:" + item2.transit_details.line.vehicle.icon));
+                                        MapView.MapControl.MapElements.Add(new MapIcon() { Image = ico, Title = "arrival " + item2.transit_details.headsign, Location = new Geopoint(new BasicGeoposition() { Latitude = item2.transit_details.arrival_stop.location.lat, Longitude = item2.transit_details.arrival_stop.location.lng }) });
+                                        MapView.MapControl.MapElements.Add(new MapIcon() { Image = ico, Title = "departure  " + item2.transit_details.headsign, Location = new Geopoint(new BasicGeoposition() { Latitude = item2.transit_details.departure_stop.location.lat, Longitude = item2.transit_details.departure_stop.location.lng }) });
+                                    }
+                                }
+                            }
                             await new MessageDialog($"{MultilingualHelpToolkit.GetString("StringDirectionCalculated", "Text")}".Replace("{di}", di).Replace("{es}", es)).ShowAsync();
                             MapView.MapControl.ZoomLevel = 18;
                             MapView.MapControl.Center = Origin;

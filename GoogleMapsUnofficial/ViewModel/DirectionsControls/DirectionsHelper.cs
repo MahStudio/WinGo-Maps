@@ -392,9 +392,78 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
             public string html_instructions { get; set; }
             public Polyline polyline { get; set; }
             public Start_Location1 start_location { get; set; }
+            public Transit_Details transit_details { get; set; }
             public string travel_mode { get; set; }
             public string maneuver { get; set; }
         }
+
+        public class Transit_Details
+        {
+            public Arrival_Stop arrival_stop { get; set; }
+            public Arrival_Time arrival_time { get; set; }
+            public Departure_Stop departure_stop { get; set; }
+            public Departure_Time departure_time { get; set; }
+            public string headsign { get; set; }
+            public Line line { get; set; }
+            public int num_stops { get; set; }
+        }
+
+        public class Arrival_Stop
+        {
+            public Location location { get; set; }
+            public string name { get; set; }
+        }
+
+        public class Location
+        {
+            public float lat { get; set; }
+            public float lng { get; set; }
+        }
+
+        public class Arrival_Time
+        {
+            public string text { get; set; }
+            public string time_zone { get; set; }
+            public int value { get; set; }
+        }
+
+        public class Departure_Stop
+        {
+            public Location location { get; set; }
+            public string name { get; set; }
+        }
+
+        public class Departure_Time
+        {
+            public string text { get; set; }
+            public string time_zone { get; set; }
+            public int value { get; set; }
+        }
+
+        public class Line
+        {
+            public Agency[] agencies { get; set; }
+            public string color { get; set; }
+            public string name { get; set; }
+            public string short_name { get; set; }
+            public string text_color { get; set; }
+            public Vehicle vehicle { get; set; }
+        }
+
+        public class Vehicle
+        {
+            public string icon { get; set; }
+            public string name { get; set; }
+            public string type { get; set; }
+        }
+
+        public class Agency
+        {
+            public string name { get; set; }
+            public string phone { get; set; }
+            public string url { get; set; }
+        }
+
 
         public class Distance1
         {
