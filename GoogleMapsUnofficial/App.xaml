@@ -2,8 +2,7 @@
     x:Class="GoogleMapsUnofficial.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:GoogleMapsUnofficial"
-    RequestedTheme="Light">
+    xmlns:local="using:GoogleMapsUnofficial">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

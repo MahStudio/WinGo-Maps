@@ -321,4 +321,16 @@
   <data name="SettingsViewShowTrafficToggle.Header" xml:space="preserve">
     <value>نمایش ترافیک پس از اجرا</value>
   </data>
+  <data name="SettingsViewApplicattionThemeCombo.Header" xml:space="preserve">
+    <value>نمای برنامه</value>
+  </data>
+  <data name="StringDarkTheme.Text" xml:space="preserve">
+    <value>تیره</value>
+  </data>
+  <data name="StringLightTheme.Text" xml:space="preserve">
+    <value>روشن</value>
+  </data>
+  <data name="StringSystemTheme.Text" xml:space="preserve">
+    <value>مطابق سیستم</value>
+  </data>
 </root>

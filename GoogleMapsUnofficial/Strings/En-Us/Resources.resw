@@ -321,4 +321,16 @@
   <data name="SettingsViewShowTrafficToggle.Header" xml:space="preserve">
     <value>Show traffic on launch</value>
   </data>
+  <data name="SettingsViewApplicattionThemeCombo.Header" xml:space="preserve">
+    <value>Application Theme</value>
+  </data>
+  <data name="StringDarkTheme.Text" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="StringLightTheme.Text" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="StringSystemTheme.Text" xml:space="preserve">
+    <value>System</value>
+  </data>
 </root>

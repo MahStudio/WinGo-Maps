@@ -16,6 +16,7 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
     class SettingsMainVM : INotifyPropertyChanged
     {
         private bool _showtrafficonlaunch;
+        private int _themeindex = 0;
         private int _lengthUnitindex = 0;
         private int _rotationcontrolsVisible = -1;
         private int _zoomcontrolsVisible = -1;
@@ -102,6 +103,16 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
                 SettingsSetters.SetLengthUnit(value);
             }
         }
+        public int ThemeIndex
+        {
+            get { return _themeindex; }
+            set
+            {
+                _themeindex = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ThemeIndex"));
+                SettingsSetters.SetThemeIndex(value);
+            }
+        }
         public List<string> MapInteractionModeOptions
         {
             get { return Enum.GetNames(typeof(MapInteractionMode)).ToList(); }
@@ -109,6 +120,10 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
         public List<string> LengthUnits
         {
             get { return new List<string>() { $"{MultilingualHelpToolkit.GetString("StringMetricLengthUnit", "Text")}", $"{MultilingualHelpToolkit.GetString("StringImperialLengthUnit", "Text")}", $"{MultilingualHelpToolkit.GetString("StringUSLengthUnit", "Text")}" }; }
+        }
+        public List<string> AvailableThemes
+        {
+            get { return new List<string>() { $"{MultilingualHelpToolkit.GetString("StringDarkTheme", "Text")}", $"{MultilingualHelpToolkit.GetString("StringLightTheme", "Text")}", $"{MultilingualHelpToolkit.GetString("StringSystemTheme", "Text")}" }; }
         }
         public static List<string> MapInteractionModeOptionsstatic
         {
@@ -126,6 +141,7 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
             ZoomControlsVisible = EnumToIndexConverter(SettingsSetters.GetZoomControlsVisible());
             RotationControlsVisible = EnumToIndexConverter(SettingsSetters.GetRotationControlsVisible());
             LengthUnit = SettingsSetters.GetLengthUnit();
+            ThemeIndex = SettingsSetters.GetThemeIndex();
             BackgroundHandler();
         }
 
@@ -375,6 +391,24 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
         public static void SetLengthUnit(int Index)
         {
             ApplicationData.Current.LocalSettings.Values["LengthUnit"] = Index;
+        }
+
+        public static int GetThemeIndex()
+        {
+            try
+            {
+                return (int)ApplicationData.Current.LocalSettings.Values["ThemeIndex"];
+            }
+            catch (Exception)
+            {
+                SetThemeIndex(2);
+                return 2;
+            }
+        }
+
+        public static void SetThemeIndex(int Index)
+        {
+            ApplicationData.Current.LocalSettings.Values["ThemeIndex"] = Index;
         }
     }
 }

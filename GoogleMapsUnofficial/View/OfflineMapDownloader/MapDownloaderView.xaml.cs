@@ -78,7 +78,7 @@ namespace GoogleMapsUnofficial.View.OfflineMapDownloader
 
         private async void DLComplete(object sender, bool e)
         {
-            if(MDH != null)
+            if (MDH != null)
             {
                 try
                 {
@@ -97,12 +97,23 @@ namespace GoogleMapsUnofficial.View.OfflineMapDownloader
                 DLButton.IsEnabled = true;
             }
             catch { }
+            try
+            {
+                new DisplayRequest().RequestRelease();
+            }
+            catch { }
         }
 
         private void DLProgress(object sender, int e)
         {
             DLPB.Value = e;
-            new DisplayRequest().RequestActive();
+            try
+            {
+                new DisplayRequest().RequestActive();
+            }
+            catch
+            {
+            }
         }
 
         private async void BackupBTN_Click(object sender, RoutedEventArgs e)

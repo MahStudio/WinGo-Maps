@@ -1,4 +1,5 @@
 ﻿using GoogleMapsUnofficial.ViewModel;
+using GoogleMapsUnofficial.ViewModel.SettingsView;
 using System;
 using System.Linq;
 using Windows.ApplicationModel;
@@ -38,6 +39,16 @@ namespace GoogleMapsUnofficial
                 System.Globalization.CultureInfo.CurrentCulture.NumberFormat.PercentDecimalSeparator = English.NumberFormat.PercentDecimalSeparator;
             }
             catch { }
+            try
+            {
+                var index= SettingsSetters.GetThemeIndex();
+                if (index == 0) this.RequestedTheme = ApplicationTheme.Dark;
+                if (index == 1) this.RequestedTheme = ApplicationTheme.Light;
+            }
+            catch
+            {
+                this.RequestedTheme = ApplicationTheme.Light;
+            }
         }
         
         private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
