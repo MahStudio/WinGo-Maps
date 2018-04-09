@@ -15,6 +15,7 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
 {
     class SettingsMainVM : INotifyPropertyChanged
     {
+        private bool _showtrafficonlaunch;
         private int _lengthUnitindex = 0;
         private int _rotationcontrolsVisible = -1;
         private int _zoomcontrolsVisible = -1;
@@ -22,6 +23,19 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
         private bool _allowOverstretch;
         private bool _livetileenable;
         public event PropertyChangedEventHandler PropertyChanged;
+        public bool ShowTrafficOnLaunch
+        {
+            get
+            {
+                return _showtrafficonlaunch;
+            }
+            set
+            {
+                _showtrafficonlaunch = value;
+                SettingsSetters.SetShowTrafficOnLaunch(value);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ShowTrafficOnLaunch"));
+            }
+        }
         public bool LiveTileEnable
         {
             get { return _livetileenable; }
@@ -108,6 +122,7 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
         {
             AllowOverstretch = SettingsSetters.GetAllowOverstretch();
             FadeAnimationEnabled = SettingsSetters.GetFadeAnimationEnabled();
+            ShowTrafficOnLaunch = SettingsSetters.GetShowTrafficOnLaunch();
             ZoomControlsVisible = EnumToIndexConverter(SettingsSetters.GetZoomControlsVisible());
             RotationControlsVisible = EnumToIndexConverter(SettingsSetters.GetRotationControlsVisible());
             LengthUnit = SettingsSetters.GetLengthUnit();
@@ -164,6 +179,24 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
 
     class SettingsSetters
     {
+        public static bool GetShowTrafficOnLaunch()
+        {
+            try
+            {
+                return (bool)ApplicationData.Current.LocalSettings.Values["ShowTrafficOnLaunch"];
+            }
+            catch
+            {
+                SetShowTrafficOnLaunch(false);
+                return false;
+            }
+        }
+
+        public static void SetShowTrafficOnLaunch(bool Value)
+        {
+            ApplicationData.Current.LocalSettings.Values["ShowTrafficOnLaunch"] = Value;
+        }
+
         public static bool GetFadeAnimationEnabled()
         {
             try

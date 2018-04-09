@@ -13,24 +13,32 @@ class GeoLocatorHelper
 
     private static async void StartLocationExtensionSession()
     {
-        session = new ExtendedExecutionSession();
-        session.Description = "Location Tracker";
-        session.Reason = ExtendedExecutionReason.LocationTracking;
-        session.Revoked += new TypedEventHandler<object, ExtendedExecutionRevokedEventArgs>(ExtendedExecutionSession_Revoked);
-        var result = await session.RequestExtensionAsync();
-        if (result == ExtendedExecutionResult.Denied)
+        try
         {
-            //TODO: handle denied
+            session = new ExtendedExecutionSession();
+            session.Description = "Location Tracker";
+            session.Reason = ExtendedExecutionReason.LocationTracking;
+            var result = await session.RequestExtensionAsync();
+            if (result == ExtendedExecutionResult.Denied)
+            {
+                //TODO: handle denied
+                session.Revoked += new TypedEventHandler<object, ExtendedExecutionRevokedEventArgs>(ExtendedExecutionSession_Revoked);
+            }
         }
+        catch { }
     }
 
     private static void ExtendedExecutionSession_Revoked(object sender, ExtendedExecutionRevokedEventArgs args)
     {
-        if (session != null)
+        try
         {
-            session.Dispose();
-            session = null;
+            if (session != null)
+            {
+                session.Dispose();
+                session = null;
+            }
         }
+        catch { }
     }
 
     static GeoLocatorHelper()

@@ -316,4 +316,10 @@
   <data name="StringYes.Text" xml:space="preserve">
     <value>نعم</value>
   </data>
+  <data name="ChangeViewUCRoadsOnlyView.Content" xml:space="preserve">
+    <value>الطرقات فقط</value>
+  </data>
+  <data name="SettingsViewShowTrafficToggle.Header" xml:space="preserve">
+    <value>عرض حركة المرور عند الإطلاق</value>
+  </data>
 </root>

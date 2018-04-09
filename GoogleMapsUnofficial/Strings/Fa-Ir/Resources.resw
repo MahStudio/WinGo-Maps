@@ -318,4 +318,7 @@
   <data name="ChangeViewUCRoadsOnlyView.Content" xml:space="preserve">
     <value>فقط راه ها</value>
   </data>
+  <data name="SettingsViewShowTrafficToggle.Header" xml:space="preserve">
+    <value>نمایش ترافیک پس از اجرا</value>
+  </data>
 </root>

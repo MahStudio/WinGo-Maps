@@ -315,4 +315,10 @@
   <data name="StringYes.Text" xml:space="preserve">
     <value>Sim</value>
   </data>
+  <data name="ChangeViewUCRoadsOnlyView.Content" xml:space="preserve">
+    <value>Estradas apenas</value>
+  </data>
+  <data name="SettingsViewShowTrafficToggle.Header" xml:space="preserve">
+    <value>Mostrar trânsito na inicialização</value>
+  </data>
 </root>

@@ -131,7 +131,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                             var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
                             await new MessageDialog($"{MultilingualHelpToolkit.GetString("StringDirectionCalculated", "Text")}".Replace("{di}", di).Replace("{es}", es)).ShowAsync();
                             //await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
-                            MapView.MapControl.ZoomLevel = 18;
+                            await MapView.MapControl.TryZoomToAsync(16);
                             MapView.MapControl.Center = Origin;
                             MapView.MapControl.DesiredPitch = 45;
                             MapViewVM.ActiveNavigationMode = true;
@@ -184,7 +184,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                             var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
                             var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
                             await new MessageDialog($"{MultilingualHelpToolkit.GetString("StringDirectionCalculated", "Text")}".Replace("{di}", di).Replace("{es}", es)).ShowAsync();
-                            MapView.MapControl.ZoomLevel = 18;
+                            await MapView.MapControl.TryZoomToAsync(16);
                             MapView.MapControl.Center = Origin;
                             MapView.MapControl.DesiredPitch = 45;
                             MapViewVM.ActiveNavigationMode = true;
@@ -226,7 +226,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                             {
                                 foreach (var item2 in item.steps)
                                 {
-                                    if( item2.transit_details != null)
+                                    if (item2.transit_details != null)
                                     {
                                         var ico = RandomAccessStreamReference.CreateFromUri(new Uri("http:" + item2.transit_details.line.vehicle.icon));
                                         MapView.MapControl.MapElements.Add(new MapIcon() { Image = ico, Title = "arrival " + item2.transit_details.headsign, Location = new Geopoint(new BasicGeoposition() { Latitude = item2.transit_details.arrival_stop.location.lat, Longitude = item2.transit_details.arrival_stop.location.lng }) });
@@ -235,7 +235,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                                 }
                             }
                             await new MessageDialog($"{MultilingualHelpToolkit.GetString("StringDirectionCalculated", "Text")}".Replace("{di}", di).Replace("{es}", es)).ShowAsync();
-                            MapView.MapControl.ZoomLevel = 18;
+                            await MapView.MapControl.TryZoomToAsync(16);
                             MapView.MapControl.Center = Origin;
                             MapView.MapControl.DesiredPitch = 45;
                             MapViewVM.ActiveNavigationMode = true;
@@ -301,7 +301,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                         var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
                         var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
                         //await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
-                        MapView.MapControl.ZoomLevel = 18;
+                        await MapView.MapControl.TryZoomToAsync(16);
                         MapView.MapControl.Center = Origin;
                         MapView.MapControl.DesiredPitch = 45;
                         MapViewVM.ActiveNavigationMode = true;
@@ -347,7 +347,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                         var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
                         var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
                         //await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
-                        MapView.MapControl.ZoomLevel = 18;
+                        await MapView.MapControl.TryZoomToAsync(16);
                         MapView.MapControl.Center = Origin;
                         MapView.MapControl.DesiredPitch = 45;
                         MapViewVM.ActiveNavigationMode = true;
@@ -379,7 +379,7 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
                         var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
                         var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
                         //await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
-                        MapView.MapControl.ZoomLevel = 18;
+                        await MapView.MapControl.TryZoomToAsync(16);
                         MapView.MapControl.Center = Origin;
                         MapView.MapControl.DesiredPitch = 45;
                         MapViewVM.ActiveNavigationMode = true;

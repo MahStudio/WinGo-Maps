@@ -77,8 +77,15 @@ namespace GoogleMapsUnofficial
             applyAcrylicAccent(MainGrid);
             HMenuTopLst.Items.Add(new MenuClass { Text = MultilingualHelpToolkit.GetString("StringMapView", "Text"), Icon = "", Tag = "Map View" });
             HMenuTopLst.Items.Add(new MenuClass { Text = MultilingualHelpToolkit.GetString("StringOfflineMaps", "Text"), Icon = "", Tag = "Offline Maps" });
-            if (CurrentAppSimulator.LicenseInformation.IsTrial)
+            try
+            {
+                if (CurrentAppSimulator.LicenseInformation.IsTrial)
+                    HMenuBottomLst.Items.Add(new MenuClass { Text = MultilingualHelpToolkit.GetString("StringBuyFromIran", "Text"), Icon = "", Tag = "Buy from Iran" });
+            }
+            catch
+            {
                 HMenuBottomLst.Items.Add(new MenuClass { Text = MultilingualHelpToolkit.GetString("StringBuyFromIran", "Text"), Icon = "", Tag = "Buy from Iran" });
+            }
             HMenuBottomLst.Items.Add(new MenuClass { Text = MultilingualHelpToolkit.GetString("StringSendFeedback", "Text"), Icon = "", Tag = "Send feedback" });
             HMenuBottomLst.Items.Add(new MenuClass { Text = MultilingualHelpToolkit.GetString("StringSettings", "Text"), Icon = "", Tag = "Settings" });
             if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone)
@@ -89,16 +96,23 @@ namespace GoogleMapsUnofficial
         private async void MainPage_BackRequested(object sender, BackRequestedEventArgs e)
         {
             e.Handled = true;
-            if (Fr.CanGoBack) Fr.GoBack();
-            else
+            try
             {
-                var msg = new MessageDialog(MultilingualHelpToolkit.GetString("stringExit","Text"));
-                msg.Commands.Add(new UICommand(MultilingualHelpToolkit.GetString("StringYes","Text"), delegate
+                if (Fr.CanGoBack) Fr.GoBack();
+                else
                 {
-                    App.Current.Exit();
-                }));
-                msg.Commands.Add(new UICommand(MultilingualHelpToolkit.GetString("StringNo", "Text"), delegate { }));
-                await msg.ShowAsync();
+                    var msg = new MessageDialog(MultilingualHelpToolkit.GetString("stringExit", "Text"));
+                    msg.Commands.Add(new UICommand(MultilingualHelpToolkit.GetString("StringYes", "Text"), delegate
+                    {
+                        App.Current.Exit();
+                    }));
+                    msg.Commands.Add(new UICommand(MultilingualHelpToolkit.GetString("StringNo", "Text"), delegate { }));
+                    await msg.ShowAsync();
+                }
+            }
+            catch
+            {
+
             }
         }
 

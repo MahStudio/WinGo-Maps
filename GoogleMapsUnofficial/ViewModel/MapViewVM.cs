@@ -65,7 +65,7 @@ namespace GoogleMapsUnofficial.ViewModel
             StaticVM = this;
             LoadPage();
         }
-        
+
         async void LocateUser()
         {
             try
@@ -87,8 +87,12 @@ namespace GoogleMapsUnofficial.ViewModel
                         }
                         else
                         {
-                            Map.Center = UserLocation.Location;
-                            Map.ZoomLevel = 16;
+                            UserLocation.Location = FastLoadGeoPosition;
+                            Map.Center = FastLoadGeoPosition;
+                            await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, async delegate
+                            {
+                                await Map.TryZoomToAsync(16);
+                            });
                         }
                         // Subscribe to the StatusChanged event to get updates of location status changes.
                         //geolocator.StatusChanged += Geolocator_StatusChanged;
@@ -107,6 +111,7 @@ namespace GoogleMapsUnofficial.ViewModel
                             });
                         }
                         await Task.Delay(150);
+                        LocationFlagVisibility = Visibility.Visible;
                         //if (Map.Is3DSupported)
                         //{
                         //    Map.Style = MapStyle.Aerial3DWithRoads;
@@ -129,17 +134,31 @@ namespace GoogleMapsUnofficial.ViewModel
                 else
                 {
                     LocationFlagVisibility = Visibility.Collapsed;
-                    var msg = new MessageDialog(MultilingualHelpToolkit.GetString("StringLocationPrivacy","Text"));
+                    var msg = new MessageDialog(MultilingualHelpToolkit.GetString("StringLocationPrivacy", "Text"));
                     msg.Commands.Add(new UICommand(MultilingualHelpToolkit.GetString("StringOK", "Text"), async delegate
                     {
                         await Launcher.LaunchUriAsync(new Uri("ms-settings:privacy-location", UriKind.RelativeOrAbsolute));
                     }));
-                    msg.Commands.Add(new UICommand(MultilingualHelpToolkit.GetString("StringCancel","Text"), delegate { }));
+                    msg.Commands.Add(new UICommand(MultilingualHelpToolkit.GetString("StringCancel", "Text"), delegate { }));
                     await msg.ShowAsync();
+                    Window.Current.Activated += Current_Activated;
                 }
             }
             catch { }
         }
+
+        private async void Current_Activated(object sender, WindowActivatedEventArgs e)
+        {
+            if (e.WindowActivationState == CoreWindowActivationState.CodeActivated)
+            {
+                Window.Current.Activated -= Current_Activated;
+                if (await Geolocator.RequestAccessAsync() == GeolocationAccessStatus.Allowed)
+                {
+                    LocateUser();
+                }
+            }
+        }
+
         public async void LoadPage()
         {
             Compass = Compass.GetDefault();
@@ -159,12 +178,12 @@ namespace GoogleMapsUnofficial.ViewModel
                 Geopoint snPoint = new Geopoint(new BasicGeoposition { Latitude = pos.Position.Latitude, Longitude = pos.Position.Longitude });
                 await Task.Delay(10);
                 //Map.MapElements.Add(UserLoction);
-                if(Map == null)
+                if (Map == null)
                     Map = View.MapView.MapControl;
-                if(Map != null)
+                if (Map != null)
                 {
                     Map.Center = snPoint;
-                    Map.ZoomLevel = 16;
+                    await Map.TryZoomToAsync(16);
                     UserLocation.Location = pos;
                 }
             });

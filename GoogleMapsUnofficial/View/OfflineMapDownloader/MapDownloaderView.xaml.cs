@@ -4,6 +4,7 @@ using System;
 using System.ComponentModel;
 using Windows.Devices.Geolocation;
 using Windows.Storage.Pickers;
+using Windows.System.Display;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -77,19 +78,31 @@ namespace GoogleMapsUnofficial.View.OfflineMapDownloader
 
         private async void DLComplete(object sender, bool e)
         {
-            MDH.DownloadCompleted -= DLComplete;
-            MDH.DownloadProgress -= DLProgress;
-            DLButton.IsEnabled = true;
-            if (MDH.FailedDownloads == 0)
-                await new MessageDialog(MultilingualHelpToolkit.GetString("MapDownloaderViewStringDLComplete", "Text")).ShowAsync();
-            else
-                await new MessageDialog(MultilingualHelpToolkit.GetString("MapDownloaderViewStringDLCompleteWithErrors", "Text").Replace("{count}", $"{MDH.FailedDownloads}")).ShowAsync();
-                //await new MessageDialog("Download Completed with " + MDH.FailedDownloads + " Failures count. Please click on start download once again to re-download failed items again.").ShowAsync();
+            if(MDH != null)
+            {
+                try
+                {
+                    MDH.DownloadCompleted -= DLComplete;
+                    MDH.DownloadProgress -= DLProgress;
+
+                    if (MDH.FailedDownloads == 0)
+                        await new MessageDialog(MultilingualHelpToolkit.GetString("MapDownloaderViewStringDLComplete", "Text")).ShowAsync();
+                    else
+                        await new MessageDialog(MultilingualHelpToolkit.GetString("MapDownloaderViewStringDLCompleteWithErrors", "Text").Replace("{count}", $"{MDH.FailedDownloads}")).ShowAsync();
+                }
+                catch { }
+            }
+            try
+            {
+                DLButton.IsEnabled = true;
+            }
+            catch { }
         }
 
         private void DLProgress(object sender, int e)
         {
             DLPB.Value = e;
+            new DisplayRequest().RequestActive();
         }
 
         private async void BackupBTN_Click(object sender, RoutedEventArgs e)

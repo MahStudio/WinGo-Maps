@@ -318,4 +318,7 @@
   <data name="ChangeViewUCRoadsOnlyView.Content" xml:space="preserve">
     <value>Roads only</value>
   </data>
+  <data name="SettingsViewShowTrafficToggle.Header" xml:space="preserve">
+    <value>Show traffic on launch</value>
+  </data>
 </root>

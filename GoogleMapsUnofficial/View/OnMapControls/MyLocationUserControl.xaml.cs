@@ -19,10 +19,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             this.InitializeComponent();
             GeoLocatorHelper.LocationFetched += GeoLocatorHelper_LocationFetched;
         }
-        ~MyLocationUserControl()
-        {
-            GeoLocatorHelper.LocationFetched -= GeoLocatorHelper_LocationFetched;
-        }
+
         private async void GeoLocatorHelper_LocationFetched(object sender, Geoposition e)
         {
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
@@ -34,7 +31,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                 await Task.Delay(10);
                 var Map = MapView.MapControl;
                 Map.Center = snPoint;
-                Map.ZoomLevel = 16;
+                await MapView.MapControl.TryZoomToAsync(16);
                 MapViewVM.UserLocation.Location = snPoint;
             });
         }

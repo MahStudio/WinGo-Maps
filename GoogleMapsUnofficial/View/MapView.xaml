@@ -211,7 +211,7 @@
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock Text="" HorizontalAlignment="Center" Grid.Row="0" FontFamily="Segoe MDL2 Assets" FontSize="28"/>
-                                <TextBlock Text="Directions" Grid.Row="1"/>
+                                <TextBlock x:Uid="MapViewFindDirections" Text="Directions" Grid.Row="1"/>
                             </Grid>
                         </Button>
                     </Grid>

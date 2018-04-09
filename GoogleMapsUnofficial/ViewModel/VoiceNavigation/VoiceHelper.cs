@@ -133,13 +133,21 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
         }
         public static async Task ReadText(string Text)
         {
-            using (var speech = new SpeechSynthesizer())
+            try
             {
-                var mediaplayer = new MediaPlayer() { AudioCategory = MediaPlayerAudioCategory.Other };
-                speech.Voice = SpeechSynthesizer.AllVoices.First(gender => gender.Gender == VoiceGender.Female);
-                var stream = await speech.SynthesizeTextToStreamAsync(Text);
-                mediaplayer.Source = MediaSource.CreateFromStream(stream, stream.ContentType);
-                mediaplayer.Play();
+                using (var speech = new SpeechSynthesizer() { Voice = SpeechSynthesizer.AllVoices.First(gender => gender.Gender == VoiceGender.Female) })
+                {
+                    using (var mediaplayer = new MediaPlayer() { AudioCategory = MediaPlayerAudioCategory.Other })
+                    {
+                        var stream = await speech.SynthesizeTextToStreamAsync(Text);
+                        mediaplayer.Source = MediaSource.CreateFromStream(stream, stream.ContentType);
+                        mediaplayer.Play();
+                    }
+                }
+            }
+            catch
+            {
+
             }
         }
     }

@@ -60,12 +60,8 @@ namespace GoogleMapsUnofficial.View
             NetworkInformation.NetworkStatusChanged += NetworkInformation_NetworkStatusChanged;
             MapControl = Map;
             StaticMapView = this;
-            Map.Style = MapStyle.None;
-            Map.TileSources.Clear();
-            var AllowOverstretch = SettingsSetters.GetAllowOverstretch();
-            var FadeAnimationEnabled = SettingsSetters.GetFadeAnimationEnabled();
-            Map.RotateInteractionMode = MapInteractionMode.GestureOnly;
-            //Map.RotateInteractionMode = SettingsSetters.GetRotationControlsVisible();
+            //Map.RotateInteractionMode = MapInteractionMode.GestureOnly;
+            Map.RotateInteractionMode = SettingsSetters.GetRotationControlsVisible();
             var ZoomInteractionMode = SettingsSetters.GetZoomControlsVisible();
             if (ZoomInteractionMode == MapInteractionMode.Auto || ZoomInteractionMode == MapInteractionMode.ControlOnly || ZoomInteractionMode == MapInteractionMode.GestureAndControl || ZoomInteractionMode == MapInteractionMode.PointerKeyboardAndControl)
                 ZoomUserControl.Visibility = Visibility.Visible;
@@ -73,27 +69,7 @@ namespace GoogleMapsUnofficial.View
             if (ZoomInteractionMode == MapInteractionMode.Auto || ZoomInteractionMode == MapInteractionMode.GestureAndControl || ZoomInteractionMode == MapInteractionMode.GestureOnly || ZoomInteractionMode == MapInteractionMode.PointerAndKeyboard || ZoomInteractionMode == MapInteractionMode.PointerKeyboardAndControl || ZoomInteractionMode == MapInteractionMode.PointerOnly)
                 Map.ZoomInteractionMode = MapInteractionMode.GestureOnly;
             else Map.ZoomInteractionMode = MapInteractionMode.Disabled;
-            if (InternalHelper.InternetConnection())
-            {
-                //var hm = new HttpMapTileDataSource() { AllowCaching = true };
-                //var md = new MapTileSource(hm) { AllowOverstretch = false };
-                //Map.TileSources.Add(md);
-                //hm.UriRequested += Hm_UriRequested;
-                //New
-                //Map.TileSources.Add(new MapTileSource(new HttpMapTileDataSource("https://www.googleapis.com/tile/v1/tiles/{x}/{y}/{zoomlevel}?session=sessiontoken&key=AIzaSyCFQ-I2-SPtdtVR4TCa6665mLMX5n_I5Sc")
-                //{ AllowCaching = true })
-                //{ AllowOverstretch = false, IsFadingEnabled = false, ZoomLevelRange = new MapZoomLevelRange() { Max = 22, Min = 1 } });
-                //OLD
-                //lyrs parameter h = dark, y = hybrid
-                string mapuri = "http://mt1.google.com/vt/lyrs=r&hl=" + AppCore.OnMapLanguage + "&z={zoomlevel}&x={x}&y={y}";
-                Map.TileSources.Add(new MapTileSource(new HttpMapTileDataSource(mapuri)
-                { AllowCaching = true })
-                { AllowOverstretch = AllowOverstretch, IsFadingEnabled = FadeAnimationEnabled, ZoomLevelRange = new MapZoomLevelRange() { Max = 22, Min = 0 } });
-            }
-            else
-            {
-                Map.TileSources.Add(new MapTileSource(new LocalMapTileDataSource("ms-appdata:///local/MahMaps/mah_x_{x}-y_{y}-z_{zoomlevel}.jpeg")) { AllowOverstretch = false, IsFadingEnabled = FadeAnimationEnabled });
-            }
+
             //if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone)
             //{
             //    ChangeViewControl.Margin = new Thickness(28, 95, 28, 0);
@@ -158,6 +134,19 @@ namespace GoogleMapsUnofficial.View
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            MapControl = Map;
+            if (e.NavigationMode == NavigationMode.Back)
+                ChangeViewControl.Map = Map;
+            var AllowOverstretch = SettingsSetters.GetAllowOverstretch();
+            var FadeAnimationEnabled = SettingsSetters.GetFadeAnimationEnabled();
+            if (InternalHelper.InternetConnection())
+            {
+                ChangeViewControl.UseGoogleMaps(OnMapControls.ChangeViewUserControl.MapMode.Standard, AllowOverstretch: AllowOverstretch, IsFadingEnabled: FadeAnimationEnabled, ShowTraffic: SettingsSetters.GetShowTrafficOnLaunch());
+            }
+            else
+            {
+                Map.TileSources.Add(new MapTileSource(new LocalMapTileDataSource("ms-appdata:///local/MahMaps/mah_x_{x}-y_{y}-z_{zoomlevel}.jpeg")) { AllowOverstretch = false, IsFadingEnabled = FadeAnimationEnabled });
+            }
             inkCanvas.InkPresenter.InputDeviceTypes = CoreInputDeviceTypes.Mouse | CoreInputDeviceTypes.Pen | CoreInputDeviceTypes.Touch;
             var drawingAttr = this.inkCanvas.InkPresenter.CopyDefaultDrawingAttributes();
             drawingAttr.PenTip = PenTipShape.Rectangle;
@@ -262,7 +251,7 @@ namespace GoogleMapsUnofficial.View
                                 BasicGeoposition pointer = new BasicGeoposition() { Latitude = Convert.ToDouble(cp[0]), Longitude = Convert.ToDouble(cp[1]) };
                                 Map.Center = new Geopoint(pointer);
                                 if (zoom.Value != null)
-                                    Map.ZoomLevel = Convert.ToDouble(zoom.Value);
+                                    await Map.TryZoomToAsync(Convert.ToDouble(zoom.Value));
                                 RunMapRightTapped(Map, new Geopoint(pointer));
                             }
                             else
@@ -278,7 +267,7 @@ namespace GoogleMapsUnofficial.View
                                 var ploc = res.results.FirstOrDefault().geometry.location;
                                 var geopoint = new Geopoint(new BasicGeoposition() { Latitude = ploc.lat, Longitude = ploc.lng });
                                 Map.Center = geopoint;
-                                Map.ZoomLevel = 16;
+                                await MapView.MapControl.TryZoomToAsync(16);
                                 SearchResultPoint = geopoint;
                             }
                         }
@@ -350,8 +339,8 @@ namespace GoogleMapsUnofficial.View
                         Map.Center = new Geopoint(bgp);
                         Map.MapElements.Add(new MapIcon() { Location = new Geopoint(bgp), Title = "Point" });
                     }
-                    if (zoomlevel != 0) Map.ZoomLevel = zoomlevel;
-                    else Map.ZoomLevel = 16;
+                    if (zoomlevel != 0) await Map.TryZoomToAsync( zoomlevel );
+                    else await MapView.MapControl.TryZoomToAsync(16);
                     if (Querry != "")
                     {
                         await Task.Delay(1500);

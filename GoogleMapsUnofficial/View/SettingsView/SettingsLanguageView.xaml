@@ -10,34 +10,74 @@
     <Page.DataContext>
         <local:SettingsLanguageVM/>
     </Page.DataContext>
-    <Grid Padding="12,12,12,0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <TextBlock x:Uid="StringLaguageSettings" Grid.Row="0" Text="Settings" FontWeight="SemiBold" FontSize="22" Margin="0,0,0,15"/>
-        <ComboBox Grid.Row="1" Header="Application Language" ItemsSource="{Binding ApplicationLanguages}" SelectedIndex="{Binding ApplicationLanguageIndex, Mode=TwoWay}">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Key}"/>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <ComboBox Grid.Row="2" Header="API Language" ItemsSource="{Binding SupportedLanguages}" SelectedIndex="{Binding APILanguageIndex, Mode=TwoWay}" Margin="0,15">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Key}"/>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <ComboBox Grid.Row="3" Header="Map Language"  ItemsSource="{Binding SupportedMapLanguage}" SelectedIndex="{Binding OnMapLanguageIndex, Mode=TwoWay}" Margin="0,15">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Key}"/>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-    </Grid>
+    <ScrollViewer Padding="12,12,12,0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Uid="StringLaguageSettings" Grid.Row="0" Text="Settings" FontWeight="SemiBold" FontSize="22" Margin="0,0,0,15"/>
+            <ComboBox Grid.Row="1" Header="Application Language" ItemsSource="{Binding ApplicationLanguages}" SelectedIndex="{Binding ApplicationLanguageIndex, Mode=TwoWay}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Key}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <ComboBox Grid.Row="2" Header="API Language" ItemsSource="{Binding SupportedLanguages}" SelectedIndex="{Binding APILanguageIndex, Mode=TwoWay}" Margin="0,15">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Key}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <ComboBox Grid.Row="3" Header="Map Language"  ItemsSource="{Binding SupportedMapLanguage}" SelectedIndex="{Binding OnMapLanguageIndex, Mode=TwoWay}" Margin="0,15">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Key}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Grid Grid.Row="6">
+                <TextBlock LineHeight="30" TextWrapping="Wrap" FontFamily="Segoe UI">
+                <Run FontSize="22">Translators</Run>
+                <LineBreak/>
+                <Run FontSize="20">Arabic</Run>
+                <LineBreak/>
+                <Run>Ahmad Karaki</Run>
+                <LineBreak/>
+                <Run FontSize="20">Belarusian</Run>
+                <LineBreak/>
+                <Run>Deerslayer</Run>
+                <LineBreak/>
+                <Run FontSize="20">German</Run>
+                <LineBreak/>
+                <Run>Loris Oberländer</Run>
+                <LineBreak/>
+                <Run FontSize="20">Italian</Run>
+                <LineBreak/>
+                <Run>Filippo Fedeli</Run>
+                <LineBreak/>
+                <Run FontSize="20">Persian</Run>
+                <LineBreak/>
+                <Run>Maryam Garaeli Shekh, Ali Noshahi</Run>
+                <LineBreak/>
+                <Run FontSize="20">Portuguese (Brazil)</Run>
+                <LineBreak/>
+                <Run>Marcus Malvar Corbacho</Run>
+                <LineBreak/>
+                <Run FontSize="20">Turkish</Run>
+                <LineBreak/>
+                <Run>Hadi Dana</Run>
+                <LineBreak/>
+                <Run FontSize="20">Spanish</Run>
+                <LineBreak/>
+                <Run>Sergio Fernández-Pacheco Rico</Run>
+                </TextBlock>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
 </Page>

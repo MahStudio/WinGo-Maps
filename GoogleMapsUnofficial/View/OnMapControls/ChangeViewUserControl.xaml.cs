@@ -9,7 +9,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
 {
     public sealed partial class ChangeViewUserControl : UserControl
     {
-        private MapControl Map;
+        public MapControl Map;
         public bool AllowOverstretch;
         public bool FadeAnimationEnabled;
         public bool ShowTrafficIsOn;
@@ -24,7 +24,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
         public ChangeViewUserControl()
         {
             CurrentMapMode = MapMode.Standard;
-            ShowTrafficIsOn = false;
+            ShowTrafficIsOn = SettingsSetters.GetShowTrafficOnLaunch();
             AllowOverstretch = SettingsSetters.GetAllowOverstretch();
             FadeAnimationEnabled = SettingsSetters.GetFadeAnimationEnabled();
             this.InitializeComponent();
@@ -79,8 +79,28 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             if (Map == null)
             {
                 Map = MapView.MapControl;
-                DefaultMapView.IsChecked = true;
-                ShowTraffic.IsOn = false;
+                ShowTraffic.IsOn = SettingsSetters.GetShowTrafficOnLaunch();
+            }
+            DefaultMapView.IsChecked = false;
+            RoadsOnlyView.IsChecked = false;
+            SatelliteMapView.IsChecked = false;
+            HybridMapView.IsChecked = false;
+            switch (CurrentMapMode)
+            {
+                case MapMode.Standard:
+                    DefaultMapView.IsChecked = true;
+                    break;
+                case MapMode.RoadsOnly:
+                    RoadsOnlyView.IsChecked = true;
+                    break;
+                case MapMode.Satellite:
+                    SatelliteMapView.IsChecked = true;
+                    break;
+                case MapMode.Hybrid:
+                    HybridMapView.IsChecked = true;
+                    break;
+                default:
+                    break;
             }
         }
 

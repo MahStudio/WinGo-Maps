@@ -6,6 +6,7 @@ using Windows.Storage.Streams;
 using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using GoogleMapsUnofficial.View;
+using Windows.Networking.BackgroundTransfer;
 
 namespace GoogleMapsUnofficial.ViewModel.OfflineMapDownloader
 {
