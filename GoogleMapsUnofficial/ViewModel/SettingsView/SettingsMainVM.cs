@@ -401,8 +401,8 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
             }
             catch (Exception)
             {
-                SetThemeIndex(2);
-                return 2;
+                SetThemeIndex(1);
+                return 1;
             }
         }
 
