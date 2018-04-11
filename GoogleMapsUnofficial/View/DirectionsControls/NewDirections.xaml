@@ -19,7 +19,7 @@
                                   OffsetX="2"
                                   OffsetY="2"
                                   Color="Black" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
-            <Grid Background="White" CornerRadius="5" Opacity="0.8">
+            <Grid Background="{StaticResource WinGoBack}" CornerRadius="5" Opacity="0.8">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>

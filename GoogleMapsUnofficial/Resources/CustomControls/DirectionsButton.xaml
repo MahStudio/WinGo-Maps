@@ -5,9 +5,9 @@
 
     <!-- Default style for Windows.UI.Xaml.Controls.Button -->
     <Style TargetType="Button" x:Key="DirectionButtonStyle">
-        <Setter Property="Background" Value="#fbfbfb" />
-        <Setter Property="Foreground" Value="#cbcbcb" />
-        <Setter Property="BorderBrush" Value="#fbfbfb" />
+        <Setter Property="Background" Value="{StaticResource WinGoBack2}" />
+        <Setter Property="Foreground" Value="{StaticResource WinGoBack2Foreground}" />
+        <Setter Property="BorderBrush" Value="{StaticResource WinGoBack2}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="8,4,8,4" />
         <Setter Property="HorizontalAlignment" Value="Left" />
@@ -31,7 +31,7 @@
                                 <VisualState x:Name="PointerOver">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="#ffffff" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource WinGoPureBack}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPointerOver}" />

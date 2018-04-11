@@ -103,6 +103,22 @@
                 </Setter>
             </Style>
 
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="WinGoBack" Color="#fafafa"/>
+                    <SolidColorBrush x:Key="WinGoBackForeground" Color="#7d7d7d"/>
+                    <SolidColorBrush x:Key="WinGoPureBack" Color="#ffffff"/>
+                    <SolidColorBrush x:Key="WinGoBack2" Color="#fbfbfb"/>
+                    <SolidColorBrush x:Key="WinGoBack2Foreground" Color="#cbcbcb"/>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="WinGoBack" Color="#2B2B2B"/>
+                    <SolidColorBrush x:Key="WinGoBackForeground" Color="#E6E6E6"/>
+                    <SolidColorBrush x:Key="WinGoPureBack" Color="#000000"/>
+                    <SolidColorBrush x:Key="WinGoBack2" Color="#2B2B2B"/>
+                    <SolidColorBrush x:Key="WinGoBack2Foreground" Color="#444444"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
