@@ -1,0 +1,346 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ButtonLanguageSettings.Content" xml:space="preserve">
+    <value>言語の設定</value>
+  </data>
+  <data name="ChangeViewUCDefaultMapView.Content" xml:space="preserve">
+    <value>既定</value>
+  </data>
+  <data name="ChangeViewUCHybridMapView.Content" xml:space="preserve">
+    <value>ハイブリッド</value>
+  </data>
+  <data name="ChangeViewUCSatelliteMapView.Content" xml:space="preserve">
+    <value>航空写真</value>
+  </data>
+  <data name="ChangeViewUCShowTraffic.Header" xml:space="preserve">
+    <value>交通量の表示</value>
+  </data>
+  <data name="MapDownloaderViewBackupBTN.Content" xml:space="preserve">
+    <value>バックアップ</value>
+  </data>
+  <data name="MapDownloaderViewDLButton.Content" xml:space="preserve">
+    <value>ダウンロード</value>
+  </data>
+  <data name="MapDownloaderViewMaximumZoomLevel.Text" xml:space="preserve">
+    <value>ダウンロードする地図の最大ズームレベル（既定値は17）</value>
+  </data>
+  <data name="MapDownloaderViewRestoreBtn.Content" xml:space="preserve">
+    <value>リストア</value>
+  </data>
+  <data name="MapDownloaderViewStringDLComplete.Text" xml:space="preserve">
+    <value>オフライン マップのダウンロードが終わりました。</value>
+  </data>
+  <data name="MapDownloaderViewStringDLCompleteWithErrors.Text" xml:space="preserve">
+    <value>ダウンロードが終了しましたが、{count} アイテムをダウンロード出来ませんでした。失敗したアイテムをダウンロードするにはもう一度「ダウンロード」をクリックします。</value>
+  </data>
+  <data name="MapDownloaderViewStringTwoPointsSelected.Text" xml:space="preserve">
+    <value>領域を選択済みです。</value>
+  </data>
+  <data name="MapDownloaderViewTextLine1.Text" xml:space="preserve">
+    <value>選択した領域の地図をダウンロード出来ます。領域を選択してから、「ダウンロード」 をクリックします。</value>
+  </data>
+  <data name="MapDownloaderViewTextLine2.Text" xml:space="preserve">
+    <value>領域を選択するには、最初に領域の左上、次に右下をクリックします。指定をやり直すには、地図上のマーカーをクリックして消してから再び指定します。</value>
+    <comment>Touch 2 points on the map to select a region. First point Top Left, Second point Bottom Right. If you want to change pointers position click on the flag and try to set it in any position you want</comment>
+  </data>
+  <data name="NewDirectionsDrivingMode.Text" xml:space="preserve">
+    <value>車</value>
+  </data>
+  <data name="NewDirectionsTransitMode.Text" xml:space="preserve">
+    <value>公共交通機関</value>
+  </data>
+  <data name="NewDirectionsWalkingMode.Text" xml:space="preserve">
+    <value>歩行</value>
+  </data>
+  <data name="SearchUCSearchBox.PlaceholderText" xml:space="preserve">
+    <value>マップを検索する...</value>
+  </data>
+  <data name="SettingsLanguageAPILang.Header" xml:space="preserve">
+    <value>API の言語</value>
+  </data>
+  <data name="SettingsLanguageApplicationLang.Header" xml:space="preserve">
+    <value>アプリの言語</value>
+  </data>
+  <data name="SettingsLanguageMapLang.Header" xml:space="preserve">
+    <value>マップの言語</value>
+  </data>
+  <data name="SettingsViewFadeAnimationToggle.Header" xml:space="preserve">
+    <value>地図のロード時にフェード効果を使用する</value>
+  </data>
+  <data name="SettingsViewLengthUnitCombo.Header" xml:space="preserve">
+    <value>距離の単位</value>
+  </data>
+  <data name="SettingsViewLiveTileToggle.Header" xml:space="preserve">
+    <value>スタート メニューのタイルに地図を表示する</value>
+  </data>
+  <data name="SettingsViewOverStrechToggle.Header" xml:space="preserve">
+    <value>地図がロードされるまでの間、ダウンロード済みの地図を引き延ばして表示する</value>
+  </data>
+  <data name="SettingsViewZoomControlsVisibilityCombo.Header" xml:space="preserve">
+    <value>マップ上のズーム コントロール表示</value>
+  </data>
+  <data name="StringAbout.Text" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="StringBuyFromIran.Text" xml:space="preserve">
+    <value>このアプリをイランで購入するには</value>
+  </data>
+  <data name="StringCancel.Text" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="StringDirectionCalculated.Text" xml:space="preserve">
+    <value>計算したルートは行程およそ {di} 、移動時間はおよそ {es} です。</value>
+  </data>
+  <data name="StringExit.Text" xml:space="preserve">
+    <value>終了してよろしいですか？</value>
+  </data>
+  <data name="StringFeet.Text" xml:space="preserve">
+    <value>フィート</value>
+  </data>
+  <data name="StringHours.Text" xml:space="preserve">
+    <value>時間</value>
+  </data>
+  <data name="StringImperialLengthUnit.Text" xml:space="preserve">
+    <value>ヤード・マイル (Imperial)</value>
+    <comment>Imperial (Yards, Miles)</comment>
+  </data>
+  <data name="StringKiloMeters.Text" xml:space="preserve">
+    <value>キロメートル</value>
+  </data>
+  <data name="StringLaguageSettings.Text" xml:space="preserve">
+    <value>言語の設定</value>
+  </data>
+  <data name="StringLocationPrivacy.Text" xml:space="preserve">
+    <value>位置情報を取得できませんでした。デバイスの位置情報がオンになっており、このアプリが位置情報の取得を許可されているか確認してください。\nOKボタンで設定に移動します。</value>
+    <comment>We weren't able to access your location. Please check if your device location is on and you have accepted location access to the app in privacy settings.\nHit ok button to navigate location settings and cancel to continue.</comment>
+  </data>
+  <data name="StringMapView.Text" xml:space="preserve">
+    <value>マップ ビュー</value>
+    <comment>Nav Pane</comment>
+  </data>
+  <data name="StringMeters.Text" xml:space="preserve">
+    <value>メートル</value>
+  </data>
+  <data name="StringMetricLengthUnit.Text" xml:space="preserve">
+    <value>メートル・キロメートル (Metric)</value>
+    <comment>Metric</comment>
+  </data>
+  <data name="StringMiles.Text" xml:space="preserve">
+    <value>マイル</value>
+  </data>
+  <data name="StringMinutes.Text" xml:space="preserve">
+    <value>分</value>
+  </data>
+  <data name="StringNo.Text" xml:space="preserve">
+    <value>いいえ</value>
+  </data>
+  <data name="StringNoWayToDestination.Text" xml:space="preserve">
+    <value>目的地へのルートが見つかりません！</value>
+    <comment>No way to your destination!!!</comment>
+  </data>
+  <data name="StringOfflineMaps.Text" xml:space="preserve">
+    <value>オフライン マップ</value>
+    <comment>Nav Pane</comment>
+  </data>
+  <data name="StringOK.Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="StringSelectBothOriginAndDestination.Text" xml:space="preserve">
+    <value>出発地と目的地が設定されていません。</value>
+  </data>
+  <data name="StringSendFeedback.Text" xml:space="preserve">
+    <value>フィードバックの送信</value>
+  </data>
+  <data name="StringSettings.Text" xml:space="preserve">
+    <value>設定</value>
+    <comment>Nav Pane</comment>
+  </data>
+  <data name="StringUSLengthUnit.Text" xml:space="preserve">
+    <value>フィート・マイル (US)</value>
+  </data>
+  <data name="StringWayPointsNotAvailableInTransit.Text" xml:space="preserve">
+    <value>交通機関モードで経由地は設定できません。</value>
+  </data>
+  <data name="StringYards.Text" xml:space="preserve">
+    <value>ヤード</value>
+  </data>
+  <data name="StringYes.Text" xml:space="preserve">
+    <value>はい</value>
+  </data>
+  <data name="BookMarkAddUC.PrimaryButtonText" xml:space="preserve">
+    <value>ブックマークの追加</value>
+  </data>
+  <data name="BookMarkAddUC.SecondaryButtonText" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="BookmarkAddUC.Title" xml:space="preserve">
+    <value>ブックマークの追加</value>
+  </data>
+  <data name="BookmarkAddUCCustomName.Content" xml:space="preserve">
+    <value>名前を指定</value>
+  </data>
+  <data name="BookmarkAddUCPinLiveTile.Content" xml:space="preserve">
+    <value>ライブタイルとしてスタートにピン留め</value>
+  </data>
+  <data name="MapViewAddBookmark.Text" xml:space="preserve">
+    <value>ブックマークを追加</value>
+  </data>
+  <data name="MapViewAddPlace.Text" xml:space="preserve">
+    <value>場所を追加</value>
+    <comment>Add missing place</comment>
+  </data>
+  <data name="MapViewAddWaypoint.Text" xml:space="preserve">
+    <value>経由地を追加</value>
+  </data>
+  <data name="MapViewFindDirections.Text" xml:space="preserve">
+    <value>ルート</value>
+  </data>
+  <data name="MapViewMoreInfo.Text" xml:space="preserve">
+    <value>詳細情報</value>
+  </data>
+  <data name="MapViewSetAsOrigin.Text" xml:space="preserve">
+    <value>ここを出発地に設定</value>
+  </data>
+  <data name="MapViewShare.Text" xml:space="preserve">
+    <value>共有</value>
+  </data>
+  <data name="MainPage.FlowDirection" xml:space="preserve">
+    <value>LeftToRight</value>
+  </data>
+  <data name="ChangeViewUCRoadsOnlyView.Content" xml:space="preserve">
+    <value>道路のみ</value>
+  </data>
+  <data name="SettingsViewShowTrafficToggle.Header" xml:space="preserve">
+    <value>起動時に交通量を表示する</value>
+  </data>
+  <data name="SettingsViewApplicattionThemeCombo.Header" xml:space="preserve">
+    <value>テーマの選択</value>
+  </data>
+  <data name="StringDarkTheme.Text" xml:space="preserve">
+    <value>黒</value>
+  </data>
+  <data name="StringLightTheme.Text" xml:space="preserve">
+    <value>白</value>
+  </data>
+  <data name="StringSystemTheme.Text" xml:space="preserve">
+    <value>システム</value>
+    <comment>Theme</comment>
+  </data>
+</root>
