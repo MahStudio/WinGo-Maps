@@ -17,6 +17,7 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
 {
     class SettingsMainVM : INotifyPropertyChanged
     {
+        private bool _contactsaccess;
         private bool _showtrafficonlaunch;
         private int _themeindex = 0;
         private int _lengthUnitindex = 0;
@@ -26,6 +27,19 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
         private bool _allowOverstretch;
         private bool _livetileenable;
         public event PropertyChangedEventHandler PropertyChanged;
+        public bool ContactsAccess
+        {
+            get { return _contactsaccess; }
+            set
+            {
+                UpdateContactsAccess(value);
+            }
+        }
+        public async void UpdateContactsAccess(bool V)
+        {
+            _contactsaccess = await SettingsSetters.SetAccessToContacts(V);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ContactsAccess"));
+        }
         public bool ShowTrafficOnLaunch
         {
             get
@@ -145,8 +159,12 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
             LengthUnit = SettingsSetters.GetLengthUnit();
             ThemeIndex = SettingsSetters.GetThemeIndex();
             BackgroundHandler();
+            ContactHandler();
         }
-
+        async void ContactHandler()
+        {
+            ContactsAccess = await SettingsSetters.GetAccessToContcts();
+        }
         async void BackgroundHandler()
         {
             try
@@ -414,10 +432,46 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
         }
         public static async Task<bool> GetAccessToContcts()
         {
-            var at = await ContactManager.RequestStoreAsync(ContactStoreAccessType.AllContactsReadWrite);
-            if (at != null)
-                return true;
-            else return false;
+            try
+            {
+                var data = Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values["AccessContacts"]);
+                if (data == false) return false;
+                var at = await ContactManager.RequestStoreAsync(ContactStoreAccessType.AllContactsReadWrite);
+                if (at != null)
+                    return true;
+                else return false;
+            }
+            catch
+            {
+                return await SetAccessToContacts(false);
+            }
+        }
+
+        public static async Task<bool> SetAccessToContacts(bool Value)
+        {
+            try
+            {
+                if (Value == false)
+                {
+                    ApplicationData.Current.LocalSettings.Values["AccessContacts"] = false;
+                    return false;
+                }
+                var at = await ContactManager.RequestStoreAsync(ContactStoreAccessType.AllContactsReadWrite);
+                if (at != null)
+                {
+                    ApplicationData.Current.LocalSettings.Values["AccessContacts"] = true;
+                    return true;
+                }
+                else
+                {
+                    ApplicationData.Current.LocalSettings.Values["AccessContacts"] = false;
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

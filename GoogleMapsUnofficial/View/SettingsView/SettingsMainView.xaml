@@ -32,7 +32,7 @@
             <ToggleSwitch x:Uid="SettingsViewFadeAnimationToggle" Margin="0,15,0,0" Grid.Row="2" Header="Enable Fade Animation on loading map tiles" IsOn="{Binding FadeAnimationEnabled, Mode=TwoWay}"/>
             <ToggleSwitch x:Uid="SettingsViewLiveTileToggle" Margin="0,15,0,0" Grid.Row="3" Header="Enable live tile" IsOn="{Binding LiveTileEnable, Mode=TwoWay}"/>
             <ToggleSwitch x:Uid="SettingsViewShowTrafficToggle" Margin="0,15,0,0" Grid.Row="4" Header="Enable live tile" IsOn="{Binding ShowTrafficOnLaunch, Mode=TwoWay}"/>
-            <!--<ToggleSwitch Margin="0,15,0,0" Grid.Row="5" IsOn="{Binding ShowTrafficOnLaunch, Mode=TwoWay}">
+            <ToggleSwitch Margin="0,15,0,0" Grid.Row="5" IsOn="{Binding ContactsAccess, Mode=TwoWay}">
                 <ToggleSwitch.HeaderTemplate>
                     <DataTemplate>
                         <Grid>
@@ -44,7 +44,7 @@
                         </Grid>
                     </DataTemplate>
                 </ToggleSwitch.HeaderTemplate>
-            </ToggleSwitch>-->
+            </ToggleSwitch>
             <ComboBox x:Uid="SettingsViewZoomControlsVisibilityCombo" Margin="0,20,0,0" Grid.Row="6" Header="Show zoom controls on map" ItemsSource="{Binding MapInteractionModeOptions,Mode=OneWay}" SelectedIndex="{Binding ZoomControlsVisible, Mode=TwoWay}"/>
             <ComboBox Grid.Row="7" Header="Show rotation controls on map" Margin="0,20,0,0" ItemsSource="{Binding MapInteractionModeOptions,Mode=OneWay}" SelectedIndex="{Binding RotationControlsVisible, Mode=TwoWay}"/>
             <ComboBox x:Uid="SettingsViewLengthUnitCombo" Margin="0,20,0,0" Grid.Row="8" Header="Show distance in" ItemsSource="{Binding LengthUnits, Mode=OneWay}" SelectedIndex="{Binding LengthUnit, Mode=TwoWay}"/>
