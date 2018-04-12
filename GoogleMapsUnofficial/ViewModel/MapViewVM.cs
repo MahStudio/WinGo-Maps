@@ -1,4 +1,5 @@
-﻿using GoogleMapsUnofficial.ViewModel.PlaceControls;
+﻿using GoogleMapsUnofficial.View;
+using GoogleMapsUnofficial.ViewModel.PlaceControls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -73,6 +74,7 @@ namespace GoogleMapsUnofficial.ViewModel
                 var accessStatus = await Geolocator.RequestAccessAsync();
                 if (accessStatus == GeolocationAccessStatus.Allowed)
                 {
+                    Map = MapView.MapControl;
                     if (FastLoadGeoPosition != null)
                     {
                         if (geolocator == null)
@@ -100,16 +102,18 @@ namespace GoogleMapsUnofficial.ViewModel
                         GeoLocatorHelper.GetUserLocation();
                         GeoLocatorHelper.LocationFetched += GeoLocatorHelper_LocationFetched;
                         geolocator.PositionChanged += Geolocator_PositionChanged;
-
-                        var savedplaces = SavedPlacesVM.GetSavedPlaces();
-                        foreach (var item in savedplaces)
+                        await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, delegate
                         {
-                            Map.MapElements.Add(new MapIcon()
+                            var savedplaces = SavedPlacesVM.GetSavedPlaces();
+                            foreach (var item in savedplaces)
                             {
-                                Location = new Geopoint(new BasicGeoposition() { Latitude = item.Latitude, Longitude = item.Longitude }),
-                                Title = item.PlaceName
-                            });
-                        }
+                                Map.MapElements.Add(new MapIcon()
+                                {
+                                    Location = new Geopoint(new BasicGeoposition() { Latitude = item.Latitude, Longitude = item.Longitude }),
+                                    Title = item.PlaceName
+                                });
+                            }
+                        });
                         await Task.Delay(150);
                         LocationFlagVisibility = Visibility.Visible;
                         //if (Map.Is3DSupported)
