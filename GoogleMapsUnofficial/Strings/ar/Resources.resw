@@ -322,4 +322,22 @@
   <data name="SettingsViewShowTrafficToggle.Header" xml:space="preserve">
     <value>عرض حركة المرور عند الإطلاق</value>
   </data>
+  <data name="SettingsViewApplicattionThemeCombo.Header" xml:space="preserve">
+    <value>وضع التطبيق</value>
+  </data>
+  <data name="StringAccessContacts.Text" xml:space="preserve">
+    <value>الوصول إلى جهات الاتصال</value>
+  </data>
+  <data name="StringAccessContactsWhy.Text" xml:space="preserve">
+    <value>سيتم عرض جهات الاتصال ذات العناوين في نتائج البحث للعثور على موقعها بشكل أسرع</value>
+  </data>
+  <data name="StringDarkTheme.Text" xml:space="preserve">
+    <value>داكن</value>
+  </data>
+  <data name="StringLightTheme.Text" xml:space="preserve">
+    <value>فاتح</value>
+  </data>
+  <data name="StringSystemTheme.Text" xml:space="preserve">
+    <value>النظام</value>
+  </data>
 </root>

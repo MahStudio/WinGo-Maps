@@ -315,4 +315,22 @@
   <data name="StringYes.Text" xml:space="preserve">
     <value>Si</value>
   </data>
+  <data name="SettingsViewApplicattionThemeCombo.Header" xml:space="preserve">
+    <value>Tema de la aplicación</value>
+  </data>
+  <data name="StringAccessContacts.Text" xml:space="preserve">
+    <value>Acceso a contactos</value>
+  </data>
+  <data name="StringAccessContactsWhy.Text" xml:space="preserve">
+    <value>Contactos con una dirección serán mostrados en los resultados de búsqueda para encontrar su localización más rápido</value>
+  </data>
+  <data name="StringDarkTheme.Text" xml:space="preserve">
+    <value>Oscuro</value>
+  </data>
+  <data name="StringLightTheme.Text" xml:space="preserve">
+    <value>Claro</value>
+  </data>
+  <data name="StringSystemTheme.Text" xml:space="preserve">
+    <value>Sistema</value>
+  </data>
 </root>

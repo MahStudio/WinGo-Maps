@@ -268,7 +268,7 @@
     <value>Não conseguimos acessar sua localização. Por favor verifique se a localização do seu dispositivo está ligada e se você aceitou o acesso a sua localização nas configurações de privacidade. \nClique no botão OK para ir as configurações de localização ou cancelar para continuar.</value>
   </data>
   <data name="StringMapView.Text" xml:space="preserve">
-    <value>Visual do Mapa</value>
+    <value>Mostrar Mapa</value>
   </data>
   <data name="StringMeters.Text" xml:space="preserve">
     <value>Metros</value>

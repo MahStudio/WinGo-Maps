@@ -321,4 +321,22 @@
   <data name="SettingsViewShowTrafficToggle.Header" xml:space="preserve">
     <value>Zeige Verkehr beim Öffnen</value>
   </data>
+  <data name="SettingsViewApplicattionThemeCombo.Header" xml:space="preserve">
+    <value>Aussehen der App</value>
+  </data>
+  <data name="StringAccessContacts.Text" xml:space="preserve">
+    <value>Zugriff auf Kontaktliste</value>
+  </data>
+  <data name="StringAccessContactsWhy.Text" xml:space="preserve">
+    <value>Kontakte mit Adressen werden in den Suchergebnissen gezeigt, um deren Position schneller zu finden.</value>
+  </data>
+  <data name="StringDarkTheme.Text" xml:space="preserve">
+    <value>Hell</value>
+  </data>
+  <data name="StringLightTheme.Text" xml:space="preserve">
+    <value>Dunkel</value>
+  </data>
+  <data name="StringSystemTheme.Text" xml:space="preserve">
+    <value>Systemfarbe</value>
+  </data>
 </root>

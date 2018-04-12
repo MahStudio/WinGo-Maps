@@ -317,6 +317,8 @@ namespace GoogleMapsUnofficial.View
                                 var loc = res.results.FirstOrDefault().geometry.location;
                                 //var rgc = await ReverseGeoCode.GetLocation(Where);
                                 Map.Center = new Geopoint(new BasicGeoposition() { Latitude = loc.lat, Longitude = loc.lng });
+                                LastRightTap = new Geopoint(new BasicGeoposition() { Latitude = loc.lat, Longitude = loc.lng });
+                                RunMapRightTapped(Map, LastRightTap);
                             }
                             else
                             {

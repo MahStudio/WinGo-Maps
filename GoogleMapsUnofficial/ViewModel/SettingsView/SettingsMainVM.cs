@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Background;
+using Windows.ApplicationModel.Contacts;
 using Windows.Data.Xml.Dom;
 using Windows.Devices.Geolocation;
 using Windows.Storage;
@@ -409,6 +411,13 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
         public static void SetThemeIndex(int Index)
         {
             ApplicationData.Current.LocalSettings.Values["ThemeIndex"] = Index;
+        }
+        public static async Task<bool> GetAccessToContcts()
+        {
+            var at = await ContactManager.RequestStoreAsync(ContactStoreAccessType.AllContactsReadWrite);
+            if (at != null)
+                return true;
+            else return false;
         }
     }
 }

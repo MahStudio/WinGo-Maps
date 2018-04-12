@@ -321,4 +321,22 @@
   <data name="SettingsViewShowTrafficToggle.Header" xml:space="preserve">
     <value>Mostra traffico all'avvio</value>
   </data>
+  <data name="SettingsViewApplicattionThemeCombo.Header" xml:space="preserve">
+    <value>Tema dell'applicazione</value>
+  </data>
+  <data name="StringAccessContacts.Text" xml:space="preserve">
+    <value>Accesso ai contatti</value>
+  </data>
+  <data name="StringAccessContactsWhy.Text" xml:space="preserve">
+    <value>I contatti con indirizzo saranno mostrati nei risultati di ricerca per trovare la loro posizione più rapidamente</value>
+  </data>
+  <data name="StringDarkTheme.Text" xml:space="preserve">
+    <value>Scuro</value>
+  </data>
+  <data name="StringLightTheme.Text" xml:space="preserve">
+    <value>Chiaro</value>
+  </data>
+  <data name="StringSystemTheme.Text" xml:space="preserve">
+    <value>Di sistema</value>
+  </data>
 </root>

@@ -333,4 +333,10 @@
   <data name="StringSystemTheme.Text" xml:space="preserve">
     <value>System</value>
   </data>
+  <data name="StringAccessContacts.Text" xml:space="preserve">
+    <value>Access to contacts</value>
+  </data>
+  <data name="StringAccessContactsWhy.Text" xml:space="preserve">
+    <value>Contacts with address will be shown in search results to find their location faster.</value>
+  </data>
 </root>
