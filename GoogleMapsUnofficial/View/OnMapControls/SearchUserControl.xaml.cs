@@ -198,17 +198,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                         (DataContext as ViewModel).SearchResults.Clear();
                         SearchBox.Text = "";
                     }
-                    //else
-                    //{
-                    //    var rgc = await ReverseGeoCode.GetLocation(Where);
-                    //    Map.Center = rgc;
-                    //}
                 }
-                //else
-                //{
-                //    var rgc = await ReverseGeoCode.GetLocation(Where);
-                //    Map.Center = rgc;
-                //}
                 return;
             }
             var res = await GeocodeHelper.GetInfo(select.place_id);

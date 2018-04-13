@@ -1,9 +1,12 @@
 ﻿using GoogleMapsUnofficial.View;
 using GoogleMapsUnofficial.ViewModel.PlaceControls;
+using GoogleMapsUnofficial.ViewModel.SettingsView;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Contacts;
 using Windows.Devices.Geolocation;
 using Windows.Devices.Sensors;
 using Windows.System;
@@ -172,6 +175,7 @@ namespace GoogleMapsUnofficial.ViewModel
             geolocator = GeoLocate;
             Map = View.MapView.MapControl;
             await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, LocateUser);
+            await SaveAddressForContact("فرهاد 25", "Mashad", "Iran");
         }
 
         private async void GeoLocatorHelper_LocationFetched(object sender, Geoposition e)
@@ -206,7 +210,7 @@ namespace GoogleMapsUnofficial.ViewModel
                 catch { }
             });
         }
-
+        
         private async void Geolocator_PositionChanged(Geolocator sender, PositionChangedEventArgs args)
         {
             try
