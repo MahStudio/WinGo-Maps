@@ -53,7 +53,7 @@ namespace GoogleMapsUnofficial.ViewModel.TilesAPIControls
             }
             req.overlay = Request.overlay;
             if (Request.Scale != null) req.scale = Request.Scale.Value.ToString();
-            var http = new HttpClient();
+            var http = AppCore.HttpClient;
             http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);
             var resp = await http.PostAsync(new Uri($"https://www.googleapis.com/tile/v1/createSession?key={AppCore.GoogleMapAPIKey}", UriKind.RelativeOrAbsolute),
                 new HttpStringContent(JsonConvert.SerializeObject(req)));

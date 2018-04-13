@@ -51,7 +51,7 @@ namespace GoogleMapsUnofficial.ViewModel.DirectionsControls
                     }
                 }
                 //requestUrl += $"&key={AppCore.GoogleMapAPIKey}";
-                var http = new HttpClient();
+                var http = AppCore.HttpClient;
                 http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);
                 var s = await http.GetStringAsync(new Uri(requestUrl, UriKind.RelativeOrAbsolute));
                 return JsonConvert.DeserializeObject<Rootobject>(s);

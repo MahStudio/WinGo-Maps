@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Net.Http;
 using System.Threading.Tasks;
+using Windows.Web.Http;
 
 namespace GoogleMapsUnofficial.ViewModel.PlaceControls
 {
@@ -16,9 +16,9 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
         {
             try
             {
-                var http = new HttpClient();
+                var http = AppCore.HttpClient;
                 http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);
-                var r = await http.PostAsync($"https://maps.googleapis.com/maps/api/place/add/json?key={AppCore.GoogleMapAPIKey}", new StringContent(JsonConvert.SerializeObject(PlaceInfo)));
+                var r = await http.PostAsync(new Uri($"https://maps.googleapis.com/maps/api/place/add/json?key={AppCore.GoogleMapAPIKey}", UriKind.RelativeOrAbsolute), new HttpStringContent(JsonConvert.SerializeObject(PlaceInfo)));
                 return JsonConvert.DeserializeObject<Response>((await r.Content.ReadAsStringAsync()));
             }
             catch (Exception)
@@ -90,8 +90,8 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
         {
             try
             {
-                var http = new HttpClient();
-                var r = await http.PostAsync($"https://maps.googleapis.com/maps/api/place/delete/json?key={AppCore.GoogleMapAPIKey}", new StringContent(JsonConvert.SerializeObject(PlaceInfo)));
+                var http = AppCore.HttpClient;
+                var r = await http.PostAsync(new Uri($"https://maps.googleapis.com/maps/api/place/delete/json?key={AppCore.GoogleMapAPIKey}", UriKind.RelativeOrAbsolute), new HttpStringContent(JsonConvert.SerializeObject(PlaceInfo)));
                 return JsonConvert.DeserializeObject<Response>((await r.Content.ReadAsStringAsync()));
             }
             catch (Exception)

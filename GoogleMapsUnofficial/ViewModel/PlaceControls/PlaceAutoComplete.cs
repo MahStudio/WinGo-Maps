@@ -12,7 +12,7 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
         {
             try
             {
-                var http = new HttpClient();
+                var http = AppCore.HttpClient;
                 var para = $"input={input}&language={AppCore.GoogleMapRequestsLanguage}&key={AppCore.GoogleMapAPIKey}";
                 if (radius != 0) para += $"&radius={radius}"; if (location != null) para += $"&location={location.Position.Latitude},{location.Position.Longitude}";
                 http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);

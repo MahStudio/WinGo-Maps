@@ -343,7 +343,7 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
                             var geolocator = new Geolocator();
                             var Location = await geolocator.GetGeopositionAsync();
                             var ul = Location.Coordinate.Point.Position;
-                            var http = new HttpClient();
+                            var http = AppCore.HttpClient;
                             http.DefaultRequestHeaders.UserAgent.ParseAdd("MahStudioWinGoMaps");
                             var res = await (await http.GetAsync(new Uri($"https://maps.googleapis.com/maps/api/staticmap?center={ul.Latitude},{ul.Longitude}&zoom=16&size=200x200", UriKind.RelativeOrAbsolute))).Content.ReadAsBufferAsync();
                             var reswide = await (await http.GetAsync(new Uri($"https://maps.googleapis.com/maps/api/staticmap?center={ul.Latitude},{ul.Longitude}&zoom=16&size=310x150", UriKind.RelativeOrAbsolute))).Content.ReadAsBufferAsync();

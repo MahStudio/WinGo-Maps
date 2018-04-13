@@ -131,7 +131,7 @@ namespace GoogleMapsUnofficial.ViewModel.OfflineMapDownloader
             {
                 var url = new Uri(href);
                 outp = (await file.OpenAsync(FileAccessMode.ReadWrite));
-                var http = new HttpClient();
+                var http = AppCore.HttpClient;
                 http.DefaultRequestHeaders.Accept.ParseAdd("text/html, application/xhtml+xml, image/jxr, */*");
                 http.DefaultRequestHeaders.AcceptLanguage.ParseAdd("en-US,en;q=0.7,fa;q=0.3");
                 http.DefaultRequestHeaders.Cookie.ParseAdd($"IP_JAR={DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}-21");
