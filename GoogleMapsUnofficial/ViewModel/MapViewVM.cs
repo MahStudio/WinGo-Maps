@@ -175,7 +175,6 @@ namespace GoogleMapsUnofficial.ViewModel
             geolocator = GeoLocate;
             Map = View.MapView.MapControl;
             await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, LocateUser);
-            await SaveAddressForContact("فرهاد 25", "Mashad", "Iran");
         }
 
         private async void GeoLocatorHelper_LocationFetched(object sender, Geoposition e)
