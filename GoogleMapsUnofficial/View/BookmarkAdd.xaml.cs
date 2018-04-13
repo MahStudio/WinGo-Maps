@@ -23,6 +23,7 @@ namespace GoogleMapsUnofficial.View
 {
     public class BookmarkAddNeedsClass
     {
+        public string PlaceID { get; set; }
         public Geopoint Location { get; set; }
         public string PlaceName { get; set; }
     }
@@ -44,12 +45,15 @@ namespace GoogleMapsUnofficial.View
                     SavedPlacesVM.AddNewPlace(new SavedPlacesVM.SavedPlaceClass() { PlaceName = context.PlaceName, Latitude = context.Location.Position.Latitude, Longitude = context.Location.Position.Longitude });
                     if (PinLiveTile.IsChecked.Value)
                     {
-                        Uri square150x150Logo = new Uri("ms-appx:///Assets/StoreLogo.png");
+                        //var pd = await ViewModel.PlaceControls.PlaceDetailsHelper.GetPlaceDetails((DataContext as BookmarkAddNeedsClass).PlaceID);
+                        Uri square150x150Logo = new Uri("ms-appx:///Assets/Square150x150Logo.scale-100.png");
                         SecondaryTile tile = new SecondaryTile(new Random(1).Next(Int32.MaxValue).ToString(), "Home", $"{context.Location.Position.Latitude},{context.Location.Position.Longitude}", square150x150Logo, TileSize.Square150x150);
                         tile.DisplayName = PlaceNameText.Text;
                         tile.VisualElements.ShowNameOnSquare150x150Logo = true;
                         tile.VisualElements.ShowNameOnWide310x150Logo = true;
+                        tile.VisualElements.ShowNameOnSquare310x310Logo = true;
                         tile.VisualElements.Wide310x150Logo = new Uri("ms-appx:///Assets/Wide310x150Logo.scale-200.png");
+                        tile.VisualElements.Square310x310Logo = new Uri("ms-appx:///Assets/LargeTile.scale-200.png");
                         await tile.RequestCreateAsync();
                     }
                 }
@@ -66,12 +70,14 @@ namespace GoogleMapsUnofficial.View
                     SavedPlacesVM.AddNewPlace(new SavedPlacesVM.SavedPlaceClass() { PlaceName = PlaceNameText.Text, Latitude = context.Location.Position.Latitude, Longitude = context.Location.Position.Longitude });
                     if (PinLiveTile.IsChecked.Value)
                     {
-                        Uri square150x150Logo = new Uri("ms-appx:///Assets/StoreLogo.png");
+                        Uri square150x150Logo = new Uri("ms-appx:///Assets/Square150x150Logo.scale-100.png");
                         SecondaryTile tile = new SecondaryTile(new Random(1).Next(Int32.MaxValue).ToString(), "Home", $"{context.Location.Position.Latitude},{context.Location.Position.Longitude}", square150x150Logo, TileSize.Square150x150);
                         tile.DisplayName = PlaceNameText.Text;
                         tile.VisualElements.ShowNameOnSquare150x150Logo = true;
                         tile.VisualElements.ShowNameOnWide310x150Logo = true;
+                        tile.VisualElements.ShowNameOnSquare310x310Logo = true;
                         tile.VisualElements.Wide310x150Logo = new Uri("ms-appx:///Assets/Wide310x150Logo.scale-200.png");
+                        tile.VisualElements.Square310x310Logo = new Uri("ms-appx:///Assets/LargeTile.scale-200.png");
                         await tile.RequestCreateAsync();
                     }
                 }
