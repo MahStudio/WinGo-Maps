@@ -18,7 +18,7 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
             {
                 var http = AppCore.HttpClient;
                 http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);
-                var res = await http.GetStringAsync(new Uri($"https://maps.googleapis.com/maps/api/place/details/json?placeid={PlaceID}&key={AppCore.GoogleMapAPIKey}", UriKind.RelativeOrAbsolute));
+                var res = await http.GetStringAsync(new Uri($"https://maps.googleapis.com/maps/api/place/details/json?placeid={PlaceID}&key={AppCore.GoogleMapAPIKey}&language={AppCore.GoogleMapRequestsLanguage}", UriKind.RelativeOrAbsolute));
                 return JsonConvert.DeserializeObject<Rootobject>(res);
             }
             catch
@@ -32,7 +32,7 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
             {
                 var http = AppCore.HttpClient;
                 http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);
-                var res = await http.GetStringAsync(new Uri($"https://maps.googleapis.com/maps/api/place/details/json?reference={ReferenceID}&key={AppCore.GoogleMapAPIKey}", UriKind.RelativeOrAbsolute));
+                var res = await http.GetStringAsync(new Uri($"https://maps.googleapis.com/maps/api/place/details/json?reference={ReferenceID}&key={AppCore.GoogleMapAPIKey}&language={AppCore.GoogleMapRequestsLanguage}", UriKind.RelativeOrAbsolute));
                 return JsonConvert.DeserializeObject<Rootobject>(res);
             }
             catch

@@ -1,4 +1,5 @@
-﻿using GoogleMapsUnofficial.ViewModel.GeocodControls;
+﻿using GoogleMapsUnofficial.Extension;
+using GoogleMapsUnofficial.ViewModel.GeocodControls;
 using GoogleMapsUnofficial.ViewModel.PlaceControls;
 using GoogleMapsUnofficial.ViewModel.SettingsView;
 using System;

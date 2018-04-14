@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GoogleMapsUnofficial.Extension;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;

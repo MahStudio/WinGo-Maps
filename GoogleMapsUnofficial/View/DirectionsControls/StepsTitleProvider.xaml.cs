@@ -1,4 +1,5 @@
-﻿using GoogleMapsUnofficial.ViewModel.VoiceNavigation;
+﻿using GoogleMapsUnofficial.Extension;
+using GoogleMapsUnofficial.ViewModel.VoiceNavigation;
 using System;
 using System.Collections.Generic;
 using System.IO;
