@@ -112,6 +112,7 @@
     <Compile Include="Helpers\MultilingualHelpToolkit.cs" />
     <Compile Include="Helpers\TileCoordinateHelper.cs" />
     <Compile Include="Helpers\ClassInfo.cs" />
+    <Compile Include="Helpers\TTS\ArianaPersianTTS.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

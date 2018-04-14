@@ -261,3 +261,4 @@ __pycache__/
 *.pyc
 /GoogleMapsUnofficial/AppCore.cs
 /GoogleMapsUnofficial/Package.xml
+/GoogleMapsUnofficial/Helpers/TTS/ArianaPersianTTS.cs
