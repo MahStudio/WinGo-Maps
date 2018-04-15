@@ -41,7 +41,7 @@ namespace GoogleMapsUnofficial
             catch { }
             try
             {
-                var index= SettingsSetters.GetThemeIndex();
+                var index = SettingsSetters.GetThemeIndex();
                 if (index == 0) this.RequestedTheme = ApplicationTheme.Dark;
                 if (index == 1) this.RequestedTheme = ApplicationTheme.Light;
             }
@@ -50,7 +50,7 @@ namespace GoogleMapsUnofficial
                 this.RequestedTheme = ApplicationTheme.Light;
             }
         }
-        
+
         private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var d = DateTime.Now;
@@ -108,7 +108,11 @@ namespace GoogleMapsUnofficial
             }
             try
             {
-                StatusBar.GetForCurrentView().ForegroundColor = Colors.Black;
+                var index = SettingsSetters.GetThemeIndex();
+                if (index == 1)
+                    StatusBar.GetForCurrentView().ForegroundColor = Colors.Black;
+                else
+                    StatusBar.GetForCurrentView().ForegroundColor = Colors.White;
             }
             catch { }
             StartFluent();
@@ -241,7 +245,7 @@ namespace GoogleMapsUnofficial
             Window.Current.Content = eSplash;
             Window.Current.Activate();
         }
-        
+
         /// <summary>
         /// Invoked when Navigation to a certain page fails
         /// </summary>

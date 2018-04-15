@@ -7,6 +7,23 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <Style x:Key="WinGoIcon" TargetType="Image">
+                        <Setter Property="Source" Value="/Assets/BlackLogo2.png"/>
+                    </Style>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <Style x:Key="WinGoIcon" TargetType="Image">
+                        <Setter Property="Source" Value="/Assets/BlackLogo.png"/>
+                    </Style>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
     <Grid>
         <RelativePanel Grid.Column="0" Grid.ColumnSpan="2" MinWidth="40" x:Name="MainGrid" SizeChanged="Page_SizeChanged"/>
         <RelativePanel x:Name="MyGrid" Grid.Column="0" Width="{Binding ElementName=MainGrid,Path=Width}" Background="#28000000"/>
@@ -28,7 +45,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Image VerticalAlignment="Center" Height="35" Width="35" Grid.Column="0" Margin="39,0,39,0" Source="/Assets/BlackLogo.png"/>
+                                <Image VerticalAlignment="Center" Height="35" Width="35" Grid.Column="0" Margin="39,0,39,0" Style="{StaticResource WinGoIcon}"/>
                                 <StackPanel Grid.Column="1">
                                     <TextBlock FontWeight="SemiBold" Text="WinGo Maps BETA"/>
                                     <TextBlock Text="MahStudio"/>
