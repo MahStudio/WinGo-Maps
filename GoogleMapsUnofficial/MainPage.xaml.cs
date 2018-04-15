@@ -40,7 +40,6 @@ namespace GoogleMapsUnofficial
         }
         private void applyAcrylicAccent(Panel panel)
         {
-            if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone) return;
             if (ApiInformation.IsTypePresent("Windows.UI.Xaml.Media.AcrylicBrush"))
             {
                 var ac = new AcrylicBrush();

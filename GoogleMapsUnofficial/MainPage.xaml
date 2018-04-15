@@ -109,7 +109,6 @@
                     <VisualState.Setters>
                         <Setter Target="Split.IsPaneOpen" Value="False" />
                         <Setter Target="Split.DisplayMode" Value="Overlay" />
-                        <Setter Target="Split.PaneBackground" Value="#fbfbfb"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="NarrowState">
@@ -119,7 +118,6 @@
                     <VisualState.Setters>
                         <Setter Target="Split.IsPaneOpen" Value="False" />
                         <Setter Target="Split.DisplayMode" Value="Overlay" />
-                        <Setter Target="Split.PaneBackground" Value="#fbfbfb"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

@@ -31,7 +31,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <SplitView x:Name="Split" Grid.Row="0" PaneBackground="Transparent" IsPaneOpen="True" DisplayMode="Inline">
+            <SplitView x:Name="Split" Grid.Row="0" PaneBackground="{ThemeResource WinGoBack}" IsPaneOpen="True" DisplayMode="Inline">
                 <SplitView.Pane>
                     <Grid Margin="0,100,0,25">
                         <Grid.RowDefinitions>
@@ -108,7 +108,6 @@
                     <VisualState.Setters>
                         <Setter Target="Split.IsPaneOpen" Value="False" />
                         <Setter Target="Split.DisplayMode" Value="Overlay" />
-                        <Setter Target="Split.PaneBackground" Value="#fbfbfb"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="NarrowState">
@@ -118,7 +117,6 @@
                     <VisualState.Setters>
                         <Setter Target="Split.IsPaneOpen" Value="False" />
                         <Setter Target="Split.DisplayMode" Value="Overlay" />
-                        <Setter Target="Split.PaneBackground" Value="#fbfbfb"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
