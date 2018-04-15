@@ -9,7 +9,7 @@
     d:DesignHeight="200"
     d:DesignWidth="400">
 
-    <Grid Background="White" Opacity="0.8">
+    <Grid Background="{StaticResource WinGoBack}" Opacity="0.8">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="50"/>

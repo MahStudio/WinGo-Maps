@@ -79,179 +79,261 @@ namespace GoogleMapsUnofficial.View.DirectionsControls
 
             DirectionFinder();
         }
-
+        public async void DirectionFinderFunctionality()
+        {
+            DirectionsHelper.DirectionModes mod = DirectionsHelper.DirectionModes.walking;
+            switch (Mode)
+            {
+                case DirectionMode.walking:
+                    mod = DirectionsHelper.DirectionModes.walking;
+                    break;
+                case DirectionMode.driving:
+                    mod = DirectionsHelper.DirectionModes.driving;
+                    break;
+                case DirectionMode.transit:
+                    mod = DirectionsHelper.DirectionModes.transit;
+                    break;
+                default:
+                    break;
+            }
+            try
+            {
+                MapPolyline CurrentDrawed = null;
+                try
+                {
+                    foreach (var item in MapView.MapControl.MapElements)
+                    {
+                        if (item.GetType() == typeof(MapPolyline))
+                            CurrentDrawed = (MapPolyline)item;
+                    }
+                }
+                catch { }
+                if (Origin != null && Destination != null)
+                {
+                    DirectionsHelper.Rootobject r = null;
+                    if (Waypoints == null)
+                        r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, mod);
+                    else
+                    {
+                        var lst = new List<BasicGeoposition>();
+                        foreach (var item in Waypoints)
+                        {
+                            if (item != null)
+                                lst.Add(new BasicGeoposition() { Latitude = item.Position.Latitude, Longitude = item.Position.Longitude });
+                        }
+                        if (lst.Count > 0)
+                            r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, mod, lst);
+                        else
+                            r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, mod);
+                    }
+                    if (r == null || r.routes.Count() == 0)
+                    {
+                        await new MessageDialog(MultilingualHelpToolkit.GetString("StringNoWayToDestination", "Text")).ShowAsync();
+                        return;
+                    }
+                    if (CurrentDrawed != null)
+                        MapView.MapControl.MapElements.Remove(CurrentDrawed);
+                    var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), (Color)Resources["SystemControlBackgroundAccentBrush"]);
+                    MapView.MapControl.MapElements.Add(route);
+                    var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
+                    var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
+                    if(Mode == DirectionMode.transit)
+                    {
+                        foreach (var item in r.routes.FirstOrDefault().legs)
+                        {
+                            foreach (var item2 in item.steps)
+                            {
+                                if (item2.transit_details != null)
+                                {
+                                    var ico = RandomAccessStreamReference.CreateFromUri(new Uri("http:" + item2.transit_details.line.vehicle.icon));
+                                    MapView.MapControl.MapElements.Add(new MapIcon() { Image = ico, Title = "arrival " + item2.transit_details.headsign, Location = new Geopoint(new BasicGeoposition() { Latitude = item2.transit_details.arrival_stop.location.lat, Longitude = item2.transit_details.arrival_stop.location.lng }) });
+                                    MapView.MapControl.MapElements.Add(new MapIcon() { Image = ico, Title = "departure  " + item2.transit_details.headsign, Location = new Geopoint(new BasicGeoposition() { Latitude = item2.transit_details.departure_stop.location.lat, Longitude = item2.transit_details.departure_stop.location.lng }) });
+                                }
+                            }
+                        }
+                    }
+                    await new MessageDialog($"{MultilingualHelpToolkit.GetString("StringDirectionCalculated", "Text")}".Replace("{di}", di).Replace("{es}", es)).ShowAsync();
+                    //await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
+                    await MapView.MapControl.TryZoomToAsync(16);
+                    MapView.MapControl.Center = Origin;
+                    MapView.MapControl.DesiredPitch = 45;
+                    MapViewVM.ActiveNavigationMode = true;
+                    new DisplayRequest().RequestActive();
+                }
+                else
+                {
+                    await new MessageDialog(MultilingualHelpToolkit.GetString("StringSelectBothOriginAndDestination", "Text")).ShowAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                //await new MessageDialog("error on DirectionFinder in Walking Mode" + Environment.NewLine + ex.Message).ShowAsync();
+            }
+        }
         public async void DirectionFinder()
         {
             if (Destination == null) return;
             await VoiceHelper.ReadText("calculating route");
-            MapPolyline CurrentDrawed = null;
-            try
-            {
-                foreach (var item in MapView.MapControl.MapElements)
-                {
-                    if (item.GetType() == typeof(MapPolyline))
-                        CurrentDrawed = (MapPolyline)item;
-                }
-            }
-            catch { }
-            if (Mode == DirectionMode.walking)
-            {
-                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
-                {
-                    try
-                    {
-                        if (Origin != null && Destination != null)
-                        {
-                            DirectionsHelper.Rootobject r = null;
-                            if (Waypoints == null)
-                                r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.walking);
-                            else
-                            {
-                                var lst = new List<BasicGeoposition>();
-                                foreach (var item in Waypoints)
-                                {
-                                    if (item != null)
-                                        lst.Add(new BasicGeoposition() { Latitude = item.Position.Latitude, Longitude = item.Position.Longitude });
-                                }
-                                if (lst.Count > 0)
-                                    r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.walking, lst);
-                                else
-                                    r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.walking);
-                            }
-                            if (r == null || r.routes.Count() == 0)
-                            {
-                                await new MessageDialog(MultilingualHelpToolkit.GetString("StringNoWayToDestination", "Text")).ShowAsync();
-                                return;
-                            }
-                            if (CurrentDrawed != null)
-                                MapView.MapControl.MapElements.Remove(CurrentDrawed);
-                            var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), (Color)Resources["SystemControlBackgroundAccentBrush"]);
-                            MapView.MapControl.MapElements.Add(route);
-                            var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
-                            var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
-                            await new MessageDialog($"{MultilingualHelpToolkit.GetString("StringDirectionCalculated", "Text")}".Replace("{di}", di).Replace("{es}", es)).ShowAsync();
-                            //await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
-                            await MapView.MapControl.TryZoomToAsync(16);
-                            MapView.MapControl.Center = Origin;
-                            MapView.MapControl.DesiredPitch = 45;
-                            MapViewVM.ActiveNavigationMode = true;
-                            new DisplayRequest().RequestActive();
-                        }
-                        else
-                        {
-                            await new MessageDialog(MultilingualHelpToolkit.GetString("StringSelectBothOriginAndDestination", "Text")).ShowAsync();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        //await new MessageDialog("error on DirectionFinder in Walking Mode" + Environment.NewLine + ex.Message).ShowAsync();
-                    }
-                });
-            }
-            else if (Mode == DirectionMode.driving)
-            {
-                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
-                {
-                    try
-                    {
-                        if (Origin != null && Destination != null)
-                        {
-                            DirectionsHelper.Rootobject r = null;
-                            if (Waypoints == null)
-                                r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.driving);
-                            else
-                            {
-                                var lst = new List<BasicGeoposition>();
-                                foreach (var item in Waypoints)
-                                {
-                                    if (item != null)
-                                        lst.Add(new BasicGeoposition() { Latitude = item.Position.Latitude, Longitude = item.Position.Longitude });
-                                }
-                                if (lst.Count > 0)
-                                    r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.driving, lst);
-                                else
-                                    r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.driving);
-                            }
-                            if (r == null || r.routes.Count() == 0)
-                            {
-                                await new MessageDialog(MultilingualHelpToolkit.GetString("StringNoWayToDestination", "Text")).ShowAsync();
-                                return;
-                            }
-                            if (CurrentDrawed != null)
-                                MapView.MapControl.MapElements.Remove(CurrentDrawed);
-                            var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), (Color)Resources["SystemControlBackgroundAccentBrush"]);
-                            MapView.MapControl.MapElements.Add(route);
-                            var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
-                            var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
-                            await new MessageDialog($"{MultilingualHelpToolkit.GetString("StringDirectionCalculated", "Text")}".Replace("{di}", di).Replace("{es}", es)).ShowAsync();
-                            await MapView.MapControl.TryZoomToAsync(16);
-                            MapView.MapControl.Center = Origin;
-                            MapView.MapControl.DesiredPitch = 45;
-                            MapViewVM.ActiveNavigationMode = true;
-                            new DisplayRequest().RequestActive();
-                        }
-                        else
-                        {
-                            await new MessageDialog(MultilingualHelpToolkit.GetString("StringSelectBothOriginAndDestination", "Text")).ShowAsync();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        //await new MessageDialog("error on DirectionFinder in Driving Mode" + Environment.NewLine + ex.Message).ShowAsync();
-                    }
-                });
-            }
-            else
-            {
-                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
-                {
-                    try
-                    {
-                        if (Origin != null && Destination != null)
-                        {
-                            DirectionsHelper.Rootobject r = null;
-                            r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.transit);
-                            if (r == null || r.routes.Count() == 0)
-                            {
-                                await new MessageDialog(MultilingualHelpToolkit.GetString("StringNoWayToDestination", "Text")).ShowAsync();
-                                return;
-                            }
-                            if (CurrentDrawed != null)
-                                MapView.MapControl.MapElements.Remove(CurrentDrawed);
-                            var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), (Color)Resources["SystemControlBackgroundAccentBrush"]);
-                            MapView.MapControl.MapElements.Add(route);
-                            var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
-                            var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
-                            foreach (var item in r.routes.FirstOrDefault().legs)
-                            {
-                                foreach (var item2 in item.steps)
-                                {
-                                    if (item2.transit_details != null)
-                                    {
-                                        var ico = RandomAccessStreamReference.CreateFromUri(new Uri("http:" + item2.transit_details.line.vehicle.icon));
-                                        MapView.MapControl.MapElements.Add(new MapIcon() { Image = ico, Title = "arrival " + item2.transit_details.headsign, Location = new Geopoint(new BasicGeoposition() { Latitude = item2.transit_details.arrival_stop.location.lat, Longitude = item2.transit_details.arrival_stop.location.lng }) });
-                                        MapView.MapControl.MapElements.Add(new MapIcon() { Image = ico, Title = "departure  " + item2.transit_details.headsign, Location = new Geopoint(new BasicGeoposition() { Latitude = item2.transit_details.departure_stop.location.lat, Longitude = item2.transit_details.departure_stop.location.lng }) });
-                                    }
-                                }
-                            }
-                            await new MessageDialog($"{MultilingualHelpToolkit.GetString("StringDirectionCalculated", "Text")}".Replace("{di}", di).Replace("{es}", es)).ShowAsync();
-                            await MapView.MapControl.TryZoomToAsync(16);
-                            MapView.MapControl.Center = Origin;
-                            MapView.MapControl.DesiredPitch = 45;
-                            MapViewVM.ActiveNavigationMode = true;
-                            new DisplayRequest().RequestActive();
-                        }
-                        else
-                        {
-                            await new MessageDialog(MultilingualHelpToolkit.GetString("StringSelectBothOriginAndDestination", "Text")).ShowAsync();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        //await new MessageDialog("error on DirectionFinder in Transit Mode" + Environment.NewLine + ex.Message).ShowAsync();
-                    }
-                });
-            }
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, DirectionFinderFunctionality);
+            return;
+            //if (Mode == DirectionMode.walking)
+            //{
+            //    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
+            //    {
+            //        try
+            //        {
+            //            if (Origin != null && Destination != null)
+            //            {
+            //                DirectionsHelper.Rootobject r = null;
+            //                if (Waypoints == null)
+            //                    r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.walking);
+            //                else
+            //                {
+            //                    var lst = new List<BasicGeoposition>();
+            //                    foreach (var item in Waypoints)
+            //                    {
+            //                        if (item != null)
+            //                            lst.Add(new BasicGeoposition() { Latitude = item.Position.Latitude, Longitude = item.Position.Longitude });
+            //                    }
+            //                    if (lst.Count > 0)
+            //                        r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.walking, lst);
+            //                    else
+            //                        r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.walking);
+            //                }
+            //                if (r == null || r.routes.Count() == 0)
+            //                {
+            //                    await new MessageDialog(MultilingualHelpToolkit.GetString("StringNoWayToDestination", "Text")).ShowAsync();
+            //                    return;
+            //                }
+            //                if (CurrentDrawed != null)
+            //                    MapView.MapControl.MapElements.Remove(CurrentDrawed);
+            //                var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), (Color)Resources["SystemControlBackgroundAccentBrush"]);
+            //                MapView.MapControl.MapElements.Add(route);
+            //                var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
+            //                var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
+            //                await new MessageDialog($"{MultilingualHelpToolkit.GetString("StringDirectionCalculated", "Text")}".Replace("{di}", di).Replace("{es}", es)).ShowAsync();
+            //                //await new MessageDialog($"we calculate that the route is about {di} and takes about {es}").ShowAsync();
+            //                await MapView.MapControl.TryZoomToAsync(16);
+            //                MapView.MapControl.Center = Origin;
+            //                MapView.MapControl.DesiredPitch = 45;
+            //                MapViewVM.ActiveNavigationMode = true;
+            //                new DisplayRequest().RequestActive();
+            //            }
+            //            else
+            //            {
+            //                await new MessageDialog(MultilingualHelpToolkit.GetString("StringSelectBothOriginAndDestination", "Text")).ShowAsync();
+            //            }
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            //await new MessageDialog("error on DirectionFinder in Walking Mode" + Environment.NewLine + ex.Message).ShowAsync();
+            //        }
+            //    });
+            //}
+            //else if (Mode == DirectionMode.driving)
+            //{
+            //    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
+            //    {
+            //        try
+            //        {
+            //            if (Origin != null && Destination != null)
+            //            {
+            //                DirectionsHelper.Rootobject r = null;
+            //                if (Waypoints == null)
+            //                    r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.driving);
+            //                else
+            //                {
+            //                    var lst = new List<BasicGeoposition>();
+            //                    foreach (var item in Waypoints)
+            //                    {
+            //                        if (item != null)
+            //                            lst.Add(new BasicGeoposition() { Latitude = item.Position.Latitude, Longitude = item.Position.Longitude });
+            //                    }
+            //                    if (lst.Count > 0)
+            //                        r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.driving, lst);
+            //                    else
+            //                        r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.driving);
+            //                }
+            //                if (r == null || r.routes.Count() == 0)
+            //                {
+            //                    await new MessageDialog(MultilingualHelpToolkit.GetString("StringNoWayToDestination", "Text")).ShowAsync();
+            //                    return;
+            //                }
+            //                if (CurrentDrawed != null)
+            //                    MapView.MapControl.MapElements.Remove(CurrentDrawed);
+            //                var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), (Color)Resources["SystemControlBackgroundAccentBrush"]);
+            //                MapView.MapControl.MapElements.Add(route);
+            //                var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
+            //                var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
+            //                await new MessageDialog($"{MultilingualHelpToolkit.GetString("StringDirectionCalculated", "Text")}".Replace("{di}", di).Replace("{es}", es)).ShowAsync();
+            //                await MapView.MapControl.TryZoomToAsync(16);
+            //                MapView.MapControl.Center = Origin;
+            //                MapView.MapControl.DesiredPitch = 45;
+            //                MapViewVM.ActiveNavigationMode = true;
+            //                new DisplayRequest().RequestActive();
+            //            }
+            //            else
+            //            {
+            //                await new MessageDialog(MultilingualHelpToolkit.GetString("StringSelectBothOriginAndDestination", "Text")).ShowAsync();
+            //            }
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            //await new MessageDialog("error on DirectionFinder in Driving Mode" + Environment.NewLine + ex.Message).ShowAsync();
+            //        }
+            //    });
+            //}
+            //else
+            //{
+            //    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async delegate
+            //    {
+            //        try
+            //        {
+            //            if (Origin != null && Destination != null)
+            //            {
+            //                DirectionsHelper.Rootobject r = null;
+            //                r = await DirectionsHelper.GetDirections(Origin.Position, Destination.Position, DirectionsHelper.DirectionModes.transit);
+            //                if (r == null || r.routes.Count() == 0)
+            //                {
+            //                    await new MessageDialog(MultilingualHelpToolkit.GetString("StringNoWayToDestination", "Text")).ShowAsync();
+            //                    return;
+            //                }
+            //                if (CurrentDrawed != null)
+            //                    MapView.MapControl.MapElements.Remove(CurrentDrawed);
+            //                var route = DirectionsHelper.GetDirectionAsRoute(r.routes.FirstOrDefault(), (Color)Resources["SystemControlBackgroundAccentBrush"]);
+            //                MapView.MapControl.MapElements.Add(route);
+            //                var es = DirectionsHelper.GetTotalEstimatedTime(r.routes.FirstOrDefault());
+            //                var di = DirectionsHelper.GetDistance(r.routes.FirstOrDefault());
+            //                foreach (var item in r.routes.FirstOrDefault().legs)
+            //                {
+            //                    foreach (var item2 in item.steps)
+            //                    {
+            //                        if (item2.transit_details != null)
+            //                        {
+            //                            var ico = RandomAccessStreamReference.CreateFromUri(new Uri("http:" + item2.transit_details.line.vehicle.icon));
+            //                            MapView.MapControl.MapElements.Add(new MapIcon() { Image = ico, Title = "arrival " + item2.transit_details.headsign, Location = new Geopoint(new BasicGeoposition() { Latitude = item2.transit_details.arrival_stop.location.lat, Longitude = item2.transit_details.arrival_stop.location.lng }) });
+            //                            MapView.MapControl.MapElements.Add(new MapIcon() { Image = ico, Title = "departure  " + item2.transit_details.headsign, Location = new Geopoint(new BasicGeoposition() { Latitude = item2.transit_details.departure_stop.location.lat, Longitude = item2.transit_details.departure_stop.location.lng }) });
+            //                        }
+            //                    }
+            //                }
+            //                await new MessageDialog($"{MultilingualHelpToolkit.GetString("StringDirectionCalculated", "Text")}".Replace("{di}", di).Replace("{es}", es)).ShowAsync();
+            //                await MapView.MapControl.TryZoomToAsync(16);
+            //                MapView.MapControl.Center = Origin;
+            //                MapView.MapControl.DesiredPitch = 45;
+            //                MapViewVM.ActiveNavigationMode = true;
+            //                new DisplayRequest().RequestActive();
+            //            }
+            //            else
+            //            {
+            //                await new MessageDialog(MultilingualHelpToolkit.GetString("StringSelectBothOriginAndDestination", "Text")).ShowAsync();
+            //            }
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            //await new MessageDialog("error on DirectionFinder in Transit Mode" + Environment.NewLine + ex.Message).ShowAsync();
+            //        }
+            //    });
+            //}
         }
 
 

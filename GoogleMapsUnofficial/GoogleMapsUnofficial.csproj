@@ -137,6 +137,9 @@
     <Compile Include="View\BookmarkAdd.xaml.cs">
       <DependentUpon>BookmarkAdd.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\DirectionsControls\FullStepsProvider.xaml.cs">
+      <DependentUpon>FullStepsProvider.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DirectionsControls\NewDirections.xaml.cs">
       <DependentUpon>NewDirections.xaml</DependentUpon>
     </Compile>
@@ -355,6 +358,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="View\BookmarkAdd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DirectionsControls\FullStepsProvider.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

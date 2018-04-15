@@ -333,4 +333,10 @@
   <data name="StringSystemTheme.Text" xml:space="preserve">
     <value>مطابق سیستم</value>
   </data>
+  <data name="StringAccessContacts.Text" xml:space="preserve">
+    <value>دسترسی به مخاطبان</value>
+  </data>
+  <data name="StringAccessContactsWhy.Text" xml:space="preserve">
+    <value>مخاطبان دارای آدرس در نتایج جستجو نمایش داده میشوند تا سریع تر به آنها دسترسی داشته باشید.</value>
+  </data>
 </root>

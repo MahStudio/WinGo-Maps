@@ -1,5 +1,7 @@
 ﻿using GoogleMapsUnofficial.Extension;
+using GoogleMapsUnofficial.Helpers.TTS;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
@@ -136,6 +138,16 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
         {
             try
             {
+                if(AppCore.GoogleMapRequestsLanguage.StartsWith("fa"))
+                {
+                    using (var mediaplayer = new MediaPlayer() { AudioCategory = MediaPlayerAudioCategory.Other })
+                    {
+                        var r = await ArianaPersianTTS.ReadText(Text);
+                        if (r == null) return;
+                        mediaplayer.Source = MediaSource.CreateFromStream(r.AsRandomAccessStream(), "mp3");
+                        mediaplayer.Play();
+                    }
+                }
                 using (var speech = new SpeechSynthesizer() { Voice = SpeechSynthesizer.AllVoices.First(gender => gender.Gender == VoiceGender.Female) })
                 {
                     using (var mediaplayer = new MediaPlayer() { AudioCategory = MediaPlayerAudioCategory.Other })
