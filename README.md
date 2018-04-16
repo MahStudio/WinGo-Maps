@@ -52,6 +52,8 @@ Then write this code in this class based on your *Google API information*:
 ```csharp
 public class AppCore
 {
+    private static HttpClient _http;
+    public static HttpClient HttpClient { get { if (_http != null) return _http; else { _http = new HttpClient(); return _http; } } }
     public static string OnMapLanguage { get; set; }
     public static string GoogleMapRequestsLanguage { get; set; }
     public static string GoogleMapAPIKey { get; private set; }
