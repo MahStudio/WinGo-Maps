@@ -94,7 +94,7 @@ namespace GoogleMapsUnofficial
             return;
         }
 
-        private async void MainPage_BackRequested(object sender, BackRequestedEventArgs e)
+        private void MainPage_BackRequested(object sender, BackRequestedEventArgs e)
         {
             e.Handled = true;
             try
