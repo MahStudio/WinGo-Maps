@@ -2,12 +2,14 @@
 using GoogleMapsUnofficial.View.OfflineMapDownloader;
 using GoogleMapsUnofficial.View.OnMapControls;
 using GoogleMapsUnofficial.View.SettingsView;
+using RavinduL.LocalNotifications.Notifications;
 using System;
 using System.Numerics;
 using Windows.ApplicationModel.Store;
 using Windows.Foundation.Metadata;
 using Windows.Graphics.Display;
 using Windows.System;
+using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -100,13 +102,23 @@ namespace GoogleMapsUnofficial
                 if (Fr.CanGoBack) Fr.GoBack();
                 else
                 {
-                    var msg = new MessageDialog(MultilingualHelpToolkit.GetString("stringExit", "Text"));
-                    msg.Commands.Add(new UICommand(MultilingualHelpToolkit.GetString("StringYes", "Text"), delegate
+                    RavinduL.LocalNotifications.LocalNotificationManager lnm = new RavinduL.LocalNotifications.LocalNotificationManager(MG);
+                    lnm.Show(new SimpleNotification
                     {
-                        App.Current.Exit();
-                    }));
-                    msg.Commands.Add(new UICommand(MultilingualHelpToolkit.GetString("StringNo", "Text"), delegate { }));
-                    await msg.ShowAsync();
+                        TimeSpan = TimeSpan.FromSeconds(5),
+                        Text = "Click/Tap Here to exit",
+                        Glyph = "\uE7E8",
+                        Background = (new SolidColorBrush((Color)Resources["SystemControlBackgroundAccentBrush"])),
+                        VerticalAlignment = VerticalAlignment.Bottom,
+                        Action = () => { App.Current.Exit(); },
+                    }, RavinduL.LocalNotifications.LocalNotificationCollisionBehaviour.Wait);
+                    //var msg = new MessageDialog(MultilingualHelpToolkit.GetString("stringExit", "Text"));
+                    //msg.Commands.Add(new UICommand(MultilingualHelpToolkit.GetString("StringYes", "Text"), delegate
+                    //{
+                    //    App.Current.Exit();
+                    //}));
+                    //msg.Commands.Add(new UICommand(MultilingualHelpToolkit.GetString("StringNo", "Text"), delegate { }));
+                    //await msg.ShowAsync();
                 }
             }
             catch

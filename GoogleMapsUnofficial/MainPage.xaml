@@ -24,8 +24,8 @@
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>
     </Page.Resources>
-    
-    <Grid>
+
+    <Grid x:Name="MG">
         <RelativePanel Grid.Column="0" Grid.ColumnSpan="2" MinWidth="40" x:Name="MainGrid" SizeChanged="Page_SizeChanged"/>
         <RelativePanel x:Name="MyGrid" Grid.Column="0" Width="{Binding ElementName=MainGrid,Path=Width}" Background="#28000000"/>
         <Grid>

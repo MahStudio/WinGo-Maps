@@ -445,6 +445,9 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>11.0.2</Version>
     </PackageReference>
+    <PackageReference Include="RavinduL.LocalNotifications">
+      <Version>3.0.0</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="WindowsMobile, Version=10.0.16299.0">

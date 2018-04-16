@@ -56,7 +56,7 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
             CurrentStep = route.legs.FirstOrDefault().steps.FirstOrDefault();
             View.DirectionsControls.StepsTitleProvider.Provider.CurrentStep = CurrentStep;
         }
-        
+
         private async void GeoLocate_PositionChanged(Geolocator sender, PositionChangedEventArgs args)
         {
             if (IsRecalculating) return;
@@ -138,24 +138,29 @@ namespace GoogleMapsUnofficial.ViewModel.VoiceNavigation
         {
             try
             {
-                if(AppCore.GoogleMapRequestsLanguage.StartsWith("fa"))
+                if (AppCore.GoogleMapRequestsLanguage.StartsWith("fa"))
                 {
-                    using (var mediaplayer = new MediaPlayer() { AudioCategory = MediaPlayerAudioCategory.Other })
+                    var mediaplayer = new MediaPlayer() { AudioCategory = MediaPlayerAudioCategory.Other };
+                    mediaplayer.Source = MediaSource.CreateFromUri(new Uri("http://api.farsireader.com/ArianaCloudService/ReadTextGET?APIKey=N2E30XVIPRIL1TU&Text=" + Text + "&Speaker=Female1&Format=mp3%2F32%2Fm&GainLevel=0&PitchLevel=0&PunctuationLevel=0&SpeechSpeedLevel=0&ToneLevel=0", UriKind.Absolute));
+                    //mediaplayer.Source = MediaSource.CreateFromStream(r, "mp3");
+                    mediaplayer.Play();
+                    mediaplayer.MediaEnded += (e, s) =>
                     {
-                        var r = await ArianaPersianTTS.ReadText(Text);
-                        if (r == null) return;
-                        mediaplayer.Source = MediaSource.CreateFromStream(r.AsRandomAccessStream(), "mp3");
-                        mediaplayer.Play();
-                    }
+                        e.Dispose();
+                    };
                 }
-                using (var speech = new SpeechSynthesizer() { Voice = SpeechSynthesizer.AllVoices.First(gender => gender.Gender == VoiceGender.Female) })
+                else
                 {
-                    using (var mediaplayer = new MediaPlayer() { AudioCategory = MediaPlayerAudioCategory.Other })
+                    var speech = new SpeechSynthesizer() { Voice = SpeechSynthesizer.AllVoices.First(gender => gender.Gender == VoiceGender.Female) };
+                    var mediaplayer = new MediaPlayer() { AudioCategory = MediaPlayerAudioCategory.Other };
+
+                    var stream = await speech.SynthesizeTextToStreamAsync(Text);
+                    mediaplayer.Source = MediaSource.CreateFromStream(stream, stream.ContentType);
+                    mediaplayer.Play();
+                    mediaplayer.MediaEnded += (e, s) =>
                     {
-                        var stream = await speech.SynthesizeTextToStreamAsync(Text);
-                        mediaplayer.Source = MediaSource.CreateFromStream(stream, stream.ContentType);
-                        mediaplayer.Play();
-                    }
+                        e.Dispose();
+                    };
                 }
             }
             catch
