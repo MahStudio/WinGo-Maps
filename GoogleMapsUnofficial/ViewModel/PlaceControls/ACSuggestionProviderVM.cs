@@ -34,7 +34,7 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
 
         public async void SuggestForSearch(string searchExpression)
         {
-            await CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
+            await AppCore.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
             {
                 SearchResults.Clear();
                 var s = await PlaceAutoComplete.GetAutoCompleteResults(searchExpression, location: MapView.MapControl.Center, radius: 50000);

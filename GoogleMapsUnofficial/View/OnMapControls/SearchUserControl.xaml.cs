@@ -56,7 +56,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
 
             public async void SuggestForSearch(string searchExpression)
             {
-                await CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
+                await AppCore.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
                 {
                     if (SearchResults == null) SearchResults = new ObservableCollection<PlaceAutoComplete.Prediction>();
                     SearchResults.Clear();

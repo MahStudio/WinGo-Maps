@@ -54,14 +54,12 @@ namespace GoogleMapsUnofficial.ViewModel
         public static bool ActiveNavigationMode { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
         private MapControl Map;
-        private CoreWindow CoreWindow;
         public static ViewModel UserLocation { get; set; }
         Geolocator geolocator = new Geolocator();
         public static Geolocator GeoLocate { get; set; }
         public static Geopoint FastLoadGeoPosition { get; set; }
         public MapViewVM()
         {
-            CoreWindow = CoreWindow.GetForCurrentThread();
             LocationFlagVisibility = Visibility.Visible;
             StepsTitleProviderVisibility = Visibility.Collapsed;
             if (UserLocation == null)
@@ -94,7 +92,7 @@ namespace GoogleMapsUnofficial.ViewModel
                         {
                             UserLocation.Location = FastLoadGeoPosition;
                             Map.Center = FastLoadGeoPosition;
-                            await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High, async delegate
+                            await AppCore.Dispatcher.RunAsync(CoreDispatcherPriority.High, async delegate
                             {
                                 await Map.TryZoomToAsync(16);
                             });
@@ -105,7 +103,7 @@ namespace GoogleMapsUnofficial.ViewModel
                         GeoLocatorHelper.GetUserLocation();
                         GeoLocatorHelper.LocationFetched += GeoLocatorHelper_LocationFetched;
                         geolocator.PositionChanged += Geolocator_PositionChanged;
-                        await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, delegate
+                        await AppCore.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, delegate
                         {
                             var savedplaces = SavedPlacesVM.GetSavedPlaces();
                             foreach (var item in savedplaces)
@@ -174,12 +172,12 @@ namespace GoogleMapsUnofficial.ViewModel
             ActiveNavigationMode = false;
             geolocator = GeoLocate;
             Map = View.MapView.MapControl;
-            await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, LocateUser);
+            await AppCore.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, LocateUser);
         }
 
         private async void GeoLocatorHelper_LocationFetched(object sender, Geoposition e)
         {
-            await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
+            await AppCore.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
             {
                 var pos = e.Coordinate.Point;
                 Geopoint snPoint = new Geopoint(new BasicGeoposition { Latitude = pos.Position.Latitude, Longitude = pos.Position.Longitude });
@@ -198,7 +196,7 @@ namespace GoogleMapsUnofficial.ViewModel
 
         private async void Compass_ReadingChanged(Compass sender, CompassReadingChangedEventArgs args)
         {
-            await CoreWindow.Dispatcher.TryRunAsync(CoreDispatcherPriority.Normal, delegate
+            await AppCore.Dispatcher.TryRunAsync(CoreDispatcherPriority.Normal, delegate
             {
                 try
                 {
@@ -214,7 +212,7 @@ namespace GoogleMapsUnofficial.ViewModel
         {
             try
             {
-                await CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, delegate
+                await AppCore.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, delegate
                 {
                     if (Map == null || UserLocation == null) return;
                     UserLocation.Location = args.Position.Coordinate.Point;

@@ -7,7 +7,6 @@ using Windows.Foundation;
 class GeoLocatorHelper
 {
     public static event EventHandler<Geoposition> LocationFetched;
-    public static Geoposition UserPosition { get; set; }
     public static bool IsLocationBusy { get; set; }
     private static ExtendedExecutionSession session;
 

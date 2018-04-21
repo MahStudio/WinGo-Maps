@@ -40,7 +40,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
         {
             count++;
             await Task.Delay(350);
-            await CoreWindow.GetForCurrentThread().Dispatcher.TryRunAsync(CoreDispatcherPriority.Normal, async delegate
+            await AppCore.Dispatcher.TryRunAsync(CoreDispatcherPriority.Normal, async delegate
             {
                 if (count == 0) return;
                 if (count == 1)

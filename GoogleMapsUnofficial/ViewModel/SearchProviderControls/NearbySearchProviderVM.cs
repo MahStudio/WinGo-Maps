@@ -48,7 +48,7 @@ namespace GoogleMapsUnofficial.ViewModel.SearchProviderControls
         }
         private async void Search()
         {
-            await CoreWindow.GetForCurrentThread().Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
+            await AppCore.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
             {
                 SearchResults.Clear();
                 SearchHelper.Rootobject s = null;
