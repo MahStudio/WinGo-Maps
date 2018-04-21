@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="7482MahStudios.WinGoMaps" Publisher="CN=983BF5D2-5CC3-402A-B46D-46C1F70449F9" Version="1.0.583.0" />
+  <Identity Name="7482MahStudios.WinGoMaps" Publisher="CN=983BF5D2-5CC3-402A-B46D-46C1F70449F9" Version="1.0.585.0" />
   <mp:PhoneIdentity PhoneProductId="6c5e1d37-5879-407c-83f4-ec9655592328" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>WinGo Maps</DisplayName>

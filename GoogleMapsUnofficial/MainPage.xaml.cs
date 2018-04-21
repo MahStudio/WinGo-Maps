@@ -42,6 +42,7 @@ namespace GoogleMapsUnofficial
         }
         private void applyAcrylicAccent(Panel panel)
         {
+            if (ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone) return;
             if (ApiInformation.IsTypePresent("Windows.UI.Xaml.Media.AcrylicBrush"))
             {
                 var ac = new AcrylicBrush();
@@ -72,7 +73,7 @@ namespace GoogleMapsUnofficial
                 _hostSprite.Size = e.NewSize.ToVector2();
         }
 
-        private void MainPage_Loaded(object sender, RoutedEventArgs e)
+        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             Fr.Navigate(typeof(MapView), para);
             applyAcrylicAccent(MainGrid);
@@ -81,11 +82,18 @@ namespace GoogleMapsUnofficial
             try
             {
                 if (CurrentAppSimulator.LicenseInformation.IsTrial)
-                    HMenuBottomLst.Items.Add(new MenuClass { Text = MultilingualHelpToolkit.GetString("StringBuyFromIran", "Text"), Icon = "", Tag = "Buy from Iran" });
+                {
+                    var exp = CurrentAppSimulator.LicenseInformation.ExpirationDate;
+                    if(exp.Subtract(DateTime.Now) <= new TimeSpan(4,0,0,0))
+                    {
+                        await new MessageDialog("Application will be expired on " + exp.ToString()).ShowAsync();
+                    }
+                }
+                //    HMenuBottomLst.Items.Add(new MenuClass { Text = MultilingualHelpToolkit.GetString("StringBuyFromIran", "Text"), Icon = "", Tag = "Buy from Iran" });
             }
             catch
             {
-                HMenuBottomLst.Items.Add(new MenuClass { Text = MultilingualHelpToolkit.GetString("StringBuyFromIran", "Text"), Icon = "", Tag = "Buy from Iran" });
+                //HMenuBottomLst.Items.Add(new MenuClass { Text = MultilingualHelpToolkit.GetString("StringBuyFromIran", "Text"), Icon = "", Tag = "Buy from Iran" });
             }
             HMenuBottomLst.Items.Add(new MenuClass { Text = MultilingualHelpToolkit.GetString("StringSendFeedback", "Text"), Icon = "", Tag = "Send feedback" });
             HMenuBottomLst.Items.Add(new MenuClass { Text = MultilingualHelpToolkit.GetString("StringSettings", "Text"), Icon = "", Tag = "Settings" });
