@@ -436,7 +436,7 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
             {
                 var data = Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values["AccessContacts"]);
                 if (data == false) return false;
-                var at = await ContactManager.RequestStoreAsync(ContactStoreAccessType.AllContactsReadWrite);
+                var at = await ContactManager.RequestStoreAsync(ContactStoreAccessType.AllContactsReadOnly);
                 if (at != null)
                     return true;
                 else return false;
@@ -456,7 +456,7 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
                     ApplicationData.Current.LocalSettings.Values["AccessContacts"] = false;
                     return false;
                 }
-                var at = await ContactManager.RequestStoreAsync(ContactStoreAccessType.AllContactsReadWrite);
+                var at = await ContactManager.RequestStoreAsync(ContactStoreAccessType.AllContactsReadOnly);
                 if (at != null)
                 {
                     ApplicationData.Current.LocalSettings.Values["AccessContacts"] = true;

@@ -121,9 +121,7 @@ namespace GoogleMapsUnofficial
             {
                 geolocator = new Geolocator
                 {
-                    MovementThreshold = 1,
-                    ReportInterval = 1,
-                    DesiredAccuracyInMeters = 1
+                   DesiredAccuracy = PositionAccuracy.High
                 };
                 MapViewVM.GeoLocate = geolocator;
                 GeoLocatorHelper.GetUserLocation();

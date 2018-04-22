@@ -55,18 +55,20 @@ namespace GoogleMapsUnofficial.ViewModel.TilesAPIControls
             if (Request.Scale != null) req.scale = Request.Scale.Value.ToString();
             var http = AppCore.HttpClient;
             http.DefaultRequestHeaders.UserAgent.ParseAdd(AppCore.HttpUserAgent);
-            var resp = await http.PostAsync(new Uri($"https://www.googleapis.com/tile/v1/createSession?key={AppCore.GoogleMapAPIKey}", UriKind.RelativeOrAbsolute),
-                new HttpStringContent(JsonConvert.SerializeObject(req)));
-            var res = JsonConvert.DeserializeObject<InternalResponse>(await resp.Content.ReadAsStringAsync());
-            var t = DateTime.Now.AddSeconds(res.expiry);
-            return new ResponseClass()
+            using (var resp = await http.PostAsync(new Uri($"https://www.googleapis.com/tile/v1/createSession?key={AppCore.GoogleMapAPIKey}", UriKind.RelativeOrAbsolute),
+                new HttpStringContent(JsonConvert.SerializeObject(req))))
             {
-                expiry = t,
-                imageFormat = res.imageFormat, 
-                session = res.session, 
-                tileHeight = res.tileHeight, 
-                tileWidth = res.tileWidth
-            };
+                var res = JsonConvert.DeserializeObject<InternalResponse>(await resp.Content.ReadAsStringAsync());
+                var t = DateTime.Now.AddSeconds(res.expiry);
+                return new ResponseClass()
+                {
+                    expiry = t,
+                    imageFormat = res.imageFormat,
+                    session = res.session,
+                    tileHeight = res.tileHeight,
+                    tileWidth = res.tileWidth
+                };
+            }
         }
 
         public static Uri GetMapUri(string SessionToken)
