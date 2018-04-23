@@ -110,6 +110,7 @@
                     <SolidColorBrush x:Key="WinGoPureBack" Color="#ffffff"/>
                     <SolidColorBrush x:Key="WinGoBack2" Color="#fbfbfb"/>
                     <SolidColorBrush x:Key="WinGoBack2Foreground" Color="#cbcbcb"/>
+                    <SolidColorBrush x:Key="WinGoBackForSplitView" Color="#fafafa" Opacity="0.3"/>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Dark">
                     <SolidColorBrush x:Key="WinGoBack" Color="#2B2B2B"/>
@@ -117,6 +118,7 @@
                     <SolidColorBrush x:Key="WinGoPureBack" Color="#000000"/>
                     <SolidColorBrush x:Key="WinGoBack2" Color="#2B2B2B"/>
                     <SolidColorBrush x:Key="WinGoBack2Foreground" Color="#444444"/>
+                    <SolidColorBrush x:Key="WinGoBackForSplitView" Color="#2B2B2B" Opacity="0.55"/>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
         </ResourceDictionary>

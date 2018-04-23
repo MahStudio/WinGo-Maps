@@ -142,7 +142,10 @@ namespace GoogleMapsUnofficial.View
             var FadeAnimationEnabled = SettingsSetters.GetFadeAnimationEnabled();
             if (InternalHelper.InternetConnection())
             {
-                ChangeViewControl.UseGoogleMaps(OnMapControls.ChangeViewUserControl.MapMode.Standard, AllowOverstretch: AllowOverstretch, IsFadingEnabled: FadeAnimationEnabled, ShowTraffic: SettingsSetters.GetShowTrafficOnLaunch());
+                if (App.Current.RequestedTheme == ApplicationTheme.Light)
+                    ChangeViewControl.UseGoogleMaps(OnMapControls.ChangeViewUserControl.MapMode.Standard, AllowOverstretch: AllowOverstretch, IsFadingEnabled: FadeAnimationEnabled, ShowTraffic: SettingsSetters.GetShowTrafficOnLaunch());
+                else
+                    ChangeViewControl.UseGoogleMaps(OnMapControls.ChangeViewUserControl.MapMode.RoadsOnly, AllowOverstretch: AllowOverstretch, IsFadingEnabled: FadeAnimationEnabled, ShowTraffic: SettingsSetters.GetShowTrafficOnLaunch());
             }
             else
             {
@@ -342,7 +345,7 @@ namespace GoogleMapsUnofficial.View
                         Map.Center = new Geopoint(bgp);
                         Map.MapElements.Add(new MapIcon() { Location = new Geopoint(bgp), Title = "Point" });
                     }
-                    if (zoomlevel != 0) await Map.TryZoomToAsync( zoomlevel );
+                    if (zoomlevel != 0) await Map.TryZoomToAsync(zoomlevel);
                     else await MapView.MapControl.TryZoomToAsync(16);
                     if (Querry != "")
                     {
