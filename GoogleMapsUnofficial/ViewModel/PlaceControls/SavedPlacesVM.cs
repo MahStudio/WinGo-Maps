@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.Storage;
+using Windows.UI.StartScreen;
 
 namespace GoogleMapsUnofficial.ViewModel.PlaceControls
 {
@@ -23,7 +24,21 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
                 return new List<SavedPlaceClass>();
             }
         }
-
+        public static async void UpdateJumpList()
+        {
+            try
+            {
+                var listjump = await JumpList.LoadCurrentAsync();
+                listjump.Items.Clear();
+                foreach (var Place in GetSavedPlaces())
+                {
+                    listjump.SystemGroupKind = JumpListSystemGroupKind.None;
+                    listjump.Items.Add(JumpListItem.CreateWithArguments($"{Place.Latitude},{Place.Longitude}", Place.PlaceName));
+                }
+                await listjump.SaveAsync();
+            }
+            catch { }
+        }
         /// <summary>
         /// Save a place to saved places
         /// </summary>
@@ -42,6 +57,7 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
                     throw new ArgumentOutOfRangeException("PlaceName is already exists");
                 r.Add(Place);
                 ApplicationData.Current.RoamingSettings.Values["SavedPlaces"] = JsonConvert.SerializeObject(r);
+                UpdateJumpList();
                 return true;
             }
             catch (Exception ex)
@@ -65,6 +81,7 @@ namespace GoogleMapsUnofficial.ViewModel.PlaceControls
                 if (p.Count() == 0) throw new KeyNotFoundException("PlaceName not found");
                 r.Remove(p.FirstOrDefault());
                 ApplicationData.Current.RoamingSettings.Values["SavedPlaces"] = JsonConvert.SerializeObject(r);
+                UpdateJumpList();
                 return true;
             }
             catch (Exception ex)
