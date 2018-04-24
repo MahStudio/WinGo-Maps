@@ -61,7 +61,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                     if (SearchResults == null) SearchResults = new ObservableCollection<PlaceAutoComplete.Prediction>();
                     SearchResults.Clear();
                     var saved = SavedPlacesVM.GetSavedPlaces();
-                    saved.Where(x => x.PlaceName.Contains(searchExpression));
+                    saved = saved.Where(x => x.PlaceName.Contains(searchExpression)).ToList();
                     foreach (var item in saved)
                     {
                         SearchResults.Add(new PlaceAutoComplete.Prediction() { place_id = $"{item.Latitude},{item.Longitude}", description = "Saved:" + item.PlaceName });
