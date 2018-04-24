@@ -47,7 +47,6 @@ class GeoLocatorHelper
     }
     public static void GetUserLocation()
     {
-        if (IsLocationBusy) return;
         var res = MapViewVM.GeoLocate.GetGeopositionAsync();
         MapViewVM.GeoLocate.StatusChanged += GeoLocate_StatusChanged;
         IsLocationBusy = true;
