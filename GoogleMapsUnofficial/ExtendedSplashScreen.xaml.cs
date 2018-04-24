@@ -1,4 +1,5 @@
 ﻿using GoogleMapsUnofficial.ViewModel;
+using GoogleMapsUnofficial.ViewModel.PlaceControls;
 using System;
 using System.Numerics;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Composition;
 using Windows.UI.Popups;
+using Windows.UI.StartScreen;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Hosting;
@@ -98,10 +100,25 @@ namespace GoogleMapsUnofficial
                 }
             }
         }
+        public async void UpdateJumpList()
+        {
+            try
+            {
+                var listjump = await JumpList.LoadCurrentAsync();
+                listjump.Items.Clear();
+                foreach (var Place in SavedPlacesVM.GetSavedPlaces())
+                {
+                    listjump.SystemGroupKind = JumpListSystemGroupKind.None;
+                    listjump.Items.Add(JumpListItem.CreateWithArguments($"{Place.Latitude},{Place.Longitude}", Place.PlaceName));
+                }
+                await listjump.SaveAsync();
+            }
+            catch { }
+        }
         async void LoadExtendedSplashScreen()
         {
             ApplyAcrylicAccent(Grid1);
-            InstallVCD();
+            InstallVCD(); UpdateJumpList();
             try
             {
                 var res = ApplicationData.Current.LocalSettings.Values["LastUserLocation"].ToString();
