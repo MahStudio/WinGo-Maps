@@ -3,6 +3,7 @@ using GoogleMapsUnofficial.View.OfflineMapDownloader;
 using GoogleMapsUnofficial.View.OnMapControls;
 using GoogleMapsUnofficial.View.SettingsView;
 using RavinduL.LocalNotifications.Notifications;
+using SamplesCommon;
 using System;
 using System.Numerics;
 using Windows.ApplicationModel.Store;
@@ -34,6 +35,10 @@ namespace GoogleMapsUnofficial
         public MainPage(object parameter = null)
         {
             this.InitializeComponent();
+            if(ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.Phone)
+            {
+                ImageLoader.Initialize(ElementCompositionPreview.GetElementVisual(this).Compositor);
+            }
             SystemNavigationManager.GetForCurrentView().BackRequested += MainPage_BackRequested;
             this.Loaded += MainPage_Loaded;
             RootFrame = Fr;

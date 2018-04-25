@@ -263,6 +263,7 @@
     <Content Include="Assets\LargeTile.scale-150.png" />
     <Content Include="Assets\LargeTile.scale-200.png" />
     <Content Include="Assets\LargeTile.scale-400.png" />
+    <Content Include="Assets\Noise.png" />
     <Content Include="Assets\SmallTile.scale-100.png" />
     <Content Include="Assets\SmallTile.scale-125.png" />
     <Content Include="Assets\SmallTile.scale-150.png" />
@@ -365,6 +366,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\DirectionsControls\NewDirections.DeviceFamily-Mobile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DirectionsControls\NewDirections.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -455,13 +460,13 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BackDrop-master\MGS.BackDrop\MGS.BackDrop.csproj">
-      <Project>{c4f5fecd-a48d-408a-a5d0-548d283d4257}</Project>
-      <Name>MGS.BackDrop</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LiveTileTask\LiveTileTask.csproj">
       <Project>{f5e2423a-05f4-4877-b31d-f3c10df6082f}</Project>
       <Name>LiveTileTask</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SamplesCommon\SamplesCommon\SamplesCommon.csproj">
+      <Project>{0b6a4830-d1ff-4018-baa2-7257eb4579fe}</Project>
+      <Name>SamplesCommon</Name>
     </ProjectReference>
     <ProjectReference Include="..\WinGoService\WinGoService.csproj">
       <Project>{df428a8c-75d3-4551-9636-0ae8cb1a0fad}</Project>
