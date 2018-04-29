@@ -83,6 +83,7 @@ namespace GoogleMapsUnofficial.ViewModel.SettingsView
                     new KeyValuePair<string, string>("Arabic","Ar"),
                     new KeyValuePair<string, string>("Belarusian","Be-By"),
                     new KeyValuePair<string, string>("English","En-Us"),
+                    new KeyValuePair<string, string>("French","Fr-Fr"),
                     new KeyValuePair<string, string>("German","DE-DE"),
                     new KeyValuePair<string, string>("Italian","it"),
                     new KeyValuePair<string, string>("Japanese","ja-JP"),
