@@ -51,22 +51,24 @@ namespace GoogleMapsUnofficial
             }
         }
 
-        private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        private async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            var d = DateTime.Now;
-            var st = sender.GetType();
-            //var doc = await KnownFolders.PicturesLibrary.CreateFileAsync($"WingoMaps{d.Year},{d.Month},{d.Day},{d.Hour}_{d.Minute}_{d.Second}.txt", CreationCollisionOption.GenerateUniqueName);
-            string CrashReport = $"Wingo MAP Crash Report {d.ToString()}.{Environment.NewLine}SenderType= {st.Name}{Environment.NewLine}ExceptionMessage={Environment.NewLine}{e.Message}{Environment.NewLine}{e.Exception.Message}Stack Trace:{e.Exception.StackTrace}{Environment.NewLine}Source={e.Exception.Source}{Environment.NewLine}HResult={e.Exception.HResult}{Environment.NewLine}HelpLink={e.Exception.HelpLink}{Environment.NewLine}";
-            if (e.Exception.InnerException == null)
-            {
-                CrashReport += $"Inner Exception=False{Environment.NewLine}";
-            }
-            else
-            {
-                CrashReport += $"Inner Exception Present=False{Environment.NewLine}Inner Exception:{Environment.NewLine}Message:{e.Exception.InnerException.Message}{Environment.NewLine}StackTrace={e.Exception.InnerException.StackTrace}{Environment.NewLine}HResult={e.Exception.InnerException.HResult}{Environment.NewLine}HelpLink={e.Exception.InnerException.HelpLink}{Environment.NewLine}";
-            }
-            ApplicationData.Current.LocalSettings.Values["CrashDump"] = CrashReport;
-            //await FileIO.WriteTextAsync(doc, CrashReport);
+            e.Handled = true;
+            await new MessageDialog($"{e.Message}{Environment.NewLine}{e.Exception.StackTrace}").ShowAsync();
+            //var d = DateTime.Now;
+            //var st = sender.GetType();
+            ////var doc = await KnownFolders.PicturesLibrary.CreateFileAsync($"WingoMaps{d.Year},{d.Month},{d.Day},{d.Hour}_{d.Minute}_{d.Second}.txt", CreationCollisionOption.GenerateUniqueName);
+            //string CrashReport = $"Wingo MAP Crash Report {d.ToString()}.{Environment.NewLine}SenderType= {st.Name}{Environment.NewLine}ExceptionMessage={Environment.NewLine}{e.Message}{Environment.NewLine}{e.Exception.Message}Stack Trace:{e.Exception.StackTrace}{Environment.NewLine}Source={e.Exception.Source}{Environment.NewLine}HResult={e.Exception.HResult}{Environment.NewLine}HelpLink={e.Exception.HelpLink}{Environment.NewLine}";
+            //if (e.Exception.InnerException == null)
+            //{
+            //    CrashReport += $"Inner Exception=False{Environment.NewLine}";
+            //}
+            //else
+            //{
+            //    CrashReport += $"Inner Exception Present=False{Environment.NewLine}Inner Exception:{Environment.NewLine}Message:{e.Exception.InnerException.Message}{Environment.NewLine}StackTrace={e.Exception.InnerException.StackTrace}{Environment.NewLine}HResult={e.Exception.InnerException.HResult}{Environment.NewLine}HelpLink={e.Exception.InnerException.HelpLink}{Environment.NewLine}";
+            //}
+            //ApplicationData.Current.LocalSettings.Values["CrashDump"] = CrashReport;
+            ////await FileIO.WriteTextAsync(doc, CrashReport);
         }
 
         private void StartFluent()
