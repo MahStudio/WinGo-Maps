@@ -225,7 +225,7 @@
                 <Grid Grid.Row="0">
                     <maps:MapControl MapRightTapped="Map_MapRightTapped" x:Name="Map" MapServiceToken="Qe4rzjfqSL7zZlp8xb8A~4o8bBFXIWVuiCUT9pX2cUg~Auk92xku8o5QuFTpMvN0_7Os9b6pREma6NBC8ojGjU0N3Eq3BBzkI9ehNfu065Wv" >
                         <maps:MapItemsControl>
-                            <Grid Visibility="{Binding LocationFlagVisibility, Mode=OneWay}" HorizontalAlignment="Center" maps:MapControl.Location="{Binding UserLocation.Location, Mode=TwoWay, UpdateSourceTrigger=Explicit}" maps:MapControl.NormalizedAnchorPoint="0.5,0.5" >
+                            <Grid Tapped="Nearby_Invoke" Visibility="{Binding LocationFlagVisibility, Mode=OneWay}" HorizontalAlignment="Center" maps:MapControl.Location="{Binding UserLocation.Location, Mode=TwoWay, UpdateSourceTrigger=Explicit}" maps:MapControl.NormalizedAnchorPoint="0.5,0.5" >
                                 <Path Data="F1M473,280C473,283.867,476.134,287,480,287L480,287C483.866,287,487,283.867,487,280L487,280C487,276.134,483.866,273,480,273L480,273C476.134,273,473,276.134,473,280" Height="14" Stretch="Fill" Width="14" Fill="DodgerBlue" />
                                 <Path x:Name="path" Data="F1M391,280C391,230.847,430.847,191,480,191C529.153,191,569,230.847,569,280C569,329.153,529.153,369,480,369C430.847,369,391,329.153,391,280" Height="95" Stretch="Uniform" Width="95" Opacity="0.3" Stroke="Blue" StrokeThickness="1" Fill="DodgerBlue">
                                     <!--<Interactivity:Interaction.Behaviors>
@@ -257,7 +257,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <!--<OMC:MenuUserControl Grid.Column="0" Margin="32,15" />-->
-                        <!--<OMC:SearchOptionsUserControl x:Name="Searchgrid" Grid.Column="1" Margin="0,15" HorizontalAlignment="Center"/>-->
+                        <OMC:SearchOptionsUserControl x:Name="Searchgrid" Grid.Column="1" Margin="0,15" HorizontalAlignment="Center"/>
                         <dir:NewDirections x:Name="DirectionsControl" Grid.Column="1" Height="80" HorizontalAlignment="Stretch" MaxWidth="500" Margin="16,0"/>
                         <Button x:Name="InkingBTN" Click="InkingBTN_Click" Style="{StaticResource dotbut}" Width="48" Height="48" Margin="32,0,32,112" Grid.Column="2" BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Foreground="White" Padding="0" FontSize="18" FontFamily="Segoe MDL2 Assets" Content="&#xE76D;"/>
                         <OMC:MyLocationUserControl x:Name="MyLocationControl" Grid.Column="2" Margin="32,32" />

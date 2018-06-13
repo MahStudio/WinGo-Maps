@@ -38,10 +38,30 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                 SetValue(PopUPProperty, value);
                 if (value)
                     SearchBTN.Flyout.ShowAt(SearchBTN);
+                else SearchBTN.Flyout.Hide();
             }
         }
         public static readonly DependencyProperty PopUPProperty = DependencyProperty.Register(
          "PopUP",
+         typeof(bool),
+         typeof(SearchOptionsUserControl),
+         new PropertyMetadata(null)
+        );
+        public bool IsNearbySearch
+        {
+            get
+            {
+                return (bool)GetValue(IsNearbySearchProperty);
+            }
+            set
+            {
+                SetValue(IsNearbySearchProperty, value);
+                if (value) { Piv.SelectedIndex = 1; }
+                else { Piv.SelectedIndex = 0; }
+            }
+        }
+        public static readonly DependencyProperty IsNearbySearchProperty = DependencyProperty.Register(
+         "IsNearbySearch",
          typeof(bool),
          typeof(SearchOptionsUserControl),
          new PropertyMetadata(null)

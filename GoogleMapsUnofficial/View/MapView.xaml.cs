@@ -1,4 +1,5 @@
 ﻿using GoogleMapsUnofficial.Extension;
+using GoogleMapsUnofficial.View.OnMapControls;
 using GoogleMapsUnofficial.ViewModel.GeocodControls;
 using GoogleMapsUnofficial.ViewModel.PlaceControls;
 using GoogleMapsUnofficial.ViewModel.SettingsView;
@@ -55,12 +56,14 @@ namespace GoogleMapsUnofficial.View
         string LastPlaceID { get; set; }
         public static MapControl MapControl;
         public static MapView StaticMapView { get; set; }
+        public static SearchOptionsUserControl StaticSearchGrid { get; set; }
         public MapView()
         {
             this.InitializeComponent();
             NetworkInformation.NetworkStatusChanged += NetworkInformation_NetworkStatusChanged;
             MapControl = Map;
             StaticMapView = this;
+            StaticSearchGrid = Searchgrid;
             //Map.RotateInteractionMode = MapInteractionMode.GestureOnly;
             Map.RotateInteractionMode = SettingsSetters.GetRotationControlsVisible();
             var ZoomInteractionMode = SettingsSetters.GetZoomControlsVisible();
@@ -589,6 +592,12 @@ namespace GoogleMapsUnofficial.View
             var redir = "https://www.google.com/maps/@" + LastRightTap.Position.Latitude + "," + LastRightTap.Position.Latitude + "," + Map.ZoomLevel.ToString("0.00") + "z/data=!10m1!1e2";
             await Launcher.LaunchUriAsync(new Uri(redir));
 
+        }
+
+        private void Nearby_Invoke(object sender, TappedRoutedEventArgs e)
+        {
+            Searchgrid.IsNearbySearch = true;
+            Searchgrid.PopUP = true;
         }
     }
 }

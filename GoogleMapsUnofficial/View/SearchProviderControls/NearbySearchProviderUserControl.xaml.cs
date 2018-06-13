@@ -67,6 +67,13 @@ namespace GoogleMapsUnofficial.View.SearchProviderControls
                     Latitude = ploc.lat,
                     Longitude = ploc.lng
                 });
+            MapView.StaticMapView.SearchResultPoint = new Geopoint(
+                new BasicGeoposition()
+                {
+                    Latitude = ploc.lat,
+                    Longitude = ploc.lng
+                });
+            MapView.StaticSearchGrid.PopUP = false;
         }
 
         private void PlaceType_Click(object sender, RoutedEventArgs e)

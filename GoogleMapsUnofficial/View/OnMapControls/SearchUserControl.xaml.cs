@@ -142,12 +142,16 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             //SearchReq.Invoke(args.QueryText, null);
             //SearchBox.Visibility = Visibility.Collapsed;
             //BTNExpand.Visibility = Visibility.Visible;
+            var t = SearchBox.Text;
             SearchBox.Text = "";
             try
             {
                 (DataContext as ViewModel).SearchResults.Clear();
             }
             catch { }
+            MapView.StaticSearchGrid.IsNearbySearch = false;
+            MapView.StaticSearchGrid.SearchText = t;
+            MapView.StaticSearchGrid.PopUP = true;
         }
 
         private async void Control2_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
