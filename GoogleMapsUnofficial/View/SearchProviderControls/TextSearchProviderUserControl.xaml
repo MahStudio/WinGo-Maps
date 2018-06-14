@@ -24,7 +24,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
-                        <TextBlock TextAlignment="DetectFromContent" Text="{Binding description}" FontFamily="B Koodak" TextWrapping="Wrap" MaxLines="1"/>
+                        <TextBlock TextAlignment="DetectFromContent" Text="{Binding description}" VerticalAlignment="Center" TextWrapping="Wrap" MaxLines="1"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

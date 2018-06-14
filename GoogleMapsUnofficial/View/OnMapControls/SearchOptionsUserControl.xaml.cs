@@ -1,4 +1,6 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using System.Threading.Tasks;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
@@ -69,6 +71,14 @@ namespace GoogleMapsUnofficial.View.OnMapControls
         public SearchOptionsUserControl()
         {
             this.InitializeComponent();
+        }
+        
+        async void SelectPivotItem(int v)
+        {
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, delegate
+            {
+                Piv.SelectedIndex = v;
+            });
         }
     }
 }

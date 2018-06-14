@@ -364,7 +364,7 @@ namespace GoogleMapsUnofficial.View
                 var brush = Resources["SystemControlChromeLowAcrylicWindowBrush"] as Windows.UI.Xaml.Media.AcrylicBrush;
                 ac = brush;
                 ac.TintOpacity = 0.8;
-                ac.BackgroundSource = Windows.UI.Xaml.Media.AcrylicBackgroundSource.HostBackdrop;
+                ac.BackgroundSource = Windows.UI.Xaml.Media.AcrylicBackgroundSource.Backdrop;
                 InfoPane.PaneBackground = ac;
             }
 
@@ -594,10 +594,10 @@ namespace GoogleMapsUnofficial.View
 
         }
 
-        private void Nearby_Invoke(object sender, TappedRoutedEventArgs e)
+        private async void Nearby_Invoke(object sender, TappedRoutedEventArgs e)
         {
-            Searchgrid.IsNearbySearch = true;
             Searchgrid.PopUP = true;
+            Searchgrid.IsNearbySearch = true;
         }
     }
 }

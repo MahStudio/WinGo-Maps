@@ -137,7 +137,7 @@ namespace GoogleMapsUnofficial.View.OnMapControls
             }
             catch { }
         }
-        private void Control2_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        private async void Control2_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             //SearchReq.Invoke(args.QueryText, null);
             //SearchBox.Visibility = Visibility.Collapsed;
@@ -149,9 +149,10 @@ namespace GoogleMapsUnofficial.View.OnMapControls
                 (DataContext as ViewModel).SearchResults.Clear();
             }
             catch { }
-            MapView.StaticSearchGrid.IsNearbySearch = false;
-            MapView.StaticSearchGrid.SearchText = t;
+            if (args.ChosenSuggestion != null) return;
             MapView.StaticSearchGrid.PopUP = true;
+            MapView.StaticSearchGrid.SearchText = t;
+            MapView.StaticSearchGrid.IsNearbySearch = false;
         }
 
         private async void Control2_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)

@@ -48,7 +48,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock TextAlignment="DetectFromContent" Text="{Binding name}" FontFamily="B Koodak" TextWrapping="Wrap" MaxLines="1" Grid.Column="1"/>
+                        <TextBlock TextAlignment="DetectFromContent" Text="{Binding name}" FontFamily="B Koodak" TextWrapping="Wrap" Margin="15,0" MaxLines="1" VerticalAlignment="Center" FontWeight="SemiBold" Grid.Column="1"/>
                         <Image Source="{Binding photos[0].PlaceThumbnail}" Grid.Column="0" MaxWidth="70" MaxHeight="70"/>
                     </Grid>
                 </DataTemplate>
