@@ -10,6 +10,7 @@ using Windows.ApplicationModel.Contacts;
 using Windows.Devices.Geolocation;
 using Windows.Devices.Sensors;
 using Windows.System;
+using Windows.System.Display;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -217,7 +218,10 @@ namespace GoogleMapsUnofficial.ViewModel
                     if (Map == null || UserLocation == null) return;
                     UserLocation.Location = args.Position.Coordinate.Point;
                     if (ActiveNavigationMode == true)
+                    {
                         Map.Center = args.Position.Coordinate.Point;
+                        new DisplayRequest().RequestActive();
+                    }
                 });
             }
             catch { }
