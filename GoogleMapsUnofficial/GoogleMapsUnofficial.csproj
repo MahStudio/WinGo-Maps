@@ -124,6 +124,7 @@
     <Compile Include="ViewModel\GeocodControls\ReverseGeoCode.cs" />
     <Compile Include="ViewModel\MapViewVM.cs" />
     <Compile Include="ViewModel\OfflineMapDownloader\MapDLHelper.cs" />
+    <Compile Include="ViewModel\OnMapControls\ChangeViewUCVM.cs" />
     <Compile Include="ViewModel\PhotoControls\PhotoHelper.cs" />
     <Compile Include="ViewModel\PlaceControls\ACSuggestionProviderVM.cs" />
     <Compile Include="ViewModel\PlaceControls\PlaceAutoComplete.cs" />

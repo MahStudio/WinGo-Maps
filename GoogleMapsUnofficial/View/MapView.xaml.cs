@@ -1,6 +1,7 @@
 ﻿using GoogleMapsUnofficial.Extension;
 using GoogleMapsUnofficial.View.OnMapControls;
 using GoogleMapsUnofficial.ViewModel.GeocodControls;
+using GoogleMapsUnofficial.ViewModel.OnMapControls;
 using GoogleMapsUnofficial.ViewModel.PlaceControls;
 using GoogleMapsUnofficial.ViewModel.SettingsView;
 using System;
@@ -92,7 +93,7 @@ namespace GoogleMapsUnofficial.View
                     Map.TileSources.Clear();
                     Map.TileSources.Add(new MapTileSource(new LocalMapTileDataSource("ms-appdata:///local/MahMaps/mah_x_{x}-y_{y}-z_{zoomlevel}.jpeg")) { AllowOverstretch = false, IsFadingEnabled = SettingsSetters.GetFadeAnimationEnabled() });
                 }
-                else { ChangeViewControl.UseGoogleMaps(ChangeViewControl.CurrentMapMode, ChangeViewControl.ShowTrafficIsOn, true, ChangeViewControl.AllowOverstretch, ChangeViewControl.FadeAnimationEnabled); }
+                else { ChangeViewControl.UseGoogleMaps(); }
             });
         }
 
@@ -139,16 +140,14 @@ namespace GoogleMapsUnofficial.View
         {
             base.OnNavigatedTo(e);
             MapControl = Map;
-            if (e.NavigationMode == NavigationMode.Back)
-                ChangeViewControl.Map = Map;
             var AllowOverstretch = SettingsSetters.GetAllowOverstretch();
             var FadeAnimationEnabled = SettingsSetters.GetFadeAnimationEnabled();
             if (InternalHelper.InternetConnection())
             {
                 if (App.Current.RequestedTheme == ApplicationTheme.Light)
-                    ChangeViewControl.UseGoogleMaps(OnMapControls.ChangeViewUserControl.MapMode.Standard, AllowOverstretch: AllowOverstretch, IsFadingEnabled: FadeAnimationEnabled, ShowTraffic: SettingsSetters.GetShowTrafficOnLaunch());
+                    ChangeViewControl.UseGoogleMaps(MapMode.Standard, AllowOverstretch: AllowOverstretch, IsFadingEnabled: FadeAnimationEnabled, showtraffic: SettingsSetters.GetShowTrafficOnLaunch());
                 else
-                    ChangeViewControl.UseGoogleMaps(OnMapControls.ChangeViewUserControl.MapMode.RoadsOnly, AllowOverstretch: AllowOverstretch, IsFadingEnabled: FadeAnimationEnabled, ShowTraffic: SettingsSetters.GetShowTrafficOnLaunch());
+                    ChangeViewControl.UseGoogleMaps(MapMode.RoadsOnly, AllowOverstretch: AllowOverstretch, IsFadingEnabled: FadeAnimationEnabled, showtraffic: SettingsSetters.GetShowTrafficOnLaunch());
             }
             else
             {
