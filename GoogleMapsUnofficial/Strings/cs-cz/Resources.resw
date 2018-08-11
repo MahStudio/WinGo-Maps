@@ -118,225 +118,198 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BookMarkAddUC.PrimaryButtonText" xml:space="preserve">
-    <value>Lesezeichen hinzufügen </value>
+    <value>Přidat záložku</value>
   </data>
   <data name="BookMarkAddUC.SecondaryButtonText" xml:space="preserve">
-    <value>Abbrechen</value>
+    <value>Zrušit</value>
   </data>
   <data name="BookmarkAddUC.Title" xml:space="preserve">
-    <value>Lesezeichen hinzufügen </value>
+    <value>Přidat záložku</value>
   </data>
   <data name="BookmarkAddUCCustomName.Content" xml:space="preserve">
-    <value>Eigener Name</value>
+    <value>Vlastní název</value>
   </data>
   <data name="BookmarkAddUCPinLiveTile.Content" xml:space="preserve">
-    <value>Als Live-Kachel zum Startbildschirm hinzufügen</value>
+    <value>Připnout jako živou dlaždici</value>
   </data>
   <data name="ButtonLanguageSettings.Content" xml:space="preserve">
-    <value>Spracheinstellungen</value>
+    <value>Nastavení jazyka</value>
   </data>
   <data name="ChangeViewUCDefaultMapView.Content" xml:space="preserve">
-    <value>Standart</value>
+    <value>Výchozí</value>
   </data>
   <data name="ChangeViewUCHybridMapView.Content" xml:space="preserve">
-    <value>Hybrid</value>
-  </data>
-  <data name="ChangeViewUCRoadsOnlyView.Content" xml:space="preserve">
-    <value>Nur Straßen</value>
+    <value>Hybridní</value>
   </data>
   <data name="ChangeViewUCSatelliteMapView.Content" xml:space="preserve">
-    <value>Sattelit</value>
+    <value>Satelitní</value>
   </data>
   <data name="ChangeViewUCShowTraffic.Header" xml:space="preserve">
-    <value>Verkehr anzeigen</value>
-  </data>
-  <data name="MainPage.FlowDirection" xml:space="preserve">
-    <value>LinksNachRechts-Layout</value>
+    <value>Zobrazit dopravu</value>
   </data>
   <data name="MapDownloaderViewBackupBTN.Content" xml:space="preserve">
-    <value>Sicherung</value>
+    <value>Zálohovat</value>
   </data>
   <data name="MapDownloaderViewDLButton.Content" xml:space="preserve">
-    <value>Herunterladen</value>
+    <value>Stáhnout</value>
   </data>
   <data name="MapDownloaderViewMaximumZoomLevel.Text" xml:space="preserve">
-    <value>Maximale Offline-Zoom-Ebene (Standard: 17)</value>
+    <value>Zvolte maximální přiblížení které se má stáhnout (Výchozí hodnota je 17)</value>
   </data>
   <data name="MapDownloaderViewRestoreBtn.Content" xml:space="preserve">
-    <value>Wiederherstellen</value>
+    <value>Obnova</value>
   </data>
   <data name="MapDownloaderViewStringDLComplete.Text" xml:space="preserve">
-    <value>Vollständig heruntergeladen.</value>
+    <value>Stažení offline map bylo úspěšné.</value>
   </data>
   <data name="MapDownloaderViewStringDLCompleteWithErrors.Text" xml:space="preserve">
-    <value>Herunterladen mit {count} Fehlern abgeschlossen. Wiederhole den Download bitte noch einmal, um Fehler vorzubeugen.</value>
+    <value>Stahování bylo dokončeno s {count} chybou / chybami. Kliknutím na tlačítko Stáhnout, stáhnete oblast znova.</value>
   </data>
   <data name="MapDownloaderViewStringTwoPointsSelected.Text" xml:space="preserve">
-    <value>Du hast zwei Punkte angewählt.</value>
+    <value>Vyberte 2 body</value>
   </data>
   <data name="MapDownloaderViewTextLine1.Text" xml:space="preserve">
-    <value>Hier kannst du einen Bereich auswählen und diesen, zur Offlinennutzung, herunterladen. </value>
+    <value>Tenhle nástroj vám umožní stáhnout libovolnou oblast pro její pozdější použití offline.</value>
   </data>
   <data name="MapDownloaderViewTextLine2.Text" xml:space="preserve">
-    <value>Wähle zwei Eckpunkte auf der Karte an. Als erstes oben links - dann unten rechts. </value>
+    <value>Klepnutím na mapu vyberte 2 body, první nahoře vlevo a druhý dole vpravo. Pro změnu vybrané oblasti klikněte na cedulky a přesuňte je kam chcete.</value>
   </data>
   <data name="MapViewAddBookmark.Text" xml:space="preserve">
-    <value>Lesezeichen hinzufügen </value>
+    <value>Přidat záložku</value>
   </data>
   <data name="MapViewAddPlace.Text" xml:space="preserve">
-    <value>Fehlenden Ort hinzufügen</value>
+    <value>Přidat chybějící místo</value>
   </data>
   <data name="MapViewAddWaypoint.Text" xml:space="preserve">
-    <value>Wegepunkt hinzufügen</value>
+    <value>Přidat bod</value>
   </data>
   <data name="MapViewFindDirections.Text" xml:space="preserve">
-    <value>Navigation</value>
+    <value>Instrukce</value>
   </data>
   <data name="MapViewMoreInfo.Text" xml:space="preserve">
-    <value>Mehr Informationen </value>
+    <value>Více informací</value>
   </data>
   <data name="MapViewSetAsOrigin.Text" xml:space="preserve">
-    <value>Als Ausgangspunkt festlegen </value>
+    <value>Nastavit jako výchozí</value>
   </data>
   <data name="MapViewShare.Text" xml:space="preserve">
-    <value>Freigeben</value>
+    <value>Sdílet</value>
   </data>
   <data name="NewDirectionsDrivingMode.Text" xml:space="preserve">
-    <value>Auto</value>
+    <value>Autem</value>
   </data>
   <data name="NewDirectionsTransitMode.Text" xml:space="preserve">
-    <value>ÖPNV</value>
+    <value>Veřejná doprava</value>
   </data>
   <data name="NewDirectionsWalkingMode.Text" xml:space="preserve">
-    <value>Fußgänger </value>
+    <value>Pěšky</value>
   </data>
   <data name="SearchUCSearchBox.PlaceholderText" xml:space="preserve">
-    <value>Suchen...</value>
+    <value>Hledat místo v WinGo mapách</value>
   </data>
   <data name="SettingsLanguageAPILang.Header" xml:space="preserve">
-    <value>API-Sprache</value>
+    <value>Jazyk API</value>
   </data>
   <data name="SettingsLanguageApplicationLang.Header" xml:space="preserve">
-    <value>App-Sprache</value>
+    <value>Jazyk aplikace</value>
   </data>
   <data name="SettingsLanguageMapLang.Header" xml:space="preserve">
-    <value>Karten-Sprache</value>
-  </data>
-  <data name="SettingsViewApplicattionThemeCombo.Header" xml:space="preserve">
-    <value>Aussehen der App</value>
+    <value>Jazyk mapy</value>
   </data>
   <data name="SettingsViewFadeAnimationToggle.Header" xml:space="preserve">
-    <value>Übergangsanimation beim Laden der Karte anzeigen</value>
+    <value>Animace při načítání živé dlaždice</value>
   </data>
   <data name="SettingsViewLengthUnitCombo.Header" xml:space="preserve">
-    <value>Entfernung angeben in</value>
+    <value>Vzdálenost zobrazovat v hodnotách</value>
   </data>
   <data name="SettingsViewLiveTileToggle.Header" xml:space="preserve">
-    <value>Live-Kachel aktivieren</value>
+    <value>Aktivovat živé dlaždice</value>
   </data>
   <data name="SettingsViewOverStrechToggle.Header" xml:space="preserve">
-    <value>Beim Laden einer neuen Zoomebene vorerst vorherige Zoomebene anzeigen</value>
-  </data>
-  <data name="SettingsViewShowTrafficToggle.Header" xml:space="preserve">
-    <value>Zeige Verkehr beim Öffnen</value>
+    <value>Roztažení mapových dlaždic</value>
   </data>
   <data name="SettingsViewZoomControlsVisibilityCombo.Header" xml:space="preserve">
-    <value>Zoom-Knöpfe anzeigen</value>
+    <value>Zobrazit ovládací prvky přiblížení na mapě</value>
   </data>
   <data name="StringAbout.Text" xml:space="preserve">
-    <value>Über diese App</value>
-  </data>
-  <data name="StringAccessContacts.Text" xml:space="preserve">
-    <value>Zugriff auf Kontaktliste</value>
-  </data>
-  <data name="StringAccessContactsWhy.Text" xml:space="preserve">
-    <value>Kontakte mit Adressen werden in den Suchergebnissen gezeigt, um deren Position schneller zu finden.</value>
+    <value>O aplikaci</value>
   </data>
   <data name="StringBuyFromIran.Text" xml:space="preserve">
-    <value>Im Iran kaufen</value>
+    <value>Buy from Iran</value>
   </data>
   <data name="StringCancel.Text" xml:space="preserve">
-    <value>Abbrechen</value>
-  </data>
-  <data name="StringDarkTheme.Text" xml:space="preserve">
-    <value>Hell</value>
+    <value>Zrušit</value>
   </data>
   <data name="StringDirectionCalculated.Text" xml:space="preserve">
-    <value>Die Route ist {di} lang und man braucht ca. {es}.</value>
+    <value>Vaše cesta je {di} dlouhá a bude trvat {es}</value>
   </data>
   <data name="StringExit.Text" xml:space="preserve">
-    <value>Willst du die App wirklich verlassen?</value>
+    <value>Opravdu chcete odejít?</value>
   </data>
   <data name="StringFeet.Text" xml:space="preserve">
-    <value>Fuß</value>
+    <value>Stop</value>
   </data>
   <data name="StringHours.Text" xml:space="preserve">
-    <value>Stunden</value>
+    <value>hodin</value>
   </data>
   <data name="StringImperialLengthUnit.Text" xml:space="preserve">
-    <value>GB (Yards, Meilen)</value>
+    <value>Imperiální (Yardy, Míle)</value>
   </data>
   <data name="StringKiloMeters.Text" xml:space="preserve">
-    <value>Kilometer</value>
+    <value>Kilometery</value>
   </data>
   <data name="StringLaguageSettings.Text" xml:space="preserve">
-    <value>Spracheinstellungen</value>
-  </data>
-  <data name="StringLightTheme.Text" xml:space="preserve">
-    <value>Dunkel</value>
+    <value>Nastavení jazyka</value>
   </data>
   <data name="StringLocationPrivacy.Text" xml:space="preserve">
-    <value>Wir können deine Position nicht finden. Bitte überprüfe, ob GPS aktiviert ist.</value>
+    <value>Nepodařilo se nám najít vaší polohu, zkontrolujte zda máte zapnutou GPS a zda má aplikace povoleno zjišťování polohy. Zjišťování polohy povolíte v nastavení ochrany osobních údajů.\nStisknutím tlačítka Ok budete přesunuti do nastavení kde zapnete povolení zjistit vaší polohu.</value>
   </data>
   <data name="StringMapView.Text" xml:space="preserve">
-    <value>Karten-Ansicht</value>
+    <value>Prohlížeč map</value>
   </data>
   <data name="StringMeters.Text" xml:space="preserve">
-    <value>Meter</value>
+    <value>metry</value>
   </data>
   <data name="StringMetricLengthUnit.Text" xml:space="preserve">
-    <value>Metrisch (Meter, Kilometer)</value>
+    <value>Metrické (Metry, Kilometry)</value>
   </data>
   <data name="StringMiles.Text" xml:space="preserve">
-    <value>Meilen</value>
+    <value>Míle</value>
   </data>
   <data name="StringMinutes.Text" xml:space="preserve">
-    <value>Minuten</value>
+    <value>minuty</value>
   </data>
   <data name="StringNo.Text" xml:space="preserve">
-    <value>Nein</value>
+    <value>Není vybrána výchozí ani cílová destinace</value>
   </data>
   <data name="StringNoWayToDestination.Text" xml:space="preserve">
-    <value>Keine Verbindung zu deinem Ziel gefunden.</value>
+    <value>Neexistuje žádná cesta k cíli!!!</value>
   </data>
   <data name="StringOfflineMaps.Text" xml:space="preserve">
-    <value>Offline-Karten</value>
+    <value>Offline mapy</value>
   </data>
   <data name="StringOK.Text" xml:space="preserve">
-    <value>Ok</value>
+    <value>OK</value>
   </data>
   <data name="StringSelectBothOriginAndDestination.Text" xml:space="preserve">
-    <value>Du hast noch keine zwei Punkte angewählt.</value>
+    <value>Není vybrána výchozí ani cílová destinace</value>
   </data>
   <data name="StringSendFeedback.Text" xml:space="preserve">
-    <value>Feedback abgeben</value>
+    <value>Váš názor</value>
   </data>
   <data name="StringSettings.Text" xml:space="preserve">
-    <value>Einstellungen</value>
-  </data>
-  <data name="StringSystemTheme.Text" xml:space="preserve">
-    <value>Systemfarbe</value>
+    <value>Nastavení</value>
   </data>
   <data name="StringUSLengthUnit.Text" xml:space="preserve">
-    <value>US (Fuß, Meilen)</value>
+    <value>Spojené státy (Stopy, Míle)</value>
   </data>
   <data name="StringWayPointsNotAvailableInTransit.Text" xml:space="preserve">
-    <value>Wegepunkte werden im ÖPNV-Modus nicht unterstützt.</value>
+    <value>Trasové body nejsou podporovány v režimu Veřejná doprava</value>
   </data>
   <data name="StringYards.Text" xml:space="preserve">
-    <value>Yards</value>
+    <value>Yardy</value>
   </data>
   <data name="StringYes.Text" xml:space="preserve">
-    <value>Ja</value>
+    <value>Ano</value>
   </data>
 </root>

@@ -232,7 +232,8 @@ namespace GoogleMapsUnofficial.ViewModel
                 await AppCore.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, delegate
                 {
                     if (Map == null || UserLocation == null) return;
-                    UserLocation.Location = args.Position.Coordinate.Point;
+                    var r = args.Position.Coordinate.Point;
+                    UserLocation.Location = new Geopoint(new BasicGeoposition() { Altitude = 0, Latitude = r.Position.Latitude, Longitude = r.Position.Longitude }, AltitudeReferenceSystem.Terrain);// ;
                     if (ActiveNavigationMode == true)
                     {
                         Map.Center = args.Position.Coordinate.Point;
