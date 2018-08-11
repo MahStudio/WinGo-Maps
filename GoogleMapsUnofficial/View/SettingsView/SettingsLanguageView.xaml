@@ -53,6 +53,10 @@
                 <LineBreak/>
                 <Run>Deerslayer</Run>
                 <LineBreak/>
+                <Run FontSize="20">Czech</Run>
+                <LineBreak/>
+                <Run>Roman Praslička</Run>
+                <LineBreak/>
                 <Run FontSize="20">French</Run>
                 <LineBreak/>
                 <Run>Cretenet Thierry</Run>

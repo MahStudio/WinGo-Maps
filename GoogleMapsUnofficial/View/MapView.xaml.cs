@@ -63,8 +63,7 @@ namespace GoogleMapsUnofficial.View
             this.InitializeComponent();
             NetworkInformation.NetworkStatusChanged += NetworkInformation_NetworkStatusChanged;
             MapControl = Map;
-            StaticMapView = this;
-            StaticSearchGrid = Searchgrid;
+            
             //Map.RotateInteractionMode = MapInteractionMode.GestureOnly;
             Map.RotateInteractionMode = SettingsSetters.GetRotationControlsVisible();
             var ZoomInteractionMode = SettingsSetters.GetZoomControlsVisible();
@@ -140,6 +139,8 @@ namespace GoogleMapsUnofficial.View
         {
             base.OnNavigatedTo(e);
             MapControl = Map;
+            StaticMapView = this;
+            StaticSearchGrid = Searchgrid;
             var AllowOverstretch = SettingsSetters.GetAllowOverstretch();
             var FadeAnimationEnabled = SettingsSetters.GetFadeAnimationEnabled();
             if (InternalHelper.InternetConnection())

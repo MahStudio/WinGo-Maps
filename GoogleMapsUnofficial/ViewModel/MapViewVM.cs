@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Contacts;
 using Windows.Devices.Geolocation;
 using Windows.Devices.Sensors;
+using Windows.Storage;
 using Windows.System;
 using Windows.System.Display;
 using Windows.UI.Core;
@@ -151,6 +152,21 @@ namespace GoogleMapsUnofficial.ViewModel
                 }
             }
             catch { }
+            try
+            {
+                ApplicationData.Current.LocalSettings.Values["WCReponse"].ToString();
+            }
+            catch 
+            {
+                var message = new MessageDialog("windowscentral is not a Microsoft News website that you are looking for. See our reply to WindowsCentral post about WinGo Maps.");
+                message.Commands.Add(new UICommand("See our response on twitter.", async delegate
+                {
+                    await Launcher.LaunchUriAsync(new Uri("https://twitter.com/NGameAli/status/1028157663752978432"));
+                }));
+                await message.ShowAsync();
+                ApplicationData.Current.LocalSettings.Values["WCReponse"] = "windowscentral is not a Microsoft News website that you are looking for";
+            }
+
         }
 
         private async void Current_Activated(object sender, WindowActivatedEventArgs e)

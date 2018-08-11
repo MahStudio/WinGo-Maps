@@ -91,7 +91,7 @@ namespace GoogleMapsUnofficial.ViewModel.OnMapControls
         }
         public void UseGoogleMaps(MapMode MapMode = MapMode.Standard, bool showtraffic = false, bool AllowCaching = true, bool AllowOverstretch = false, bool IsFadingEnabled = true)
         {
-            if (Map == null && MapView.MapControl != null) Map = MapView.MapControl;
+            Map = MapView.MapControl;
             if (Map == null) return;
             Map.Style = MapStyle.None;
             CurrentMapMode = MapMode;
