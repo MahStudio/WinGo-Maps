@@ -152,20 +152,20 @@ namespace GoogleMapsUnofficial.ViewModel
                 }
             }
             catch { }
-            try
-            {
-                ApplicationData.Current.LocalSettings.Values["WCReponse"].ToString();
-            }
-            catch 
-            {
-                var message = new MessageDialog("windowscentral is not a Microsoft News website that you are looking for. See our reply to WindowsCentral post about WinGo Maps.");
-                message.Commands.Add(new UICommand("See our response on twitter.", async delegate
-                {
-                    await Launcher.LaunchUriAsync(new Uri("https://twitter.com/NGameAli/status/1028157663752978432"));
-                }));
-                await message.ShowAsync();
-                ApplicationData.Current.LocalSettings.Values["WCReponse"] = "windowscentral is not a Microsoft News website that you are looking for";
-            }
+            //try
+            //{
+            //    ApplicationData.Current.LocalSettings.Values["WCReponse"].ToString();
+            //}
+            //catch 
+            //{
+            //    var message = new MessageDialog("windowscentral is not a Microsoft News website that you are looking for. See our reply to WindowsCentral post about WinGo Maps.");
+            //    message.Commands.Add(new UICommand("See our response on twitter.", async delegate
+            //    {
+            //        await Launcher.LaunchUriAsync(new Uri("https://twitter.com/NGameAli/status/1028157663752978432"));
+            //    }));
+            //    await message.ShowAsync();
+            //    ApplicationData.Current.LocalSettings.Values["WCReponse"] = "windowscentral is not a Microsoft News website that you are looking for";
+            //}
 
         }
 
