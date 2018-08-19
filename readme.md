@@ -79,7 +79,7 @@ public class AppCore
     public static string HttpUserAgent { get; private set; }
     static AppCore()
     {
-        HttpUserAgent = "MahStudioWinGoMaps";
+        HttpUserAgent = "MahStudioWinGoMapsX";
         GoogleMapAPIKey = "YouGMapsAPIKey";
         GoogleMapRequestsLanguage = LanguageSettingsSetters.GetAPILanguage();
         OnMapLanguage = LanguageSettingsSetters.GetOnMapLanguage();
