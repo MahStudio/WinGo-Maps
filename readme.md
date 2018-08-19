@@ -50,8 +50,27 @@ Win Go Maps is an UNOFFICIAL Google Map client for Universal Windows Platform.
 Then write this code in this class based on your *Google API information*: 
 
 ```csharp
+using WinGoMapsX.ViewModel.SettingsView;
+using Windows.ApplicationModel.Store;
+using Windows.UI.Core;
+using Windows.Web.Http;
+
 public class AppCore
 {
+    public static string ArianaAPIKey { get => "ArianaAPIKey"; }
+    private static CoreDispatcher _dispatch;
+    public static CoreDispatcher Dispatcher
+    {
+        get
+        {
+            if (_dispatch != null) return _dispatch;
+            else
+            {
+                _dispatch = CoreWindow.GetForCurrentThread().Dispatcher;
+                return _dispatch;
+            }
+        }
+    }
     private static HttpClient _http;
     public static HttpClient HttpClient { get { if (_http != null) return _http; else { _http = new HttpClient(); return _http; } } }
     public static string OnMapLanguage { get; set; }
@@ -60,8 +79,8 @@ public class AppCore
     public static string HttpUserAgent { get; private set; }
     static AppCore()
     {
-        HttpUserAgent = "WindowsUniversalGoogleMapsV2ALPHA";
-        GoogleMapAPIKey = "Your GoogleMap API Key";
+        HttpUserAgent = "MahStudioWinGoMaps";
+        GoogleMapAPIKey = "YouGMapsAPIKey";
         GoogleMapRequestsLanguage = LanguageSettingsSetters.GetAPILanguage();
         OnMapLanguage = LanguageSettingsSetters.GetOnMapLanguage();
     }
