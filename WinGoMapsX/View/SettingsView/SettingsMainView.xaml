@@ -1,0 +1,98 @@
+﻿<Page
+    x:Class="WinGoMapsX.View.SettingsView.SettingsMainView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WinGoMapsX.ViewModel.SettingsView"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <local:SettingsMainVM/>
+    </Page.DataContext>
+
+    <ScrollViewer Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid Margin="12,12,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Uid="StringSettings" Grid.Row="0" Text="Settings" FontWeight="SemiBold" FontSize="22" Margin="0,0,0,15"/>
+            <ToggleSwitch x:Uid="SettingsViewOverStrechToggle" Margin="0,15,0,0" Grid.Row="1" Header="Allow over strech map tiles" IsOn="{Binding AllowOverstretch, Mode=TwoWay}"/>
+            <ToggleSwitch x:Uid="SettingsViewFadeAnimationToggle" Margin="0,15,0,0" Grid.Row="2" Header="Enable Fade Animation on loading map tiles" IsOn="{Binding FadeAnimationEnabled, Mode=TwoWay}"/>
+            <ToggleSwitch x:Uid="SettingsViewLiveTileToggle" Margin="0,15,0,0" Grid.Row="3" Header="Enable live tile" IsOn="{Binding LiveTileEnable, Mode=TwoWay}"/>
+            <ToggleSwitch x:Uid="SettingsViewShowTrafficToggle" Margin="0,15,0,0" Grid.Row="4" Header="Enable live tile" IsOn="{Binding ShowTrafficOnLaunch, Mode=TwoWay}"/>
+            <ToggleSwitch Margin="0,15,0,0" Grid.Row="5" IsOn="{Binding ContactsAccess, Mode=TwoWay}">
+                <ToggleSwitch.HeaderTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <TextBlock TextWrapping="Wrap" MaxLines="3">
+                                <Run x:Uid="StringAccessContacts" FontWeight="SemiBold">Access to contacts</Run>
+                                <LineBreak/>
+                                <Run x:Uid="StringAccessContactsWhy">Some description about why we need </Run>
+                            </TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ToggleSwitch.HeaderTemplate>
+            </ToggleSwitch>
+            <!--Speed Limiter-->
+            <!--<StackPanel Grid.Row="6" HorizontalAlignment="Left">
+                <TextBlock Text="Warn me if speed is over"/>
+                <Slider Value="50" Width="200"/>
+            </StackPanel>-->
+            <ComboBox x:Uid="SettingsViewZoomControlsVisibilityCombo" Margin="0,20,0,0" Grid.Row="7" Header="Show zoom controls on map" ItemsSource="{Binding MapInteractionModeOptions,Mode=OneWay}" SelectedIndex="{Binding ZoomControlsVisible, Mode=TwoWay}"/>
+            <!--<ComboBox Grid.Row="8" Header="Show rotation controls on map" Margin="0,20,0,0" ItemsSource="{Binding MapInteractionModeOptions,Mode=OneWay}" SelectedIndex="{Binding RotationControlsVisible, Mode=TwoWay}"/>-->
+            <ComboBox x:Uid="SettingsViewLengthUnitCombo" Margin="0,20,0,0" Grid.Row="9" Header="Show distance in" ItemsSource="{Binding LengthUnits, Mode=OneWay}" SelectedIndex="{Binding LengthUnit, Mode=TwoWay}"/>
+            <ComboBox x:Uid="SettingsViewApplicattionThemeCombo" Margin="0,20,0,0" Grid.Row="10" Header="Application Theme" ItemsSource="{Binding AvailableThemes, Mode=OneWay}" SelectedIndex="{Binding ThemeIndex, Mode=TwoWay}"/>
+            <Grid Margin="0,20,0,0" Grid.Row="11">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Uid="StringLaguageSettings" Grid.Row="0" Text="Laguage Settings" FontSize="22" Margin="0,15"/>
+                <Button x:Uid="ButtonLanguageSettings" Grid.Row="1" Content="Language Settings" Click="LanguageSets_Click"/>
+            </Grid>
+            <Grid Grid.Row="12" Margin="0,15">
+                <TextBlock LineHeight="30" TextWrapping="Wrap" FontFamily="Segoe UI">
+                    <Run FontSize="22" x:Uid="StringAbout">About</Run>
+                    <LineBreak/>
+                    <Run>WinGoMaps</Run>
+                    <Run Text="{Binding ApplicationVersion,Mode=OneWay}"/>
+                    <LineBreak/>
+                    <Run>© 2018 MahStudio </Run>
+                    <LineBreak/>
+                    <Run FontSize="20">Developers Team</Run>
+                    <LineBreak/>
+                    <Run>Ali Noshahi, Mohsen Seifi, Poura Riyahi, Mehdi Ardakani, Maryam Garaeli Shekh, Shivanand Anchalkar</Run>
+                    <LineBreak/>
+                    <Run FontSize="20">Design Team</Run>
+                    <LineBreak/>
+                    <Run>Mohammad Alidoost, Amir Estefad</Run>
+                    <LineBreak/>
+                    <Run FontSize="20">Special thanks to</Run>
+                    <LineBreak/>
+                    <Run>Microsoft Bing Maps Enterprise Team, For their hep in fixing location pointer bug and more on mobile.</Run>
+                    <LineBreak/>
+                    <Run>Joost van Schaik, Windows Development MVP for his helps in solving application's bug on Mobile</Run>
+                    <LineBreak/>
+                    <Run>Ahmad Karaki for his calculations and formulas</Run>
+                    <LineBreak/>
+                    <Run>Ali Ghamari and Filippo Fedeli for his testings and reporting lots of issues</Run>
+                    <LineBreak/>
+                    <Run>Insiders on Telegram who have provide many ideas and did lots of debugging to make this app better</Run>
+                </TextBlock>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</Page>

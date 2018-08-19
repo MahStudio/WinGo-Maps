@@ -1,0 +1,42 @@
+﻿<UserControl
+    x:Class="WinGoMapsX.View.OnMapControls.SearchUserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WinGoMapsX.View.OnMapControls"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:VM="using:WinGoMapsX.ViewModel.OnMapControls"
+    mc:Ignorable="d" RequestedTheme="Light">
+
+    <UserControl.DataContext>
+        <VM:SearchUserControlVM x:Name="SearchUserControlVM"/>
+    </UserControl.DataContext>
+    
+    <UserControl.Resources>
+        <ResourceDictionary Source="/Resources/CustomControls/AutoSuggestionBox.xaml"/>
+    </UserControl.Resources>
+    
+    <Grid Background="White">
+        <AutoSuggestBox x:Uid="SearchUCSearchBox" Style="{StaticResource MyAutoSuggestBox}" FontFamily="B Koodak" PlaceholderText="Search..."
+            ItemsSource="{Binding SearchClass.SearchResults}" 
+            x:Name="autoSuggestBox"
+            QueryIcon="Find" Visibility="Visible"
+            VerticalContentAlignment="Center"
+            VerticalAlignment="Center" MinWidth="250" Height="36"
+            SuggestionChosen="AutoSuggestBox_SuggestionChosen"
+            TextChanged="AutoSuggestBox_TextChanged">
+            
+            <!--QuerySubmitted="Control2_QuerySubmitted"-->
+            
+            <AutoSuggestBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid BorderThickness="0,0,0,1" BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}">
+                        <TextBlock Text="{Binding Description}" TextWrapping="Wrap" MaxLines="3" TextAlignment="DetectFromContent" FontFamily="B Koodak"/>
+                    </Grid>
+                </DataTemplate>
+            </AutoSuggestBox.ItemTemplate>
+        </AutoSuggestBox>
+    </Grid>
+</UserControl>

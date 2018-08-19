@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ButtonLanguageSettings.Content" xml:space="preserve">
+    <value>تنظیمات زبان</value>
+  </data>
+  <data name="ChangeViewUCDefaultMapView.Content" xml:space="preserve">
+    <value>پیشفرض</value>
+  </data>
+  <data name="ChangeViewUCHybridMapView.Content" xml:space="preserve">
+    <value>ترکیبی</value>
+  </data>
+  <data name="ChangeViewUCSatelliteMapView.Content" xml:space="preserve">
+    <value>ماهواره</value>
+  </data>
+  <data name="ChangeViewUCShowTraffic.Header" xml:space="preserve">
+    <value>نمایش ترافیک</value>
+  </data>
+  <data name="MapDownloaderViewBackupBTN.Content" xml:space="preserve">
+    <value>پشتیبان گیری</value>
+  </data>
+  <data name="MapDownloaderViewDLButton.Content" xml:space="preserve">
+    <value>دانلود</value>
+  </data>
+  <data name="MapDownloaderViewMaximumZoomLevel.Text" xml:space="preserve">
+    <value>حداکثر سطح زوم جهت دانلود (پیشفرض: 17)</value>
+  </data>
+  <data name="MapDownloaderViewRestoreBtn.Content" xml:space="preserve">
+    <value>بازگردانی پشتیبان</value>
+  </data>
+  <data name="MapDownloaderViewStringDLComplete.Text" xml:space="preserve">
+    <value>دانلود نقشه آفلاین به پایان رسید.</value>
+  </data>
+  <data name="MapDownloaderViewStringDLCompleteWithErrors.Text" xml:space="preserve">
+    <value>خطا پایان یافت.لطفاً مجدداً کلید دانلود را بزنید تا موارد دریافت نشده مجدداً دانلود شوند.</value>
+  </data>
+  <data name="MapDownloaderViewStringTwoPointsSelected.Text" xml:space="preserve">
+    <value>شما دو نقطه را انتخاب نموده اید.</value>
+  </data>
+  <data name="MapDownloaderViewTextLine1.Text" xml:space="preserve">
+    <value>این ابزار به شما اجازه میدهد تا نقشه آفلاین برای محدوده ای مشخص دانلود نمائید. لطفاً یک محدوده را روی نقشه مشخص و سپس کلید دانلود را بزنید.</value>
+  </data>
+  <data name="MapDownloaderViewTextLine2.Text" xml:space="preserve">
+    <value>دو نقطه روی نقشه را جهت مشخص شدن محدوده انتخاب کنید. نقطه اول در بالا سمت چپ محدوده مورد مورد و نقطه دوم پایین سمت راست محدوده. اگر که میخواهید مکان نقطه ها را تغییر دهید کافیست روی پرچم نقطه مورد نظر بزنید تا حذف شود و سپس نقطه ای دیگر را انتخاب نمائید.</value>
+  </data>
+  <data name="NewDirectionsDrivingMode.Text" xml:space="preserve">
+    <value>رانندگی</value>
+  </data>
+  <data name="NewDirectionsTransitMode.Text" xml:space="preserve">
+    <value>نقلیه عمومی</value>
+  </data>
+  <data name="NewDirectionsWalkingMode.Text" xml:space="preserve">
+    <value>پیاده روی</value>
+  </data>
+  <data name="SearchUCSearchBox.PlaceholderText" xml:space="preserve">
+    <value>جستجو...</value>
+  </data>
+  <data name="SettingsLanguageAPILang.Header" xml:space="preserve">
+    <value>زبان API</value>
+  </data>
+  <data name="SettingsLanguageApplicationLang.Header" xml:space="preserve">
+    <value>زبان برنامه</value>
+  </data>
+  <data name="SettingsLanguageMapLang.Header" xml:space="preserve">
+    <value>زبان نقشه</value>
+  </data>
+  <data name="SettingsViewFadeAnimationToggle.Header" xml:space="preserve">
+    <value>فعالسازی انیمیشن هنگام لود شدن کاشی های نقشه</value>
+  </data>
+  <data name="SettingsViewLengthUnitCombo.Header" xml:space="preserve">
+    <value>نمایش فواصل در واحد</value>
+  </data>
+  <data name="SettingsViewLiveTileToggle.Header" xml:space="preserve">
+    <value>فعالسازی کاشی زنده</value>
+  </data>
+  <data name="SettingsViewOverStrechToggle.Header" xml:space="preserve">
+    <value>اجازه زوم بیش از حد روی کاشی های نقشه</value>
+  </data>
+  <data name="SettingsViewZoomControlsVisibilityCombo.Header" xml:space="preserve">
+    <value>نمایش کنترل های بزرگنمایی در نقشه</value>
+  </data>
+  <data name="StringAbout.Text" xml:space="preserve">
+    <value>درباره</value>
+  </data>
+  <data name="StringBuyFromIran.Text" xml:space="preserve">
+    <value>خرید از ایران</value>
+  </data>
+  <data name="StringCancel.Text" xml:space="preserve">
+    <value>لغو</value>
+  </data>
+  <data name="StringDirectionCalculated.Text" xml:space="preserve">
+    <value>محاسبات ما نشان میدهد مسیر شما حدود {di} و مدت زمان تقریبی رسیدن به مقصد {es} میباشد.</value>
+  </data>
+  <data name="StringExit.Text" xml:space="preserve">
+    <value>آیا مایل به خروج از برنامه هستید؟</value>
+  </data>
+  <data name="StringFeet.Text" xml:space="preserve">
+    <value>فوت</value>
+  </data>
+  <data name="StringHours.Text" xml:space="preserve">
+    <value>ساعت</value>
+  </data>
+  <data name="StringImperialLengthUnit.Text" xml:space="preserve">
+    <value>امپریال (یارد، مایل)</value>
+  </data>
+  <data name="StringKiloMeters.Text" xml:space="preserve">
+    <value>کیلومتر</value>
+  </data>
+  <data name="StringLaguageSettings.Text" xml:space="preserve">
+    <value>تنظیمات زبان</value>
+  </data>
+  <data name="StringLocationPrivacy.Text" xml:space="preserve">
+    <value>ما قادر به دسترسی به موقعیت مکانی شما نیستیم. لطفاً بررسی نمائید که سرویس موقعیت یاب دستگاه شما فعال باشد و همچنین در تنظیمات حریم خصوصی اجازه استفاده برنامه از موقعیت مکانی را فعال نموده باشید.\nکلید تائید را جهت باز شدن تنظیمات موقعیت مکانی یا کلید لغو را جهت ادامه بزنید.</value>
+  </data>
+  <data name="StringMapView.Text" xml:space="preserve">
+    <value>نمای نقشه</value>
+  </data>
+  <data name="StringMeters.Text" xml:space="preserve">
+    <value>متر</value>
+  </data>
+  <data name="StringMetricLengthUnit.Text" xml:space="preserve">
+    <value>متریک (متر، کیلومتر)</value>
+  </data>
+  <data name="StringMiles.Text" xml:space="preserve">
+    <value>مایل</value>
+  </data>
+  <data name="StringMinutes.Text" xml:space="preserve">
+    <value>دقیقه</value>
+  </data>
+  <data name="StringNo.Text" xml:space="preserve">
+    <value>خیر</value>
+  </data>
+  <data name="StringNoWayToDestination.Text" xml:space="preserve">
+    <value>مسیری به مقصد تعیین شده یافت نشد!!!</value>
+  </data>
+  <data name="StringOfflineMaps.Text" xml:space="preserve">
+    <value>نقشه آفلاین</value>
+  </data>
+  <data name="StringOK.Text" xml:space="preserve">
+    <value>تائید</value>
+  </data>
+  <data name="StringSelectBothOriginAndDestination.Text" xml:space="preserve">
+    <value>شما هر دو نقطه مبدا و مقصد را انتخاب نکرده اید.</value>
+  </data>
+  <data name="StringSendFeedback.Text" xml:space="preserve">
+    <value>ارسال پیشنهادات</value>
+  </data>
+  <data name="StringSettings.Text" xml:space="preserve">
+    <value>تنظیمات</value>
+  </data>
+  <data name="StringUSLengthUnit.Text" xml:space="preserve">
+    <value>ایالات متحده (فوت، مایل)</value>
+  </data>
+  <data name="StringWayPointsNotAvailableInTransit.Text" xml:space="preserve">
+    <value>نقاط بین مسیر در حالت وسایل نقلیه عمومی پشتیبانی نمیشود.</value>
+  </data>
+  <data name="StringYards.Text" xml:space="preserve">
+    <value>یارد</value>
+  </data>
+  <data name="StringYes.Text" xml:space="preserve">
+    <value>بله</value>
+  </data>
+  <data name="BookMarkAddUC.PrimaryButtonText" xml:space="preserve">
+    <value>افزودن نشانه</value>
+  </data>
+  <data name="BookMarkAddUC.SecondaryButtonText" xml:space="preserve">
+    <value>لغو</value>
+  </data>
+  <data name="BookmarkAddUC.Title" xml:space="preserve">
+    <value>افزودن نشانه</value>
+  </data>
+  <data name="BookmarkAddUCCustomName.Content" xml:space="preserve">
+    <value>نام دلخواه</value>
+  </data>
+  <data name="BookmarkAddUCPinLiveTile.Content" xml:space="preserve">
+    <value>ایجاد کاشی زنده</value>
+  </data>
+  <data name="MapViewAddBookmark.Text" xml:space="preserve">
+    <value>افزودن نشانه</value>
+  </data>
+  <data name="MapViewAddPlace.Text" xml:space="preserve">
+    <value>افزودن مکان ناموجود</value>
+  </data>
+  <data name="MapViewAddWaypoint.Text" xml:space="preserve">
+    <value>افزودن نقطه بین راه</value>
+  </data>
+  <data name="MapViewFindDirections.Text" xml:space="preserve">
+    <value>مسیر یابی</value>
+  </data>
+  <data name="MapViewMoreInfo.Text" xml:space="preserve">
+    <value>اطلاعات بیشتر</value>
+  </data>
+  <data name="MapViewSetAsOrigin.Text" xml:space="preserve">
+    <value>انتخاب به عنوان مبدا</value>
+  </data>
+  <data name="MapViewShare.Text" xml:space="preserve">
+    <value>اشتراک</value>
+  </data>
+  <data name="MainPage.FlowDirection" xml:space="preserve">
+    <value>RightToLeft</value>
+  </data>
+  <data name="ChangeViewUCRoadsOnlyView.Content" xml:space="preserve">
+    <value>فقط راه ها</value>
+  </data>
+  <data name="SettingsViewShowTrafficToggle.Header" xml:space="preserve">
+    <value>نمایش ترافیک پس از اجرا</value>
+  </data>
+  <data name="SettingsViewApplicattionThemeCombo.Header" xml:space="preserve">
+    <value>نمای برنامه</value>
+  </data>
+  <data name="StringDarkTheme.Text" xml:space="preserve">
+    <value>تیره</value>
+  </data>
+  <data name="StringLightTheme.Text" xml:space="preserve">
+    <value>روشن</value>
+  </data>
+  <data name="StringSystemTheme.Text" xml:space="preserve">
+    <value>مطابق سیستم</value>
+  </data>
+  <data name="StringAccessContacts.Text" xml:space="preserve">
+    <value>دسترسی به مخاطبان</value>
+  </data>
+  <data name="StringAccessContactsWhy.Text" xml:space="preserve">
+    <value>مخاطبان دارای آدرس در نتایج جستجو نمایش داده میشوند تا سریع تر به آنها دسترسی داشته باشید.</value>
+  </data>
+</root>
