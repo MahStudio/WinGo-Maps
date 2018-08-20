@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using WinGoMapsX.ViewModel;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -28,6 +29,7 @@ namespace WinGoMapsX.View.DirectionsControls
         DirectionsHelper.Leg CurrentLeg { get; set; }
         DirectionsHelper.Step CurrentStep { get; set; }
         public bool IsBusy { get; set; }
+        public MapView MapView { get; set; }
 
         public StepsTitleProvider()
         {
@@ -43,6 +45,7 @@ namespace WinGoMapsX.View.DirectionsControls
             CurrentStep = CurrentLeg.Steps.FirstOrDefault();
             this.Visibility = Visibility.Visible;
             UpdateStep();
+            FullList_Click(null, null);
         }
 
         private async void GeoLocatorHelper_LocationChanged(object sender, Geocoordinate e)
@@ -105,6 +108,13 @@ namespace WinGoMapsX.View.DirectionsControls
                     return dist;
             }
             return dist;
+        }
+
+        private void FullList_Click(object sender, RoutedEventArgs e)
+        {
+            (MapView.FindName("RightPaneGrid") as Grid).Children.Clear();
+            (MapView.FindName("RightPaneGrid") as Grid).Children.Add(new FullStepsProvider(CurrentRoute) { HorizontalAlignment = HorizontalAlignment.Stretch, VerticalAlignment = VerticalAlignment.Stretch });
+            (MapView.DataContext as MapViewVM).RightPaneOpen = true;
         }
     }
 }

@@ -122,6 +122,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\MapViewVM.cs" />
     <Compile Include="ViewModel\OfflineMapDownloader\MapDLHelper.cs" />
+    <Compile Include="View\DirectionsControls\FullStepsProvider.xaml.cs">
+      <DependentUpon>FullStepsProvider.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\OfflineMapDownloader\MapDownloaderView.xaml.cs">
       <DependentUpon>MapDownloaderView.xaml</DependentUpon>
     </Compile>
@@ -294,6 +297,10 @@
     <Page Include="Resources\CustomControls\TabbedPivot.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\DirectionsControls\FullStepsProvider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\DirectionsControls\NewDirections.DeviceFamily-Mobile.xaml">
       <SubType>Designer</SubType>

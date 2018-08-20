@@ -125,6 +125,7 @@ namespace WinGoMapsX.View
             }
             MapViewVM.Map = Searchbar.Map = ZoomUserControl.Map = DirectionsControl.Map = ChangeViewControl.Map = Map;
             MapViewVM.NewDirections = DirectionsControl;
+            StepsTitleProvider.MapView = this;
             MyLocationControl.MapViewVM = (Searchbar.DataContext as SearchUserControlVM).VM = MapViewVM;
             DirectionsControl.StepsTitleProvider = StepsTitleProvider;
 

@@ -59,6 +59,7 @@ namespace WinGoMapsX.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropName));
         }
 
+        private bool _rightpaneopen;
         private bool _ispaneopen;
         private ViewModel _userlocation;
         private Visibility _locflagvisi;
@@ -89,6 +90,12 @@ namespace WinGoMapsX.ViewModel
             get => _ispaneopen;
             set { _ispaneopen = value; Update("IsPaneOpen"); }
         }
+        public bool RightPaneOpen
+        {
+            get => _rightpaneopen;
+            set { _rightpaneopen = value; Update("RightPaneOpen"); }
+        }
+
 
         public Geopoint LastRightTapPos { get; set; }
         public ViewModel UserLocation { get => _userlocation; set { _userlocation = value; Update("UserLocation"); } }
@@ -105,7 +112,7 @@ namespace WinGoMapsX.ViewModel
 
         public MapViewVM()
         {
-            IsPaneOpen = false;
+            IsPaneOpen = RightPaneOpen = false;
             LocationFlagVisibility = MoreInfoVisibility = HeadingLocIndicatorVisibility = Visibility.Collapsed;
             Dispatcher = Window.Current.Dispatcher;
             FindDirectionsCmd = AppCommand.GetInstance();

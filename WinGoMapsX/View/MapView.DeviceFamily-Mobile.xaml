@@ -317,5 +317,13 @@
                 </Grid>
             </Grid>
         </SplitView>
+        <SplitView PanePlacement="Right" IsPaneOpen="{Binding RightPaneOpen, Mode=TwoWay}">
+            <SplitView.Pane>
+                <Grid x:Name="RightPaneGrid">
+
+                </Grid>
+            </SplitView.Pane>
+            <Grid/>
+        </SplitView>
     </Grid>
 </Page>
