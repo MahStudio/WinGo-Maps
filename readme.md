@@ -1,12 +1,24 @@
-# WinGo Maps 
+<p align="center">
+  <a href="https://www.microsoft.com/en-us/store/p/denna/9n9c2hwnzcft">
+    <img src="https://github.com/MahStudio/WinGo-Maps/raw/WinGoMapsX/WinGoMapsX/Assets/Branding.jpg" width=80 height=80>
+  </a>
 
-Win Go Maps is an UNOFFICIAL Google Map client for Universal Windows Platform.
+  <h3 align="center">Wingo Maps</h3>
 
-[Telegram Messenger Insiders Group](https://t.me/joinchat/DQwGRhG-DXgBJNDWjGEoZQ)
+  <p align="center">
+    WinGo Maps is an UNOFFICIAL Google Map client for Universal Windows Platform.
+    <br>
+    <a href="https://www.microsoft.com/en-us/p/wingo-maps/9nmj42v775gt">Download</a>
+    &middot;
+    <a href="https://t.me/joinchat/DQwGRhG-DXgBJNDWjGEoZQ">Insiders Group</a>
+  &middot;
+    <a href="https://github.com/NGame1/UWPGmaps.SDK">Gmaps SDK</a>
+    <br>
+    
+  </p>
+</p>
 
-[GMaps Class Library](https://github.com/NGame1/UWPGmaps.SDK)
-
-[SDK NuGet package](https://www.nuget.org/packages/GMapsUWPSDK)
+<br>
 
 ## Features
 
@@ -95,5 +107,5 @@ We are always welcome to your help. You can join our [Telegram Insiders Group](h
 
 ### Authors
 
-This project is designed, developed, maintained and supported by the community software development team **Mah Studio**.
+This project is designed, developed, maintained and supported by the community software development team [**Mah Studio**](https://github.com/MahStudio/).
 See also the list of [contributors](https://github.com/MahStudio/WinGo-Maps/contributors) who participated in this project.
