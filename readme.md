@@ -38,7 +38,6 @@
 - Fluent design
 
 ### Screenshots
-![Screenshot](http://s9.picofile.com/file/8319001000/image_2018_02_09_23_23_27.png)
 
 ![Screenshot](http://s8.picofile.com/file/8319001034/image_2018_02_09_23_23_01.png)
 
