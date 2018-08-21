@@ -4,8 +4,11 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using Windows.System.Threading;
+using Windows.UI.Core;
 
 namespace WinGoMapsX.ViewModel.OfflineMapDownloader
 {
@@ -57,7 +60,13 @@ namespace WinGoMapsX.ViewModel.OfflineMapDownloader
         public int DownloadPercent
         {
             get { return _perc; }
-            set { _perc = value; DownloadProgress?.Invoke(this, value); }
+            set
+            {
+                CoreApplication.MainView.Dispatcher.RunAsync(CoreDispatcherPriority.High, new DispatchedHandler(() =>
+          {
+              _perc = value; DownloadProgress?.Invoke(this, value);
+          }));
+            }
         }
         private StorageFolder MapFolder { get; set; }
         private const String mapfiles = "http://maps.google.com/mapfiles/mapfiles/132e/map2";
@@ -161,60 +170,67 @@ namespace WinGoMapsX.ViewModel.OfflineMapDownloader
         /// <param name="MaxZoomLevel">Maximum zoom level to download tiles. Default value is 17</param>
         public async void DownloadMap(double lat_bgn, double lng_bgn, double lat_end, double lng_end, int MaxZoomLevel = 17)
         {
-            AllDownloads = 0;
-            Downloaded = 0;
-            FailedDownloads = 0;
-            //Calculate Total downloads number
-            for (int z = (int)1; z <= MaxZoomLevel; z++)
+            await ThreadPool.RunAsync(async (WorkItem) =>
             {
-                TileCoordinate c_bgn = new TileCoordinate(lat_bgn, lng_bgn, z);
-                var c1 = c_bgn.locationCoord();
-                TileCoordinate c_end = new TileCoordinate(lat_end, lng_end, z);
-                var c2 = c_end.locationCoord();
-                var x_min = (int)c_bgn.x;
-                var x_max = (int)c_end.x;
-
-                var y_min = (int)c_bgn.y;
-                var y_max = (int)c_end.y;
-                for (int x = x_min; x <= x_max; x++)
+                AllDownloads = 0;
+                Downloaded = 0;
+                FailedDownloads = 0;
+                //Calculate Total downloads number
+                for (int z = (int)1; z <= MaxZoomLevel; z++)
                 {
-                    for (int y = y_min; y <= y_max; y++)
+                    TileCoordinate c_bgn = new TileCoordinate(lat_bgn, lng_bgn, z);
+                    var c1 = c_bgn.locationCoord();
+                    TileCoordinate c_end = new TileCoordinate(lat_end, lng_end, z);
+                    var c2 = c_end.locationCoord();
+                    var x_min = (int)c_bgn.x;
+                    var x_max = (int)c_end.x;
+
+                    var y_min = (int)c_bgn.y;
+                    var y_max = (int)c_end.y;
+                    for (int x = x_min; x <= x_max; x++)
                     {
-                        AllDownloads++;
-                    }
-                }
-            }
-
-            DownloadStarted?.Invoke(this, AllDownloads);
-            //Start Download
-            for (int z = (int)1; z <= MaxZoomLevel; z++)
-            {
-                TileCoordinate c_bgn = new TileCoordinate(lat_bgn, lng_bgn, z);
-                var c1 = c_bgn.locationCoord();
-                TileCoordinate c_end = new TileCoordinate(lat_end, lng_end, z);
-                var c2 = c_end.locationCoord();
-                var x_min = (int)c_bgn.x;
-                var x_max = (int)c_end.x;
-
-                var y_min = (int)c_bgn.y;
-                var y_max = (int)c_end.y;
-
-                for (int x = x_min; x <= x_max; x++)
-                {
-                    for (int y = y_min; y <= y_max; y++)
-                    {
-                        String mapparams = "x_" + x + "-y_" + y + "-z_" + z;
-                        //http://mt0.google.com/vt/lyrs=m@405000000&hl=x-local&src=app&sG&x=43614&y=25667&z=16
-                        await Download("http://mt" + ((x + y) % 4) + ".google.com/vt/lyrs=m@405000000&hl=x-local&&src=app&sG&x=" + x + "&y=" + y + "&z=" + z, "mah_" + mapparams + ".jpeg");
-                        Downloaded++;
+                        for (int y = y_min; y <= y_max; y++)
+                        {
+                            AllDownloads++;
+                        }
                     }
                 }
 
-            }
+                DownloadStarted?.Invoke(this, AllDownloads);
+                //Start Download
+                for (int z = (int)1; z <= MaxZoomLevel; z++)
+                {
+                    TileCoordinate c_bgn = new TileCoordinate(lat_bgn, lng_bgn, z);
+                    var c1 = c_bgn.locationCoord();
+                    TileCoordinate c_end = new TileCoordinate(lat_end, lng_end, z);
+                    var c2 = c_end.locationCoord();
+                    var x_min = (int)c_bgn.x;
+                    var x_max = (int)c_end.x;
 
-            //Download Completed
-            DownloadCompleted?.Invoke(this, true);
-            AllDownloads = 0;
+                    var y_min = (int)c_bgn.y;
+                    var y_max = (int)c_end.y;
+
+                    for (int x = x_min; x <= x_max; x++)
+                    {
+                        for (int y = y_min; y <= y_max; y++)
+                        {
+                            String mapparams = "x_" + x + "-y_" + y + "-z_" + z;
+                            //http://mt0.google.com/vt/lyrs=m@405000000&hl=x-local&src=app&sG&x=43614&y=25667&z=16
+                            await Download("http://mt" + ((x + y) % 4) + ".google.com/vt/lyrs=m@405000000&hl=x-local&&src=app&sG&x=" + x + "&y=" + y + "&z=" + z, "mah_" + mapparams + ".jpeg");
+                            Downloaded++;
+                        }
+                    }
+
+                }
+
+                //Download Completed
+                await CoreApplication.MainView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    DownloadCompleted?.Invoke(this, true);
+                    AllDownloads = 0;
+                });
+            }, WorkItemPriority.Normal);
+
         }
 
     }
