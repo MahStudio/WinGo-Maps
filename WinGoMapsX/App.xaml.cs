@@ -39,10 +39,7 @@ namespace WinGoMapsX
         /// </summary>
         public App()
         {
-            if (ClassProInfo.SystemVersion.StartsWith("10.0.14393"))
-            {
-            }
-            else
+            if (!ClassProInfo.SystemVersion.StartsWith("10.0.14393"))
                 this.InitializeComponent();
             MemoryManager.AppMemoryUsageIncreased += MemoryManager_AppMemoryUsageIncreased;
             this.Suspending += OnSuspending;
