@@ -39,7 +39,11 @@ namespace WinGoMapsX
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
+            if (ClassProInfo.SystemVersion.StartsWith("10.0.14393"))
+            {
+            }
+            else
+                this.InitializeComponent();
             MemoryManager.AppMemoryUsageIncreased += MemoryManager_AppMemoryUsageIncreased;
             this.Suspending += OnSuspending;
             this.UnhandledException += App_UnhandledException;
@@ -80,6 +84,12 @@ namespace WinGoMapsX
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            if (ClassProInfo.SystemVersion.StartsWith("10.0.14393"))
+            {
+                #region Initialize Page
+                Application.LoadComponent(this, new Uri("ms-appx:///App.AuSupport.xaml", UriKind.RelativeOrAbsolute), ComponentResourceLocation.Application);
+                #endregion
+            }
             try
             {
                 var index = SettingsSetters.GetThemeIndex();
@@ -303,5 +313,5 @@ namespace WinGoMapsX
             catch { }
         }
     }
-    
+
 }
