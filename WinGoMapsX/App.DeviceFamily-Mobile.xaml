@@ -55,7 +55,7 @@
                                                       TintOpacity="0.739999983459711" TintColor="#2B2B2B" FallbackColor="#2B2B2B" />
 
                     <!--14393 colors-->
-                    <!--<SolidColorBrush x:Key="CustomAcrylicPaneBackgroundBrushColor" Color="#60A5FF"/>-->
+                    <!--<SolidColorBrush x:Key="CustomAcrylicPaneBackgroundBrushColor" Color="#2B2B2B"/>-->
 
                     <media:AcrylicBrush x:Key="CustomAcrylicDirectionsBackgroundBrushColor" BackgroundSource="Backdrop"
                                                       TintOpacity="0.739999983459711" TintColor="#2B2B2B" FallbackColor="#2B2B2B" />
