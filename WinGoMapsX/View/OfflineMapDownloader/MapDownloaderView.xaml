@@ -52,7 +52,14 @@
             <TextBlock x:Uid="MapDownloaderViewMaximumZoomLevel" Text="Maximum zoom level to download (Default 17)" TextAlignment="Center"/>
             <Slider x:Name="MaxZoom" StepFrequency="1" Maximum="20" Minimum="1" Width="300" Value="17"/>
         </StackPanel>
-        <ProgressBar x:Name="DLPB" Minimum="0" Maximum="100" Grid.Row="3" Margin="5" Width="300"/>
+        <Grid Grid.Row="3" Margin="5" MaxWidth="375">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <ProgressBar x:Name="DLPB" Minimum="0" Maximum="100" Grid.Column="0"/>
+            <Button x:Name="CancelBTN" IsEnabled="False" Background="Transparent" Content="&#xE711;" FontFamily="Segoe MDL2 Assets" Grid.Column="1" Click="CancelBTN_Click"/>
+        </Grid>
         <Grid Grid.Row="4" HorizontalAlignment="Center" Margin="0,25">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>

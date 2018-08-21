@@ -43,6 +43,17 @@ namespace WinGoMapsX.View.OfflineMapDownloader
             Map.TileSources.Add(new MapTileSource(new HttpMapTileDataSource("http://mt1.google.com/vt/lyrs=r@405000000&hl=x-local&z={zoomlevel}&x={x}&y={y}") { AllowCaching = true }) { IsFadingEnabled = false, AllowOverstretch = true });
         }
 
+        protected override async void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            if (CancelBTN.IsEnabled)
+            {
+                e.Cancel = (CancelBTN.IsEnabled);
+                await new MessageDialog("You can not navigate while you are downloading. You can cancel download and resume another time.",
+                    "Wait for download or cancel").ShowAsync();
+            }
+            base.OnNavigatingFrom(e);
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -96,10 +107,37 @@ namespace WinGoMapsX.View.OfflineMapDownloader
         private void DownloadMap_Click(object sender, RoutedEventArgs e)
         {
             DLButton.IsEnabled = false;
+            CancelBTN.IsEnabled = true;
             MDH.DownloadProgress += new EventHandler<int>(DLProgress);
             MDH.DownloadCompleted += new EventHandler<bool>(DLComplete);
+            MDH.DownloadCanceled += new EventHandler<bool>(DLCanceled);
             MDH.DownloadMap(TopLeftPos.Latitude, TopLeftPos.Longitude,
                                 BottomRightPos.Latitude, BottomRightPos.Longitude, (int)MaxZoom.Value);
+        }
+
+        private void DLCanceled(object sender, bool e)
+        {
+            if (MDH != null)
+            {
+                try
+                {
+                    MDH.DownloadCompleted -= DLComplete;
+                    MDH.DownloadProgress -= DLProgress;
+                    MDH.DownloadCanceled -= DLCanceled;
+                }
+                catch { }
+            }
+            try
+            {
+                DLButton.IsEnabled = true;
+                CancelBTN.IsEnabled = false;
+            }
+            catch { }
+            try
+            {
+                new DisplayRequest().RequestRelease();
+            }
+            catch { }
         }
 
         private async void DLComplete(object sender, bool e)
@@ -110,6 +148,7 @@ namespace WinGoMapsX.View.OfflineMapDownloader
                 {
                     MDH.DownloadCompleted -= DLComplete;
                     MDH.DownloadProgress -= DLProgress;
+                    MDH.DownloadCanceled -= DLCanceled;
 
                     if (MDH.FailedDownloads == 0)
                         await new MessageDialog(MultilingualHelpToolkit.GetString("MapDownloaderViewStringDLComplete", "Text")).ShowAsync();
@@ -121,6 +160,7 @@ namespace WinGoMapsX.View.OfflineMapDownloader
             try
             {
                 DLButton.IsEnabled = true;
+                CancelBTN.IsEnabled = false;
             }
             catch { }
             try
@@ -210,6 +250,11 @@ namespace WinGoMapsX.View.OfflineMapDownloader
             TopLeft.Visibility = Visibility.Collapsed;
             fp = false;
             DLButton.IsEnabled = false;
+        }
+
+        private void CancelBTN_Click(object sender, RoutedEventArgs e)
+        {
+            MDH.CancelDownload();
         }
     }
 }

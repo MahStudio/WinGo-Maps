@@ -5,6 +5,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
+using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.System.Threading;
@@ -14,10 +15,15 @@ namespace WinGoMapsX.ViewModel.OfflineMapDownloader
 {
     public class MapDLHelper
     {
+        public IAsyncAction DownloadMapAction { get; set; }
         /// <summary>
         /// Please subscribe this event. When e == true, it means download completed
         /// </summary>
         public EventHandler<bool> DownloadCompleted;
+        /// <summary>
+        /// Please subscribe this event. When e == true, it means download has been canceled.
+        /// </summary>
+        public EventHandler<bool> DownloadCanceled;
         /// <summary>
         /// This event periodically notify you about the download precent. e == DownloadPercent
         /// </summary>
@@ -75,6 +81,7 @@ namespace WinGoMapsX.ViewModel.OfflineMapDownloader
         /// </summary>
         public MapDLHelper()
         {
+            DownloadMapAction = null;
             AsyncInitialize();
             FailedDownloads = 0;
         }
@@ -168,9 +175,9 @@ namespace WinGoMapsX.ViewModel.OfflineMapDownloader
         /// <param name="lat_end"></param>
         /// <param name="lng_end"></param>
         /// <param name="MaxZoomLevel">Maximum zoom level to download tiles. Default value is 17</param>
-        public async void DownloadMap(double lat_bgn, double lng_bgn, double lat_end, double lng_end, int MaxZoomLevel = 17)
+        public void DownloadMap(double lat_bgn, double lng_bgn, double lat_end, double lng_end, int MaxZoomLevel = 17)
         {
-            await ThreadPool.RunAsync(async (WorkItem) =>
+            IAsyncAction act = ThreadPool.RunAsync(async (WorkItem) =>
             {
                 AllDownloads = 0;
                 Downloaded = 0;
@@ -230,8 +237,17 @@ namespace WinGoMapsX.ViewModel.OfflineMapDownloader
                     AllDownloads = 0;
                 });
             }, WorkItemPriority.Normal);
-
+            DownloadMapAction = act;
         }
 
+        public async void CancelDownload()
+        {
+            await CoreApplication.MainView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                DownloadMapAction.Cancel();
+                DownloadCanceled?.Invoke(this, true);
+                AllDownloads = 0;
+            });
+        }
     }
 }
