@@ -1,11 +1,14 @@
 ﻿using GMapsUWP.GeoCoding;
 using GMapsUWP.Place;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using Windows.ApplicationModel.Contacts;
 using Windows.Devices.Geolocation;
+using Windows.Graphics.Imaging;
+using Windows.Storage.Streams;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
@@ -46,13 +49,63 @@ namespace WinGoMapsX.ViewModel.OnMapControls
             }
         }
 
+        public async void NearbySearchSuggestions()
+        {
+            var res = await PlaceSearchHelper.NearbySearch(new BasicGeoposition()
+            {
+                Longitude = Map.Center.Position.Longitude,
+                Latitude = Map.Center.Position.Latitude
+            }, 1500);
+            if (res == null || res.Results == null || res.Results.Length ==0) return;
+            SearchResults.Clear();
+            List<MapIcon> MapIcons = new List<MapIcon>();
+            foreach (var item in Map.MapElements)
+            {
+                if (item.GetType() == typeof(MapIcon))
+                    MapIcons.Add(item as MapIcon);
+            }
+            foreach (var item in MapIcons)
+            {
+                Map.MapElements.Remove(item);
+            }
+            var nlat = res.Results.Max(x => x.Geometry.Viewport.NorthEast.Latitude);
+            var nlng = res.Results.Max(x => x.Geometry.Viewport.NorthEast.Longitude);
+            var slat = res.Results.Min(x => x.Geometry.Viewport.SouthWest.Latitude);
+            var slng = res.Results.Min(x => x.Geometry.Viewport.SouthWest.Longitude);
+            await Map.TrySetViewBoundsAsync(new GeoboundingBox(
+                new BasicGeoposition() { Latitude = nlat, Longitude = slng },
+                new BasicGeoposition() { Latitude = slat, Longitude = nlng }), null, MapAnimationKind.Bow);
+            foreach (var item in res.Results)
+            {
+                var t = RandomAccessStreamReference.CreateFromUri(new Uri(item.Icon));
+
+                //var rt = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, null);
+                
+                Map.MapElements.Add(new MapIcon()
+                {
+                    Image = t,
+                    Location = new Geopoint(new BasicGeoposition()
+                    {
+                        Altitude = 0,
+                        Latitude = item.Geometry.Location.Latitude,
+                        Longitude = item.Geometry.Location.Longitude
+                    }),
+                    Title = item.Name
+                });
+            }
+        }
+
         public async void SuggestForSearch(string searchExpression)
         {
-            if (searchExpression == "") return;
+            if (searchExpression == "") { SearchResults.Clear(); return; }
             await AppCore.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
             {
                 if (SearchResults == null) SearchResults = new ObservableCollection<PlaceAutoComplete.Prediction>();
                 SearchResults.Clear();
+                SearchResults.Add(new PlaceAutoComplete.Prediction()
+                {
+                    Description = "Do Nearby Search"
+                });
                 //Search Saved Places
                 var saved = SavedPlacesVM.GetSavedPlaces();
                 saved = saved.Where(x => x.PlaceName.Contains(searchExpression)).ToList();
@@ -144,6 +197,11 @@ namespace WinGoMapsX.ViewModel.OnMapControls
         private async void SuggestChoosen(object obj)
         {
             var item = obj as PlaceAutoComplete.Prediction;
+            if (item.Description == "Do Nearby Search")
+            {
+                SearchClass.NearbySearchSuggestions();
+                return;
+            }
             if (item.Description.StartsWith("Saved:"))
             {
                 var loc = item.PlaceId.Split(',');
@@ -154,11 +212,11 @@ namespace WinGoMapsX.ViewModel.OnMapControls
                 //    Latitude = Convert.ToDouble(lat),
                 //    Longitude = Convert.ToDouble(lng)
                 //});
-                await VM.Map.TrySetViewAsync(new Geopoint( new BasicGeoposition()
+                await VM.Map.TrySetViewAsync(new Geopoint(new BasicGeoposition()
                 {
                     Latitude = Convert.ToDouble(lat),
                     Longitude = Convert.ToDouble(lng)
-                }), null,null,null, MapAnimationKind.Bow);
+                }), null, null, null, MapAnimationKind.Bow);
                 VM.MapRightTapCmd.Execute(new Geopoint(
                     new BasicGeoposition()
                     {
@@ -215,10 +273,10 @@ namespace WinGoMapsX.ViewModel.OnMapControls
             //        Longitude = ploc.Longitude
             //    });
             var bounds = res.Results.FirstOrDefault().Geometry.Viewport;
-            
+
             await Map.TrySetViewBoundsAsync(new GeoboundingBox(
                 new BasicGeoposition() { Latitude = bounds.NorthEast.Latitude, Longitude = bounds.SouthWest.Longitude },
-                new BasicGeoposition() { Latitude = bounds.SouthWest.Latitude, Longitude = bounds.NorthEast.Longitude }),null, MapAnimationKind.Bow);
+                new BasicGeoposition() { Latitude = bounds.SouthWest.Latitude, Longitude = bounds.NorthEast.Longitude }), null, MapAnimationKind.Bow);
             VM.MapRightTapCmd.Execute(new Geopoint(
                 new BasicGeoposition()
                 {

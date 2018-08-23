@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
+using Windows.Devices.Sensors;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -24,7 +25,7 @@ namespace WinGoMapsX.ViewModel
         private Geopoint center;
         public Geopoint Location
         {
-            get => location; 
+            get => location;
             set
             {
                 location = value;
@@ -33,7 +34,7 @@ namespace WinGoMapsX.ViewModel
         }
         public Geopoint Center
         {
-            get => center; 
+            get => center;
             set
             {
                 center = value;
@@ -64,7 +65,7 @@ namespace WinGoMapsX.ViewModel
         private ViewModel _userlocation;
         private Visibility _locflagvisi;
         private Visibility _moreinfvis;
-        private Visibility _headinglocvis;
+        //private Visibility _headinglocvis;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -78,12 +79,11 @@ namespace WinGoMapsX.ViewModel
             get => _moreinfvis;
             set { _moreinfvis = value; Update("MoreInfoVisibility"); Update("MoreInfoHyperVisibility"); }
         }
-        public Visibility HeadingLocIndicatorVisibility
-        {
-            get => _headinglocvis;
-            set { _headinglocvis = value; Update("HeadingLocIndicatorVisibility"); Update("NormalLocIndicatorVisibility"); }
-        }
-        public Visibility NormalLocIndicatorVisibility { get => HeadingLocIndicatorVisibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed; }
+        //public Visibility HeadingLocIndicatorVisibility
+        //{
+        //    get => _headinglocvis;
+        //    set { _headinglocvis = value; Update("HeadingLocIndicatorVisibility"); Update("NormalLocIndicatorVisibility"); }
+        //}
         public Visibility MoreInfoHyperVisibility { get => MoreInfoVisibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed; }
         public bool IsPaneOpen
         {
@@ -95,7 +95,7 @@ namespace WinGoMapsX.ViewModel
             get => _rightpaneopen;
             set { _rightpaneopen = value; Update("RightPaneOpen"); }
         }
-
+        public bool CompassMode { get; set; }
 
         public Geopoint LastRightTapPos { get; set; }
         public ViewModel UserLocation { get => _userlocation; set { _userlocation = value; Update("UserLocation"); } }
@@ -109,11 +109,30 @@ namespace WinGoMapsX.ViewModel
         Uri _puru { get; set; }
         public PlaceDetailsHelper.Rootobject SearchResult { get => _searchres; set { _searchres = value; Update("SearchResult"); } }
         public Uri PictureURI { get => _puru; set { _puru = value; Update("PictureURI"); } }
+        private Compass _compass;
+        public Compass CompassDevice { get => _compass; set { _compass = value; HandleCompass(); } }
+        
+        private void HandleCompass()
+        {
+            if (CompassDevice != null)
+            {
+                CompassDevice.GetCurrentReading();
+                CompassDevice.ReportInterval = 1000;
+                CompassDevice.ReadingChanged += CompassDevice_ReadingChanged;
+            }
+        }
+
+        private async void CompassDevice_ReadingChanged(Compass sender, CompassReadingChangedEventArgs args)
+        {
+            if (CompassMode && args.Reading.HeadingTrueNorth.HasValue && args.Reading.HeadingTrueNorth.Value != Double.NaN)
+                await Map.TryRotateAsync(args.Reading.HeadingTrueNorth.Value);
+        }
 
         public MapViewVM()
         {
+            CompassDevice = Compass.GetDefault();
             IsPaneOpen = RightPaneOpen = false;
-            LocationFlagVisibility = MoreInfoVisibility = HeadingLocIndicatorVisibility = Visibility.Collapsed;
+            LocationFlagVisibility = MoreInfoVisibility = Visibility.Collapsed;
             Dispatcher = Window.Current.Dispatcher;
             FindDirectionsCmd = AppCommand.GetInstance();
             FindDirectionsCmd.ExecuteFunc = FindDirections;
@@ -158,9 +177,9 @@ namespace WinGoMapsX.ViewModel
 
         public void ReRun() => GeoLocatorHelper.GetUserLocation();
 
-        private async void GeoLocatorHelper_LocationFetched(object sender, Geoposition e) => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate { await Task.Delay(500); if (HavingParameter) { HavingParameter = false; return; } LocationFlagVisibility = Visibility.Visible; await Map.TrySetViewAsync(e.Coordinate.Point, Map.MaxZoomLevel,0 , null, MapAnimationKind.Bow); Update("UserLocation"); });
+        private async void GeoLocatorHelper_LocationFetched(object sender, Geoposition e) => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate { await Task.Delay(500); if (HavingParameter) { HavingParameter = false; return; } LocationFlagVisibility = Visibility.Visible; await Map.TrySetViewAsync(e.Coordinate.Point, Map.MaxZoomLevel, 0, null, MapAnimationKind.Bow); Update("UserLocation"); });
 
-        private async void GeoLocatorHelper_LocationChanged(object sender, Geocoordinate e) => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, delegate { UserLocation.Heading = e.Heading.HasValue ? e.Heading: e.Heading.Value + 90; UserLocation.Location = new Geopoint(new BasicGeoposition() { Altitude = 0, Latitude = e.Point.Position.Latitude, Longitude = e.Point.Position.Longitude }, AltitudeReferenceSystem.Terrain);  Update("UserLocation"); });
+        private async void GeoLocatorHelper_LocationChanged(object sender, Geocoordinate e) => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, delegate { UserLocation.Location = new Geopoint(new BasicGeoposition() { Altitude = 0, Latitude = e.Point.Position.Latitude, Longitude = e.Point.Position.Longitude }, AltitudeReferenceSystem.Terrain); Update("UserLocation"); });
 
         private void FindDirections(object obj)
         {

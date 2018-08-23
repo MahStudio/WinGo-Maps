@@ -245,7 +245,7 @@
                         <maps:MapItemsControl>
                             <Grid Visibility="{Binding LocationFlagVisibility, Mode=OneWay}" HorizontalAlignment="Center" maps:MapControl.Location="{Binding UserLocation.Location, Mode=TwoWay, UpdateSourceTrigger=Explicit}" maps:MapControl.NormalizedAnchorPoint="0.5,0.5" >
                                 <!--Test WinGo Maps Pointer with Heading-->
-                                <Grid Width="70" Height="70" Visibility="{Binding HeadingLocIndicatorVisibility,Mode=OneWay}">
+                                <!--<Grid Width="70" Height="70" Visibility="{Binding HeadingLocIndicatorVisibility,Mode=OneWay}">
                                     <Grid.RenderTransform>
                                         <RotateTransform Angle="{Binding UserLocation.Heading.Value, Mode=OneWay}"/>
                                     </Grid.RenderTransform>
@@ -260,7 +260,7 @@
                                         </Polygon.Fill>
                                     </Polygon>
                                     <Path Data="F1M473,280C473,283.867,476.134,287,480,287L480,287C483.866,287,487,283.867,487,280L487,280C487,276.134,483.866,273,480,273L480,273C476.134,273,473,276.134,473,280" Height="14" Stretch="Fill" Width="14" Fill="DodgerBlue" />
-                                </Grid>
+                                </Grid>-->
 
                                 <!--WinGo Maps Pointer-->
                                 <Path Data="F1M473,280C473,283.867,476.134,287,480,287L480,287C483.866,287,487,283.867,487,280L487,280C487,276.134,483.866,273,480,273L480,273C476.134,273,473,276.134,473,280" Height="14" Stretch="Fill" Width="14" Fill="DodgerBlue" Visibility="{Binding NormalLocIndicatorVisibility,Mode=OneWay}"/>

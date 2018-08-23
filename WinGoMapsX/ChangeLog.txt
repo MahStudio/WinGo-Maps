@@ -1,3 +1,1 @@
-﻿-Fixed a bug in directions control
--Cortana integration works again.
--Support for Bing Maps (Windows Maps) URI Association
+﻿

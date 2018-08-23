@@ -57,12 +57,12 @@ namespace WinGoMapsX.View.OnMapControls
                     if (Compass.GetDefault() == null) return;
                     if (thisbtn.Content.ToString() == "")
                     {
-                        MapViewVM.HeadingLocIndicatorVisibility = Visibility.Visible;
+                        MapViewVM.CompassMode = true;
                         thisbtn.Content = "";
                     }
                     else
                     {
-                        MapViewVM.HeadingLocIndicatorVisibility = Visibility.Collapsed;
+                        MapViewVM.CompassMode = false;
                         thisbtn.Content = "";
                     }
                     //if (MapViewVM.Compass != null)
