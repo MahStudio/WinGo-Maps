@@ -15,6 +15,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls.Maps;
 using WinGoMapsX.Helpers;
 using WinGoMapsX.View.DirectionsControls;
+using WinGoMapsX.ViewModel.PlacesControls;
 
 namespace WinGoMapsX.ViewModel
 {
@@ -63,6 +64,7 @@ namespace WinGoMapsX.ViewModel
         private bool _rightpaneopen;
         private bool _ispaneopen;
         private ViewModel _userlocation;
+        private Compass _compass;
         private Visibility _locflagvisi;
         private Visibility _moreinfvis;
         //private Visibility _headinglocvis;
@@ -109,7 +111,7 @@ namespace WinGoMapsX.ViewModel
         Uri _puru { get; set; }
         public PlaceDetailsHelper.Rootobject SearchResult { get => _searchres; set { _searchres = value; Update("SearchResult"); } }
         public Uri PictureURI { get => _puru; set { _puru = value; Update("PictureURI"); } }
-        private Compass _compass;
+        
         public Compass CompassDevice { get => _compass; set { _compass = value; HandleCompass(); } }
         
         private void HandleCompass()
@@ -141,6 +143,18 @@ namespace WinGoMapsX.ViewModel
             UserLocation = new ViewModel();
             GeoLocatorHelper.LocationChanged += GeoLocatorHelper_LocationChanged;
             GeoLocatorHelper.LocationFetched += GeoLocatorHelper_LocationFetched;
+        }
+
+        public void OnNavigatedTo()
+        {
+            foreach (var item in SavedPlacesVM.GetSavedPlaces())
+            {
+                Map.MapElements.Add(new MapIcon()
+                {
+                    Location = new Geopoint(new BasicGeoposition() { Altitude = 0, Latitude = item.Latitude, Longitude = item.Longitude }),
+                    Title = item.PlaceName
+                });
+            }
         }
 
         private async void MapRightTap(object obj)

@@ -59,7 +59,7 @@ class GeoLocatorHelper
             if (IsLocationBusy) return;
             IsLocationBusy = true;
             var access = await Geolocator.RequestAccessAsync();
-            if(access != GeolocationAccessStatus.Allowed)
+            if (access != GeolocationAccessStatus.Allowed)
             {
                 var msg = new MessageDialog(MultilingualHelpToolkit.GetString("StringLocationPrivacy", "Text"));
                 msg.Commands.Add(new UICommand(MultilingualHelpToolkit.GetString("StringOK", "Text"), async delegate
@@ -113,7 +113,7 @@ class GeoLocatorHelper
         {
             var res = asyncInfo.GetResults();
             LocationFetched?.Invoke(null, res);
-            LocationChanged?.Invoke(null, res.Coordinate);
+            //LocationChanged?.Invoke(null, res.Coordinate);
             IsLocationBusy = false;
         }
         catch

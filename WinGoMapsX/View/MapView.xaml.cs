@@ -128,6 +128,7 @@ namespace WinGoMapsX.View
             StepsTitleProvider.MapView = this;
             MyLocationControl.MapViewVM = (Searchbar.DataContext as SearchUserControlVM).VM = MapViewVM;
             DirectionsControl.StepsTitleProvider = StepsTitleProvider;
+            MapViewVM.OnNavigatedTo();
 
             if (MapViewVM.UserLocation != null) MapViewVM.ReRun();
             inkCanvas.InkPresenter.InputDeviceTypes = CoreInputDeviceTypes.Mouse | CoreInputDeviceTypes.Pen | CoreInputDeviceTypes.Touch;

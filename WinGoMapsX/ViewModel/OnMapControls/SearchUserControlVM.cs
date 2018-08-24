@@ -78,7 +78,7 @@ namespace WinGoMapsX.ViewModel.OnMapControls
             foreach (var item in res.Results)
             {
                 var t = RandomAccessStreamReference.CreateFromUri(new Uri(item.Icon));
-
+                
                 //var rt = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, null);
                 
                 Map.MapElements.Add(new MapIcon()
