@@ -2,6 +2,7 @@
 using GMapsUWP.GeoCoding;
 using GMapsUWP.Place;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Calls;
@@ -29,9 +30,19 @@ namespace WinGoMapsX.View
     /// </summary>
     public sealed partial class MapView : Page
     {
+        Stopwatch Stopwatch { get; set; }
         public MapView()
         {
             this.InitializeComponent();
+            Stopwatch = Stopwatch.StartNew();
+        }
+
+        private async void Map_ZoomLevelChanged(MapControl sender, object args)
+        {
+            Stopwatch.Restart();
+            await Task.Delay(500);
+            if (Stopwatch.ElapsedMilliseconds >= 500)
+                await Map.TryZoomToAsync(Math.Round(Map.ZoomLevel));
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
