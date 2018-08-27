@@ -102,10 +102,10 @@ namespace WinGoMapsX.ViewModel.OnMapControls
             {
                 if (SearchResults == null) SearchResults = new ObservableCollection<PlaceAutoComplete.Prediction>();
                 SearchResults.Clear();
-                SearchResults.Add(new PlaceAutoComplete.Prediction()
-                {
-                    Description = "Do Nearby Search"
-                });
+                //SearchResults.Add(new PlaceAutoComplete.Prediction()
+                //{
+                //    Description = "Do Nearby Search"
+                //});
                 //Search Saved Places
                 var saved = SavedPlacesVM.GetSavedPlaces();
                 saved = saved.Where(x => x.PlaceName.Contains(searchExpression)).ToList();

@@ -92,11 +92,13 @@ namespace WinGoMapsX.ViewModel.OnMapControls
         }
         public ChangeViewUCVM()
         {
-            CurrentMapMode = MapMode.Standard;
+            if (App.Current.RequestedTheme == ApplicationTheme.Light)
+                CurrentMapMode = MapMode.Standard;
+            else CurrentMapMode = MapMode.RoadsOnly;
             IsDefaultMapViewOn = true;
             ShowTraffic = SettingsSetters.GetShowTrafficOnLaunch();
         }
-        
+
         public void UseGoogleMaps(MapMode MapMode, bool showtraffic, bool AllowCaching, bool AllowOverstretch, bool IsFadingEnabled)
         {
             if (Map == null) return;

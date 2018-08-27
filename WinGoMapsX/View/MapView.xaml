@@ -230,7 +230,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <maps:MapControl x:Name="Map" Grid.Row="0" Center="{Binding UserLocation.Center, Mode=TwoWay}" MapServiceToken="Qe4rzjfqSL7zZlp8xb8A~4o8bBFXIWVuiCUT9pX2cUg~Auk92xku8o5QuFTpMvN0_7Os9b6pREma6NBC8ojGjU0N3Eq3BBzkI9ehNfu065Wv" MapRightTapped="Map_MapRightTapped">
+                <maps:MapControl x:Name="Map" Grid.Row="0" Center="{Binding UserLocation.Center, Mode=TwoWay}" IsFocusEngagementEnabled="True" RequiresPointer="WhenEngaged" MapServiceToken="Qe4rzjfqSL7zZlp8xb8A~4o8bBFXIWVuiCUT9pX2cUg~Auk92xku8o5QuFTpMvN0_7Os9b6pREma6NBC8ojGjU0N3Eq3BBzkI9ehNfu065Wv" MapRightTapped="Map_MapRightTapped">
                     <maps:MapItemsControl>
                         <Grid Visibility="{Binding LocationFlagVisibility, Mode=OneWay}" HorizontalAlignment="Center" maps:MapControl.Location="{Binding UserLocation.Location, Mode=OneWay}" maps:MapControl.NormalizedAnchorPoint="0.5,0.5" RenderTransformOrigin="0.5,0.5" >
                             <!--Test WinGo Maps Pointer with Heading-->

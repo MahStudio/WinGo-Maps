@@ -43,6 +43,14 @@ namespace WinGoMapsX
                 this.InitializeComponent();
             MemoryManager.AppMemoryUsageIncreased += MemoryManager_AppMemoryUsageIncreased;
             this.Suspending += OnSuspending;
+            //XBOX Improvements
+            //if(ClassInfo.DeviceType() == ClassInfo.DeviceTypeEnum.XBOX)
+            //{
+            //Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().SetDesiredBoundsMode
+            //(Windows.UI.ViewManagement.ApplicationViewBoundsMode.UseCoreWindow);
+            //this.RequiresPointerMode = ApplicationRequiresPointerMode.WhenRequested;
+            //this.FocusVisualKind = FocusVisualKind.Reveal;
+            //}
             this.UnhandledException += App_UnhandledException;
             try
             {

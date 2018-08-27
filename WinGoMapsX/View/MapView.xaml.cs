@@ -33,11 +33,11 @@ namespace WinGoMapsX.View
         {
             this.InitializeComponent();
         }
-        
+
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            if(e.Parameter !=null)
+            if (e.Parameter != null)
             {
                 //Google Maps Override
                 if (e.Parameter.ToString().StartsWith("http"))
@@ -73,7 +73,7 @@ namespace WinGoMapsX.View
                             Map.MapElements.Add(new MapIcon() { Location = new Geopoint(new BasicGeoposition() { Latitude = Convert.ToDouble(latitude), Longitude = Convert.ToDouble(longitude) }), Title = pointargs[2].Replace("+", " ") });
                         else
                             Map.MapElements.Add(new MapIcon() { Location = new Geopoint(new BasicGeoposition() { Latitude = Convert.ToDouble(latitude), Longitude = Convert.ToDouble(longitude) }), Title = "Point" });
-                        
+
                     }
                     if (Where != "")
                     {
@@ -93,7 +93,7 @@ namespace WinGoMapsX.View
                                 var b = rgc.Geometry.Bounds;
                                 var loc = rgc.Geometry.Location;
                                 await Map.TrySetViewBoundsAsync(new GeoboundingBox(new BasicGeoposition() { Latitude = b.NorthEast.Latitude, Longitude = b.SouthWest.Longitude }, new BasicGeoposition() { Latitude = b.SouthWest.Latitude, Longitude = b.NorthEast.Longitude }), null, MapAnimationKind.Bow);
-                                
+
                             }
                         }
                         else
