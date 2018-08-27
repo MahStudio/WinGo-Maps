@@ -294,6 +294,7 @@
                     <local:ZoomUserControl x:Name="ZoomUserControl" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="32,149,32,0"/>
                     <InkCanvas x:Name="inkCanvas"  Visibility="Collapsed"/>
                     <InkToolbar x:Name="inkToolbar" Visibility="{Binding ElementName=inkCanvas, Path=Visibility, Mode=OneWay}" VerticalAlignment="Bottom" TargetInkCanvas="{x:Bind inkCanvas}" />
+                    <Button Click="InkingBTN_Click" Visibility="{Binding ElementName=inkCanvas, Path=Visibility, Mode=OneWay}" Style="{StaticResource dotbut}" Width="48" Height="48" Margin="0,0,32,56" Grid.Column="0" BorderBrush="{ThemeResource SystemControlBackgroundAccentBrush}" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Foreground="White" Padding="0" FontSize="18" FontFamily="Segoe MDL2 Assets" Content="&#xE711;" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
                 </Grid>
 
                 <Grid Grid.Row="1">
