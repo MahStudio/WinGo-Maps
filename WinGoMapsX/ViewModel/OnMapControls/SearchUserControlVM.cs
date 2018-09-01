@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Contacts;
 using Windows.Devices.Geolocation;
 using Windows.Graphics.Imaging;
@@ -20,6 +22,7 @@ namespace WinGoMapsX.ViewModel.OnMapControls
 {
     class SearchVMClass : INotifyPropertyChanged
     {
+        private Stopwatch StopwatchTimer { get; set; }
         public MapControl Map { get; set; }
         public string SearchQuerry
         {
@@ -49,6 +52,17 @@ namespace WinGoMapsX.ViewModel.OnMapControls
             }
         }
 
+        public SearchVMClass()
+        {
+            StopwatchTimer = new Stopwatch();
+        }
+
+        ~SearchVMClass()
+        {
+            StopwatchTimer.Reset();
+            StopwatchTimer = null;
+        }
+
         public async void NearbySearchSuggestions()
         {
             var res = await PlaceSearchHelper.NearbySearch(new BasicGeoposition()
@@ -56,7 +70,7 @@ namespace WinGoMapsX.ViewModel.OnMapControls
                 Longitude = Map.Center.Position.Longitude,
                 Latitude = Map.Center.Position.Latitude
             }, 1500);
-            if (res == null || res.Results == null || res.Results.Length ==0) return;
+            if (res == null || res.Results == null || res.Results.Length == 0) return;
             SearchResults.Clear();
             List<MapIcon> MapIcons = new List<MapIcon>();
             foreach (var item in Map.MapElements)
@@ -78,9 +92,9 @@ namespace WinGoMapsX.ViewModel.OnMapControls
             foreach (var item in res.Results)
             {
                 var t = RandomAccessStreamReference.CreateFromUri(new Uri(item.Icon));
-                
+
                 //var rt = await BitmapEncoder.CreateAsync(BitmapEncoder.PngEncoderId, null);
-                
+
                 Map.MapElements.Add(new MapIcon()
                 {
                     Image = t,
@@ -133,11 +147,17 @@ namespace WinGoMapsX.ViewModel.OnMapControls
                 //Search in API
                 if (searchExpression.Length >= 3)
                 {
-                    var s = await PlaceAutoComplete.GetAutoCompleteResults(searchExpression, location: Map.Center, radius: 50000);
-                    if (s == null) return;
-                    foreach (var item in s.Predictions)
+                    StopwatchTimer.Restart();
+                    await Task.Delay(1000);
+                    if (StopwatchTimer.ElapsedMilliseconds >= 1000)
                     {
-                        SearchResults.Add(item);
+
+                        var s = await PlaceAutoComplete.GetAutoCompleteResults(searchExpression, location: Map.Center, radius: 50000);
+                        if (s == null) return;
+                        foreach (var item in s.Predictions)
+                        {
+                            SearchResults.Add(item);
+                        }
                     }
                 }
 
@@ -253,9 +273,9 @@ namespace WinGoMapsX.ViewModel.OnMapControls
                                 Longitude = loc.Longitude
                             }));
                         SearchClass.SearchResults.Clear();
-                        SearchClass.SearchQuerry = "";
                     }
                 }
+                SearchClass.SearchQuerry = "";
                 return;
             }
             var res = await GeocodeHelper.GetInfo(item.PlaceId);

@@ -111,9 +111,9 @@ namespace WinGoMapsX.ViewModel
         Uri _puru { get; set; }
         public PlaceDetailsHelper.Rootobject SearchResult { get => _searchres; set { _searchres = value; Update("SearchResult"); } }
         public Uri PictureURI { get => _puru; set { _puru = value; Update("PictureURI"); } }
-        
+
         public Compass CompassDevice { get => _compass; set { _compass = value; HandleCompass(); } }
-        
+
         private void HandleCompass()
         {
             if (CompassDevice != null)
@@ -147,6 +147,16 @@ namespace WinGoMapsX.ViewModel
 
         public void OnNavigatedTo()
         {
+            List<MapIcon> Micons = new List<MapIcon>();
+            foreach (var item in Map.MapElements)
+            {
+                if (item.GetType() == typeof(MapIcon))
+                    Micons.Add(item as MapIcon);
+            }
+            foreach (var item in Micons)
+            {
+                Map.MapElements.Remove(item);
+            }
             foreach (var item in SavedPlacesVM.GetSavedPlaces())
             {
                 Map.MapElements.Add(new MapIcon()

@@ -221,9 +221,20 @@ namespace WinGoMapsX.View
 
         private void SplitView_PaneClosed(SplitView sender, object args) => MapViewVM.MoreInfoVisibility = Visibility.Collapsed;
 
-        private void PlacePhone_Click(object sender, TappedRoutedEventArgs e) => PhoneCallManager.ShowPhoneCallUI(MapViewVM.SearchResult.Result.FormatedPhoneNumber, MapViewVM.SearchResult.Result.Name);
+        private void PlacePhone_Click(object sender, TappedRoutedEventArgs e)
+        {
+            if (MapViewVM.SearchResult != null && MapViewVM.SearchResult.Result != null && MapViewVM.SearchResult.Result.FormatedPhoneNumber != null)
+                PhoneCallManager.ShowPhoneCallUI(MapViewVM.SearchResult.Result.FormatedPhoneNumber, MapViewVM.SearchResult.Result.Name);
+        }
 
-        private async void PlaceWebsite_Click(object sender, TappedRoutedEventArgs e) => await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate { MapViewVM.IsPaneOpen = false; await Launcher.LaunchUriAsync(new Uri(MapViewVM.SearchResult.Result.Website, UriKind.RelativeOrAbsolute)); });
+        private async void PlaceWebsite_Click(object sender, TappedRoutedEventArgs e)
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
+            {
+                if (MapViewVM.SearchResult != null && MapViewVM.SearchResult.Result != null && MapViewVM.SearchResult.Result.Website != null)
+                    await Launcher.LaunchUriAsync(new Uri(MapViewVM.SearchResult.Result.Website, UriKind.RelativeOrAbsolute));
+            });
+        }
 
         private async void RatePlace_Click(object sender, TappedRoutedEventArgs e) => await Launcher.LaunchUriAsync(new Uri("https://search.google.com/local/writereview?placeid=" + MapViewVM.LastRightTapPos));
 
@@ -237,6 +248,7 @@ namespace WinGoMapsX.View
                 PlaceName = MapViewVM.SearchResult != null ? MapViewVM.SearchResult.Result.Name : ""
             }).ShowAsync();
             MapViewVM.IsPaneOpen = false;
+            MapViewVM.OnNavigatedTo();
         }
     }
 }
