@@ -10,7 +10,7 @@
     <br>
     <a href="https://www.microsoft.com/en-us/p/wingo-maps/9nmj42v775gt">Download</a>
     &middot;
-    <a href="https://t.me/joinchat/DQwGRhG-DXgBJNDWjGEoZQ">Insiders Group</a>
+    <a href="https://t.me/WinGoMapsInsiders">Insiders Group</a>
   &middot;
     <a href="https://github.com/NGame1/UWPGmaps.SDK">Gmaps SDK</a>
     <br>
